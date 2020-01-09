@@ -1,0 +1,51 @@
+<ion-view cache-view="false">
+
+  <ion-nav-title> 
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}</div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content style="direction: rtl;">
+
+    <div class="card" style="border-radius: 12px; -webkit-border-radius: 12px; -moz-border-radius: 12px; border-radius: 12px;  box-shadow: 3px 3px 7px black; padding-right: 3px;">
+      <div class="item item-avatar">
+        <h2>{{chat.QUESTION_FROM}}</h2>
+        <h3>{{chat.QUESTION_DATE | date : 'dd-MM-yyyy hh:ss'}}</h6>
+        <h3>{{docDetails.PO_ORDER}}: {{docDetails.COMMENTS}}</h6>
+        <h3>{{chat.QUESTION_THEME}}</h6>
+      </div>
+      <div class="item item-text-wrap">
+        <h2>{{chat.QUESTION}}</p>
+      </div>
+    </div>
+
+    <div class="card" ng-show="chat.ANSWER_FROM" style="border-radius: 12px; -webkit-border-radius: 12px; -moz-border-radius: 12px; border-radius: 12px;  box-shadow: 3px 3px 7px black; padding-right: 3px;">
+      <div class="item item-avatar">
+        <h2>{{chat.ANSWER_FROM}}</h2>
+        <h3>{{chat.ANSWER_DATE | date : 'dd-MM-yyyy hh:ss'}}</h6>
+      </div>
+      <div class="item item-text-wrap">
+        <h2>{{chat.ANSWER}}</p>
+      </div>
+    </div>
+
+    <div type="item-text-wrap" style="padding-left: 3%; padding-right: 3%;">
+      <a class="item item-divider item-icon-right pele-item-icon-left" ng-click="goToOrder()">
+        <i class="icon-collapse"></i>
+        <h2 class="text-right pele_rtl">
+          <span>{{docDetails.PO_ORDER}}</span>
+        </h2>
+        <i class="icon ion-document-text"></i>
+      </a>
+    </div>
+
+  </ion-content>
+  
+  <ion-footer-bar align-title="right">
+    <div class="col">
+      <button class="button button-block button-large button-positive  icon-right ion-paper-airplane" ng-click="showBtnActions()">פעולות</button>
+    </div>
+  </ion-footer-bar>
+
+</ion-view>

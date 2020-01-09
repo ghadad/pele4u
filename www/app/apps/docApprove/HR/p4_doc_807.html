@@ -1,0 +1,163 @@
+<ion-view class="feed-entries-view">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title" id="logo">דיווח העדרות
+        <!--<img src="img/DocApprove/logo.png" style="max-width: 100%;  height: 100%;"/>-->
+      </div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content scroll="false">
+    <div ng-if="0" class="pele-page-title pele-img-size pele-page-title-font">
+      <a class="description">דיווח העדרות</a>
+    </div>
+    <tab-slide-box>
+      <div class="tsb-icons">
+        <div class="tsb-ic-wrp">
+          <ion-scroll has-bouncing="false" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
+            <a class="triangle-isosceles {{tab.icon}}" ng-repeat="tab in tabs" on-finish-render="test()">
+              {{tab.text}}
+            </a>
+          </ion-scroll>
+        </div>
+      </div>
+      <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+        <!-- -->
+        <!-------------------------------------------------------------------------------->
+        <!----------------------------- Approve List Slide ------------------------------->
+        <!-------------------------------------------------------------------------------->
+
+        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+          <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <div ng-repeat="detail in ACTION_HISTORY" type="item-text-wrap" dir="RTL">
+              <!--<div class="item item-divider "> -->
+              <a class="item item-divider item-icon-right pele-item-icon-left" ng-click="detail.SHOW_FLAG = !detail.SHOW_FLAG; detail.PUSH_COUNT = PUSH_COUNT +1;">
+                <!-- <i ng-class="detail.SHOW_FLAG ? 'icon-collapse' : 'icon-expand'"></i> -->
+                <i ng-class="showIconCollapseInAcctionHistory(detail.SHOW_FLAG , detail.HIDEN_FLAG)"></i>
+                <p class="text-right pele_rtl">{{detail.SEQUENCE_NUM}}. {{detail.USER_NAME}}</p>
+                <i class="icon pel_icon icon-left {{getApproveListActionIcon(detail.ACTION , detail.ACTION_DATE , detail.NOTE)}}"></i>
+              </a>
+
+              <label class="item" ng-hide="hidenAcctionHistoryDetails(detail.SHOW_FLAG, detail.HIDEN_FLAG, detail.PUSH_COUNT , detail.NOTE)">
+                <div class="row">
+                  <div class="col text-right pele_rtl">פעולה:</div>
+                  <div class="col col-75 text-right pele_rtl">{{detail.ACTION}}</div>
+                </div>
+                <div class="row">
+                  <div class="col text-right pele_rtl">תאריך:</div>
+                  <div class="col col-75 text-right pele_rtl">{{detail.ACTION_DATE}}</div>
+                </div>
+                <!--
+                <div class="row">
+                  <div class="col text-right pele_rtl">הערה:</div>
+                  <textarea class="col col-75 text-right pele_rtl" readonly="true">{{detail.NOTE}}</textarea>
+                </div>
+                -->
+                <div class="row">
+                  <div class="col text-right pele_rtl">הערות:</div>
+                  <div class="col col-75 pele-item item-text-wrap text-right pele_rtl">{{detail.NOTE}}</div>
+                </div>
+              </label>
+            </div>
+          </ion-scroll>
+        </ion-slide>
+        <!------------------------------------------------------------------------------->
+        <!----------------------------- Doc Details Slide ------------------------------->
+        <!------------------------------------------------------------------------------->
+        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
+          <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <!-- Refresh to get the new posts -->
+
+            <label class="item item-thumbnail-left">
+
+              <img src="img/employees/worker.png">
+              <table class="pele_rtl text-right">
+                <tbody>
+                  <tr><td class="label">שם: </td><td class="info"> {{CREATOR}}</td></tr>
+                  <tr><td class="label">ת.ז.: </td><td class="info"> {{EMP_NUMBER}}</td></tr>
+                  <tr><td class="label">מספר טופס: </td><td class="info"> {{DOC_INIT_ID}}</td></tr>
+                  <tr><td class="label">ת. יצירה: </td><td class="info"> {{SENT_DATE}}</td></tr>
+                  <tr><td class="label">מחלקה: </td><td class="info"> {{DEPARTMENT}}</td></tr>
+                  <tr><td class="label">חטיבה: </td><td class="info"> {{SECTOR}}</td></tr>
+                </tbody>
+              </table>
+            </label>
+            <ul class="list">
+              <label class="item" dir="RTL">
+          <!-- Holly Day -->
+          <div class="row">
+            <div class="col text-right pele_rtl">יתרת שעות חופשה</div>
+          </div>
+          <div class="row">
+            <div class="col text-right pele_rtl" style="color:red;">{{HOLIDAY_BALANCE}}</div>
+          </div>
+        </label>
+              <div ng-repeat="detail in docDetails.DOC_LINES" type="item-text-wrap" dir="RTL">
+                <a class="item item-divider item-icon-right" ng-click="toggleGroup(detail.ATTRIBUTE2)">
+              <i class="icon pel_icon ion-android-calendar"></i>
+              <p class="float-right">מ : {{detail.ATTRIBUTE2}}</p>
+              <p class="float-right tab">עד: {{detail.ATTRIBUTE3}}</p>
+              <i ng-class="isGroupShown(detail.ATTRIBUTE2) ? 'icon-expand' : 'icon-collapse'"></i>
+            </a>
+
+
+                <label class="item" ng-show="isGroupShown(detail.ATTRIBUTE2)">
+              <div class="row">
+                <div class="col">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                  <tr>
+                    <td class="label">סיבת אי דיווח : </td>
+                    <td class="info">{{detail.ATTRIBUTE4}}</td>
+                  </tr>
+                  <tr>
+                    <td class="label">הערה : </td>
+                    <td class="info">
+                      {{detail.ATTRIBUTE5}}
+                    </td>
+                  </tr>
+                </tbody>
+                </table>
+              </div>
+            </div>
+          </label>
+              </div>
+            </ul>
+          </ion-scroll>
+        </ion-slide>
+      </ion-slide-box>
+  </ion-content>
+  <!-- Footer Actions -->
+  <ion-footer-bar align-title="right">
+
+    <div class="row">
+
+      <div class="col">
+        <button class="button button-block button-large button-positive  icon-right ion-paper-airplane" ng-click="showBtnActions()">פעולות</button>
+      </div>
+
+      <div class="col">
+        <button class="button button-block button-large button-balanced icon-right ion-document-text" ng-click="NotePopup()">הערה</button>
+      </div>
+
+    </div>
+
+  </ion-footer-bar>
+  <script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">הערה חדשה</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">ביטול</button>
+      </ion-header-bar>
+      <ion-content class="padding">
+        <div class="list" dir="RTL">
+          <label class="item item-input">
+            <textarea rows="8" ng-model="newNote.Note" type="text"></textarea>
+          </label>
+          <button class="button button-full button-positive" ng-click="createNote(newNote)">שמירה</button>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>

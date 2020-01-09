@@ -1,0 +1,55 @@
+<ion-view cache-view="false">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="true" padding="true">
+    <div id="task-view" class="item-section lead-section">
+      <h3 class="text-center pele_rtl">ליד מס' : {{task.TASK_NUMBER}}</h3>
+      <table class="pele_rtl text-right">
+        <tbody>
+          <tr>
+            <td class="label">שם לקוח: </td>
+            <td class="info"> {{task.CUSTOMER_NAME}}</td>
+          </tr>
+          <tr>
+            <td class="label">תאריך יצירה: </td>
+            <td class="info"> {{task.CREATION_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
+          </tr>
+          <tr>
+            <td class="label">
+              תאריך עדכון:
+            </td>
+            <td class="info"> {{task.ACTUAL_END_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
+          </tr>
+          <tr>
+            <td class="label">גורם מטפל: </td>
+            <td class="info"> {{task.CURRENT_ASIGNEE}}</td>
+          </tr>
+          <tr>
+            <td class="label">סטאטוס: </td>
+            <td class="info"> {{task.TASK_STATUS}}</td>
+          </tr>
+          <tr>
+            <td class="label">מצב משימה: </td>
+            <td class="info"> <span ng-show="task.OPEN_FLAG=='Y'">פתוחה</span>
+              <span ng-show="task.OPEN_FLAG!='Y'">סגורה</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="info" colspan="2">
+              <p class="task-description">
+                <h3>תיאור נוסף</h3>
+                <pre ng-bind-html="trust(task.DESCRIPTION)">{{task.DESCRIPTION}}</pre>
+              </p>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </ion-content>
+</ion-view>

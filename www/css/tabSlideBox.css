@@ -1,0 +1,121 @@
+.tabbed-slidebox .slider {
+  height: 100%;
+}
+.tabbed-slidebox.btm .slider {
+  margin-bottom: -50px;
+}
+.tabbed-slidebox .slider-slides {
+  width: 100%;
+}
+
+.tabbed-slidebox .slider-slide {
+  padding-top: 0px;
+  color: #000;
+  background-color: #fff;
+  text-align: center;
+  font-weight: 300;
+  /*background-color: #BDECEC;*/
+
+}
+
+.tabbed-slidebox .tsb-icons {
+  text-align: right;
+  margin: 0px 0;
+  position: relative;
+
+}
+
+.dis_tabbed-slidebox .tsb-ic-wrp {
+  display: flex;
+  position: relative;
+  -webkit-transition: -webkit-transform 0.3s; /* For Safari 3.1 to 6.0 */
+  -webkit-transform:translate3d(0,0,0);
+  background-image:url('../img/DocApprove/background.png');
+}
+
+.tabbed-slidebox .tsb-ic-wrp {
+
+}
+/*
+.tabbed-slidebox .tsb-icons a {
+  display: inline-block;
+  font-size: 24px;
+  color: #FFFFFF;
+  -webkit-transform:translate3d(0,8px,0);
+  background-image:url('../img/DocApprove/menu_tab_grey.png');
+  background-size: cover;
+  width: 150px !important;
+}
+
+.tabbed-slidebox .tsb-icons a.active {
+  color: #4996C9;
+  font-size: 24px;
+  -webkit-transform:translate3d(0,0,0);
+  background-image:url('../img/DocApprove/menu_tab_white.png');
+  background-size: cover;
+  width: 180px !important;
+}
+*/
+.tabbed-slidebox .tsb-icons a {
+  display: inline-block;
+  width: 54px;
+  color: #0D47A1;
+}
+
+
+.tabbed-slidebox .tsb-icons a.active {
+  background:#2196F3;
+  color:#FFF;
+}
+
+.tabbed-slidebox .tabbed-slidebox {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.dis_tabbed-slidebox .tsb-icons:after {
+  width: 0;
+  height: 0;
+  border-width: 0 1.4em 1.4em 1.4em;
+  border-color: transparent transparent #0398dc transparent;
+  position: absolute;
+  content: "";
+  display: block;
+  bottom: -12px;
+  left: 50%;
+  margin-left: -14px;
+}
+.tsb-hscroll.scroll-view{
+  white-space: nowrap;
+  margin:10px auto;
+}
+.tsb-hscroll.scroll-view .scroll-bar{
+  visibility:hidden;
+}
+.tsb-hscroll.scroll-view .scroll.onscroll{
+  -webkit-transition: -webkit-transform 0.3s; /* For Safari 3.1 to 6.0 */
+}
+
+.dis_tabbed-slidebox .tsb-icons .scroll a{
+  width:auto;
+  font-size: 1.5em;
+  line-height: 1.7em;
+  text-decoration: none;
+  margin: 0 15px;
+  /*border-bottom: 3px solid transparent;*/
+}
+
+.tabbed-slidebox .tsb-icons .scroll a{
+  width:auto;
+  text-decoration: none;
+  line-height: 1.5em;
+  margin: 0px 15px 10px 0px;
+  /*border-bottom: 3px solid transparent;*/
+}
+
+
+.dis_tabbed-slidebox .tsb-icons .scroll a.active {
+  font-size: 1.6em;
+  /*border-bottom: 3px solid #ccc;*/
+}

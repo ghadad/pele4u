@@ -1,0 +1,25 @@
+<ion-view cache-view="true">
+    <ion-nav-buttons side="right">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <div class="bar bar-header bar-positive">
+            <div class="title">{{title}}
+            </div>
+        </div>
+    </ion-nav-title>
+    <ion-content scroll="true" padding="true" id="cc-main">
+
+            <div class="list">
+                <label class="item item-input">
+                    <input type="text" placeholder="Environment" ng-model="envSearch">
+                </label>
+            </div>
+        <div class="list">
+            <a ng-repeat="env in envList | filter:envSearch" class="item" ui-sref="app.cc.packagelist({env:env.Environment})">
+                <h2>{{env.Environment}}</h2>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
+    

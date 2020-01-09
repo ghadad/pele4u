@@ -1,0 +1,37 @@
+<ion-view cache-view="false">
+
+    <ion-nav-title>
+      <div class="bar bar-header bar-positive">
+        <div class="title">{{title}}</div>
+      </div>
+    </ion-nav-title>
+  
+    <ion-content class="pele-background" onload="doRefresh()">
+      <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
+      </ion-refresher>
+  
+      <label class="item item-input item-search">
+  
+        <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש" ng-model="searchText">
+        <a class="search-icon" ></a>
+      </label>
+  
+      <ion-list>
+        <div class="docs-menu" ng-repeat="docsGroup in docsGroups">
+          <div class="item docs-menu-details item-icon-left pele_rtl" ng-repeat="item in docsGroup.DOCUMENTS.DOCUMENTS_ROW | filter:searchText as filtered" ng-click="forwardToDoc(docsGroup.DOC_ID, item.DOC_INIT_ID,item.INFO.NOTIFICATION_ID)">
+            <div class="row">
+              <div class="col-90">
+                <div class="docs-menu-item-title"><span ng-show="item.INFO.ADD_TITLE" class="string-badge">{{item.INFO.ADD_TITLE}} </span>{{item.INFO.EMP_NAME}}: נסיעה על סך {{item.INFO.TRIP_COST}} <span>&#36;</span></div>
+                <div class="ellipsis">{{item.INFO.ORG_NAME}}</div>
+                <div>תאריך יצירה: <span class="peldate">{{item.INFO.CREATION_DATE| date : 'dd-MM-yyyy'}}</span> </div>
+              </div>
+              <div class="col col-10">
+                <img class="icon pel_icon" ng-src="img/DocApprove/document_redirect.png">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+  

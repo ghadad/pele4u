@@ -1,0 +1,101 @@
+<ion-view cache-view="true">
+  <ion-nav-buttons side="left">
+    <button ng-show="page!='form'" class="button button-icon icon ion-ios-search" ng-click="setForm()"></button>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}</div>
+    </div>
+  </ion-nav-title>
+  <ion-content class="phonebook-form pele-background" ng-show="page=='form' || !page">
+
+    <div class="row">
+      <div class="col col-input">
+        <ion-item class="item item-input">
+          <input class="pele_rtl text-right" type="text" placeholder="חיפוש לפי שם פרטי/משפחה/שלוחה" ng-model="formData.term">
+          <i class="icon ion-funnel placeholder-icon"></i>
+        </ion-item>
+        <div class="text-center" ng-show="hint">
+          <strong class="white">{{hint}}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-input">
+        <div class="list pele_ltr">
+
+          <label class="item item-input item-select">
+            <div class="input-label">
+              <i class="icon ion-funnel placeholder-icon"></i>
+
+            </div>
+            <select class="pele_rtl text-right" ng-model="formData.sectorId">
+              <option value="">חפש לפי חטיבה</option>
+              <option ng-repeat="sector in sectors" value="{{sector.orgId}}">{{sector.orgName}}</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col push-top-20">
+      <div class="text-center">
+        <button ng-click="search(term)" class="round button icon-left ion-search button-positive">חיפוש</button>
+      </div>
+    </div>
+    <div class="col">
+
+      <div class="text-center" ng-show="page=='form' && searchResult.isFound==false">
+        <h3 class="white">לא נמצאו עובדים התואמים לחיפוש</h3>
+      </div>
+    </div>
+    <!--div class="col push-top-20"> <div class="text-center push-top-20"> <button class="button button-clear icon-right button-light ion-gear-b"> פעולות </button> </div> </div-->
+    <div class="col">
+      <div class="text-center">
+        <button ng-click="search('operunits')" class="button button-clear icon-right button-light ion-information-circled">
+        טלפונים חשובים
+        </button>
+      </div>
+    </div>
+  </ion-content>
+  <ion-content class="pele_rtl" ng-show="page=='result' && searchType=='operunits'">
+    <div class="list phonebook">
+      <ion-item ng-repeat="u in operunits">
+        <div class="row ">
+          <div class="col col-35 item-text-wrap ">
+            {{u.displayName}}
+          </div>
+          <div class="col col-35 ">{{u.phoneNumber}}</div>
+          <div class="col col-30 text-left">
+            <a href="tel:{{u.phoneNumber}} "><img class="pel_icon" src="img/new_icons/gray_phone.png"></a>
+            <a on-tap="swalContact($event,u)"><img class="pel_icon" src="img/new_icons/purple_add_contact.png"></a>
+          </div>
+        </div>
+      </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+  <ion-content class="pele_rtl" ng-show="page=='result' && searchResult.list.length>0">
+    <div class="list phonebook">
+      <div class="item item-avatar item-avatar-right item-icon-left" ng-repeat="contact in searchResult.list track by $index">
+        <img class="avatar" ng-if="contact.pic" ui-sref="app.phonebook.details({personId:contact.personId})" ng-src="data:image/JPEG;base64,{{contact.pic}}">
+        <img class="avatar" ng-if="!contact.pic" ui-sref="app.phonebook.details({personId:contact.personId})" ng-src="img/new_icons/blue_avatar.png">
+        <div ui-sref="app.phonebook.details({personId:contact.personId})">
+          <h2>
+            {{contact.lastName}}
+            {{contact.firstName}}</h2>
+          <p> {{contact.sector|replace:"no sector":""}}</td>
+          </p>
+        </div>
+        <div class="icon">
+          <a href="#" ng-href="tel:{{contact.workPhone}}" ng-show="contact.workPhone"><img class="pel_icon" src="img/new_icons/gray_phone.png"></a>
+          <a href="#" ng-href="tel:{{contact.mobilePhone}}" ng-show="contact.mobilePhone"><img class="pel_icon" src="img/new_icons/green_mobile.png "></a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center" ng-show="searchResult.cursor.quantity && searchResult.cursor.quantity == searchResult.cursor.pageSize">
+
+      <button ng-click="search(searchResult.cursor.offset)" class="button button-positive"> הציגו עוד ... </button>
+    </div>
+
+  </ion-content>
+</ion-view>

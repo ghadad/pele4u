@@ -1,0 +1,46 @@
+<ion-view cache-view="false" hide-back-button="true">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-light">
+      <div class="title" id="logo">
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content class="pele-background" scroll="false">
+    <div class="pele-page-title pele-img-size pele-page-title-font">
+      <a class="description">{{TITLE_LOGIN}}</a>
+    </div>
+    <div class="row">
+      <div class="col col-center">
+        <div class="card login-container">
+          <form name="login_form" class="" novalidate>
+            <div class="item item-body">
+              <label class="item item-input">
+                <span class="input-label" placeholder="{{TITLE_SYSTEM_MESSAGES}}" >{{user.message}}</span>
+                <!--<input type="text" placeholder="{{TITLE_SYSTEM_MESSAGES}}" name="user_message" ng-model="user.message" disabled></a>-->
+              </label>
+              <label class="item item-input">
+                <span class="input-label">סיסמה</span>
+                <input type="tel" maxlength="4" placeholder="{{TITLE_OTP_INPUT}}" name="user_pin" ng-model="user.pin" autocomplete="one-time-code" required valid-pin="user.pin" show-hide-input>
+              </label>
+            </div>
+            <div class="item item-body bottom-content">
+              <!-- <button type="submit" class="button button-positive button-block" ng-click="recoverPassword()" ng-disabled="forgot_password_form.$invalid"> -->
+              <button type="submit" class="button button-positive button-block" ng-click="doLogIn()">
+                {{TITLE_SEND_OTP}}
+              </button>
+            </div>
+          </form>
+        </div>
+        <!--
+        <div class="alternative-actions">
+          <a class="forgot-password button button-full button-clear button-light text-right" ng-click="resetLogIn()">
+            {{TITLE_RESET_PASSWORD_LINK}}
+          </a>
+        </div>
+        -->
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

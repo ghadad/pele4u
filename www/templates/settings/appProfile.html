@@ -1,0 +1,31 @@
+<ion-view class="profile-view">
+  <ion-nav-title>
+    <span>פלאפון תקשורת בע"מ</span>
+  </ion-nav-title>
+  <ion-content>
+    <div class="top-content row">
+      <div class="profile-container">
+        <div class="user-image-container">
+          <pre-img ratio="_1_1" helper-class="rounded-image">
+            <img ng-click="showDev()" class="user-image" ng-src="img/icon.png" spinner-on-load>
+          </pre-img>
+        </div>
+        <div class="user-name">אפליקציה פנים ארגונית</div>
+        <div class="user-twitter">Pele4U</div>
+      </div>
+      <div class="user-background-image-outer">
+        <!--<div multi-bg="['https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg']"></div>-->
+      </div>
+    </div>
+    <div class="bottom-content" dir="rtl">
+      <ul class="list ">
+        <label class="item">
+          <div class="row">
+            <div class="col col-30 text-right">גרסה : </div>
+            <div class="col col-78 text-right">{{APP_VERSION}}{{ENIRONMENT}}</div>
+          </div>
+        </label>
+      </ul>
+    </div>
+  </ion-content>
+</ion-view>

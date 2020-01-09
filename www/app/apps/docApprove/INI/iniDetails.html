@@ -1,0 +1,221 @@
+<ion-view cache-view="false">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}</div>
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="false">
+    <tab-slide-box tab="2">
+      <div class="tsb-icons">
+        <div class="tsb-ic-wrp">
+          <ion-scroll has-bouncing="false" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
+            <a class="triangle-isosceles {{tab.icon}}" ng-repeat="tab in tabs" on-finish-render="test()">
+              {{tab.text}}
+            </a>
+          </ion-scroll>
+        </div>
+      </div>
+      <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+
+        <!-------------------------------------------------------------------------------->
+        <!----------------------------- Approve List Slide ------------------------------->
+        <!-------------------------------------------------------------------------------->
+        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+          <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <div class="list">
+              <div ng-repeat="action in docDetails.ACTION_HISTORY" class="pele_rtl">
+                <div ng-click="action.left_icon && toggleActionItem(action)" class="item item-divider item-icon-left item-icon-right text-right action-history-item">
+                  <i class="icon pel_icon icon-sm" ng-class="action.left_icon"></i> {{action.APPROVAL_SEQ}}. {{action.USER_NAME}}
+                  <small class="string-badge ellipsis_90 ellipsis" ng-show="action.short_text">{{action.short_text}}</small>
+
+                  <i class="icon pel_icon icon-sm" ng-class="action.right_icon"></i>
+                </div>
+                <div class="item bo-border pele_rtl text-right item-icon-left item-icon-right text-right" ng-show="action.display">
+                  <div class="row">
+                    <div class="col">פעולה:</div>
+                    <div class="col col-75">{{action.ACTION}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col">תאריך:</div>
+                    <div class="col col-75">{{action.ACTION_DATE| date : 'hh:ss dd-MM-yyyy'}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col">הערות:</div>
+                    <div class="col col-75 pele-item item-text-wrap">{{action.NOTE}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </ion-scroll>
+        </ion-slide>
+
+        <!------------------------------------------------------------------------------->
+        <!----------------------------- Doc Details Slide ------------------------------->
+        <!------------------------------------------------------------------------------->
+        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
+          <ion-scroll scrollX="false" class="pele_rtl text-right" style="height:80%" delegate-handle="slide1Scroll">
+            <!-- Refresh to get the new posts -->
+            <ul class="list">
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-left item-icon-right">
+                  <h2 class="text-right pele_rtl">תיאור ייזום</h2>
+                  <i class="icon pel_icon icon-md ion-clipboard"></i>
+                </div>
+                <div class="item-section pele_rtl item-text-wrap text-right">
+                  {{docDetails.INIT_DESCRIPTION}}
+                </div>
+              </li>
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="info_elm=true" ng-click="info_elm=!info_elm">
+                  <i class="icon pel_icon icon-sm" ng-class="info_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <i class="icon pel_icon icon-md ion-clipboard"></i>
+                  <h2 class="text-right pele_rtl">פרטי ייזום</h2>
+                </div>
+                <div class="item-section" ng-show="info_elm">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                      <tr>
+                        <td class="label">שם מסמך: </td>
+                        <td class="info"> {{docDetails.DOC_NAME}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">תאריך יצירה: </td>
+                        <td class="info"> {{docDetails.CREATION_DATE|date:'dd-MM-yyyy HH:mm'}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">יוזם: </td>
+                        <td class="info"> {{docDetails.PREPARER_NAME}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">הצדקת ייזום: </td>
+                        <td class="info"> {{docDetails.NOTE_TO_APPROVER}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">ספק מומלץ: </td>
+                        <td class="info"> {{docDetails.VENDOR_NAME}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">נדרש חוזה תחזוקה: </td>
+                        <td class="info pele_rtl"> {{docDetails.IS_CONTRACT_REQUIRED}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">קיום הצעת מחיר: </td>
+                        <td class="info"> {{docDetails.IS_EXISTS_QUOTATION}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">סכום משוער: </td>
+                        <td class="info"> {{docDetails.AMOUNT}} {{docDetails.CURRENCY_CODE}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="lines_elm=true" ng-click="lines_elm=!lines_elm">
+                  <i class="icon pel_icon icon-sm" ng-class="lines_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <h2 class="text-right pele_rtl">שורות ייזום</h2>
+                  <i class="icon pel_icon icon-md ion-navicon"></i>
+                </div>
+                <div class="item-section" ng-show="docDetails && !docDetails.INIT_LINES.length">
+                  <div ng-show="!docDetails.INIT_LINES.length" class="item-text-wrap">לא נמצאו שורות ייזום</div>
+                </div>
+                <div class="item-section" ng-show="lines_elm">
+                  <table class="init_lines_table pele_rtl text-right" ng-repeat="line in docDetails.INIT_LINES">
+                    <thead>
+                      <th class="label"> שורה {{line.LINE_NUM}}: </th>
+                      <th class="item-text-wrap info">
+                        {{line.ITEM}}
+                      </th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="label">מחיר ליחידה: </td>
+                        <td class="info"> {{line.PRICE}} </td>
+                      </tr>
+                      <tr>
+                        <td class="label">כמות: </td>
+                        <td class="info"> {{line.QTY}} </td>
+                      </tr>
+                      <tr>
+                        <td class="label">סה"כ לשורה: </td>
+                        <td class="info"> {{line.SUM_QTY}} </td>
+                      </tr>
+                      <tr>
+                        <td class="label">שם ספק: </td>
+                        <td class="info"> {{line.VENDOR}} </td>
+                      </tr>
+                      <tr>
+                        <td class="label">קוד מחלקה: </td>
+                        <td class="info"> {{line.DEPT_CODE}} </td>
+                      </tr>
+                      <tr>
+                        <td class="label">קוד תקציב: </td>
+                        <td class="info"> {{line.BUDGET_CODE}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </li>
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="attach_elm=true" ng-click="attach_elm=!attach_elm">
+                  <i class="icon pel_icon icon-sm" ng-class="attach_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <h2 class="text-right pele_rtl">נספחי ייזום</h2>
+                  <i class="icon pel_icon icon-md ion-paperclip"></i>
+                </div>
+                <div class="item-section" ng-show="displayable && !displayable.length">
+                  לא קיימים מסמכים מצורפים
+                </div>
+                <div class="item-section" ng-show="attach_elm && displayable.length">
+                  <table class="pele_rtl attachments-table text-right">
+                    <tbody>
+                      <tr class="pele_rtl" ng-repeat="file in docDetails.attachments | filter:{ DISPLAY: 'Y' } as displayable">
+                        <td class="num_index"> {{$index+1}} . </td>
+                        <td class="info pele_ltr">
+                          <span ng-click="openAttachment(file)" ng-class="'show_content_'+file.SHOW_CONTENT"> {{file.DISPLAY_NAME}}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+            </ul>
+
+          </ion-scroll>
+        </ion-slide>
+      </ion-slide-box>
+  </ion-content>
+  <!-- Footer Actions -->
+  <ion-footer-bar align-title="right">
+
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-large button-positive  icon-right ion-paper-airplane" ng-click="showBtnActions()">פעולות</button>
+      </div>
+
+      <div class="col">
+        <button class="button button-block button-large button-balanced icon-right ion-document-text" ng-click="displayNotePopup()">הערה</button>
+      </div>
+
+    </div>
+
+  </ion-footer-bar>
+  <script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">הערה חדשה</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">ביטול</button>
+      </ion-header-bar>
+      <ion-content class="padding">
+        <div class="list" dir="RTL">
+          <label class="item item-input">
+            <textarea rows="8" ng-model="newNote.Note" type="text"></textarea>
+          </label>
+          <button class="button button-full button-positive" ng-click="createNote(newNote)">שמירה</button>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>

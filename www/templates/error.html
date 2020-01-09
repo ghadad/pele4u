@@ -1,0 +1,38 @@
+<ion-view class="feed-entries-view " cache-view="false" ng-controller="SettingsListCtrl">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">
+        שגיאה
+      </div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="pele-background">
+    <div class="card error">
+      <div class="item item-body error-top text-center">
+        <i class="icon ion-android-alert"></i>
+      </div>
+      <div class="item item-body">
+        <strong>אופס .. משהו השתבש </strong> תוכלו לנסות שוב לבצע את הפעולה ואם היא שוב מתרחשת נשמח אם תסייעו לנו לשפר את האפליקציה
+        <p style="color:red" ng-show="stateParams.error.category=='api-400'">המערכת לא הצליחה לזהות אותך כעובד פלאפון</p>
+
+        <div class="row">
+          <div class="col col-100">
+            <button class="button  button-full item-icon-right" ng-click="sendMail()">שלחו לנו דו"ח לתיחקור
+                <i class="icon ion-paper-airplane"></i>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-100"><button class="button  button-full item-icon-right" ui-sref="app.p1_appsLists">תפריט ראשי
+            <i class="icon ion-navicon"></i>  </button></div>
+        </div>
+        <div class="row">
+          <div class="col col-100"><button class="button button-gray button-full item-icon-right" ng-Click="goBack()">
+            <i class="icon ion-reply"></i>נסו שוב </button></div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

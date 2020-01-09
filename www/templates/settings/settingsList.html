@@ -1,0 +1,37 @@
+<ion-view name="dddddd" cache-view="false" hide-back-button="true">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">הגדרות</div>
+    </div>
+  </ion-nav-title>
+  <ion-content class="pele-background" scroll="false">
+
+    <div class="list">
+
+      <a class="item item-icon-right" ng-click="sendMail()">
+        <i class="icon ion-email"></i>
+        שליחת נתונים לתחקור
+      </a>
+
+      <a ng-show="env!='PD'" class="item  item-icon-right" ui-sref="app.dev">
+        <i class="icon ion-code-working"></i>
+      תפריט מפתחים
+      <span><strong class="alert">(סביבה : {{env}})</strong></span>
+      </a>
+
+      <!--
+      <a class="item item-icon-right" ng-click="updateAppVersion()">
+        <i class="icon ion-android-download"></i>
+        <p>עדכון גרסה</p>
+      </a>
+	  -->
+      <a class="item item-icon-right" ng-click="forwardTo('app.appProfile')">
+        <i class="icon ion-help-buoy"></i>
+        אודות אפליקציה
+      </a>
+
+    </div>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,2 @@
+git fetch # This updates 'remote' portion of local repo. 
+git reset --hard origin/$1

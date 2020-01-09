@@ -1,0 +1,21 @@
+<ion-view cache-view="false">
+  <ion-nav-buttons side="right">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">
+        Network information
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+
+        date : {{date|date :'dd.MM.yyyy &nbsp; HH:mm:ss.sss'}}<br \>network : {{network}} <br \> isOnline:{{isOnline}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,44 @@
+<ion-view class="feed-entries-view " cache-view="false">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}
+        <!--<img src="img/DocApprove/logo.png" style="max-width: 100%;  height: 100%;"/>-->
+      </div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="pele-background" onload="doRefresh()">
+    <!-- Refresh to get the new posts -->
+    <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
+    </ion-refresher>
+    <div class="hide pele-page-title pele-img-size pele-page-title-font">
+      <a class="description">{{title}}</a>
+    </div>
+
+    <label class="item item-input item-search" ng-click="searchBarCreteria()">
+
+      <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש" ng-model="searchText.text">
+      <a class="search-icon" ></a>
+    </label>
+
+    <ion-list>
+      <div class="docs-menu" ng-repeat="docsGroup in docsGroups">
+        <ion-item class="docs-menu-head item-stable" ng-click="toggleGroup(docsGroup.DOC_ID)" ng-class="{active: isGroupShown(docsGroup.DOC_ID)}">
+          <ion-icon ng-class="isGroupShown(docsGroup.DOC_ID) ? 'ion-arrow-left-b' : 'ion-arrow-down-b'"></ion-icon>
+          <!--i ng-class="isGroupShown(docsGroup.DOC_ID) ? 'icon-expand' : 'icon-collapse'"> </i-->
+          {{docsGroup.DOC_NAME}}
+          <span class="pel-badge light-blue">{{docsGroup.FORM_QTY}}</span>
+        </ion-item>
+
+        <ion-item class="item-doc-list pele_rtl" ng-repeat="item in docsGroup.DOCUMENTS.DOCUMENTS_ROW | filter:searchText.text" ng-show="isGroupShown(docsGroup.DOC_ID)" ng-click="forwardToDoc(item.DOC_ID, item.DOC_INIT_ID)">
+          <img class="doc-redirect icon" ng-src="img/DocApprove/document_redirect.png">
+          <h2 class="pele_rtl">{{item.MESSAGE}}</h2>
+          <h3>{{item.DOC_INIT_ID}}</h3>
+          <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+        </ion-item>
+
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

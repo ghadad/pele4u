@@ -1,0 +1,94 @@
+<ion-view cache-view="false">
+
+    <ion-nav-buttons side="left">
+        <button ng-show="page!='form'" class="button button-icon icon ion-ios-search" ng-click="setForm()"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-title>
+        <div class="bar bar-header bar-positive">
+            <div class="title">{{title}}</div>
+        </div>
+    </ion-nav-title>
+
+    <ion-content style="direction: rtl;" ng-show="page=='form'">
+
+        <div class="row">
+            <div class="col col-input" style="margin: 10px 30px;">
+                <div class="list pele_ltr">
+                    <label class="item item-input item-select" style="border: 4px ridge #2196F3">
+                        <div class="input-label">
+                            <i class="icon ion-funnel placeholder-icon"></i>
+                        </div>
+                        <select class="pele_rtl text-right" ng-model="formData.subject">
+                            <option value="">סיבת ביאור</option>
+                            <option ng-repeat="x in noteSubject" value="{{x.NOTE_SUBJECT}}">{{x.NOTE_SUBJECT_DESC}}</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="!formData.forwardUserNameSr[0].key">
+            <div class="col col-input" style="margin: 10px 30px">
+                <div class="list pele_ltr">
+                    <label class="item item-input item-select" style="border: 4px ridge #2196F3">
+                        <div class="input-label">
+                            <i class="icon ion-funnel placeholder-icon"></i>
+                        </div>
+                        <select class="pele_rtl text-right" ng-model="formData.forwardUserName">
+                            <option value="">נמעני ברירת מחדל</option>
+                            <option ng-repeat="x in forwardUsers" value="{{x.FORWARD_TO_USER_NAME}}">{{x.FORWARD_TO_USER_DESC}}</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="text-center" ng-show="page=='form' && searchResult.isFound==false">
+                <h4 style="color: red">לא נמצאו עובדים התואמים לחיפוש</h4>
+            </div>
+        </div>
+        <div class="row" ng-show="!formData.forwardUserName" style="margin: 10px 30px">
+            <div class="col col-67 col-input">
+                <ion-item class="item item-input" style="border: 4px ridge #2196F3">
+                    <input class="pele_rtl text-right" type="text" placeholder="נמענים נוספים" ng-model="formData.forwardUserNameSr[0].value">
+                    <i class="icon ion-funnel placeholder-icon"></i>
+                </ion-item>
+            </div>
+            <div class="col col-22">
+                <button ng-click="search(forwardUserNameSr[0].value)" class="button button-positive">חיפוש</button>
+            </div>
+        </div>
+        <div class="text-center" ng-show="hint" >
+            <p style="color: red; font-weight: bold;">{{hint}}</p> 
+        </div>
+
+    </ion-content>
+
+    <ion-content style="direction: rtl;" ng-show="page=='result'">
+        <span id="scrollPoint"></span>
+        <div class="list phonebook" id="personList">
+            <div class="item item-avatar item-avatar-right item-icon-left" ng-repeat="person in searchResult.list track by $index">
+                <!-- <img class="avatar" ng-if="contact.pic" ui-sref="app.phonebook.details({personId:contact.personId})" ng-src="data:image/JPEG;base64,{{contact.pic}}"> -->
+                <!-- <img class="avatar" ng-if="!contact.pic" ui-sref="app.phonebook.details({personId:contact.personId})" ng-src="img/new_icons/blue_avatar.png"> -->
+                <div ng-click="shoose(person)">
+                    <h2>{{person.LAST_NAME}} {{person.FIRST_NAME}}</h2>
+                    <p>{{person.DEPARTMENT}}</p>
+                    <p>{{person.JOB_NAME}}</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="text-center" ng-show="searchResult.cursor.quantity && searchResult.cursor.quantity == searchResult.cursor.pageSize">
+            <button ng-click="search(searchResult.cursor.offset)" class="button button-positive"> הציגו עוד ... </button>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar align-title="right" ng-show="page=='form'">
+        <div class="col">
+            <button class="button button-block button-large button-positive  icon-right ion-paper-airplane" ng-click="showBtnActions()">פעולות</button>
+        </div>
+    </ion-footer-bar>
+
+</ion-view>

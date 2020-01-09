@@ -1,0 +1,240 @@
+<ion-view cache-view="false">
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}</div>
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="false">
+    <tab-slide-box tab="2">
+      <div class="tsb-icons">
+        <div class="tsb-ic-wrp">
+          <ion-scroll has-bouncing="false" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
+            <a class="triangle-isosceles {{tab.icon}}" ng-repeat="tab in tabs" on-finish-render="test()">
+              {{tab.text}}
+            </a>
+          </ion-scroll>
+        </div>
+      </div>
+
+      <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+
+        <!-------------------------------------------------------------------------------->
+        <!----------------------------- Approve List Slide ------------------------------->
+        <!-------------------------------------------------------------------------------->
+        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+          <ion-scroll scrollX="false" style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
+            <div class="list">
+              <div ng-repeat="action in docDetails.ACTION_HISTORY" class="pele_rtl">
+                <div ng-click="action.left_icon && toggleActionItem(action)" class="item item-divider item-icon-left item-icon-right text-right action-history-item">
+                  <i class="icon pel_icon icon-sm" ng-class="action.left_icon"></i> {{action.APPROVAL_SEQ}}. {{action.USER_NAME}}
+                  <small class="string-badge" ng-show="action.short_text">{{action.short_text}}</small>
+                  <i class="icon pel_icon icon-sm" ng-class="action.right_icon"></i>
+                </div>
+                <div class="item bo-border pele_rtl text-right item-icon-left item-icon-right text-right" ng-show="action.display">
+                  <div class="row">
+                    <div class="col">פעולה:</div>
+                    <div class="col col-75">{{action.ACTION}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col">תאריך:</div>
+                    <div class="col col-75">{{action.ACTION_DATE| date : 'hh:ss dd-MM-yyyy'}}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col">הערות:</div>
+                    <div class="col col-75 pele-item item-text-wrap">{{action.NOTE}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </ion-scroll>
+        </ion-slide>
+        <ion-slide>
+          <ion-scroll style="height:80%" scrollX="false" delegate-handle="slide1Scroll">
+            <a href="#" class="fab" ng-click="showSearch=!showSearch">
+                  <i class="icon ion-search icon-center"></i>
+              </a>
+            <div ng-class="{'show-search':showSearch,'hide-search':!showSearch}" class="row">
+              <div class="col col-80 col-offset-20">
+                <div class="list list-inset text-finder">
+                  <label class="item item-input">
+              <!--i class="icon ion-search placeholder-icon"></i-->
+              <input class="pele_rtl text-right" type="text" placeholder="חיפוש בתיאור" ng-model="term">
+            </label>
+                </div>
+              </div>
+            </div>
+            <div class="card item-section pele_rtl item-text-wrap text-right" ng-repeat="description in docDetails.TASK_DESCRIPTION track by $index">
+              <div class="row">
+                <div class="col-100">
+                  <p><span class="label">תאריך עדכון: </span>
+                    <span class="info" ng-bind-html="description.UPDATE_DATE|date:'dd-MM-yyyy HH:mm'| highlight:term"></span>
+                    <p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-100">
+                  <p>
+                    <span class="label">כותב התיאור :</span>
+                    <span class="info" ng-bind-html="description.USER_NAME +' - '+ description.ORG_HIERARCHY| highlight:term"></span>
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-100">
+                  <p>
+                    <span class="label" ng-bind-html="description.SUBJECT| highlight:term"> </span>
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-100">
+                  <span class="label">פירוט: </span>
+                  <span class="info" ng-bind-html="description.NOTES| highlight:term"></span>
+                </div>
+              </div>
+            </div>
+          </ion-scroll>
+        </ion-slide>
+        <!------------------------------------------------------------------------------->
+        <!----------------------------- Doc Details Slide ------------------------------->
+        <!------------------------------------------------------------------------------->
+        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
+          <ion-scroll class="pele_rtl text-right" scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <!-- Refresh to get the new posts -->
+            <ul class="list">
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="info_elm=true" ng-click="info_elm=!info_elm">
+
+                  <i class="pel_icon icon icon-sm" ng-class="info_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <i class="icon pel_icon icon-md ion-clipboard"></i>
+                  <h2 class="text-right pele_rtl">פרטי המשימה</h2>
+                </div>
+                <div class="item-section" ng-show="info_elm">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                      <tr>
+                        <td class="label">שם: </td>
+                        <td class="info"> {{docDetails.BAN_NAME}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">מספר לקוח: </td>
+                        <td class="info"> {{docDetails.BAN}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">נושא משימה: </td>
+                        <td class="info"> {{docDetails.TASK_TYPE}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">תת נושא: </td>
+                        <td class="info"> {{docDetails.SUB_TASK_TYPE}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">תאריך יצירה: </td>
+                        <td class="info pele_rtl"> {{docDetails.CREATION_DATE| date:'dd-MM-yyyy HH:mm'}}</td>
+                      </tr>
+                      <tr>
+                        <td class="label">האם משימה חוזרת: </td>
+                        <td class="info"> {{docDetails.RETURN_TASK}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="sys_data=false" ng-click="sys_data=!sys_data">
+                  <i class="icon pel_icon icon-sm" ng-class="sys_data ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <h2 class="text-right pele_rtl">נתוני מערכת</h2>
+                  <i class="icon pel_icon icon-md ion-clipboard"></i>
+                </div>
+                <div class="item-section" ng-show="sys_data">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                      <tr class="pele_rtl" ng-repeat="item in docDetails.SYSTEM_INFORMATION">
+                        <td class="label">{{item.PROMPT}}: </td>
+                        <td class="info"> {{item.VALUE}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="extra_elm=true" ng-click="extra_elm=!extra_elm">
+                  <i class="icon pel_icon icon-sm" ng-class="extra_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <h2 class="text-right pele_rtl">נתונים נוספים</h2>
+                  <i class="icon pel_icon icon-md ion-clipboard"></i>
+                </div>
+                <div class="item-section" ng-show="extra_elm && docDetails.EXTRA_INFORMATION">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                      <tr class="pele_rtl" ng-repeat="item in docDetails.EXTRA_INFORMATION">
+                        <td class="label">{{item.PROMPT}}: </td>
+                        <td class="info"> {{item.VALUE}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+
+              <li class="item item-info no-border">
+                <div class="item item-divider item-icon-right item-icon-left" ng-init="attach_elm=true" ng-click="attach_elm=!attach_elm">
+                  <i class="icon pel_icon icon-sm" ng-class="attach_elm ? 'ion-chevron-down' :'ion-chevron-left'"></i>
+                  <h2 class="text-right pele_rtl">נספחי משימה</h2>
+                  <i class="icon pel_icon icon-md ion-paperclip"></i>
+                </div>
+                <div class="item-section" ng-show="displayable && displayable.length==0">
+                  לא קיימים מסמכים מצורפים
+                </div>
+                <div class="item-section" ng-show="attach_elm && displayable.length">
+                  <table class="pele_rtl attachments-table text-right">
+                    <tbody>
+                      <tr class="pele_rtl" ng-repeat="file in docDetails.attachments | filter:{ DISPLAY: 'Y' } as displayable">
+                        <td class="num_index"> {{$index+1}} . </td>
+                        <td class="info pele_ltr">
+                          <span ng-click="openAttachment(file)" ng-class="'show_content_'+file.SHOW_CONTENT"> {{file.DISPLAY_NAME}}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+            </ul>
+
+          </ion-scroll>
+        </ion-slide>
+      </ion-slide-box>
+    </tab-slide-box>
+  </ion-content>
+  <!-- Footer Actions -->
+  <ion-footer-bar align-title="right">
+
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-large button-positive  icon-right ion-paper-airplane" ng-click="showBtnActions()">פעולות</button>
+      </div>
+
+      <div class="col">
+        <button class="button button-block button-large button-balanced icon-right ion-document-text" ng-click="displayNotePopup()">הערה</button>
+      </div>
+
+    </div>
+
+  </ion-footer-bar>
+  <script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">הערה חדשה</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">ביטול</button>
+      </ion-header-bar>
+      <ion-content class="padding">
+        <div class="list" dir="RTL">
+          <label class="item item-input">
+            <textarea rows="8" ng-model="newNote.Note" type="text"></textarea>
+          </label>
+          <button class="button button-full button-positive" ng-click="createNote(newNote)">שמירה</button>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>

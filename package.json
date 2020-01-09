@@ -1,0 +1,30 @@
+{
+  "name": "myApp",
+  "version": "0.0.1",
+  "description": "An Ionic project",
+  "devDependencies": {
+    "@ionic/v1-toolkit": "2.0.18",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^3.1.0",
+    "ionic": "3.10.3"
+  },
+  "dependencies": {
+    "angular-form-for": "^4.1.11",
+    "angular-upload": "^1.0.13",
+    "cordova-custom-config": "^5.0.2",
+    "cordova-plugin-contacts": "^2.3.1",
+    "cordova-plugin-filepath": "^1.3.0",
+    "ng-file-upload": "^12.2.13"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-contacts": {
+        "CONTACTS_USAGE_DESCRIPTION": "your usage message"
+      },
+      "cordova-custom-config": {},
+      "cordova-plugin-filepath": {}
+    }
+  }
+}

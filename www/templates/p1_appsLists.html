@@ -1,0 +1,70 @@
+<ion-view class="feeds-categories-view newlook newlook4 {{deviceModel}}" cache-view="false" hide-back-button="true" ng-class="{'loading':!menuItems.length,'iphonex':iphonex}">
+  <div class="row top-menu-buttons">
+    <div class="col pele4u-logo  text-left">
+      <img src="img/new_icons/transparent-pele4u.png" />
+    </div>
+    <div class="ham white col text-right">
+      <a menu-toggle="right"><img  style="margin-top:5px" src="img/new_icons/hamburger.png"></a>
+    </div>
+  </div>
+  <div id="menu-plasma" class="menu-plasma" ng-show="menuItems.length">
+    <div class="plasma">
+      <div class="text-center profile">
+        <img ng-show="profile.pic" ng-src="data:image/JPEG;base64,{{profile.pic}}" class="image-cropper">
+        <img ng-show="!profile.pic" ng-src="img/new_icons/blue_avatar.png" class="image-cropper">
+      </div>
+      <div class="profile-caption text-center">
+        {{wellcome}}, {{profile.firstName}}
+      </div>
+    </div>
+    <div class="menu1">
+      <div class="text-right pele_rtl useful caption ">קישורים שימושיים <img style="height:20px;margin-right:7px" src="img/new_icons/white-h-scroll.png"></div>
+      <ion-scroll direction="x" class="tsb-hscroll" has-bouncing="false" delegate-handle="menu1-handle">
+        <div class="">
+          <a ng-click="forwardToApp(app)" ng-repeat="app in menuItems  | filter: { menu1: true }">
+          <img class="links-image" ng-src="{{app.Image}}" />
+          <div class="caption">{{app.DisplayName}}</div>
+        </a>
+        </div>
+      </ion-scroll>
+    </div>
+  </div>
+  <ion-content class="menu2" ng-show="menuItems.length" class="no-header no-footer" has-bouncing="false">
+    <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
+    </ion-refresher>
+    <div class="grid-layout" ng-show="menuItems">
+      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">
+        <i class="circle"><img class="grid-item-image" ng-src="{{app.Image}}" /></i>
+        <div class="caption">{{app.DisplayName}}</div>
+      </div>
+    </div>
+  </ion-content>
+  <!--ion-nav-title>
+    <div class="bar bar-header bar-positive ">
+      <h1 class="title ">תפריט יישומים</h1>
+    </div>
+  </ion-nav-title-->
+
+  <!--ion-content class="pele-background">
+
+
+    <ion-list ng-if="tilesEnabled " id="new-main-menu ">
+      <ion-item ng-show="latestParent " ng-click="remenu(latestParent) ">
+        {{visibleParent}} - latest:{{latestParent}}
+      </ion-item>
+      <ion-item ng-show="app.parent===visibleParent " ng-repeat="app in feeds_categories.menuItems " ng-click="forwardToApp(app) " class="item-icon-left text-right menu-item " ng-class="app.classes ">
+        <img class="icon" ng-src="{{app.Image}} " /> {{app.DisplayName}}
+      </ion-item>
+    </ion-list>
+
+    <div ng-if="!tilesEnabled " class="apps-front-menu ">
+      <div class="menu-item " ng-repeat="category in feeds_categories.menuItems ">
+        <button ng-click="forwardToApp(category) " class="button button-large button-stable button-block text-right ">
+         <img class="menu-item-icon" ng-src="{{category.Image}} " />    {{category.DisplayName}}
+        </button>
+      </div>
+    </div>
+</ion-content-->
+  <!-- end start ng-repeat -->
+
+</ion-view>

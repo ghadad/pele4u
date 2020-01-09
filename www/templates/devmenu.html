@@ -1,0 +1,46 @@
+<ion-view cache-view="false">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">הגדרות</div>
+    </div>
+  </ion-nav-title>
+  <ion-content class="pele-background">
+
+    <div class="list">
+      <a class="item  item-icon-right" ui-sref="app.dev.network">
+          <i class="icon ion-trash-b"></i>
+      </a>
+      <a class="item item-icon-left item-icon-right" ng-click="clearLogFile()">
+      <i ng-show="checkClear" style="color:green" class="icon ion-checkmark"></i>
+      ניקוי קובץ לוגים
+        <i class="icon ion-trash-b"></i>
+      </a>
+      <a class="item  item-icon-right" ui-sref="app.dev.attach">
+        <i class="icon ion-paperclip"></i>
+          בדיקת צרופות
+      </a>
+      <a class="item  item-icon-right" ui-sref="app.dev.errors">
+        <i class="icon ion-bug"></i>
+          מחסנית שגיאות
+      </a>
+      <a class="item  item-icon-right" ui-sref="app.dev.log">
+        <i class="icon ion-bug"></i>
+          הצג קובץ לוג
+        </a>
+
+      <!--
+      <a class="item item-icon-right" ng-click="updateAppVersion()">
+        <i class="icon ion-android-download"></i>
+        <p>עדכון גרסה</p>
+      </a>
+	  -->
+      <a class="item item-icon-right" ui-sref="app.p1_appsLists">
+        <i class="icon ion-help-buoy"></i>
+        חזרה לאפליקציה
+      </a>
+
+    </div>
+
+  </ion-content>
+</ion-view>

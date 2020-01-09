@@ -1,0 +1,1 @@
+google-chrome --disable-gpu --disable-web-security --user-data-dir="/tmp" $1

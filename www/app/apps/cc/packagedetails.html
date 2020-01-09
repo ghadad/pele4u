@@ -1,0 +1,23 @@
+<ion-view cache-view="true">
+        <ion-nav-buttons side="right">
+            <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        </ion-nav-buttons>
+        <ion-nav-title>
+            <div class="bar bar-header bar-positive">
+                <div class="title">{{title}}
+                </div>
+            </div>
+        </ion-nav-title>
+            <ion-content scroll="true" padding="true" id="cc-packagedetails">
+                <button class="button-block button-positive">
+                    <h1>{{package}}</h1>
+                </button>
+                <button ng-click="promote()" ng-show="state != 'Production'" class="button button-block button-calm icon-right ion-chevron-right">
+                    Promote
+                </button>
+                <button ng-click="demote()" ng-show="state != 'Development'" class="button button-block button-calm icon-right ion-chevron-left">
+                        Demote
+                </button>
+        </ion-content>
+    </ion-view>
+    

@@ -1,0 +1,53 @@
+<ion-view cache-view="false">
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <h1 class="title">Business Link</h1>
+    </div>
+  </ion-nav-title>
+  <ion-content class="pele-background">
+    <div class="apps-front-menu text-center">
+      <button ui-sref="app.busLeads.lead({type:'T'})" class="button button-large button-stable button-block text-center">
+    פתיחת ליד עיסקי
+    </button>
+      <button ui-sref="app.busLeads.report({type:'T'})" class="button button-large button-stable button-block text-center">
+     סטאטוס לידים שפתחתי
+    </button>
+    </div>
+    <!--
+    <div class="apps-front-menu text-center">
+      <button ng-click="openModal()" class="button button-clear  button-light ion-information-circled">
+    עזרה
+    </button>
+    </div>
+    <div ng-show="stateType=='S'" ng-bind-html="info.LEAD_CLIENT_SELF_INTRO"></div>
+    <div ng-show="stateType=='T'" ng-bind-html="info.LEAD_CLIENT_TASK_INTRO"></div>
+    <div ng-show="!stateType" ng-bind-html="info.LEAD_CLIENT_GENERAL_INTRO"></div>
+  -->
+  </ion-content>
+
+  <!--script type="text/ng-template" id="leadInfo.html">
+    <ion-modal-view class="">
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">מידע נוסף</h1>
+        <button ng-click="closeModal()" class="button button-icon ion-arrow-down-b"></button>
+      </ion-header-bar>
+      <ion-content ng-show="info.LEAD_CLIENT_INFO_MODAL" ng-bind-html="info.LEAD_CLIENT_INFO_MODAL" class="pele_rtl">
+      </ion-content>
+      <ion-content ng-show="!info.LEAD_CLIENT_INFO_MODAL" padding="true">
+        <div class="card pele_rtl">
+          <div class="item item-text-wrap">
+            <h3>ליד לשגרירים </h3>
+            <p>הליד יעבור להמשך טיפול של צוות רלוונטי בפלאפון.</p>
+          </div>
+        </div>
+        <div class="card pele_rtl">
+          <div class="item item-text-wrap">
+            <h3>ליד למעקב עצמי</h3>
+            <p>הליד יישאר אצלך בלבד. הליד לא יעבור לגורם מטפל אחר בפלאפון.</p>
+          </div>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script-->
+
+</ion-view>

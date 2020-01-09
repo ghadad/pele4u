@@ -1,0 +1,39 @@
+<ion-view class="login-view auth-view" cache-view="false">
+  <ion-content scroll="false">
+    <div class="row">
+      <div class="col col-center">
+        <div class="card login-container" content-tabs tabsdata='tabsdata'>
+          <form name="login_form" class="" novalidate ng-cloak>
+            <my-tabs>
+              <my-tab title='שגיאה'>
+                <div class="list">
+                  <label class="item item-input" dir="rtl">
+                    <i class="icon icon-right ion-android-warning"></i>
+                    <input type="email" placeholder="הודעה משרת" name="pin_error" ng-model="user.error" required>
+
+                  </label>
+                </div>
+              </my-tab>
+            </my-tabs>
+            <div class="item item-body bottom-content">
+
+              <button type="submit" class="button button-positive button-block" ng-click="doRetry()">
+נשא שוב
+              </button>
+            </div>
+          </form>
+        </div>
+        <!--
+        <div class="alternative-actions">
+          <a class="forgot-password button button-small button-clear button-light" ui-sref="auth.forgot-password">
+            Forgot Password?
+          </a>
+          <a class="sign-up button button-small button-clear button-light" ui-sref="auth.signup">
+            Sign Up
+          </a>
+        </div>
+        -->
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

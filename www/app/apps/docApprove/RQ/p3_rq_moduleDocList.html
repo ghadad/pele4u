@@ -1,0 +1,34 @@
+<ion-view class="feed-entries-view" cache-view="false">
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title" id="logo">{{title}}
+        <!--<img src="img/DocApprove/logo.png" style="max-width: 100%;  height: 100%;"/>-->
+      </div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="pele-background" onload="doRefresh()">
+    <!-- Refresh to get the new posts -->
+    <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
+    </ion-refresher>
+    <div ng-if="0" class="pele-page-title pele-img-size pele-page-title-font">
+      <a class="description">{{title}}</a>
+    </div>
+
+    <label class="item item-input item-search" ng-click="searchBarCreteria()">
+
+      <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש"ng-model="searchText.text">
+      <a class="search-icon" ></a>
+    </label>
+
+    <ion-list>
+      <ion-item class="item-doc-list-3 pele_rtl" ng-repeat="chat in chats | filter:searchText.text" ng-click="forwardToDoc( '20002', chat.NOTIFICATION_ID)">
+        <img class="icon doc-redirect" ng-src="img/DocApprove/document_redirect.png">
+        <!--<h2 class="pele_rtl2" >דר.&nbsp;{{chat.REQ_NUM}}&nbsp;-&nbsp;{{chat.REQ_TOTAL_AMOUNT_DSP}}</h2>-->
+        <h2 class="pele_rtl2"><table><tr><td></td><td>&nbsp;</td><td>{{chat.REQ_NUM}}</td><td>&nbsp;</td><td>-</td><td>&nbsp;</td><td>{{chat.REQ_TOTAL_AMOUNT_DSP}}</td></tr></table></h2>
+        <h3>{{chat.REQ_DESCRIPTION}}</h3>
+        <h3>ת.&nbsp;יצירה&nbsp;{{chat.REQ_CREATION_DATE}}</h3>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

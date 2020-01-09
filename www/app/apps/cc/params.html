@@ -1,0 +1,183 @@
+<ion-view cache-view="true">
+  <ion-nav-buttons side="right">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <a class="button button-icon icon ion-ios-search" ng-click="goSearchForm()"></a>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="false" padding="true" id="phonebook_details">
+    <tab-slide-box tab="2">
+
+      <div class="tsb-icons">
+        <div class="tsb-ic-wrp">
+          <ion-scroll has-bouncing="false" class="tsb-hscroll">
+            <!--a href="#" ng-click="swalContact(contact)" class=""> <img class="fab" src="img/new_icons/purple_add_contact.png "></a-->
+            <a class="triangle-isosceles" on-finish-render="test()">
+              עץ ארגוני
+            </a>
+            <a class="triangle-isosceles" on-finish-render="test()">
+              פרטי העובד
+            </a>
+          </ion-scroll>
+        </div>
+      </div>
+      <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+          <ion-content>
+            <div style="height:{{treeHeight}}">
+              <strong class="pele_rtl text-right string-badge">{{managerInfo.orgName || 'פלאפון תקשורת'}}</strong>
+              <!--h5 class="pele_rtl text-right"> הוסף לאנשי קשר : <span class="pel-badge blue"><i ng-click="actions('members_tree',contact,contact.orgTree)" class="icon white medium ion-person-stalker"></i></span> <span class="pel-badge blue"><i
+            ng-click="actions('manager_tree',managerInfo,contact.orgTree)" class="icon white medium ion-ios-people"></i></span> </h5-->
+              <div class="pele_rtl">
+                <ul class="list pele_rtl text-right treeview level1">
+                  <li class="direct_admin tree-item" ng-class="{'noadmin':!contact.directManagerName}">
+                    <a ui-sref="app.phonebook.details({personId:contact.directManagerNumber})">
+                  <strong>  {{contact.directManagerName}}</strong>
+                  </a>
+                    <ul class="list level2">
+                      <li ng-class="{'noadmin':!contact.directManagerName}" class="{{member.relation}} tree-item" ng-show="v.personId" ng-repeat="(k,v) in tree">
+                        <div class="links" ng-class="{'last':$last}"></div>
+                        <a ui-sref="app.phonebook.details({personId:k})">
+                        <i ng-if="contact.personId==k" class="ion-android-person blue"></i>
+                        <span ng-class="{active:contact.personId==k}">
+                          {{v.lastName}},
+                          {{v.firstName}}
+                        </span>
+                      </a>
+                        <ul ng-if="v.members.length" class="list level3">
+                          <li class="{{member.relation}} tree-item" ng-repeat="member in v.members">
+                            <div class="links" ng-class="{'last':$last}"></div>
+                            <a ui-sref="app.phonebook.details({personId:member.personId})">
+                            {{member.lastName}},
+                            {{member.firstName}}
+                          </a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </ion-content>
+        </ion-slide>
+        <!------------------------------------------------------------------------------->
+        <!----------------------------- Doc Details Slide ------------------------------->
+        <!------------------------------------------------------------------------------->
+        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
+          <ion-content scroll="true" has-header="true">
+            <ul class="list pele_rtl text-right" style="height: 125%;">
+              <li class="item no-border">
+                <div class="text-center">
+                  <img class="contact-avatar" ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}" /-->
+                  <img class="no-contact-pic" ng-if="!contact.pic" ng-src="img/new_icons/blue_avatar.png" />
+                  <img ng-show="contact.birthday==today" class="contact-avatar" style="border:0;border-radius:0" ng-src="img/new_icons/happybirthday.gif">
+                </div>
+
+              </li>
+              <li class="item item-info no-border item-thumbnail-left item-avatar">
+                <div class="item-section">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                      <tr>
+                        <td class="pb label">שם פרטי:
+                        </td>
+                        <td class="info">
+                          {{contact.firstName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">שם משפחה:
+                        </td>
+                        <td class="info">
+                          {{contact.lastName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">נייד:
+                        </td>
+                        <td class="info">
+                          <a ng-href="tel://{{contact.mobilePhone}}">{{contact.mobilePhone}}</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">שלוחה:
+                        </td>
+                        <td class="info">
+                          <a ng-href="tel://{{contact.workPhone}}">{{contact.workPhone}}
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">דוא"ל:
+                        </td>
+                        <td class="info">
+                          {{contact.emailAddress}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">מיקום:
+                        </td>
+                        <td class="info">
+                          {{contact.orgLocation}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">ת.לידה:
+                        </td>
+                        <td class="info">
+                          {{contact.birthday}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_sector">
+                        <td class="pb label">חטיבה:
+                        </td>
+                        <td class="info">
+                          {{contact.sector}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_section">
+                        <td class="pb label">אגף:
+                        </td>
+                        <td class="info">
+                          {{contact.section|replace:"no sector":""}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_department">
+                        <td class="pb label">מחלקה:
+                        </td>
+                        <td class="info">
+                          {{contact.department|replace:"no sector":""}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_team">
+                        <td class="pb label">צוות
+                        </td>
+                        <td class="info">
+                          {{contact.team|replace:"no sector":""}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li class="item item-info no-border contact-icons text-center">
+                <a href="#" ng-click="swalContact($event,contact)">
+                  <img class="pel_icon medium" src="img/new_icons/purple_add_contact.png "></a>
+                <a ng-show="contact.mobilePhone" ng-href="sms://{{contact.mobilePhone}}">
+                  <img class="pel_icon medium" src="img/new_icons/blue_sms.png "></a>
+                <a href="#" ng-click="shareViaEmail(contact.emailAddress)">
+                  <img class="pel_icon medium" src="img/new_icons/red_email.png "></a>
+                <a ng-show="contact.workPhone" ng-href="tel:{{contact.workPhone}}"><img class=" pel_icon medium " src="img/new_icons/gray_phone.png"></a>
+                <a ng-show="contact.mobilePhone" ng-href="tel:{{contact.mobilePhone}}">
+                  <img class="pel_icon medium" src="img/new_icons/green_mobile.png"></a>
+                <!--div class="item-section"> <a href="#" ng-click="shareViaEmail(contact.emailAddress)"> e-mail</a> <br \> <a ng-href="sms:{{contact.mobilePhone}}"> <img class="pel_icon medium" src="img/sms.png"></a> <br \> <a href="#"
+                ng-click="shareViaSMS(contact.mobilePhone)"> ng-click <img class=" pel_icon medium " src="img/sms.png "></a> <br \> <a ng-href="tel:{{contact.mobilePhone}} "> <img class="pel_icon medium " src="img/smartphone.png "></a> <br \> <a href="#"
+                ng-click="shareViaWhatsAppToReceiver(contact.mobilePhone)">iver : :<img class="pel_icon medium " src="img/whatsapp.png "></a> <br \> <a href="#" ng-click="shareViaWhatsApp()"> no receiver : <img class="pel_icon medium" src="img/sms.png"></a> </div-->
+              </li>
+            </ul>
+          </ion-content>
+        </ion-slide>
+
+      </ion-slide-box>
+
+    </tab-slide-box>
+  </ion-content>
+</ion-view>

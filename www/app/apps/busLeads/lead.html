@@ -1,0 +1,136 @@
+<ion-view cache-view="false">
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">פתיחת ליד עסקי
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content 
+    scroll="true" 
+    style="height: calc(100% - 100px);" 
+    id="new_lead" 
+    padding="true" 
+    delegate-handle="mainContent"
+    has-footer="true"
+    >
+    <div ng-show="leadSuccess" class="lead-success text-center">
+      <img src="img/new_icons/vi.png">
+      <div ng-bind-html="successMessage"></div>
+      <a class="button button-success" ng-click="goToMenu()">OK</a>
+
+    </div>
+    <ng-form ng-show="!leadSuccess" role="form" name="forms.leadForm" novalidate autocomplete="off">
+      <div class="list lead-form pele_rtl text-right">
+          <label class="item no-border item-input">
+              <span class="input-label">ת.ז עובד</span>
+              <input type="tel" name="EMPLOYEE_ID" ng-model="lead.EMPLOYEE_ID" disabled>
+            </label>
+        <label class="item no-border item-input">
+              <span class="input-label">* שם פרטי - לקוח </span>
+              <input type="text" name="FIRST_NAME"  ng-model="lead.FIRST_NAME" required 
+              ng-pattern=/^[\wא-ת]+$/
+              autocomplete="off">
+            </label>
+        <label ng-show="forms.leadForm.FIRST_NAME.$error.required && (forms.leadForm.FIRST_NAME.$touched || submitted)" class="item no-border input-error">
+              יש להזין שם פרטי
+        </label>
+        <label ng-show="forms.leadForm.FIRST_NAME.$error.pattern && (forms.leadForm.FIRST_NAME.$touched || submitted)" class="item no-border input-error">
+          שם פרטי לא חוקי
+        </label>
+
+        <label class="item no-border item-input">
+                <span class="input-label">* שם משפחה - לקוח </span>
+                <input type="text"  name="LAST_NAME"  ng-model="lead.LAST_NAME" required
+                ng-pattern=/^[\wא-ת]+$/
+                autocomplete="off">
+              </label>
+          <label ng-show="forms.leadForm.LAST_NAME.$error.required && (forms.leadForm.LAST_NAME.$touched || submitted)" class="item no-border input-error">
+            יש להזין שם משפחה
+          </label>
+          <label ng-show="forms.leadForm.LAST_NAME.$error.pattern && (forms.leadForm.LAST_NAME.$touched || submitted)" class="item no-border input-error">
+            שם משפחה לא חוקי
+          </label>
+        <label class="item no-border item-input">
+          <span class="input-label">* כמות מנויים</span>
+              <select ng-model="lead.SUBSCRIBERS" ng-options="subs for subs in subRange" required>
+                <option value="">* בחר כמות מנויים</option>
+              </select>
+            </label>
+            <label ng-show="!lead.SUBSCRIBERS &&  submitted" class="item no-border input-error">
+              יש לבחור כמות מנויים
+           </label>
+
+        <label class="item no-border item-input item-text-wrap">
+                <span class="input-label">* מספר טלפון לחזרה</span>
+                <input type="tel"  name="PHONE_NO_1"  ng-model="lead.PHONE_NO_1" required ng-pattern="/^05\d-?[0-9]{1}-?[0-9]{2}-?[0-9]{4}$/" autocomplete="off">
+              </label>
+        <label ng-show="forms.leadForm.PHONE_NO_1.$invalid &&  (forms.leadForm.PHONE_NO_1.$touched  || forms.leadForm.PHONE_NO_1.$dirty  || submitted)" class="item no-border input-error">
+                יש להזין מס' טלפון תקין
+             </label>
+
+        <label class="item no-border item-input item-text-wrap">
+                <span class="input-label"> מספר טלפון נוסף לחזרה</span>
+                <input type="tel"  name="PHONE_NO_2"  ng-model="lead.PHONE_NO_2" ng-pattern="/^05\d-?[0-9]{1}-?[0-9]{2}-?[0-9]{4}$/" autocomplete="off">
+            </label>
+        <label ng-show="forms.leadForm.PHONE_NO_2.$invalid &&  
+        (forms.leadForm.PHONE_NO_2.$touched  || forms.leadForm.PHONE_NO_2.$dirty  || submitted)" 
+        class="item no-border input-error">
+              יש להזין מס' טלפון תקין
+           </label>
+
+        <label class="item no-border item-input">
+        <span class="input-label">* תפקיד איש קשר</span>
+            <select ng-model="lead.CONTACT_TITLE" ng-options="contact for contact in contacts" required>
+              <option value="">* בחר תפקיד</option>
+            </select>
+          </label>
+          <label ng-show="!lead.CONTACT_TITLE &&  submitted" class="item no-border input-error">
+            יש לבחור תפקיד איש קשר
+         </label>
+        <label class="item no-border item-input">
+            <span class="input-label">* עיר הלקוח</span>
+            <input type="text"  name="CITY"  ng-model="lead.CITY" 
+            required
+            ng-pattern=/^[\wא-ת\s]+$/
+            autocomplete="off">
+          </label>
+        <label ng-show="forms.leadForm.CITY.$invalid && (forms.leadForm.CITY.$touched || submitted)" class="item no-border input-error">
+                  יש להזין עיר
+              </label>
+        <div class="margin-top-10 margin-bottom-15"></div>
+        <ng-include style="background:#CCC" src="'app/apps/leads/extra.html'"></ng-include>
+        <label class="item no-border item-input item-text-wrap margin-top-10">
+              <span class="input-label">פרטים נוספים</span>
+            </label>
+        <label class="item no-border item-input item-text-wrap">
+            <textarea class="ion-item item item-text-wrap" ng-model="lead.NOTE"></textarea>
+        </label>
+        <div class="margin-top-10 margin-bottom-15"></div>
+        <label class="item no-border item-input item-text-wrap margin-top-10">
+            <span class="input-label">פרטים נוספים</span>
+          </label>
+          <a href="https://msso.pelephone.co.il/mobileAppGw/public/docs/takanon_shagririm.pdf">
+          קישור</a>
+          <label class="item no-border item-input">
+              <span class="input-label">* קראתי את התקנון</span>
+              <label class="toggle">
+                <input type="checkbox" name="REGULATIONS" ng-model="lead.REGULATIONS">
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+            </label>
+          <label ng-show="!lead.REGULATIONS && submitted" class="item no-border input-error">
+                    יש לקרוא את התקנון
+          </label>
+          <div style="height: 4rem"></div>
+      </div>
+    </ng-form>
+  </ion-content>
+
+  <div ng-show="!leadSuccess" style="background:#01579B" class="lead-footer bar bar-footer bar-positive">
+    <a id="buttun-send" class="button   button-block icon-right ion-paper-airplane" ng-disabled="disablePost" ng-click="submit()">
+    </a>
+  </div>
+
+</ion-view>

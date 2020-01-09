@@ -1,0 +1,47 @@
+<ion-view view-title="Search">
+  <ion-nav-title>
+    <div class="bar bar-header bar-light">
+      <div class="title" id="logo">
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content>
+    <br>
+    <br>
+    <div class="list">
+      <label class="item item-input">
+        <button class="button button-block button-positive" ng-click="checkFile()">
+          checkFile() = {{CHECK_FILE}}
+        </button>
+      </label>
+
+      <label class="item item-input">
+        <button class="button button-block button-assertive" ng-click="createFile()">
+          createFile() = {{CREATE_FILE}}
+        </button>
+      </label>
+
+      <label class="item item-input">
+        <button class="button button-block button-assertive" ng-click="removeFile()">
+          removeFile() = {{REMOVE_FILE}}
+        </button>
+      </label>
+
+      <label class="item item-input">
+        <button class="button button-block button-assertive" ng-click="writeFile()">
+          writeFile() = {{WRITE_FILE}}
+        </button>
+      </label>
+      <label class="item item-input">
+        <textarea rows="8" ng-model="FILE_TEXT.note" type="text">
+        </textarea>
+      </label>
+
+      <label class="item item-input">
+        <button class="button button-block button-assertive" ng-click="readAsText()">
+          readAsText() = {{READ_AS_TEXT}}
+        </button>
+      </label>
+    </div>
+  </ion-content>
+</ion-view>

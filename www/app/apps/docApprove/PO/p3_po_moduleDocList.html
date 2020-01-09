@@ -1,0 +1,54 @@
+<ion-view class="feed-entries-view " cache-view="false">
+ 
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <h1 class="title">אישור הזמנת רכש</h1>
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="pele-background" onload="doRefresh()">
+    <!-- Refresh to get the new posts -->
+    <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <div ng-if="0" class="list list-inset list-item-search">
+      <label class="item item-input item-search-new">
+      <input type="text" placeholder="חיפוש" ng-model="searchText.text" class="" ng-change="searchBarCreteria()">
+        <i class="icon pel_icon ion-search placeholder-icon"></i>
+      </input>
+    </label>
+    </div>
+    <label class="item item-input item-search" ng-click="searchBarCreteria()">
+
+     <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש" ng-model="searchText.text">
+     <a class="search-icon" ></a>
+   </label>
+
+    <ion-list>
+      <div ng-repeat="chat in chats">
+        <ion-item class="item-stable" ng-click="toggleGroup(chat.ORG_NAME)" ng-class="{active: isGroupShown(chat.ORG_NAME)}">
+          <ion-icon ng-class="isGroupShown(chat.ORG_NAME) ? 'ion-arrow-left-b' : 'ion-arrow-down-b'"></ion-icon>
+          <!--i class="pel_icon icon" ng-class="isGroupShown(chat.ORG_NAME) ? 'icon-expand' : 'icon-collapse'"></i-->
+          <span class="item-title">{{chat.ORG_NAME}}&nbsp;
+          <span class="pel-badge light-blue">{{chat.ORDER_QTY}}</span>
+        </ion-item>
+
+        <ion-item class="item-doc-list" ng-repeat="item in chat.ORDER_DETAILS.ORDER_DETAILS_ROW | filter:searchText.text" ng-show="isGroupShown(chat.ORG_NAME)" ng-click="forwardToDoc(item.DOC_ID, item.PO_HEADER_ID , chat.ORG_NAME)">
+          <img class="doc-redirect" ng-src="img/DocApprove/document_redirect.png">
+          <div style="margin-top: -3%;"><strong><span ng-show="item.EXPLICITLY" class="string-badge-aquamarine">{{item.EXPLICITLY}}</span></strong></div>
+          <div>
+            <table class="mix-alpha-numeric-table">
+              <tr>
+                <td>{{item.PO_ORDER}} : </td>
+                <td>{{item.PO_AMOUNT}}</td>
+                <td>{{item.CURRENCY}}</td>
+              </tr>
+            </table>
+          </div>
+          <div><strong>{{item.VENDOR_NAME}}</strong></div>
+        </ion-item>
+
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

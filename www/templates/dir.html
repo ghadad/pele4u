@@ -1,0 +1,39 @@
+<ion-view view-title="Dir">
+  <ion-nav-title>
+    <div class="bar bar-header bar-light">
+      <div class="title" id="logo">
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content>
+    <br>
+    <br>
+    <div class="list">
+      <label class="item item-input">
+      </label>
+      <label class="item item-input">
+        <button class="button button-block button-positive" ng-click="getFreeDiskSpace()">
+          getFreeDiskSpace() = {{FREE_DISK_SPACE}}
+        </button>
+      </label>
+
+      <label class="item item-input">
+        <button class="button button-block button-positive" ng-click="checkDir()">
+          checkDir() = {{CHECK_DIR}}
+        </button>
+      </label>
+
+      <label class="item item-input">
+        <button class="button button-block button-positive" ng-click="createDir()">
+          createDir() = {{CREATE_DIR}}
+        </button>
+      </label>
+
+      <label class="item item-input">
+        <button class="button button-block button-positive" ng-click="removeDir()">
+          removeDir() = {{REMOVE_DIR}}
+        </button>
+      </label>
+    </div>
+  </ion-content>
+</ion-view>

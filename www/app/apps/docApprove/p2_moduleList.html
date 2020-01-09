@@ -1,0 +1,27 @@
+<ion-view cache-view="false">
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <h1 class="title">בחירת טפסים לאישור</h1>
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="pele-background">
+    <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
+    </ion-refresher>
+    <div ng-if="0" class="pele-page-title pele-img-size pele-page-title-font">
+      <a class="description">בחירת טפסים לאישור</a>
+    </div>
+
+    <div class="row row-bottom">
+      <div class="col"></div>
+    </div>
+    <div ng-if="1" class="apps-front-menu">
+      <div class="menu-item" ng-class="{reduce:category_sources.length >= 5,reduce2 : category_sources.length >=7}" ng-repeat="source in category_sources">
+        <button ng-click="onClick(source.MODULE_NAME ,source.DOCUMENT_QTY )" class="button button-large button-stable button-block item-icon-left text-right">
+      {{source.MODULE_DESC}} <span class="pel-badge blue">{{source.DOCUMENT_QTY}}</span>
+
+      </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,72 @@
+<ng-form name="attributes">
+
+  <div ng-repeat="e in extraSchema">
+
+    <div ng-show="e.type=='link'" class="item no-border item-input item-text-wrap">
+      <span class="input-label">{{e.label}} </span>
+      <a href="#" ng-click="openLink(e)">קישור</a>
+    </div>
+    <div ng-if="e.type=='html'" class="item no-border item-input item-text-wrap">
+      <span ng-show="e.label" class="input-label"> {{e.label}} </span>
+      <div ng-bind-html="trust(e.html)"></div>
+    </div>
+    <div ng-if="e.type=='const'" class="item no-border item-input item-text-wrap">
+      <span ng-show="e.label" class="input-label"> {{e.label}} </span>
+      <div ng-bind-html="trust(lead.ATTRIBUTES[e.attribute_name])"></div>
+    </div>
+    <div ng-if="e.type=='upload' && e.label" class="item no-border item-input item-text-wrap">
+      <span ng-bind-html="trust(e.label)"></span>
+    </div>
+    <ng-switch on="e.type">
+      <label class="item no-border item-input item-text-wrap margin-top-10">
+      <span  ng-show="e.inputFieldInd" class="input-label"><span ng-show="e.required">*</span> {{e.label}} </span>
+      <input name="{{e.attribute_name}}" ng-switch-when="text" type="text" ng-model="lead.ATTRIBUTES[e.attribute_name]" ng-required="e.required" ng-disabled="e.disabled">
+      <input date-input  ng-switch-when="date" name="{{e.attribute_name}}" type="date"  ng-model="lead.ATTRIBUTES[e.attribute_name]"  ng-required="e.required" min="{{e.computedMin}}" max="{{e.computedMax}}" ng-disabled="e.disabled">
+      <input name="{{e.attribute_name}}" ng-switch-when="number" type="number" ng-model="lead.ATTRIBUTES[e.attribute_name]"  ng-required="e.required">
+      <input name="{{e.attribute_name}}" ng-switch-when="int" type="number" ng-model="lead.ATTRIBUTES[e.attribute_name]"  min="{{e.min}}" max="{{e.max}}" step="1" ng-min="e.min" ng-max="e.max" ng-required="e.required">
+      <select class="select" name="{{e.attribute_name}}" ng-switch-when="select" class="form-control" ng-model="lead.ATTRIBUTES[e.attribute_name]" ng-required="e.required">
+         <option ng-if="option.k != undefined" ng-repeat="option in e.options" value="{{option.k}}">{{option.v}}</option>
+         <option ng-if="option.k == undefined" ng-repeat="option in e.options" value="{{option}}">{{option}}</option>
+			</select>
+      <label ng-switch-when="checkbox" class="toggle toggle-positive">
+             <input type="checkbox" name="{{e.attribute_name}}" ng-model="lead.ATTRIBUTES[e.attribute_name]" ng-true-value="{{e.trueValue}}" ng-false-value="{{e.falseValue}}" ng-required="e.required">
+               <div class="track">
+                 <div class="handle"></div>
+           </div>
+     </label>
+      <img ng-if="e.service && e.progress" src="img/spinners/little_spin.svg">
+      </label>
+      <label ng-switch-when="textarea" class="item no-border item-input item-text-wrap margin-top-10">
+        <textarea name="{{e.attribute_name}}"  rows="e.rows" cols="e.cols" ng-model="lead.ATTRIBUTES[e.attribute_name]" ng-required="e.required"></textarea>
+        <img ng-if="e.service && e.progress" src="img/spinners/little_spin.svg">
+    </label>
+      <!--label ng-if="e.attribute_name" ng-show="leadForm.attributes[e.attribute_name].$invalid && (leadForm.attributes[e.attribute_name].$dirty || submitted)" class="item no-border input-error">
+      ערך לא תקין
+    </label-->
+      <div ng-if="e.service && e.serviceStatus==='error'">
+        <label class="item no-border input-error pele_rtl" ng-click="setDynamicValidation(extraSchema)">
+          לחצו כאן לנסות שוב
+          <i class="icon pel_icon icon-md  ion-refresh"></i>
+        </label>
+      </div>
+      <div ng-if="e.attribute_name" ng-show="forms.leadForm.attributes[e.attribute_name].$invalid && submitted">
+        <label class="item no-border input-error" ng-if="e.message">{{e.message}}</label>
+        <div ng-if="!e.message">
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.required">יש להזין ערך</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.min">ערך נמוך מדי</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.max">ערך גבוה מדי</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.email">אימייל לא תקין</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.maxlength">אורך גדול מדי</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.minlength">אורך קטן מדי</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.number">יש להזין ספרות בלבד</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.pattern">הערך שהזנתם אינו תקין</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.url">כתובת אינה תקינה</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.date">תאריך אינו תקין</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.time">השעה אינה תקינה</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.week">ערך השבוע אינו תקין</label>
+          <label class="item no-border input-error" ng-if="forms.leadForm.attributes[e.attribute_name].$error.month">ערך החודש אינו תקין</label>
+        </div>
+      </div>
+    </ng-switch>
+  </div>
+</ng-form>

@@ -1,0 +1,28 @@
+<ion-view  cache-view="false">
+  <ion-nav-buttons side="right">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">
+        Errors stack
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content>
+    <ion-list>
+      <ion-item ng-show="!errors.length">
+        <strong>Errors Stack is empty         <i class="icon ion-android-happy"></i> </strong>
+      </ion-item>
+      <ion-item class="item item-body" ng-repeat="e in errors">
+        <div><span class="pel-badge">{{$index+1}}</span> Display error page :{{e.redirect}}</div>
+        <div><strong>App state :</strong> {{e.state}} </div>
+        <div><strong>Category :</strong> {{e.category|| "No network"}} </div>
+        <div><strong>Network :</strong> {{e.network|| "No network"}} </div>
+        <div><strong>Created :</strong> {{e.created|date :'dd/M/yyyy HH:mm'}}</div>
+        <div><strong>Description :</strong> {{e.description}}</div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

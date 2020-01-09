@@ -1,0 +1,177 @@
+<ion-view cache-view="false">
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="true" style="height: calc(100% - 100px);" id="new_lead" padding="true" delegate-handle="mainContent">
+    <div ng-show="leadSuccess" class="lead-success text-center">
+      <img src="img/new_icons/vi.png">
+      <div ng-bind-html="successMessage"></div>
+    </div>
+    <ng-form ng-show="!leadSuccess" role="form" name="forms.leadForm" novalidate autocomplete="off">
+      <fancy-select class="fancy-select text-right" header-text="בחרו סוג ליד" items="typesByFormType" value="lead.LEAD_TYPE" value-property="TYPE" text-property="DESCRIPTION" allow-empty='false' text="בחרו סוג ליד <i class='icon ion-arrow-down-b'></i>" not-img-class="hidden"
+        note-text=" : סוג ליד " value-changed="onValueChanged(value)" get-custom-text="getCustomText(value)" note-img-class="icon ion-android-checkmark-circle" item-class="text-right pele_rtl">
+      </fancy-select>
+      <label ng-show="submitted && !lead.LEAD_TYPE" class="item no-border input-error text-right">
+          נא בחר סוג ליד
+      </label>
+      <label ng-show="savedAttributes['lead_status']" class="pele_rtl">
+      <h3 class="lead-status">סטאטוס: {{savedAttributes['lead_status']}} </h3>
+      </label>
+      <div class="list lead-form pele_rtl text-right">
+        <label class="item no-border item-input">
+              <span class="input-label">* שם פרטי</span>
+              <input type="text" name="FIRST_NAME"  ng-model="lead.FIRST_NAME" required autocomplete="off">
+            </label>
+        <label ng-show="forms.leadForm.FIRST_NAME.$invalid && (forms.leadForm.FIRST_NAME.$dirty || submitted)" class="item no-border input-error">
+              יש להזין שם פרטי
+              </label>
+
+        <label class="item no-border item-input">
+                <span class="input-label">שם משפחה</span>
+                <input type="text"  name="LAST_NAME"  ng-model="lead.LAST_NAME" autocomplete="off">
+              </label>
+        <label ng-show="forms.leadForm.LAST_NAME.$invalid && (forms.leadForm.LAST_NAME.$dirty || submitted)" class="item no-border input-error">
+                  יש להזין שם משפחה
+              </label>
+
+        <label class="item no-border item-input item-text-wrap">
+                <span class="input-label">* מספר סלולרי לחזרה</span>
+                <input type="tel"  name="PHONE_NO_1"  ng-model="lead.PHONE_NO_1" required ng-pattern="/^05\d-?[0-9]{1}-?[0-9]{2}-?[0-9]{4}$/" autocomplete="off">
+              </label>
+        <label ng-show="forms.leadForm.PHONE_NO_1.$invalid &&  (forms.leadForm.PHONE_NO_1.$dirty  || submitted)" class="item no-border input-error">
+                יש להזין מס' סלולארי תקין
+             </label>
+
+        <label class="item no-border item-input item-text-wrap">
+                <span class="input-label">מספר טלפון נוסף</span>
+                <input type="tel" name="PHONE_NO_2" ng-model="lead.PHONE_NO_2" ng-pattern="/^05\d-?[0-9]{1}-?[0-9]{2}-?[0-9]{4}$|^0[0-9]{2}-?[2-9]{1}-?[0-9]{2}-?[0-9]{3,4}$/" autocomplete="off">
+              </label>
+        <label ng-show="forms.leadForm.PHONE_NO_2.$invalid && (forms.leadForm.PHONE_NO_2.$dirty  || submitted)" class="item no-border  input-error">
+                יש להזין מס' נוסף תקין
+              </label>
+        <label class="item no-border item-input">
+              <span class="input-label">ת.ז לקוח</span>
+              <input type="tel" name="CUSTOMER_ID" ng-model="lead.CUSTOMER_ID" ng-pattern="/^[0-9]{8,9}$/" autocomplete="off">
+            </label>
+        <label ng-show="forms.leadForm.CUSTOMER_ID.$invalid && (forms.leadForm.CUSTOMER_ID.$dirty  || submitted)" class="item no-border  input-error">
+              יש להזין מס' תקין'
+              </label>
+        <label class="no-border margin-top-10">
+            <table style="width:100%" class="table margin-top-5 list">
+              <tr>
+                <td class="text-right"> <span class="label">  &nbsp; שעות רצויות לחזרה </span> </td>
+                <td class="text-center">
+                  <div class="item item-input no-border">
+                  <select ng-change="recreateEndHour()" name="from_hour" class="form-control select" ng-model="lead.from_hour"
+                  ng-options="option for option in from_hour_range"  ng-selected="option==lead.from_hour" />
+                      <!--option ng-repeat="option in from_hour_range" ng-selected="option==lead.from_hour" value="{{option}}">{{option}}</option-->
+                  </select>
+                </div>
+                </td>
+                <td class="text-center" style="width:10%;"> - </td>
+                <td class="text-left">
+                  <div class="item item-input no-border">
+                  <select ng-click="recreateEndHour()" name="to_hour" class="form-control select" ng-model="lead.to_hour"
+                  ng-options="option for option in to_hour_range"  ng-selected="option==lead.to_hour" />
+                </div>
+                </td>
+              </tr>
+            </table>
+            </label>
+        <!--label ng-show="(forms.leadForm.to_hour.$invalid || forms.leadForm.from_hour.$invalid) &&  (forms.leadForm.from_hour.$dirty  || forms.leadForm.to_hour.$dirty || submitted)" class="item no-border input-error">
+              נא סמנו שעות רצויות  לחזרה
+           </label-->
+
+        <!--label class="item no-border item-input item-text-wrap">
+          <table style="width:100%" class="table margin-top-10 ">
+            <tr>
+              <td style="width:70%" class="text-right">  <span class="label">מאשר קבלת עדכונים על מבצעים והטבות</span></td>
+              <td class="text-left">
+                <select class="select" name="PROACTIVE_IND" class="form-control" ng-model="lead.PROACTIVE_IND" required />
+                        <option value="">אנא בחר </option>
+                        <option value="Y">כן</option>
+                        <option value="N">לא</option>
+                    </select></td>
+            </tr>
+          </table>
+
+
+        </label>
+        <label ng-show="forms.leadForm.PROACTIVE_IND.$invalid &&  (forms.leadForm.PROACTIVE_IND.$dirty  || submitted)" class="item no-border input-error ">
+             נא סמנו
+       </label-->
+        <div class="margin-top-10 margin-bottom-15"></div>
+        <ng-include style="background:#CCC" src="'app/apps/leads/extra.html'"></ng-include>
+        <label class="item no-border item-input item-text-wrap margin-top-10">
+              <span class="input-label">פרטי הבקשה</span>
+            </label>
+        <label class="item no-border item-input item-text-wrap">
+            <textarea class="ion-item item item-text-wrap" ng-model="lead.NOTE"></textarea>
+        </label>
+      </div>
+    </ng-form>
+  </ion-content>
+
+  <div ng-show="!leadSuccess" style="background:#01579B" class="lead-footer bar bar-footer bar-positive">
+    <a id="buttun-send" class="button   button-block icon-right ion-paper-airplane" ng-disabled="disablePost" ng-click="submit()">
+       <span ng-if="storedLead">שמור</span>
+      <span ng-if="!storedLead">שלח</span>&nbsp;
+    </a>
+    <a id="buttun-files" class="button   button-block icon-right ion-paperclip" ng-if="uploadExists" ng-click="openModal()"> <span class="pel-badge">{{files.length||lead.files ||"0"}}</span> צרף מסמכים &nbsp;</a>
+    <a id="buttun-actions" class="button  button-block button-stable icon-right ion-android-list" ng-show="storedLead" ng-click="actionSheet()"> פעולות נוספות &nbsp;</a>
+  </div>
+
+  <script id="upload.html" type="text/ng-template">
+    <ion-modal-view class="pele-background" cache-view="false">
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">צירוף קבצים לליד</h1>
+        <button ng-click="closeModal()" class="button button-icon ion-arrow-down-b"></button>
+      </ion-header-bar>
+      <ion-content scroll="true" delegate-handle="modalContent">
+        <ng-form role="form" name="attachForm">
+          <div style="margin-top:20px" class="row text-center">
+            <div class="col col-50">
+              <a class="text-center white" ng-click="takePic('CAMERA')"><i class="icon ion-ios-camera-outline icon-lg icon-top"></i>מצלמה</a>
+            </div>
+            <div class="col col-50">
+              <a class="text-center white" ng-click="takePic('LIBRARY')"><i class="icon ion-images  icon-lg icon-top"></i> גלריה</a>
+            </div>
+          </div>
+        </ng-form>
+        <div ng-if="imageUri" nstyle="margin:10px" class="text-center">
+          <div class="">
+            <div class="preview-container">
+              <img style="" ng-src="{{imageUri}}" class="upload thumb">
+            </div>
+          </div>
+          <div style="margin:10px 40px 10px 40px">
+            <div class="image-title item item-input-inset">
+              <label class="item-input-wrapper">
+                <input type="text" placeholder="תיאור קצר" ng-model="imageTitle">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!--button class="button button-stable" ng-show="imageUri">Remove</button-->
+        <div ng-show="imageUri" style="margin-top:20px" class="row text-center">
+          <div class="col">
+            <a class="text-center white" ng-click="uploadFile()"><i class="icon ion-paper-airplane icon-lg icon-top"></i> שלח</a>
+          </div>
+        </div>
+        <div ng-show="uploadState.success" class="upload-success text-center">
+          <img src="img/new_icons/vi.png">
+          <h3>הקובץ הועלה בהצלחה </h3>
+          <h4>העלו קבצים נוספים או חזרו לטופס הליד</h4>
+        </div>
+        <div ng-show="uploadState.error" class="text-center">
+          <h4 style="color:red">העלאת הקובץ נכשלה - נא נסו שוב</h4>
+        </div>
+      </ion-content>
+
+    </ion-modal-view>
+  </script>
+</ion-view>

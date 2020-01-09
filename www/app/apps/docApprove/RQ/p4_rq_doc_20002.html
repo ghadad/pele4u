@@ -1,0 +1,332 @@
+<ion-view class="feed-entries-view">
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title" id="logo">
+        דרישת רכש {{REQ_NUM}}
+      </div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content scroll="false" onload="doRefresh()">
+    <tab-slide-box>
+      <div class="tsb-icons">
+        <div class="tsb-ic-wrp">
+          <ion-scroll has-bouncing="false" scrollX="false" direction="x" scrollY="false" class="tsb-hscroll">
+            <a class="triangle-isosceles {{tab.icon}}" ng-repeat="tab in tabs" on-finish-render="test()">
+              {{tab.text}}
+            </a>
+          </ion-scroll>
+        </div>
+      </div>
+      <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+
+        <!-------------------------------------------------------------------------------->
+        <!----------------------------- Approve List Slide ------------------------------->
+        <!-------------------------------------------------------------------------------->
+        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+          <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <div ng-repeat="detail in ACTION_HISTORY" type="item-text-wrap" dir="RTL">
+              <!--<div class="item item-divider "> -->
+              <a class="item item-divider item-icon-right pele-item-icon-left" ng-hide="pelHideShow2( detail.DISPLAY_FLAG )" ng-click="detail.SHOW_FLAG = !detail.SHOW_FLAG; detail.PUSH_COUNT = PUSH_COUNT +1; ">
+                <!-- <i class="icon icon-left {{getApproveListActionIcon(detail.ACTION_CODE)}}"></i> -->
+                <!--<i ng-class="detail.SHOW_FLAG ? 'icon-collapse' : 'icon-expand'"></i>-->
+                <i ng-class="showIconCollapseInAcctionHistory(detail.SHOW_FLAG , detail.HIDEN_FLAG)"></i>
+                <p class="text-right">{{detail.SEQUENCE_NUM}}. {{detail.EMPLOYEE_NAME}}</p>
+                <i class="icon icon-left {{getApproveListActionIcon(detail.ACTION_CODE , detail.CHAR_ACTION_DATE , detail.NOTE)}}"></i>
+              </a>
+
+              <label class="pele-item" ng-hide="hidenAcctionHistoryDetails(detail.SHOW_FLAG, detail.HIDEN_FLAG, detail.PUSH_COUNT , detail.NOTE)">
+                <div class="row">
+                  <div class="col text-right">פעולה:</div>
+                  <div class="col col-75 text-right">{{detail.ACTION_CODE_DISP}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col text-right">תאריך:</div>
+                  <div class="col col-75 text-right">{{detail.CHAR_ACTION_DATE}}</div>
+                </div>
+
+                <div class="row">
+                  <!--<textarea class="col col-75 text-right" readonly="true">{{detail.NOTE}}</textarea>-->
+                  <div class="col text-right">הערות:</div>
+                  <div class="col col-75 pele-item item-text-wrap text-right">
+                    {{detail.NOTE}}
+                  </div>
+                </div>
+              </label>
+            </div>
+          </ion-scroll>
+        </ion-slide>
+        <!------------------------------------------------------------------------------->
+        <!----------------------------- Doc Details Slide ------------------------------->
+        <!------------------------------------------------------------------------------->
+        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
+          <ion-scroll scrollX="false" style="height:80%" delegate-handle="slide1Scroll">
+            <ul class="list">
+              <div type="item-text-wrap" ng-click="PO_DETAILS_SHOW = !PO_DETAILS_SHOW">
+                <a class="item item-divider item-icon-left item-icon-right ">
+                  <h2 class="text-right pele_rtl">פרטי דרישה</h2>
+                  <i class="icon ion-clipboard"></i>
+                </a>
+              </div>
+              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
+                <div class="col text-right pele_rtl"><b>{{REQ_DESCRIPTION_2}}</b></div>
+              </div>
+              <div class="row" ng-show="PO_DETAILS_SHOW">
+                <div class="col text-right pele_rtl"><b>&nbsp</b></div>
+              </div>
+              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
+                <div class="col col-25 text-right pele_rtl"></div>
+                <div class="col col-25 text-right pele_rtl">{{REQ_FUNCTIONAL_CURRENCY_4}}</div>
+                <div class="col col-25 text-right pele_rtl">{{REQ_AMOUNT_DSP_3}}</div>
+                <div class="col col-25 text-right pele_rtl">
+                  <p class="under">סה"כ</p>
+                </div>
+              </div>
+              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{REQ_DESC_5}}</div>
+                <div class="col col-25 text-right pele_rtl">
+                  <p class="under">מקים דרישה</p>
+                </div>
+              </div>
+              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{REQ_CREATION_DATE_6}}</div>
+                <div class="col col-35 text-right pele_rtl">
+                  <p class="under">תאריך יצירה</p>
+                </div>
+              </div>
+              <!--
+              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl under" style="color:blue" ng-click="forwardToINI()"><a class="button icon-left ion-chevron-left button-calm">{{INI_DOC_INIT_ID}}</a></div>
+                <div class="col col-35 text-right pele_rtl"><p class="under" ><b>מסמך יזום</b></p></div>
+              </div>
+              -->
+
+              <div type="item-text-wrap" ng-show="PO_DETAILS_SHOW" ng-click="forwardToINI()">
+                <a class="item item-divider item-icon-right pele-item-icon-left">
+                  <i class="icon-collapse"></i>
+                  <h2 class="text-right pele_rtl"><table><tr><td class="under">מסמך יזום</td><td class="under">&nbsp</td><td class="under">:</td><td class="under">&nbsp</td><td class="under">{{INI_DOC_INIT_ID_VIEW}}</td></tr></table></h2>
+                  <i class="icon ion-document-text"></i>
+                </a>
+              </div>
+
+              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
+                <table>
+                  <tr>
+                    <td>&nbsp</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!------------------------------------------------>
+              <!--                   Req Lines
+              <!------------------------------------------------>
+              <div type="item-text-wrap" ng-click="PO_EXPLAIN_SHOW = !PO_EXPLAIN_SHOW">
+                <a class="item item-divider item-icon-right ">
+                  <h2 class="text-right pele_rtl under">שורות דרישה</h2>
+                  <i class="icon ion-clipboard"></i>
+                </a>
+              </div>
+
+              <div ng-repeat="ReqLinesInd in REQ_LINES_CUR" ng-show="PO_EXPLAIN_SHOW">
+                <div class="card">
+                  <div class="item item-divider text-right pele_rtl pele-item-icon-left" ng-click="ReqLinesInd.REQ_LINE_SHOW_FLAG = !ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <i ng-class="ReqLinesInd.REQ_LINE_SHOW_FLAG ? 'icon-expand' : 'icon-collapse'"></i>
+                    <i class="text-right pele_rtl under">
+                        <table>
+                          <tr>
+                            <td>שורה</td>
+                            <td>&nbsp</td>
+                            <td>{{ReqLinesInd.REQ_LINE_NUM_7}}</td>
+                            <td>&nbsp</td>
+                            <td>:</td>
+                            <td>&nbsp</td>
+                            <td>{{ReqLinesInd.REQ_LINE_DESC_8}}</td>
+                          </tr>
+                        </table>
+                      </i>
+                  </div>
+
+                  <!-- <div class="row " ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                      <div class="col col-75 text-right pele_rtl">{{ReqLinesInd.REQ_LINE_DESC_8}}</div>
+                      <div class="col col-25 text-right pele_rtl"><p class="under">פריט</p></div>
+                    </div> -->
+
+                  <div class="row " ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <div class="col col-75 text-right pele_rtl">{{ReqLinesInd.REQ_LINE_DESC_9}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">פריט</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <div class="col col-17 text-right pele_rtl"></div>
+                    <div class="col col-25 text-right pele_rtl">{{ReqLinesInd.DFF_CURRENCY_CODE}}</div>
+                    <div class="col col-33 text-right pele_rtl">{{ReqLinesInd.REQ_PRICE_NETO_9}}</div>
+                    <div class="col col-25 text-right pele_rtl under">
+                      <p class="under">מחיר ליחידה</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <div class="col col-25 text-right pele_rtl"></div>
+                    <div class="col col-25 text-right pele_rtl"></div>
+                    <div class="col col-25 text-right pele_rtl">{{ReqLinesInd.REQ_QUANTITY_11}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">כמות</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <div class="col col-17 text-right pele_rtl"></div>
+                    <div class="col col-25 text-right pele_rtl">{{ReqLinesInd.DFF_CURRENCY_CODE}}</div>
+                    <div class="col col-33 text-right pele_rtl">{{ReqLinesInd.REQ_UNIT_PRICE_13}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">סה"כ לשורה</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <div class="col col-75 text-right pele_rtl">{{ReqLinesInd.REQ_SUGGESTED_VENDOR_NAME_14}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">ספק מומלץ</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <div class="col col-75 text-right pele_rtl">{{ReqLinesInd.REQ_TO_PERSON_FULL_NAME_16}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">שם הדורש</p>
+                    </div>
+                  </div>
+
+                  <div class="item item-text-wrap text-right pele_rtl" ng-repeat="ReqLineDocument in ReqLinesInd.REQ_LINES_ATTACHMENTS_CUR" ng-show="ReqLinesInd.REQ_LINE_SHOW_FLAG">
+                    <p ng-show="ReqLineDocument.DISPLAY_FLAG_1" class="under" ng-style="getAttachmentLinkStyle(ReqLineDocument.IS_FILE_OPENED_ON_MOBILE_10)" ng-click="getAttachedDocumentRow(ReqLineDocument.CATEGORY_TYPE_4
+                                                                      , ReqLineDocument.DISPLAY_FLAG_1
+                                                                      , ReqLineDocument.DOCUMENT_ID_2
+                                                                      , ReqLineDocument.FILE_NAME_3
+                                                                      , ReqLineDocument.FILE_TYPE_6
+                                                                      , ReqLineDocument.FILE_TYPE_9
+                                                                      , ReqLineDocument.FULL_FILE_NAME_8
+                                                                      , ReqLineDocument.IOS_FILE_NAME_12
+                                                                      , ReqLineDocument.IS_FILE_OPENED_ON_MOBILE_10
+                                                                      , ReqLineDocument.OPEN_FOLDER_5 )">
+                      {{ReqLineDocument.FILE_NAME_3}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Budget Requisition Lines -->
+              <div type="item-text-wrap" ng-click="RQ_BUDGET_SHOW = !RQ_BUDGET_SHOW; toggleBudgetCardShown('budgetCard')">
+                <a class="item item-divider item-icon-right">
+                  <h2 class="text-right pele_rtl">תקציב</h2>
+                  <i class="icon ion-clipboard"></i>
+                </a>
+              </div>
+
+              <div ng-repeat="ReqBudgetLinesInd in REQ_BUDGET_CUR" ng-show="RQ_BUDGET_SHOW">
+                <div class="card" id="budgetCard">
+
+                  <div class="item item-divider text-right pele_rtl pele-item-icon-left" ng-click="ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG = !ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG; toggleBudgetShown(ReqBudgetLinesInd)">
+                    <i ng-class="ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG ? 'icon-expand' : 'icon-collapse'"></i>
+                    <i class="text-right pele_rtl under">
+                       <table>
+                         <tr>
+                           <td>תקציב של שורה</td>
+                           <td>&nbsp</td>
+                           <td>:</td>
+                           <td>&nbsp</td>
+                           <td>{{ReqBudgetLinesInd.BUDGET_LINE_NUM}}</td>
+                         </tr>
+                       </table>
+                    </i>
+                  </div>
+
+                  <div class="row" id="{{ReqBudgetLinesInd.BUDGET_LINE_NUM}}" ng-show="ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG">
+                    <div class="col col-75 text-right pele_rtl">{{ReqBudgetLinesInd.REQ_DEP_1}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">מחלקה</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG">
+                    <div class="col col-75 text-right pele_rtl">{{ReqBudgetLinesInd.REQ_BUDGET_2}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">סעיף תקציבי</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG">
+                    <div class="col col-75 text-right pele_rtl">{{ReqBudgetLinesInd.REQ_SUB_BUDGET_3}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">תת סעיף תקציבי</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG">
+                    <div class="col col-40 text-right pele_rtl">שח</div>
+                    <div class="col col-35 text-right pele_rtl">{{ReqBudgetLinesInd.TOT_GRP_DISTR_ENC_AMOUNT | currency : ''}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">סכום להפצה</p>
+                    </div>
+                  </div>
+
+                  <div class="row " ng-show="ReqBudgetLinesInd.BUDGET_LINE_SHOW_FLAG">
+                    <div class="col col-40 text-right pele_rtl">שח</div>
+                    <div class="col col-35 text-right pele_rtl">{{ReqBudgetLinesInd.TOT_GRP_DISTR_ENC_AMOUNT | currency : ''}}</div>
+                    <div class="col col-25 text-right pele_rtl">
+                      <p class="under">סכום משוריין</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!------------- Attached Documents --------------->
+              <div type="item-text-wrap" ng-click="REQ_ATTACHED_DOCUMENTS_SHOW = !REQ_ATTACHED_DOCUMENTS_SHOW; toggleAttachmentCardShown('attachmentDoc')">
+                <a class="item item-divider item-icon-right">
+                  <h2 class="text-right pele_rtl"> נספחי דרישה</h2>
+                  <i class="icon ion-paperclip"></i>
+                </a>
+              </div>
+              <div class="item item-text-wrap text-right pele_rtl" id="attachmentDoc" ng-repeat="ReqDocument in ATTACHED_DOCUMENTS" ng-show="REQ_ATTACHED_DOCUMENTS_SHOW">
+                <p class="under" ng-style="getAttachmentLinkStyle(ReqDocument.IS_FILE_OPENED_ON_MOBILE)" ng-click="openAttachedFile(ReqDocument.OPEN_FILE_NAME,  ReqDocument.FULL_FILE_NAME , ReqDocument.FILE_TYPE , ReqDocument.FILE_MAOF_TYPE , ReqDocument.SHORT_TEXT , ReqDocument.LONG_TEXT , ReqDocument.IS_FILE_OPENED_ON_MOBILE , ReqDocument.IOS_OPEN_FILE_NAME )">{{ReqDocument.FILE_NAME}}</p>
+              </div>
+            </ul>
+          </ion-scroll>
+        </ion-slide>
+      </ion-slide-box>
+  </ion-content>
+
+  <!-- Footer Actions -->
+  <ion-footer-bar align-title="right">
+
+    <div class="row">
+      <div class="col">
+        <button class="button button-block button-large button-positive  icon-right ion-paper-airplane" ng-click="showBtnActions()">פעולות</button>
+      </div>
+
+      <div class="col">
+        <button class="button button-block button-large button-balanced icon-right ion-document-text" ng-click="NotePopup()">הערה</button>
+      </div>
+    </div>
+  </ion-footer-bar>
+
+  <!-- Note Pop Up -->
+  <script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">הערה חדשה</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">ביטול</button>
+      </ion-header-bar>
+      <ion-content class="padding">
+        <div class="list" dir="RTL">
+          <label class="item item-input">
+            <textarea rows="8" ng-model="newNote.Note" type="text"></textarea>
+          </label>
+          <button class="button button-full button-positive" ng-click="createNote(newNote)">שמירה</button>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>
