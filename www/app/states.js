@@ -23,6 +23,18 @@ angular.module('pele.states', [])
       },
       src: ["app/apps/dev/devCtrl.js"]
     }, {
+      state: "app.ldap_login",
+      url: '/ldap_login',
+      views: {
+        'menuContent@app': {
+          templateUrl: function() {
+            return 'templates/auth/ldap_login.html';
+          },
+          controller: 'LdapLoginCtrl'
+        }
+      },
+      src: ["app/LdapLoginCtrl.js"]
+    },{
       state: "app.dev.network",
       url: '/log',
       views: {

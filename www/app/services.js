@@ -71,9 +71,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
 
     var urlBase = PelApi.networkInfo.httpChannel() + PelApi.appSettings.apiConfig.hostname;
     var ServiceUrl = urlBase + '/' + PelApi.appSettings.SSOEnv[env] + '/CallMobileService';
-    var authParams = $sessionStorage.ApiServiceAuthParams;
+    var authParams = $sessionStorage.ApiServiceAuthParams || {};
     authParams.APPID = internalConfig.AppId;
-    var authParamsString = PelApi.toQueryString($sessionStorage.ApiServiceAuthParams)
+    var authParamsString = PelApi.toQueryString($sessionStorage.ApiServiceAuthParams||{})
 
     internal.url = ServiceUrl + '?' + authParamsString;
     var EnvCode = "MobileApp_" + PelApi.appSettings.EnvCodes[env];

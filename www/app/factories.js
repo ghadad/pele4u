@@ -15,6 +15,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     self.networkInfo = {
       channels: channels,
       httpChannel: function() {
+
+        return channels.secure;
+
+        /* 
         if (!$rootScope.deviceReady)
           return channels.insecure;
 
@@ -24,6 +28,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           return channels.insecure;
         };
         return channels.secure;
+        */
       },
       type: function() {
         if ($rootScope.deviceReady)
@@ -383,6 +388,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         if (self.networkInfo.httpChannel() === "https://") {
           retry = 0;
         }
+        console.log(links.headers)
         return $http({
           url: links.url,
           method: "GET",
