@@ -1,1 +1,3 @@
-google-chrome --disable-gpu --disable-web-security --user-data-dir="/tmp" $1
+url=$1
+google-chrome  --args --user-data-dir=/tmp --disable-web-security --disable-site-isolation-trials $url
+

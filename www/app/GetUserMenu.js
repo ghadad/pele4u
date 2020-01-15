@@ -1,11 +1,11 @@
 /**
  * Created by User on 08/09/2016.
  */
-var app = angular.module('pele.P1_appsListCtrl', ['ngStorage', 'ngCordova']);
+var app = angular.module('pele.GetUserMenu', ['ngStorage', 'ngCordova']);
 //=====================================================================//
 //==                         PAGE_1                                  ==//
 //=====================================================================//
-app.controller('P1_appsListCtrl',
+app.controller('GetUserMenuCtrl',
   function($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
@@ -121,8 +121,17 @@ app.controller('P1_appsListCtrl',
      *                    GetUserMenuMain
      * ==========================================================
      */
+
+
+    $sessionStorage.PELE4U_MSISDN = "972507870919";
+    if($sessionStorage.PELE4U_MSISDN) {
+      appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN
+    } 
+
     $scope.GetUserMenuMain = function() {
-      
+     
+
+  
       $rootScope.menuItems = [];
       var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
@@ -264,28 +273,7 @@ app.controller('P1_appsListCtrl',
       });
     } //  GetUserMenuMain
 
-    $scope.setMSISDN = function(pin) {
-
-      try {
-        var msisdn = window.localStorage.getItem("PELE4U_MSISDN");
-
-        if (msisdn === undefined || msisdn === "") {
-          window.localStorage.setItem("PELE4U_MSISDN", pin);
-        } else if (msisdn !== pin) {
-          window.localStorage.removeItem("PELE4U_MSISDN");
-          window.localStorage.setItem("PELE4U_MSISDN", pin);
-        } else {
-          window.localStorage.setItem("PELE4U_MSISDN", pin);
-        }
-      } catch (e) {
-        PelApi.lagger.error(" $scope.setMSISDN() - " + e);
-      }
-    }; // setMSISDN
-    $scope.getMSISDN = function() {
-      var value = window.localStorage.getItem("PELE4U_MSISDN");
-      return value;
-    } // getMSISDN
-
+    
     /** *****************************************************************
      *  When         Who      Description
      *  -----------  -------  -------------------------------------------
@@ -315,6 +303,7 @@ app.controller('P1_appsListCtrl',
       //-------------------------------//
       var continueFlag = "Y";
 
+      
       if (PelApi.networkInfo.httpChannel() === "https://") {
           if (!appSettings.config.MSISDN_VALUE || appSettings.config.MSISDN_VALUE === undefined) {
           $state.go('app.ldap_login');

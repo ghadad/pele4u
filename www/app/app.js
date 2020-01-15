@@ -14,7 +14,7 @@ angular.module('pele', [
     'pele.factories',
     'pele.config',
     'pele.services',
-    'pele.P1_appsListCtrl',
+    'pele.GetUserMenu',
     'pele.authCtrl',
     'pele.states',
     'fileLogger',
@@ -142,7 +142,7 @@ angular.module('pele', [
         views: {
           'menuContent': {
             templateUrl: 'templates/p1_appsLists.html',
-            controller: 'P1_appsListCtrl'
+            controller: 'GetUserMenuCtrl'
           }
         }
       })

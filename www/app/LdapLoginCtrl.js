@@ -8,9 +8,12 @@ angular.module('pele', ['ngStorage'])
       password: null,
       username: null
     }
-
+    $scope.error = null ;
+    
     $scope.doLogIn = function () {
-      
+      if(!($scope.user.username && $scope.user.password) ) {
+        $scope.error = "יש להזין שם משתמש וסיסמה" ;
+      }
       //PelApi.showLoading();
       $sessionStorage.ApiServiceAuthParams = {TOKEN:"xxxxxx",PIN:12345}
      /*  ApiService.post("PhonebookGetSector", "dum")
