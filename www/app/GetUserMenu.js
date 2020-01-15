@@ -123,7 +123,6 @@ app.controller('GetUserMenuCtrl',
      */
 
 
-    $sessionStorage.PELE4U_MSISDN = "972507870919";
     if($sessionStorage.PELE4U_MSISDN) {
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN
     } 
@@ -147,9 +146,7 @@ app.controller('GetUserMenuCtrl',
       }
 
        
-     //  $sessionStorage.$reset();      
-       //console.log(_.get($sessionStorage,"dddd",2222))
-     //  _.set($sessionStorage.newAuth,'bio',true) 
+
       reMenu.success(function(data, status, headers, config) {
         PelApi.sessionStorage.ApiServiceAuthParams = {}
         $ionicLoading.hide();

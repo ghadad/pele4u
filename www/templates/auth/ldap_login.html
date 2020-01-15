@@ -10,11 +10,12 @@
     <div class="text-center">
     
     </div>
+    
     <div class="row">
       <div class="col col-center">
         <div class="card login-container">
-          <form name="login_form" class="" novalidate>
-            <div class="item item-body">
+          <form name="" class="" novalidate>
+              <div class="list">
               <label class="item item-input">
                 <span class="input-label strong">שם משתמש</span>
                 <input type="text" class="pele_ltr" placeholder="" name="username" ng-model="user.username" required>
@@ -23,13 +24,17 @@
                 <span class="input-label strong">סיסמה</span>
                 <input type="password"   class="pele_ltr" placeholder="" name="password" ng-model="user.password" required>
               </label>
+              <label class="item ">
+                  <p>* שם משתמש וסיסמה של כניסה למחשב</p>
+                </label>
+                <div class="item">
+                    <button type="submit" class="button button-positive button-block" ng-click="doLogIn()">התחברות  </button>
+                  </div>
+                  <div class="item text-center error">
+                   {{error}}
+                  </div>
             </div>
-            <div class="item item-body bottom-content">
-              <button type="submit" class="button button-positive button-block" ng-click="doLogIn()">התחברו  </button>
-            </div>
-            <div class="item item-body bottom-content">
-             {{errors}}
-            </div>
+            
           </form>
         </div>
       </div>

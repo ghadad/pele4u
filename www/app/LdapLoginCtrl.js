@@ -1,5 +1,5 @@
 angular.module('pele', ['ngStorage'])
-  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $sessionStorage,StorageService, ApiService) {
+  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http,$ionicLoading) {
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
@@ -8,15 +8,93 @@ angular.module('pele', ['ngStorage'])
       password: null,
       username: null
     }
-    $scope.error = null ;
-    
+    $scope.error = null;
+
     $scope.doLogIn = function () {
-      if(!($scope.user.username && $scope.user.password) ) {
-        $scope.error = "יש להזין שם משתמש וסיסמה" ;
+      $scope.error = "";
+      if (!($scope.user.username && $scope.user.password)) {
+        $scope.error = "יש להזין שם משתמש וסיסמה";
       }
       //PelApi.showLoading();
-      $sessionStorage.ApiServiceAuthParams = {TOKEN:"xxxxxx",PIN:12345}
-     /*  ApiService.post("PhonebookGetSector", "dum")
+
+      var user = _.trim($scope.user.username);
+      var password = _.trim($scope.user.password);
+
+      if (user + password === "testtest") {
+
+      }
+      var httpConf = PelApi.getDocApproveServiceUrl('ADLogin');
+
+      var promise = $http({
+        url: httpConf.url,
+        method: "POST",
+        data: {
+          UserName: user,
+          password: password
+        },
+        timeout: httpConf.timeout || PelApi.appSettings.menuTimeout,
+        retry:  1,
+        headers: httpConf.headers
+      });
+
+      var vConf =   PelApi.getDocApproveServiceUrl("IsSessionValidJson");
+
+
+      promise.success(function (data, status, headers, config) {
+        PelApi.sessionStorage.ADAUTH = _.get(data, 'ADLoginResult', {});
+        PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
+        var msisdn = PelApi.sessionStorage.ADAUTH.msisdn.replace(/^05/,"9725");
+
+        PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = msisdn;
+        PelApi.IsSessionValidJson(vConf,PelApi.sessionStorage.ADAUTH.menuItems[0].AppId,PelApi.sessionStorage.ADAUTH.PinCode).
+              success(function (pinStatus, status, headers, config) {
+                if ("Valid" === pinStatus) {
+                  $ionicLoading.hide();
+                  $scope.$broadcast('scroll.refreshComplete');
+                  PelApi.appSettings.config.Pin = PelApi.sessionStorage.ADAUTH.PinCode;
+                  PelApi.appSettings.config.IS_TOKEN_VALID = "Y";
+    
+                  PelApi.sessionStorage.AuthInfo = {
+                    pinCode: PelApi.appSettings.config.Pin,
+                    token: PelApi.appSettings.config.token
+                  };
+    
+    
+                  PelApi.pinState.set({
+                    valid: true,
+                    code: PelApi.appSettings.config.Pin,
+                    apiCode: pinStatus
+                  })
+                  
+                  alert("great")
+                  $state.go("app.p1_appsLists");
+                }
+              }).
+              error(function (errorStr, httpStatus, headers, config) {
+          var time = config.responseTimestamp - config.requestTimestamp;
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+          $scope.error ="שם משתמש או סיסמה לא נכונים"
+        })
+        
+      }).error(
+        function (errorStr, httpStatus, headers, config) {
+          var time = config.responseTimestamp - config.requestTimestamp;
+          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+          $scope.error ="שם משתמש או סיסמה לא נכונים"
+        }
+      ).finally(function () {
+        $ionicLoading.hide();
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+
+      _.set(PelApi.sessionStorage.BIOAUTH, {
+        face: true,
+        finger: true
+      })
+
+
+
+      /*  ApiService.post("PhonebookGetSector", "dum")
       .success(function(data, status, headers, config) {
         var result = ApiService.checkResponse(data, status, config)
         $scope.sectors = result.sectors;
@@ -34,50 +112,52 @@ angular.module('pele', ['ngStorage'])
         PelApi.hideLoading();
       })
     */
-        /**
-         * @return {
-         *      isAvailable:boolean,
-         *      isHardwareDetected:boolean,
-         *      hasEnrolledFingerprints:boolean
-         *   }
-         */
-        
-        
-        function isAvailableSuccess(result) {
-          PelApi.lagger.info("FingerprintAuth available: " + JSON.stringify(result));
-            if (result.isAvailable) {
-                var encryptConfig = {}; // See config object for required parameters
-                FingerprintAuth.encrypt(encryptConfig, encryptSuccessCallback, encryptErrorCallback);
-            }
-        }
-        
-        function isAvailableError(message) {
-          PelApi.lagger.error("isAvailableError(): " + message);
+      /**
+       * @return {
+       *      isAvailable:boolean,
+       *      isHardwareDetected:boolean,
+       *      hasEnrolledFingerprints:boolean
+       *   }
+       */
 
-        }
-        PelApi.lagger.info("before Auth touch!");
-        
-        if(typeof window.Fingerprint == "undefined") { 
-          PelApi.lagger.info("FingerprintAuth plugin not available in the device")
-        }
-        
-        let touchAuthObject =  window.Fingerprint.isAvailable(isAvailableSuccess, isAvailableError);
 
-        PelApi.lagger.info("touchAuthObject",touchAuthObject);
+      function isAvailableSuccess(result) {
+        PelApi.lagger.info("FingerprintAuth available: " + JSON.stringify(result));
+        if (result.isAvailable) {
+          var encryptConfig = {}; // See config object for required parameters
+          FingerprintAuth.encrypt(encryptConfig, encryptSuccessCallback, encryptErrorCallback);
+        }
+      }
+
+      function isAvailableError(message) {
+        PelApi.lagger.error("isAvailableError(): " + message);
+
+      }
+      PelApi.lagger.info("before Auth touch!");
+
+      if (typeof window.Fingerprint == "undefined") {
+        PelApi.lagger.info("FingerprintAuth plugin not available in the device")
+      }
+
+      if (window.Fingerprint) {
+
+        $scope.touchAuthObject = window.Fingerprint.isAvailable(isAvailableSuccess, isAvailableError);
+
+        PelApi.lagger.info("touchAuthObject", touchAuthObject);
 
         window.Fingerprint.show({
           clientId: "Fingerprint-Demo", //Android: Used for encryption. iOS: used for dialogue if no `localizedReason` is given.
           clientSecret: "o7aoOMYUbyxaD23oFAnJ" //Necessary for Android encrpytion of keys. Use random secret key.
         }, successCallback, errorCallback);
-    
-        function successCallback(){
+
+        function successCallback() {
           alert("Authentication successfull");
         }
-    
-        function errorCallback(err){
+
+        function errorCallback(err) {
           alert("Authentication invalid " + err);
         }
-      
+      }
     }
 
   });

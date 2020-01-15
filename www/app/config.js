@@ -1,5 +1,5 @@
 /*********************/
-const env = "PD";
+const env = "QA";
 /********************/
 
 const EnvCodes = {
@@ -62,6 +62,12 @@ const apiConfig = {
     },
   },
   services: {
+    ADLogin: {
+      timeout: 15000,
+      retry: 2,
+      "endpoint": "/" + SSOEnv[env] + "/MobileServices/SSOService.svc/json/ADLogin",
+      "RequestHeader": ""
+    },
     GetUserMenu: {
       timeout: 15000,
       retry: 2,
