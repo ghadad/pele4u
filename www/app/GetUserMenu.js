@@ -130,7 +130,6 @@ app.controller('GetUserMenuCtrl',
     $scope.GetUserMenuMain = function() {
      
 
-  
       $rootScope.menuItems = [];
       var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
@@ -145,7 +144,6 @@ app.controller('GetUserMenuCtrl',
         }
       }
 
-       
 
       reMenu.success(function(data, status, headers, config) {
         PelApi.sessionStorage.ApiServiceAuthParams = {}
@@ -164,11 +162,9 @@ app.controller('GetUserMenuCtrl',
         
 
         //$scope.setMSISDN(appSettings.config.MSISDN_VALUE);
-
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
         PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
         if ("Valid" === pinCodeStatus) {
-
           appSettings.config.token = data.token;
           appSettings.config.user = data.user;
           appSettings.config.userName = data.userName;
@@ -300,7 +296,6 @@ app.controller('GetUserMenuCtrl',
       //-------------------------------//
       var continueFlag = "Y";
 
-      
       if (PelApi.networkInfo.httpChannel() === "https://") {
           if (!appSettings.config.MSISDN_VALUE || appSettings.config.MSISDN_VALUE === undefined) {
           $state.go('app.ldap_login');
@@ -310,15 +305,16 @@ app.controller('GetUserMenuCtrl',
           if (appSettings.config.IS_TOKEN_VALID !== "Y") {
             $scope.GetUserMenuMain();
           } else {
+
             $sessionStorage.token = appSettings.config.token;
             $sessionStorage.user = appSettings.config.GetUserMenu.user;
             $sessionStorage.userName = appSettings.config.GetUserMenu.userName;
             $scope.feeds_categories = appSettings.config.GetUserMenu;
-
             $scope.visibleParent = "mid_0";
             $rootScope.menuItems = $sessionStorage.menuItems;
             $ionicLoading.hide();
             $scope.$broadcast('scroll.refreshComplete');
+            return true;
           }
         }
       } else {
@@ -402,6 +398,45 @@ app.controller('GetUserMenuCtrl',
     var btnClass = {};
     btnClass.activ = false;
     $scope.class = "pele-menu-item-on-touch item-icon-right";
-    if (!($rootScope.menuItems && $rootScope.menuItems.length))
-      $scope.doRefresh();
+      var vConf =   PelApi.getDocApproveServiceUrl("IsSessionValidJson");
+      var AppId = _.get(PelApi.sessionStorage.ADAUTH,'menuItems[0].AppId',null);
+      var PinCode = _.get(PelApi.sessionStorage.ADAUTH,'PinCode',null);
+    //  PelApi.appSettings.config.GetUserMenu= PelApi.sessionStorage.ADAUTH;
+      PelApi.appSettings.config.token =  _.get(PelApi.sessionStorage.ADAUTH,'token',null);
+     // $rootScope.menuItems = $scope.sort( _.get(PelApi.sessionStorage.ADAUTH,'menuItems',[]));
+      if(!(AppId && PinCode && PelApi.appSettings.config.token))
+       return $state.go('app.ldap_login');
+      PelApi.IsSessionValidJson(vConf,AppId,PinCode).
+      success(function (pinStatus, status, headers, config) {
+        if ("Valid" === pinStatus) {
+          $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
+          PelApi.appSettings.config.Pin = PelApi.sessionStorage.ADAUTH.PinCode;
+         // PelApi.appSettings.config.IS_TOKEN_VALID = "Y";
+
+          PelApi.sessionStorage.AuthInfo = {
+            pinCode: PelApi.appSettings.config.Pin,
+            token: PelApi.appSettings.config.token
+          };
+
+
+          PelApi.pinState.set({
+            valid: true,
+            code: PelApi.appSettings.config.Pin,
+            apiCode: pinStatus
+          });
+          
+          if (!($rootScope.menuItems && $rootScope.menuItems.length))
+            return $scope.doRefresh();
+        } else { 
+          $ionicLoading.hide();
+          $scope.$broadcast('scroll.refreshComplete');
+          return $state.go('app.ldap_login');
+        }
+      }).
+      error(function (errorStr, httpStatus, headers, config) {
+  var time = config.responseTimestamp - config.requestTimestamp;
+  var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+  $scope.error ="שם משתמש או סיסמה לא נכונים"
+})
   })

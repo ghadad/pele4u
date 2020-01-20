@@ -37,45 +37,14 @@ angular.module('pele', ['ngStorage'])
         headers: httpConf.headers
       });
 
-      var vConf =   PelApi.getDocApproveServiceUrl("IsSessionValidJson");
-
-
       promise.success(function (data, status, headers, config) {
         PelApi.sessionStorage.ADAUTH = _.get(data, 'ADLoginResult', {});
         PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
         var msisdn = PelApi.sessionStorage.ADAUTH.msisdn.replace(/^05/,"9725");
-
         PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = msisdn;
-        PelApi.IsSessionValidJson(vConf,PelApi.sessionStorage.ADAUTH.menuItems[0].AppId,PelApi.sessionStorage.ADAUTH.PinCode).
-              success(function (pinStatus, status, headers, config) {
-                if ("Valid" === pinStatus) {
-                  $ionicLoading.hide();
-                  $scope.$broadcast('scroll.refreshComplete');
-                  PelApi.appSettings.config.Pin = PelApi.sessionStorage.ADAUTH.PinCode;
-                  PelApi.appSettings.config.IS_TOKEN_VALID = "Y";
-    
-                  PelApi.sessionStorage.AuthInfo = {
-                    pinCode: PelApi.appSettings.config.Pin,
-                    token: PelApi.appSettings.config.token
-                  };
-    
-    
-                  PelApi.pinState.set({
-                    valid: true,
-                    code: PelApi.appSettings.config.Pin,
-                    apiCode: pinStatus
-                  })
-                  
-                  alert("great")
-                  $state.go("app.p1_appsLists");
-                }
-              }).
-              error(function (errorStr, httpStatus, headers, config) {
-          var time = config.responseTimestamp - config.requestTimestamp;
-          var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
-          $scope.error ="שם משתמש או סיסמה לא נכונים"
-        })
-        
+        if(!(PelApi.appSettings.config.MSISDN_VALUE && PelApi.appSettings.config.token))
+        return PelApi.throwError("api", "ADLogin", "Cannot retreive msisdn or token from ADLogin service", true);
+        return $state.go("app.p1_appsLists");
       }).error(
         function (errorStr, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
