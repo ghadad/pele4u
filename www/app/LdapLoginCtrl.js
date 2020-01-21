@@ -1,5 +1,5 @@
 angular.module('pele', ['ngStorage'])
-  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http,$ionicLoading) {
+  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http, $ionicLoading) {
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
@@ -21,8 +21,8 @@ angular.module('pele', ['ngStorage'])
       var password = _.trim($scope.user.password);
 
       if (user + password === "testtest") {
-
-      }
+ 
+        }
       var httpConf = PelApi.getDocApproveServiceUrl('ADLogin');
 
       var promise = $http({
@@ -33,23 +33,23 @@ angular.module('pele', ['ngStorage'])
           password: password
         },
         timeout: httpConf.timeout || PelApi.appSettings.menuTimeout,
-        retry:  1,
+        retry: 1,
         headers: httpConf.headers
       });
 
       promise.success(function (data, status, headers, config) {
         PelApi.sessionStorage.ADAUTH = _.get(data, 'ADLoginResult', {});
         PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
-        var msisdn = PelApi.sessionStorage.ADAUTH.msisdn.replace(/^05/,"9725");
+        var msisdn = PelApi.sessionStorage.ADAUTH.msisdn.replace(/^05/, "9725");
         PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = msisdn;
-        if(!(PelApi.appSettings.config.MSISDN_VALUE && PelApi.appSettings.config.token))
-        return PelApi.throwError("api", "ADLogin", "Cannot retreive msisdn or token from ADLogin service", true);
+        if (!(PelApi.appSettings.config.MSISDN_VALUE && PelApi.appSettings.config.token))
+          return PelApi.throwError("api", "ADLogin", "Cannot retreive msisdn or token from ADLogin service", true);
         return $state.go("app.p1_appsLists");
       }).error(
         function (errorStr, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
           var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
-          $scope.error ="שם משתמש או סיסמה לא נכונים"
+          $scope.error = "שם משתמש או סיסמה לא נכונים"
         }
       ).finally(function () {
         $ionicLoading.hide();
@@ -62,32 +62,6 @@ angular.module('pele', ['ngStorage'])
       })
 
 
-
-      /*  ApiService.post("PhonebookGetSector", "dum")
-      .success(function(data, status, headers, config) {
-        var result = ApiService.checkResponse(data, status, config)
-        $scope.sectors = result.sectors;
-        $scope.operunits = result.operunits;
-        StorageService.set("phonebook_sectors", result, 60 * 60 * 1000)
-      })
-      .error(function(errorStr, httpStatus, headers, config) {
-        console.log("errorstr:",errorStr)
-        console.log("httpStatus:",httpStatus)
-        ApiService.checkResponse({
-          error: errorStr
-        }, httpStatus, config);
-
-      }).finally( function() { 
-        PelApi.hideLoading();
-      })
-    */
-      /**
-       * @return {
-       *      isAvailable:boolean,
-       *      isHardwareDetected:boolean,
-       *      hasEnrolledFingerprints:boolean
-       *   }
-       */
 
 
       function isAvailableSuccess(result) {
@@ -115,12 +89,15 @@ angular.module('pele', ['ngStorage'])
         PelApi.lagger.info("touchAuthObject", touchAuthObject);
 
         window.Fingerprint.show({
-          clientId: "Fingerprint-Demo", //Android: Used for encryption. iOS: used for dialogue if no `localizedReason` is given.
-          clientSecret: "o7aoOMYUbyxaD23oFAnJ" //Necessary for Android encrpytion of keys. Use random secret key.
+          clientId: 'Fingerprint-Demo',
+          clientSecret: 'password', //Only necessary for Android
+          disableBackup:true,  //Only for Android(optional)
+          localizedFallbackTitle: 'Use Pin', //Only for iOS
+          localizedReason: 'Please authenticate' //Only for iOS
         }, successCallback, errorCallback);
 
-        function successCallback() {
-          alert("Authentication successfull");
+        function successCallback(res) {
+          alert("Authentication successfull:"+res);
         }
 
         function errorCallback(err) {
