@@ -44,7 +44,7 @@ angular.module('pele', ['ngStorage'])
         PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = msisdn;
         if (!(PelApi.appSettings.config.MSISDN_VALUE && PelApi.appSettings.config.token))
           return PelApi.throwError("api", "ADLogin", "Cannot retreive msisdn or token from ADLogin service", true);
-        return $state.go("app.p1_appsLists");
+        return  $scope.bioAuth();
       }).error(
         function (errorStr, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
@@ -61,49 +61,52 @@ angular.module('pele', ['ngStorage'])
         finger: true
       })
 
-
-
-
-      function isAvailableSuccess(result) {
-        PelApi.lagger.info("FingerprintAuth available: " + JSON.stringify(result));
-        if (result.isAvailable) {
-          var encryptConfig = {}; // See config object for required parameters
-          FingerprintAuth.encrypt(encryptConfig, encryptSuccessCallback, encryptErrorCallback);
-        }
-      }
-
-      function isAvailableError(message) {
-        PelApi.lagger.error("isAvailableError(): " + message);
-
-      }
-      PelApi.lagger.info("before Auth touch!");
-
-      if (typeof window.Fingerprint == "undefined") {
-        PelApi.lagger.info("FingerprintAuth plugin not available in the device")
-      }
-
-      if (window.Fingerprint) {
-
-        $scope.touchAuthObject = window.Fingerprint.isAvailable(isAvailableSuccess, isAvailableError);
-
-        PelApi.lagger.info("touchAuthObject", touchAuthObject);
-
-        window.Fingerprint.show({
-          clientId: 'Fingerprint-Demo',
-          clientSecret: 'password', //Only necessary for Android
-          disableBackup:true,  //Only for Android(optional)
-          localizedFallbackTitle: 'Use Pin', //Only for iOS
-          localizedReason: 'Please authenticate' //Only for iOS
-        }, successCallback, errorCallback);
-
-        function successCallback(res) {
-          alert("Authentication successfull:"+res);
-        }
-
-        function errorCallback(err) {
-          alert("Authentication invalid " + err);
-        }
+   }
+   $scope.bioAuth = function() {
+    function isAvailableSuccess(result) {
+      PelApi.lagger.info("FingerprintAuth available: " + JSON.stringify(result));
+      if (result.isAvailable) {
+        var encryptConfig = {}; // See config object for required parameters
+        FingerprintAuth.encrypt(encryptConfig, encryptSuccessCallback, encryptErrorCallback);
       }
     }
+
+    function isAvailableError(message) {
+      PelApi.lagger.error("isAvailableError(): " + message);
+
+    }
+    $scope.bioAuth = function() {
+      
+    }
+    PelApi.lagger.info("before Auth touch!");
+
+    if (typeof window.Fingerprint == "undefined") {
+      PelApi.lagger.info("FingerprintAuth plugin not available in the device")
+    }
+
+    if (window.Fingerprint) {
+
+      $scope.touchAuthObject = window.Fingerprint.isAvailable(isAvailableSuccess, isAvailableError);
+
+      PelApi.lagger.info("touchAuthObject", touchAuthObject);
+
+      window.Fingerprint.show({
+        clientId: 'Fingerprint-Demo',
+        clientSecret: 'password', //Only necessary for Android
+        disableBackup:true,  //Only for Android(optional)
+        localizedFallbackTitle: 'Use Pin', //Only for iOS
+        localizedReason: 'Please authenticate' //Only for iOS
+      }, successCallback, errorCallback);
+
+      function successCallback(res) {
+        alert("Authentication successfull:"+res);
+        return $state.go("app.p1_appsLists");
+      }
+
+      function errorCallback(err) {
+        alert("Authentication invalid " + err);
+      }
+    }
+   }
 
   });
