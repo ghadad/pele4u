@@ -44,7 +44,7 @@ angular.module('pele', ['ngStorage'])
         PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = msisdn;
         if (!(PelApi.appSettings.config.MSISDN_VALUE && PelApi.appSettings.config.token))
           return PelApi.throwError("api", "ADLogin", "Cannot retreive msisdn or token from ADLogin service", true);
-        return  $scope.bioAuth();
+        return  $scope.bioAuth(user,password);
       }).error(
         function (errorStr, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
@@ -56,13 +56,10 @@ angular.module('pele', ['ngStorage'])
         $scope.$broadcast('scroll.refreshComplete');
       });
 
-      _.set(PelApi.sessionStorage.BIOAUTH, {
-        face: true,
-        finger: true
-      })
+     
 
    }
-   $scope.bioAuth = function() {
+   $scope.bioAuth = function(user,password) {
     function isAvailableSuccess(result) {
       PelApi.lagger.info("FingerprintAuth available: " + JSON.stringify(result));
       if (result.isAvailable) {
@@ -77,11 +74,12 @@ angular.module('pele', ['ngStorage'])
     }
     $scope.bioAuth = function() {
       
-    }
+   
     PelApi.lagger.info("before Auth touch!");
 
     if (typeof window.Fingerprint == "undefined") {
       PelApi.lagger.info("FingerprintAuth plugin not available in the device")
+      return $state.go("app.p1_appsLists");
     }
 
     if (window.Fingerprint) {
@@ -108,5 +106,5 @@ angular.module('pele', ['ngStorage'])
       }
     }
    }
-
+  }
   });
