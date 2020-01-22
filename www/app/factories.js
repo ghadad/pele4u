@@ -963,7 +963,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //----------------------------------------------------------//
       //--                    GetServiceUrl                     --//
       //----------------------------------------------------------//
-      getDocApproveServiceUrl: function(serviceName) {
+      getDocApproveServiceUrl: function(serviceName,type=null) {
         var self = this;
 
         var serviceConf = appSettings.apiConfig.services[serviceName];
@@ -979,13 +979,17 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         };
 
         if (self.networkInfo.httpChannel() === "https://") {
-          var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
-          if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
-          if (!msisdn) {
-            self.lagger.error("Service:" + serviceName + " cant find msisdn ! not in config or localStorage or sessionStorage")
-
+          
+          if(type !== "login"){
+            var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
+            if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
+            if (!msisdn) {
+              self.lagger.error("Service:" + serviceName + " cant find msisdn ! not in config or localStorage or sessionStorage")
+  
+            }
+            headers.msisdn = msisdn;
           }
-          headers.msisdn = msisdn;
+          
           serviceConf.url = appSettings.apiConfig.wifi_uri + serviceConf.endpoint;
         } else {
           serviceConf.url = appSettings.apiConfig.uri + serviceConf.endpoint;

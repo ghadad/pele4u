@@ -1122,6 +1122,8 @@ grid-row-end: span 1;}
 .newlook.iphonex .top-menu-buttons .col {padding:5px 15px}
 .__newlook.iphonex .menu-plasma  {margin-top:22px}
 .strong {font-weight:bolder}
+.strong {font-weight:bolder}
+.padtop20 {padding-top:20px}
 .login-container .list {padding:20px}
 .login-container .list .item { border:0px}
 .login-container .item.item-input{margin-bottom:0px;border:0px;border-bottom: 2px solid #ccc;}

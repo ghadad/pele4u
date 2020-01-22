@@ -6,12 +6,12 @@ var app = angular.module('pele.GetUserMenu', ['ngStorage', 'ngCordova']);
 //==                         PAGE_1                                  ==//
 //=====================================================================//
 app.controller('GetUserMenuCtrl',
-  function($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
+  function ($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
-    PelApi.lagger.checkFile().then(function(logStat) {
+    PelApi.lagger.checkFile().then(function (logStat) {
       if (logStat.size > (1024 * 1024)) {
-        PelApi.lagger.deleteLogfile().then(function() {
+        PelApi.lagger.deleteLogfile().then(function () {
           PelApi.lagger.error("flush Log file ...  log too big ...( > 1MB) ")
         })
       }
@@ -29,7 +29,7 @@ app.controller('GetUserMenuCtrl',
     $scope.deviceModel = window.deviceModel;
 
     $scope.wellcome = "";
-    $scope.getWellcomeString = function() {
+    $scope.getWellcomeString = function () {
       $scope.timeRange = _.toNumber(moment().format("H"))
       if ($scope.timeRange >= "05" && $scope.timeRange < "11") {
         $scope.wellcome = "בוקר טוב";
@@ -43,13 +43,13 @@ app.controller('GetUserMenuCtrl',
         $scope.wellcome = "לילה טוב";
       }
     }
-    setInterval(function() {
+    setInterval(function () {
       $scope.getWellcomeString();
     }, 60)
 
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
-    $scope.sort = function(items) {
+    $scope.sort = function (items) {
 
       /*  items[0].Sorter = "1@cls1 dsds ddssd";
       items[1].Sorter = "2@cls3";
@@ -62,7 +62,7 @@ app.controller('GetUserMenuCtrl',
       */
       var re = new RegExp("(\\@[a-z]+[\\s\\w]+)", "gi")
       var idx = 0;
-      var sortedMenu = _.sortBy(items, function(i) {
+      var sortedMenu = _.sortBy(items, function (i) {
         idx++;
         i.menuLocation = i.Location || "side";
         i.side = i.menuLocation.match("side|s") ? true : false;
@@ -85,7 +85,7 @@ app.controller('GetUserMenuCtrl',
     //== ----------  ----------  ------------------------- ==//
     //== 27/12/2015  R.W.                                  ==//
     //=======================================================//
-    $scope.pushBtnClass = function(event) {
+    $scope.pushBtnClass = function (event) {
       if (event === true) {
         return "pele-item-on-release";
       } else {
@@ -93,11 +93,11 @@ app.controller('GetUserMenuCtrl',
       }
     } // pushBtnClass
 
-    $scope.onBtnAction = function() {
+    $scope.onBtnAction = function () {
       btnClass.activ = !btnClass.activ;
     };
 
-    $scope.insertOnTouchFlag = function(arr) {
+    $scope.insertOnTouchFlag = function (arr) {
       var myArr = [];
       for (var i = 0; i < arr.length; i++) {
         var myObj = {
@@ -123,14 +123,14 @@ app.controller('GetUserMenuCtrl',
      */
 
 
-    if($sessionStorage.PELE4U_MSISDN) {
+    if ($sessionStorage.PELE4U_MSISDN) {
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN
-    } 
+    }
 
-    $scope.GetUserMenuMain = function() {
-     
+    $scope.GetUserMenuMain = function () {
 
-  
+
+
       $rootScope.menuItems = [];
       var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
@@ -145,9 +145,9 @@ app.controller('GetUserMenuCtrl',
         }
       }
 
-       
 
-      reMenu.success(function(data, status, headers, config) {
+
+      reMenu.success(function (data, status, headers, config) {
         PelApi.sessionStorage.ApiServiceAuthParams = {}
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
@@ -158,10 +158,10 @@ app.controller('GetUserMenuCtrl',
             appSettings.config.MSISDN_VALUE = data.msisdn;
           }
         }
-        
+
         $sessionStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
         $localStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
-        
+
 
         //$scope.setMSISDN(appSettings.config.MSISDN_VALUE);
 
@@ -204,7 +204,7 @@ app.controller('GetUserMenuCtrl',
           if (!UserId || (UserId && UserId != $sessionStorage.user)) {
             ApiGateway.get("public/profile", {
               id: $sessionStorage.user
-            }).then(function(res) {
+            }).then(function (res) {
               $localStorage.profile = res.data;
               $localStorage.profile.id = $sessionStorage.user;
               $rootScope.profile = $localStorage.profile;
@@ -257,27 +257,27 @@ app.controller('GetUserMenuCtrl',
           PelApi.showPopupVersionUpdate(data.StatusDesc, "");
         }
       }).error(
-        function(errorStr, httpStatus, headers, config) {
+        function (errorStr, httpStatus, headers, config) {
           var time = config.responseTimestamp - config.requestTimestamp;
           var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
 
           PelApi.throwError("api-400", "GetUserMenu", "httpStatus : " + httpStatus + tr, true)
           //PelApi.showPopup(appSettings.config.getUserModuleTypesErrorMag, "");
         }
-      ).finally(function() {
+      ).finally(function () {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
       });
     } //  GetUserMenuMain
 
-    
+
     /** *****************************************************************
      *  When         Who      Description
      *  -----------  -------  -------------------------------------------
      *  02/08/2016   R.W.
      *****************************************************************
      */
-    $scope.doRefresh = function() {
+    $scope.doRefresh = function () {
       $scope.btn_class = {};
       $scope.btn_class.on_release = true;
 
@@ -300,9 +300,9 @@ app.controller('GetUserMenuCtrl',
       //-------------------------------//
       var continueFlag = "Y";
 
-      
+
       if (PelApi.networkInfo.httpChannel() === "https://") {
-          if (!appSettings.config.MSISDN_VALUE || appSettings.config.MSISDN_VALUE === undefined) {
+        if (!appSettings.config.MSISDN_VALUE || appSettings.config.MSISDN_VALUE === undefined) {
           $state.go('app.ldap_login');
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
@@ -329,7 +329,7 @@ app.controller('GetUserMenuCtrl',
     //------------------------------------------------------
     //--                  Switch APP
     //------------------------------------------------------
-    $scope.appSwitch = function(i) {
+    $scope.appSwitch = function (i) {
 
       var iabOptions = {
         location: 'yes',
@@ -340,9 +340,9 @@ app.controller('GetUserMenuCtrl',
       var target = i.target || "_blank";
       if (i.url) {
         $cordovaInAppBrowser.open(i.url, target, iabOptions)
-          .then(function(event) {
+          .then(function (event) {
             // success
-          }, function(event) {
+          }, function (event) {
             // error
           });
         return false;
@@ -361,11 +361,11 @@ app.controller('GetUserMenuCtrl',
     //-----------------------------------------------------------//
     //--                 forwardToApp
     //-----------------------------------------------------------//
-    $scope.remenu = function(parent) {
+    $scope.remenu = function (parent) {
       $scope.latestParent = $scope.childOf[parent];
       $scope.visibleParent = parent;
     }
-    $scope.forwardToApp = function(appConfig) {
+    $scope.forwardToApp = function (appConfig) {
       if (!appConfig.Path) {
         $scope.latestParent = appConfig.parent;
         $scope.visibleParent = appConfig.menuId;
@@ -403,5 +403,24 @@ app.controller('GetUserMenuCtrl',
     btnClass.activ = false;
     $scope.class = "pele-menu-item-on-touch item-icon-right";
     if (!($rootScope.menuItems && $rootScope.menuItems.length))
-      $scope.doRefresh();
+     var svConf = PelApi.getDocApproveServiceUrl("IsSessionValidJson", "login");
+     var appId  = _.get(PelApi.sessionStorage.ADAUTH,'appId',null)
+     var PinCode  = _.get(PelApi.sessionStorage.ADAUTH,'PinCode',null)
+     PelApi.appSettings.config.MSISDN_VALUE = _.get(PelApi.sessionStorage.ADAUTH,'msisdn',null);
+     PelApi.appSettings.config.token = _.get(PelApi.sessionStorage.ADAUTH,'token',null);
+     console.log(appId,PinCode,PelApi.appSettings.config.MSISDN_VALUE);
+    if(!(PinCode && appId)) {
+          return   $state.go('app.ldap_login');
+    }
+    PelApi.IsSessionValidJson(svConf, appId, PinCode).
+    success(function (pinStatus, status, headers, config) {
+      if ("Valid" === pinStatus) {
+        $ionicLoading.hide();
+        return $scope.doRefresh();      
+      } else {
+        return  $state.go('app.ldap_login');
+      }
+    }).error(function () {
+      $state.go('app.ldap_login');
+    });
   })
