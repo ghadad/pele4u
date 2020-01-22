@@ -412,7 +412,7 @@ app.controller('GetUserMenuCtrl',
     if(!(PinCode && appId)) {
           return   $state.go('app.ldap_login');
     }
-    PelApi.IsSessionValidJson(svConf, appId, PinCode).
+    PelApi.IsSessionValidJson(svConf, appId, 0 /* PinCode - there is bug in pincode expiracy checking */).
     success(function (pinStatus, status, headers, config) {
       if ("Valid" === pinStatus) {
         $ionicLoading.hide();

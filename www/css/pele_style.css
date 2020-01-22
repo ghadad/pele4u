@@ -1128,3 +1128,9 @@ grid-row-end: span 1;}
 .login-container .list .item { border:0px}
 .login-container .item.item-input{margin-bottom:0px;border:0px;border-bottom: 2px solid #ccc;}
 .login-container .item.item-input input {font-size:16px}
+img.icon-md {height:40px}
+img.icon-sm {height:30px;max-height:30px;}
+#auth-modal button span {
+  position:relative;top:-19px;
+  margin-right:10px
+}

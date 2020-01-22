@@ -1,0 +1,10 @@
+{
+  "cordova-plugin-ios-keychain": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/ionic-team/cordova-plugin-ios-keychain"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}
