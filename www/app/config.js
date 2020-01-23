@@ -38,7 +38,12 @@ const apiConfig = {
   menuTimeout: 15000,
   translateFlag: "N",
   flashTime: 2500,
-
+  authMethods  :{
+    ios:['pincode'],
+    android:['pincode','fingerprint']
+  },
+  bioClientId:"NEVER_CHANGE_THIS_VALUE_BIOPELE4U" ,
+  bioClientSecret:"NEVER_CHANGE_THIS_VALUE",
   OneSignal: {
     DV: {
       appId: '430ad45c-c555-41f5-87c4-46f9d4be0cc1',

@@ -1,62 +1,61 @@
 angular.module('pele', ['ngStorage'])
-  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http, $ionicLoading,BioAuth,$ionicModal) {
+  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http, $ionicLoading, BioAuth, $ionicModal) {
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
+    $scope.resetRequest = $state.params.reset;
 
+    $scope.authMethod = BioAuth.getMethod();
+    alert($scope.authMethod )
+    $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
 
-    $scope.authMethod =  _.get(PelApi.localStorage,'ADAUTH.method',"") ||"";
-    $scope.bioAuthRegistered = _.get(PelApi.localStorage,'ADAUTH.cred',"");
-
-    $scope.regTitle = $scope.title = "התחברות עם משתמש וסיסמה" ;
+    $scope.regTitle = $scope.title = "התחברות עם משתמש וסיסמה";
     $scope.authTitle = "ניהול שיטות זיהוי";
     $scope.user = {
       password: null,
       username: null
     }
     $scope.error = null;
-    $scope.activeForm =false;
-
+    $scope.activeForm = false;
 
     $ionicModal.fromTemplateUrl('authMethods.html', {
       scope: $scope,
       animation: 'slide-in-up'
-    }).then(function(modal) {
+    }).then(function (modal) {
       $scope.modal = modal;
     });
-    
 
-    $scope.openModal = function() {
-      $scope.title =  $scope.authTitle
+
+    $scope.openModal = function () {
+      $scope.title = $scope.authTitle
       $scope.activeForm = false;
       $scope.modal.show();
     };
 
-    
-    $scope.setAuthMethod= function(method) {
-      $scope.authMethod = method;
 
-      _.set(PelApi.localStorage,'ADAUTH.method',method);
+    $scope.setAuthMethod = function (method) {
+      $scope.authMethod = method;
+      BioAuth.setMethod(method);
       $scope.closeModal();
     }
 
 
-    $scope.closeModal = function() {
-      $scope.title =  $scope.regTitle
+    $scope.closeModal = function () {
+      $scope.title = $scope.regTitle
       $scope.modal.hide();
-      setTimeout(function(){
+      setTimeout(function () {
         $scope.activeForm = true;
-      },100)
-      
+      }, 100)
+
     };
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       $scope.modal.remove();
     });
-    $scope.$on('modal.hidden', function() {
-      $scope.title =  $scope.regTitle
-      setTimeout(function(){
+    $scope.$on('modal.hidden', function () {
+      $scope.title = $scope.regTitle
+      setTimeout(function () {
         $scope.activeForm = true;
-      },100)
+      }, 100)
       // Execute action
     });
 
@@ -65,7 +64,7 @@ angular.module('pele', ['ngStorage'])
       BioAuth.get().then(function (result) {
         return $state.go("app.p1_appsLists");
       }).catch(function (error) {
-        PelApi.lagger.error("bioAuth not exists for this device",error.stack);
+        PelApi.lagger.error("bioAuth not exists for this device", error.stack);
       })
 
       $scope.error = "";
@@ -101,24 +100,29 @@ angular.module('pele', ['ngStorage'])
           adLoginInfo.msisdn = _.get(adLoginInfo, 'msisdn', "").replace(/^05/, "9725");
           PelApi.sessionStorage.ADAUTH = adLoginInfo;
           PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
-          
+
           PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = adLoginInfo.msisdn;
           var credentials = {
             username: user,
             password: password
           };
 
-          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials),PelApi.appSettings.config.token).toString();
+          if ($scope.authMethod.match(/finger|face/)) {
+            BioAuth.show().then(function (res) {
+              var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), PelApi.appSettings.config.token).toString();
 
-        _.set(PelApi.localStorage,'ADAUTH.cred', {
-          cipher: ciphertext,
-          token:PelApi.appSettings.config.token,
-          msisdn:PelApi.appSettings.config.MSISDN_VALUE
-        });
+              _.set(PelApi.localStorage, 'ADAUTH.cred', {
+                cipher: ciphertext,
+                token: PelApi.appSettings.config.token,
+                msisdn: PelApi.appSettings.config.MSISDN_VALUE
+              });
+              return $state.go("app.p1_appsLists");
+            }).catch(function (error) {
 
-
-        $state.go("app.p1_appsLists");
-
+            })
+          } else {
+            return $state.go("app.p1_appsLists");
+          }
         })
         .error(
           function (errorStr, httpStatus, headers, config) {
@@ -130,53 +134,26 @@ angular.module('pele', ['ngStorage'])
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         });
-
-
-
-      /**
-       * @return {
-       *      isAvailable:boolean,
-       *      isHardwareDetected:boolean,
-       *      hasEnrolledFingerprints:boolean
-       *   }
-       */
-
-
-      if (typeof window.Fingerprint == "undefined") {
-        PelApi.lagger.info("FingerprintAuth plugin not available in the device")
-      }
-
-      if (window.Fingerprint) {
-
-        $scope.touchAuthObject = window.Fingerprint.isAvailable(isAvailableSuccess, isAvailableError);
-
-        PelApi.lagger.info("touchAuthObject", touchAuthObject);
-
-        window.Fingerprint.show({
-          clientId: "Fingerprint-Demo", //Android: Used for encryption. iOS: used for dialogue if no `localizedReason` is given.
-          clientSecret: "o7aoOMYUbyxaD23oFAnJ" //Necessary for Android encrpytion of keys. Use random secret key.
-        }, successCallback, errorCallback);
-
-        function successCallback(res) {
-          console.log("success bioAuth:", res)
-          alert("Authentication successfull", res);
-        }
-        function errorCallback(err) {
-          console.log("error  bioAuth:", err.stack)
-          alert("Authentication invalid " + err);
-        }
-      }
     }
 
-    var adAuth = _.get(PelApi.localStorage,'ADAUTH.cred1',{});
-    if(adAuth.token && adAuth.cipher) { 
-      var bytes  = CryptoJS.AES.decrypt(adAuth.cipher,adAuth.token);
-      var decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-       $scope.user = decryptedCredentials
-       $scope.activeForm = false;
-       $scope.doLogIn();
-    } else{
-      setTimeout(function() { $scope.openModal();},100);
+    if ($scope.authMethod.match(/finger|face/)) {
+      BioAuth.show().then(function (res) {
+        var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
+
+        if (adAuth.token && adAuth.cipher) {
+          var bytes = CryptoJS.AES.decrypt(adAuth.cipher, adAuth.token);
+          var decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+          $scope.user = decryptedCredentials
+          $scope.activeForm = false;
+          $scope.doLogIn();
+        }
+      }).catch(function (error) {
+
+      })
+    } else {
+      setTimeout(function () {
+        $scope.openModal();
+      }, 100);
       $scope.activeForm = true;
     }
   });

@@ -168,8 +168,9 @@ app.controller('GetUserMenuCtrl',
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
         PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
         if ("Valid" === pinCodeStatus) {
-
           appSettings.config.token = data.token;
+          _.set(PelApi.sessionStorage.ADAUTH,'token',data.token);
+          
           appSettings.config.user = data.user;
           appSettings.config.userName = data.userName;
           var strData = JSON.stringify(data);
@@ -243,7 +244,6 @@ app.controller('GetUserMenuCtrl',
           if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
             $state.go('app.login');
           }
-
         } else if ("PCR" === pinCodeStatus) {
           errorMsg = appSettings.PIN_STATUS.PAD;
           //PelApi.showPopup(appSettings.config.pinCodeSubTitlePCR , "");
@@ -418,7 +418,10 @@ app.controller('GetUserMenuCtrl',
         $ionicLoading.hide();
         return $scope.doRefresh();      
       } else {
-        return  $state.go('app.ldap_login');
+        //  authMethod == "pincode "
+        appSettings.config.IS_TOKEN_VALID = 'N';
+        return $scope.doRefresh();      
+
       }
     }).error(function () {
       $state.go('app.ldap_login');

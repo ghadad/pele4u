@@ -25,6 +25,9 @@ angular.module('pele.states', [])
     }, {
       state: "app.ldap_login",
       url: '/ldap_login',
+      params: {
+        reset: null,
+      },
       views: {
         'menuContent@app': {
           templateUrl: function() {

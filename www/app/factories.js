@@ -1751,9 +1751,17 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
       return $sce.trustAsHtml(text)
     }
-  }).factory('BioAuth', function ($q,$sessionStorage) {
+  }).factory('BioAuth', function ($q, $sessionStorage, PelApi) {
     return {
-
+      getMethod() {
+      return  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
+      },
+      setMethod(method) {
+        // remove old credentials 
+        _.set(PelApi.localStorage, 'ADAUTH', {
+          method: method
+        });
+      },
       get: function () {
         return $q(function (resolve, reject) {
           if (window.Fingerprint) {
@@ -1763,14 +1771,46 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             }, function () {
               PelApi.lagger.info("Fingerprint not avaialable in device");
               reject("Biometric auth not avaialable in this device");
-           });
-          } else { 
+            });
+          } else {
             reject("Fingerprint plugin not installed in device")
           }
         })
       },
-      show() { 
-        alert('show')
+      show() {
+        // platforms : 
+        // PelApi.isAndroid
+        // PelApi.isIOS
+        
+        var options = {};
+        if (PelApi.isAndroid) {
+          options = {
+            clientId: PelApi.appSettings.config.bioClientId,
+            clientSecret: PelApi.appSettings.config.bioClientSecret
+          };
+        } else if (PelApi.isIOS) {
+          options = {
+
+          };
+        }
+        function successCallback(res) {
+          console.log("success bioAuth:", res)
+          alert("Authentication successfull", res);
+          resolve(res)
+        }
+
+        function errorCallback(err) {
+          console.log("error  bioAuth:", err.stack)
+          alert("Authentication invalid " + err);
+          reject(err.stack)
+        }
+
+        return $q(function (resolve, reject) {
+          if (!Fingerprint)
+            return reject("Fingerprint not installed in this device");
+          Fingerprint.show(options, successCallback, errorCallback);
+        });
+
       }
     }
   }).factory('Contact', function ($q) {
