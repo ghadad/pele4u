@@ -138,13 +138,12 @@ angular.module('pele', ['ngStorage'])
     if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face/)) {
       BioAuth.show().then(function (res) {
         var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
-
         if (adAuth.token && adAuth.cipher) {
           var bytes = CryptoJS.AES.decrypt(adAuth.cipher, adAuth.token);
           var decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
-          $scope.doLogIn();
+          return $scope.doLogIn();
         }
       }).catch(function (error) {
       })
