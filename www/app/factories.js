@@ -1753,19 +1753,26 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     }
   }).factory('BioAuth', function ($q, $sessionStorage, PelApi) {
     return {
-      getMethod() {
-      return  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
+      isInstalled:function(){
+        return (window.Fingerprint ? true : false);
       },
-      setMethod(method) {
+      getMethod:function() {
+        return  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
+      },
+      setMethod:function(method) {
         // remove old credentials 
         _.set(PelApi.localStorage, 'ADAUTH', {
           method: method
         });
+        _.set(PelApi.sessionStorage, 'ADAUTH', {
+          method: method
+        });
+
       },
       get: function () {
         return $q(function (resolve, reject) {
           if (window.Fingerprint) {
-            Fingerprint.isAvailable(function (result) {
+            window.Fingerprint.isAvailable(function (result) {
               $sessionStorage.bioAuthCap = result;
               resolve(result);
             }, function () {
@@ -1806,7 +1813,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
 
         return $q(function (resolve, reject) {
-          if (!Fingerprint)
+          if (!window.Fingerprint)
             return reject("Fingerprint not installed in this device");
           Fingerprint.show(options, successCallback, errorCallback);
         });

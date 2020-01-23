@@ -6,7 +6,7 @@ angular.module('pele', ['ngStorage'])
     $scope.resetRequest = $state.params.reset;
 
     $scope.authMethod = BioAuth.getMethod();
-    alert($scope.authMethod )
+    
     $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
 
     $scope.regTitle = $scope.title = "התחברות עם משתמש וסיסמה";
@@ -107,10 +107,9 @@ angular.module('pele', ['ngStorage'])
             password: password
           };
 
-          if ($scope.authMethod.match(/finger|face/)) {
+          if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face/)) {
             BioAuth.show().then(function (res) {
               var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), PelApi.appSettings.config.token).toString();
-
               _.set(PelApi.localStorage, 'ADAUTH.cred', {
                 cipher: ciphertext,
                 token: PelApi.appSettings.config.token,
@@ -136,7 +135,7 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
-    if ($scope.authMethod.match(/finger|face/)) {
+    if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face/)) {
       BioAuth.show().then(function (res) {
         var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
 
@@ -148,7 +147,6 @@ angular.module('pele', ['ngStorage'])
           $scope.doLogIn();
         }
       }).catch(function (error) {
-
       })
     } else {
       setTimeout(function () {
