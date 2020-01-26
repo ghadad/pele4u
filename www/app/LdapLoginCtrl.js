@@ -147,9 +147,12 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
-    if(BioAuth.getMethod().match(/pincode/)) {
-      return $state.go("app.p1_appsLists");
+    if(BioAuth.getMethod().match(/pincode/) && PelApi.localStorage.PELE4U_MSISDN) {
+      PelApi.appSettings.config.MSISDN_VALUE = PelApi.sessionStorage.PELE4U_MSISDN = PelApi.localStorage.PELE4U_MSISDN
+      console.log(PelApi.appSettings.config.MSISDN_VALUE)
+      //return $state.go("app.p1_appsLists");
     }
+
     if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
       BioAuth.show().then(function (hashkey) {
         BioAuth.getCredentials(hashkey).

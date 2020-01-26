@@ -123,9 +123,15 @@ app.controller('GetUserMenuCtrl',
      */
 
 
+    if ($localStorage.PELE4U_MSISDN) {
+      appSettings.config.MSISDN_VALUE = $localStorage.PELE4U_MSISDN;
+    }
+    if ($sessionStorage.PELE4U_MSISDN) {
+      appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN;
+    }
     
-    appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN;
-    
+
+
 
     $scope.GetUserMenuMain = function () {
 
@@ -170,7 +176,7 @@ app.controller('GetUserMenuCtrl',
         if ("Valid" === pinCodeStatus) {
           appSettings.config.token = data.token;
           _.set(PelApi.sessionStorage.ADAUTH,'token',data.token);
-
+          
           appSettings.config.user = data.user;
           appSettings.config.userName = data.userName;
           var strData = JSON.stringify(data);
@@ -278,6 +284,9 @@ app.controller('GetUserMenuCtrl',
      *****************************************************************
      */
     $scope.doRefresh = function () {
+
+      appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN ;
+      
       $scope.btn_class = {};
       $scope.btn_class.on_release = true;
 
@@ -410,8 +419,11 @@ app.controller('GetUserMenuCtrl',
      PelApi.appSettings.config.token = _.get(PelApi.sessionStorage.ADAUTH,'token',null);
      console.log(appId,PinCode,PelApi.appSettings.config.MSISDN_VALUE);
     if(!(PinCode && appId)) {
-          return   $state.go('app.ldap_login');
+      console.log("bug 1")
+      appSettings.config.IS_TOKEN_VALID = 'N';
+      return $scope.doRefresh();    
     }
+    
     PelApi.IsSessionValidJson(svConf, appId, 0 /* PinCode - there is bug in pincode expiracy checking */).
     success(function (pinStatus, status, headers, config) {
       if ("Valid" === pinStatus) {
@@ -424,6 +436,7 @@ app.controller('GetUserMenuCtrl',
 
       }
     }).error(function () {
+      console.log("bug 2")
       $state.go('app.ldap_login');
     });
   })
