@@ -1842,34 +1842,34 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       show:function() {
         
-        var  options = {
+        var  bioOptions = {
           clientId: PelApi.appSettings.config.bioClientId,
           clientSecret: PelApi.appSettings.config.bioClientSecret
         };
 
-        PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS());
+        PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS(),bioOptions);
         
         if(ionic.Platform.isIOS()) {
-          options = {
-          };
+        //  bioOptions = {
+        //  };
         }
-        PelApi.lagger.info("bioauth options",options);
+        PelApi.lagger.info("bioauth options",bioOptions);
 
         return $q(function (resolve, reject) {
           function successCallback(res) {
             console.log("success bioAuth:", res)
-            alert("Authentication successfull:" + res);
+          //  alert("Authentication successfull:" + res);
             resolve(res)
           }
   
           function errorCallback(err) {
             console.log("error  bioAuth:", err.stack)
-            alert("Authentication invalid " + err);
+            //alert("Authentication invalid " + err);
             reject(err.stack)
           }
           if (!window.Fingerprint)
             return reject("Fingerprint not installed in this device");
-          Fingerprint.show(options, successCallback, errorCallback);
+          Fingerprint.show(bioOptions, successCallback, errorCallback);
         });
       }
     }

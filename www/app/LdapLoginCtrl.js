@@ -124,6 +124,7 @@ angular.module('pele', ['ngStorage'])
               then(function(result){
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
+                PelApi.sessionStorage.bioAuthTries =  (PelApi.sessionStorage.bioAuthTries||1) +1;
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
                 $state.reload();
               })
@@ -154,6 +155,7 @@ angular.module('pele', ['ngStorage'])
           $scope.activeForm = false;
           return $scope.doLogIn();
         }).catch(function(err){
+          PelApi.sessionStorage.bioAuthTries =  (PelApi.sessionStorage.bioAuthTries||1) +1;
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
           $state.reload();
         })
