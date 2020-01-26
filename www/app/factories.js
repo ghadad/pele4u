@@ -1784,7 +1784,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return $q(function (resolve, reject) {
           if (window.Fingerprint) {
             window.Fingerprint.isAvailable(function (result) {
-              $localStorage.bioAuthCap = $sessionStorage.bioAuthCap = result;
+              PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
               resolve(result);
             }, function () {
               PelApi.lagger.info("Fingerprint not avaialable in device");
