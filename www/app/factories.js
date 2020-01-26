@@ -1846,14 +1846,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           clientId: PelApi.appSettings.config.bioClientId,
           clientSecret: PelApi.appSettings.config.bioClientSecret
         };
-
-        PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS(),bioOptions);
+        console.log("bioOptions:",bioOptions);
+        //PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS(),bioOptions);
         
         if(ionic.Platform.isIOS()) {
         //  bioOptions = {
         //  };
         }
-        PelApi.lagger.info("bioauth options",bioOptions);
+        
 
         return $q(function (resolve, reject) {
           function successCallback(res) {

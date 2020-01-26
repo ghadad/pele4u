@@ -147,6 +147,9 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
+    if(BioAuth.getMethod().match(/pincode/)) {
+      return $state.go("app.p1_appsLists");
+    }
     if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
       BioAuth.show().then(function (hashkey) {
         BioAuth.getCredentials(hashkey).
