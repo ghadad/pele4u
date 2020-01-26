@@ -1802,7 +1802,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       setCredentials:function(credentials,hashKey) {
         return $q(function (resolve, reject) {
-        if (PelApi.isAndroid) {
+        if (ionic.Platform.isAndroid()) {
           var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), hashKey).toString();
 
           PelApi.lagger.info("set cipher and key",ciphertext, hashKey)
@@ -1813,14 +1813,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if(ciphertext) return resolve(true)
           else
           return reject("Failed to encrypt user/pass")
-        } else if (PelApi.isIOS) {
+        } else if (ionic.Platform.isIOS()) {
           return Keychain.setJson(kwin(resolve), kfail(reject),'ADAUTH_cred' , credentials, false);
         }
       });
       },
       getCredentials:function(hashKey) {
         return $q(function (resolve, reject) {
-        if (PelApi.isAndroid) {
+        if (ionic.Platform.isAndroid()) {
           var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
           if (adAuth.cipher) {
             PelApi.lagger.info("get cipher and key",adAuth.cipher, hashKey)
@@ -1835,7 +1835,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             else
             return reject("Failed to decrypt credentials")
           }
-        } else if (PelApi.isIOS) {
+        } else if (ionic.Platform.isIOS()) {
           return Keychain.getJson(kwin(resolve), kfail(reject), 'ADAUTH_cred', false);
         }
       });
@@ -1843,12 +1843,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       show:function() {
         
         var options = {};
-        if (PelApi.isAndroid) {
+        if (ionic.Platform.isAndroid()) {
           options = {
             clientId: PelApi.appSettings.config.bioClientId,
             clientSecret: PelApi.appSettings.config.bioClientSecret
           };
-        } else if (PelApi.isIOS) {
+        } else if (ionic.Platform.isIOS()) {
           options = {
           };
         }
