@@ -1845,7 +1845,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var  bioOptions = {
           clientId: PelApi.appSettings.config.bioClientId,
           clientSecret: PelApi.appSettings.config.bioClientSecret,
-          
+
         };
 
         PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS());
@@ -1870,7 +1870,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
           if (!window.Fingerprint)
             return reject("Fingerprint not installed in this device");
-          Fingerprint.show(options, successCallback, errorCallback);
+          Fingerprint.show(bioOptions, successCallback, errorCallback);
         });
       }
     }
