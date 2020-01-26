@@ -1804,6 +1804,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return $q(function (resolve, reject) {
         if (PelApi.isAndroid) {
           var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), hashKey).toString();
+
+          PelApi.lagger.info("set cipher and key",adAuth.cipher, hashKey)
+
           _.set(PelApi.localStorage, 'ADAUTH.cred', {
             cipher: ciphertext
           });
@@ -1820,11 +1823,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         if (PelApi.isAndroid) {
           var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
           if (adAuth.cipher) {
+            PelApi.lagger.info("get cipher and key",adAuth.cipher, hashKey)
             var bytes = CryptoJS.AES.decrypt(adAuth.cipher, hashKey);
             var decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
             if(decryptedCredentials) return resolve(decryptedCredentials)
             else
-            return reject("Failed to descrypt credentials")
+            return reject("Failed to decrypt credentials")
           }
         } else if (PelApi.isIOS) {
           return Keychain.getJson(kwin(resolve), kfail(reject), 'ADAUTH_cred', false);
@@ -1832,9 +1836,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       });
       },
       show:function() {
-        // platforms : 
-        // PelApi.isAndroid
-        // PelApi.isIOS
         
         var options = {};
         if (PelApi.isAndroid) {
@@ -1847,7 +1848,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           };
         }
 
-
+        PelApi.lagger.info("bioauth options",options);
+        
         return $q(function (resolve, reject) {
           function successCallback(res) {
             console.log("success bioAuth:", res)
