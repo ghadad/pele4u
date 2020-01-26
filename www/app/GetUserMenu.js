@@ -123,9 +123,9 @@ app.controller('GetUserMenuCtrl',
      */
 
 
-    if ($sessionStorage.PELE4U_MSISDN) {
-      appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN
-    }
+    
+    appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN;
+    
 
     $scope.GetUserMenuMain = function () {
 
@@ -170,7 +170,7 @@ app.controller('GetUserMenuCtrl',
         if ("Valid" === pinCodeStatus) {
           appSettings.config.token = data.token;
           _.set(PelApi.sessionStorage.ADAUTH,'token',data.token);
-          
+
           appSettings.config.user = data.user;
           appSettings.config.userName = data.userName;
           var strData = JSON.stringify(data);
