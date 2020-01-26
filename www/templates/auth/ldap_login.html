@@ -25,6 +25,11 @@
                         שימו לב - בסיום ההתחברות תועבר להזדהות הביומטרית באמצעות טביעת אצבע
                       </strong>
                     </label>
+                    <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='bio'">
+                        <strong>
+                          שימו לב - בסיום ההתחברות תועבר חד פעמי להזדהות הביומטרית 
+                        </strong>
+                      </label>
               <label class="item item-input">
                 <span class="input-label strong">שם משתמש</span>
                 <input type="text" class="pele_ltr" placeholder="" name="username" ng-model="user.username" required>
@@ -71,11 +76,6 @@
             <span>זיהוי ברומטרי</span>
                   <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
               </div>            
-            <div class="item" ng-show="bioCap=='bio'">
-                <button ng-click="setAuthMethod('fingerprint')" class="text-right button-block button-clear button-dark" >
-            <span>                טביעת אצבע</span>
-                  <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
-              </div>
             <div class="item" ng-show="bioCap=='face'">
               <button ng-click="setAuthMethod('faceid')" class="text-right button-block button-clear button-positive">
                 <span>זיהוי פנים</span>

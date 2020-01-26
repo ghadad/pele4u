@@ -1842,19 +1842,20 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           options = {
           };
         }
-        function successCallback(res) {
-          console.log("success bioAuth:", res)
-          alert("Authentication successfull:" + res);
-          resolve(res)
-        }
 
-        function errorCallback(err) {
-          console.log("error  bioAuth:", err.stack)
-          alert("Authentication invalid " + err);
-          reject(err.stack)
-        }
 
         return $q(function (resolve, reject) {
+          function successCallback(res) {
+            console.log("success bioAuth:", res)
+            alert("Authentication successfull:" + res);
+            resolve(res)
+          }
+  
+          function errorCallback(err) {
+            console.log("error  bioAuth:", err.stack)
+            alert("Authentication invalid " + err);
+            reject(err.stack)
+          }
           if (!window.Fingerprint)
             return reject("Fingerprint not installed in this device");
           Fingerprint.show(options, successCallback, errorCallback);
