@@ -1842,18 +1842,17 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       show:function() {
         
-        var options = {};
+        var  options = {
+          clientId: PelApi.appSettings.config.bioClientId,
+          clientSecret: PelApi.appSettings.config.bioClientSecret
+        };
+
         PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS());
-        if (ionic.Platform.isAndroid()) {
-          options = {
-            clientId: PelApi.appSettings.config.bioClientId,
-            clientSecret: PelApi.appSettings.config.bioClientSecret
-          };
-        } else if(ionic.Platform.isIOS()) {
+        
+        if(ionic.Platform.isIOS()) {
           options = {
           };
         }
-
         PelApi.lagger.info("bioauth options",options);
 
         return $q(function (resolve, reject) {
