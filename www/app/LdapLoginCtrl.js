@@ -148,7 +148,7 @@ angular.module('pele', ['ngStorage'])
 
     if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
       BioAuth.show().then(function (hashkey) {
-        BioAuth.setCredentials(credentials,hashkey).
+        BioAuth.getCredentials(hashkey).
         then(function(decryptedCredentials){
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
