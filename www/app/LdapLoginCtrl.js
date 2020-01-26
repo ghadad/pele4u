@@ -8,6 +8,9 @@ angular.module('pele', ['ngStorage'])
     $scope.authMethod = BioAuth.getMethod();
     
     $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
+    
+    $scope.bioErrMessage1 = "שגיאה בהפעלת זיהוי ביומטרי" ; 
+    $scope.bioErrMessage2 = "נסו שוב או  הזדהו באמצעות סיסמא חד פעמית" ; 
 
     $scope.regTitle = $scope.title = "התחברות עם משתמש וסיסמה";
     $scope.authTitle = "ניהול שיטות זיהוי";
@@ -17,6 +20,17 @@ angular.module('pele', ['ngStorage'])
     }
     $scope.error = null;
     $scope.activeForm = false;
+    $scope.bioCap = null;
+    $scope.doRender = false;
+
+    BioAuth.getCap().then(function (result) {
+      $scope.bioCap = result;
+    }).catch(function () {
+      PelApi.lagger.info("bioAuth not exists for this device");
+    }).finally(function(){ 
+      $scope.doRender = true;
+    })
+
 
     $ionicModal.fromTemplateUrl('authMethods.html', {
       scope: $scope,
@@ -24,7 +38,6 @@ angular.module('pele', ['ngStorage'])
     }).then(function (modal) {
       $scope.modal = modal;
     });
-
 
     $scope.openModal = function () {
       $scope.title = $scope.authTitle
@@ -43,8 +56,10 @@ angular.module('pele', ['ngStorage'])
     $scope.closeModal = function () {
       $scope.title = $scope.regTitle
       $scope.modal.hide();
+      
       setTimeout(function () {
         $scope.activeForm = true;
+      //  return $state.go("app.p1_appsLists");
       }, 100)
 
     };
@@ -60,25 +75,15 @@ angular.module('pele', ['ngStorage'])
     });
 
     $scope.doLogIn = function () {
-
-      BioAuth.get().then(function (result) {
-        return $state.go("app.p1_appsLists");
-      }).catch(function (error) {
-        PelApi.lagger.error("bioAuth not exists for this device", error.stack);
-      })
-
       $scope.error = "";
       if (!($scope.user.username && $scope.user.password)) {
         $scope.error = "יש להזין שם משתמש וסיסמה";
       }
-      //PelApi.showLoading();
+      PelApi.showLoading();
 
       var user = _.trim($scope.user.username);
       var password = _.trim($scope.user.password);
 
-      if (user + password === "testtest") {
-
-      }
       var httpConf = PelApi.getDocApproveServiceUrl('ADLogin');
 
       var promise = $http({
@@ -104,20 +109,20 @@ angular.module('pele', ['ngStorage'])
           PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = adLoginInfo.msisdn;
           var credentials = {
             username: user,
-            password: password
+            password: password,
+            msisdn:PelApi.appSettings.config.MSISDN_VALUE
           };
-
           if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face/)) {
-            BioAuth.show().then(function (res) {
-              var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), PelApi.appSettings.config.token).toString();
-              _.set(PelApi.localStorage, 'ADAUTH.cred', {
-                cipher: ciphertext,
-                token: PelApi.appSettings.config.token,
-                msisdn: PelApi.appSettings.config.MSISDN_VALUE
-              });
-              return $state.go("app.p1_appsLists");
+            BioAuth.show().then(function (hashkey) {
+              BioAuth.setCredentials(credentials,hashkey).
+              then(function(result){
+                return $state.go("app.p1_appsLists");
+              }).catch(function(err){
+                PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
+                return $state.go('app.ldap_login');
+              })
             }).catch(function (error) {
-
+              return $state.go('app.ldap_login');
             })
           } else {
             return $state.go("app.p1_appsLists");
@@ -136,16 +141,18 @@ angular.module('pele', ['ngStorage'])
     }
 
     if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face/)) {
-      BioAuth.show().then(function (res) {
-        var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
-        if (adAuth.token && adAuth.cipher) {
-          var bytes = CryptoJS.AES.decrypt(adAuth.cipher, adAuth.token);
-          var decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      BioAuth.show().then(function (hashkey) {
+        BioAuth.setCredentials(credentials,hashkey).
+        then(function(decryptedCredentials){
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
           return $scope.doLogIn();
-        }
+        }).catch(function(err){
+          PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
+          return $state.go('app.ldap_login');
+        })
       }).catch(function (error) {
+        return $state.go('app.ldap_login');
       })
     } else {
       setTimeout(function () {

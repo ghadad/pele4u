@@ -1752,6 +1752,18 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       return $sce.trustAsHtml(text)
     }
   }).factory('BioAuth', function ($q, $sessionStorage, PelApi) {
+    var kfail = function(reject){ 
+      return function() { 
+        return reject("Failed to get/set keychain")
+      }
+    }
+
+    var kwin = function(resolve){ 
+      return function(value) { 
+        return resolve(value);
+      }
+    }
+
     return {
       isInstalled:function(){
         return (window.Fingerprint ? true : false);
@@ -1767,13 +1779,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         _.set(PelApi.sessionStorage, 'ADAUTH', {
           method: method
         });
-
       },
-      get: function () {
+      getCap: function () {
         return $q(function (resolve, reject) {
           if (window.Fingerprint) {
             window.Fingerprint.isAvailable(function (result) {
-              $sessionStorage.bioAuthCap = result;
+              $localStorage.bioAuthCap = $sessionStorage.bioAuthCap = result;
               resolve(result);
             }, function () {
               PelApi.lagger.info("Fingerprint not avaialable in device");
@@ -1784,7 +1795,39 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
         })
       },
-      show() {
+      setCredentials:function(credentials,hashKey) {
+        return $q(function (resolve, reject) {
+        if (PelApi.isAndroid) {
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), hashKey).toString();
+          _.set(PelApi.localStorage, 'ADAUTH.cred', {
+            cipher: ciphertext,
+            msisdn: PelApi.appSettings.config.MSISDN_VALUE
+          });
+          if(ciphertext) return resolve(true)
+          else
+          return reject("Failed to encrypt user/pass")
+        } else if (PelApi.isIOS) {
+          return Keychain.setJson(kwin(resolve), kfail(reject),'ADAUTH_cred' , credentials, false);
+        }
+      });
+      },
+      getCredentials:function(hashKey) {
+        return $q(function (resolve, reject) {
+        if (PelApi.isAndroid) {
+          var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
+          if (adAuth.cipher) {
+            var bytes = CryptoJS.AES.decrypt(adAuth.cipher, hashKey);
+            var decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            if(decryptedCredentials) return resolve(decryptedCredentials)
+            else
+            return reject("Failed to descrypt credentials")
+          }
+        } else if (PelApi.isIOS) {
+          return Keychain.getJson(kwin(resolve), kfail(reject), 'ADAUTH_cred', false);
+        }
+      });
+      },
+      show:function() {
         // platforms : 
         // PelApi.isAndroid
         // PelApi.isIOS
@@ -1797,12 +1840,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           };
         } else if (PelApi.isIOS) {
           options = {
-
           };
         }
         function successCallback(res) {
           console.log("success bioAuth:", res)
-          alert("Authentication successfull", res);
+          alert("Authentication successfull:" + res);
           resolve(res)
         }
 
@@ -1817,12 +1859,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             return reject("Fingerprint not installed in this device");
           Fingerprint.show(options, successCallback, errorCallback);
         });
-
       }
     }
   }).factory('Contact', function ($q) {
-
-
     var setContactData = function (deviceContact, info) {
       var targetContact = deviceContact;
       targetContact.rawId = info.personId;

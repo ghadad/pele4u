@@ -25,7 +25,7 @@
         "CONTACTS_USAGE_DESCRIPTION": "your usage message"
       },
       "cordova-custom-config": {},
-      "cordova-plugin-filepath": {},
+      "cordova-plugin-filepath": {}
     }
   }
 }
