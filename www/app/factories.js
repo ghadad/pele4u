@@ -1843,12 +1843,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       show:function() {
         
         var options = {};
+        PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS());
         if (ionic.Platform.isAndroid()) {
           options = {
             clientId: PelApi.appSettings.config.bioClientId,
             clientSecret: PelApi.appSettings.config.bioClientSecret
           };
-        } else if (ionic.Platform.isIOS()) {
+        } else if(ionic.Platform.isIOS()) {
           options = {
           };
         }
