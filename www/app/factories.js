@@ -1768,8 +1768,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       isInstalled:function(){
         return (window.Fingerprint ? true : false);
       },
+
       getMethod:function() {
         return  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
+      },
+      clear: function() { 
+        _.set(PelApi.localStorage, 'ADAUTH', {
+        });
       },
       setMethod:function(method) {
         // remove old credentials 

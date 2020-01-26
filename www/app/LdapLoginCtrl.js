@@ -3,7 +3,8 @@ angular.module('pele', ['ngStorage'])
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
-    $scope.resetRequest = $state.params.reset;
+    if($state.params.reset)
+       BioAuth.reset();
 
     $scope.authMethod = BioAuth.getMethod();
     
