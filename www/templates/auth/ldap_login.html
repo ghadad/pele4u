@@ -66,6 +66,16 @@
 <span>                טביעת אצבע</span>
                 <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
             </div>
+            <div class="item" ng-show="bioCap=='bio'">
+                <button ng-click="setAuthMethod('bio')" class="text-right button-block button-clear button-dark" >
+            <span>זיהוי ברומטרי</span>
+                  <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
+              </div>            
+            <div class="item" ng-show="bioCap=='bio'">
+                <button ng-click="setAuthMethod('fingerprint')" class="text-right button-block button-clear button-dark" >
+            <span>                טביעת אצבע</span>
+                  <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
+              </div>
             <div class="item" ng-show="bioCap=='face'">
               <button ng-click="setAuthMethod('faceid')" class="text-right button-block button-clear button-positive">
                 <span>זיהוי פנים</span>

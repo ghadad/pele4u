@@ -23,8 +23,13 @@ angular.module('pele', ['ngStorage'])
     $scope.bioCap = null;
     $scope.doRender = false;
 
-    BioAuth.getCap().then(function (result) {
-      $scope.bioCap = result;
+    BioAuth.getCap().then(function (result="") {
+      if(result.match(/bio/i))
+          $scope.bioCap = "bio";
+          else if (result.match(/finger/i))
+          $scope.bioCap = "finger";
+          else if (result.match(/face/i))
+          $scope.bioCap = "face";
     }).catch(function () {
       PelApi.lagger.info("bioAuth not exists for this device");
     }).finally(function(){ 
@@ -53,10 +58,10 @@ angular.module('pele', ['ngStorage'])
     }
 
 
-    $scope.closeModal = function () {
+    $scope.closeModal = function (backToMenu) {
       $scope.title = $scope.regTitle
       $scope.modal.hide();
-      
+      if(backToMenu)
       setTimeout(function () {
         $scope.activeForm = true;
       //  return $state.go("app.p1_appsLists");
@@ -112,7 +117,7 @@ angular.module('pele', ['ngStorage'])
             password: password,
             msisdn:PelApi.appSettings.config.MSISDN_VALUE
           };
-          if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face/)) {
+          if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
             BioAuth.show().then(function (hashkey) {
               BioAuth.setCredentials(credentials,hashkey).
               then(function(result){
@@ -140,7 +145,7 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
-    if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face/)) {
+    if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
       BioAuth.show().then(function (hashkey) {
         BioAuth.setCredentials(credentials,hashkey).
         then(function(decryptedCredentials){
