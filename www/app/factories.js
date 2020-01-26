@@ -1805,7 +1805,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         if (PelApi.isAndroid) {
           var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), hashKey).toString();
 
-          PelApi.lagger.info("set cipher and key",adAuth.cipher, hashKey)
+          PelApi.lagger.info("set cipher and key",ciphertext, hashKey)
 
           _.set(PelApi.localStorage, 'ADAUTH.cred', {
             cipher: ciphertext
