@@ -1825,7 +1825,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (adAuth.cipher) {
             PelApi.lagger.info("get cipher and key",adAuth.cipher, hashKey)
             var bytes = CryptoJS.AES.decrypt(adAuth.cipher, hashKey);
-            var decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            var decryptedCredentials 
+            try  {
+               decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            } catch(error){
+              return reject("Failed to decrypt credentials")
+            }            
             if(decryptedCredentials) return resolve(decryptedCredentials)
             else
             return reject("Failed to decrypt credentials")
@@ -1849,7 +1854,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
 
         PelApi.lagger.info("bioauth options",options);
-        
+
         return $q(function (resolve, reject) {
           function successCallback(res) {
             console.log("success bioAuth:", res)
