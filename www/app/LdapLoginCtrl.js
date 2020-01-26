@@ -124,10 +124,10 @@ angular.module('pele', ['ngStorage'])
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
-                return $state.go('app.ldap_login');
+                $state.reload();
               })
             }).catch(function (error) {
-              return $state.go('app.ldap_login');
+              $state.reload();
             })
           } else {
             return $state.go("app.p1_appsLists");
@@ -154,10 +154,10 @@ angular.module('pele', ['ngStorage'])
           return $scope.doLogIn();
         }).catch(function(err){
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
-          return $state.go('app.ldap_login');
+          $state.reload();
         })
       }).catch(function (error) {
-        return $state.go('app.ldap_login');
+        $state.reload();
       })
     } else {
       setTimeout(function () {
