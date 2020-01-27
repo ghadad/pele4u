@@ -1757,9 +1757,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     var bioOptions = {
       clientId: PelApi.appSettings.config.bioClientId,
       clientSecret: PelApi.appSettings.config.bioClientSecret,
-      dialogTitle: "דיאלו טייטל",
-      dialogMessage: "דיאלוג מסג",
-      dialogHint: "דיאלוג הינט"
+      dialogTitle: "זיהוי באמצעות טביעת אצבע",
+      dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
+    //  dialogHint: "דיאלוג הינט"
     }
 
     var kfail = function (reject) {
@@ -1778,7 +1778,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       isInstalled: function () {
         return (window.BiometricAuth ? true : false);
       },
-
+      getToken:function() {
+        return _.get(PelApi.localStorage, 'ADAUTH.token', null);
+      },
       getMethod: function () {
         return _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
       },
