@@ -1757,7 +1757,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     var bioOptions = {
       clientId: PelApi.appSettings.config.bioClientId,
       clientSecret: PelApi.appSettings.config.bioClientSecret,
-      dialogMessage: "Blaa bla bla"
+      dialogTitle: "דיאלו טייטל",
+      dialogMessage: "דיאלוג מסג",
+      dialogHint: "דיאלוג הינט"
     }
 
     var kfail = function (reject) {
