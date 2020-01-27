@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you" version="138" versionCode="138" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
+<widget id="co.il.pelephone.pele4you_qa" version="139" versionCode="139" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PELE4U</name>
+    <name>PELE4U_QA</name>
     <description>
     Work form anywhere
   </description>
@@ -74,7 +74,13 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <param name="URL_SCHEME" value="pele4u" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" />
-    <plugin name="cordova-plugin-fingerprint-aio" source="npm" />
+    <!--plugin name="cordova-plugin-fingerprint-aio" source="npm" /-->
+    <plugin name="cordova-plugin-ios-keychain" source="npm" />
+    <plugin name="cordova-plugin-android-fingerprint-auth" source="npm" />
+    <plugin name="cordova-plugin-touchid" source="npm" />
+    
+
+
 
       <icon src="icon.png" />
     <icon src="res/icons/ios/icon-1024.png"  platform="ios" width="1024" height="1024" />

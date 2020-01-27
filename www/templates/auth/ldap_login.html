@@ -1,21 +1,35 @@
-<ion-view cache-view="false" hide-back-button="false">
+<ion-view cache-view="false" hide-back-button="false" ng-show="doRender">
 
   <ion-nav-title>
     <div class="bar bar-header bar-light">
-      <div class="title" id="logo">  <h4 class=" white">התחברות עם משתמש וסיסמה </h4>
+      <div class="title" id="logo">  <h4 class=" white">{{title}} </h4>
       </div>
     </div>
   </ion-nav-title>
   <ion-content class="pele-background" scroll="false">
     <div class="text-center">
-    
     </div>
     
-    <div class="row">
+    <div class="row" ng-show="activeForm">
       <div class="col col-center">
         <div class="card login-container">
           <form name="" class="" novalidate>
               <div class="list">
+                  <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='faceid'">
+                    <strong>
+                    שימו לב - בסיום ההתחברות תועבר להזדהות הביומטרית באמצעות זיהוי פנים
+                    </strong>
+                    </label>
+                    <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='fingerprint'">
+                      <strong>
+                        שימו לב - בסיום ההתחברות תועבר להזדהות הביומטרית באמצעות טביעת אצבע
+                      </strong>
+                    </label>
+                    <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='bio'">
+                        <strong>
+                          שימו לב - בסיום ההתחברות תועבר חד פעמי להזדהות הביומטרית 
+                        </strong>
+                      </label>
               <label class="item item-input">
                 <span class="input-label strong">שם משתמש</span>
                 <input type="text" class="pele_ltr" placeholder="" name="username" ng-model="user.username" required>
@@ -40,4 +54,42 @@
       </div>
     </div>
   </ion-content>
+  <script type="text/ng-template" id="authMethods.html">
+    <ion-content  id="auth-modal" padding="true" style="margin:60px 25px 25px 25px" ng-show="doRender">
+
+        <div  class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
+          <div class="item item-text-wrap pele_ltr">
+              <button ng-click="closeModal()" class="button-icon ion-close"></button>
+              <h2 class="text-center"><strong>יש לבחור שיטת זיהוי</strong></h2>             
+              <div class="item no-border">
+                <button ng-click="setAuthMethod('pincode')" class="text-right button-block button-clear button-dark">
+                    <span class="">SMS סיסמא חד פעמית ב</span>
+                    <img class="icon-md" src="img/new_icons/pincode.png"></button>
+              </div>
+              <div class="item" ng-show="bioCap=='finger'">
+              <button ng-click="setAuthMethod('fingerprint')" class="text-right button-block button-clear button-dark" >
+<span>                טביעת אצבע</span>
+                <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
+            </div>
+            <div class="item" ng-show="bioCap=='bio'">
+                <button ng-click="setAuthMethod('bio')" class="text-right button-block button-clear button-dark" >
+            <span>זיהוי ברומטרי</span>
+                  <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
+              </div>            
+            <div class="item" ng-show="bioCap=='face'">
+              <button ng-click="setAuthMethod('faceid')" class="text-right button-block button-clear button-positive">
+                <span>זיהוי פנים</span>
+                  <img class="icon-md" src="img/new_icons/faceid.png"></button>
+            </div>
+            <div ng-if="0" class="item">
+                <button ng-click="setAuthMethod(null)" class="text-right button-block button-clear button-dark">
+                    <span class=""> ללא זיהוי מקוצר</span>
+                    <img class="icon-md" src="img/new_icons/login_form.png"></button>
+              </div>
+          </div>
+        </div>
+        
+      </ion-content>
+  </script>
+
 </ion-view>

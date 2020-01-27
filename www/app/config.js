@@ -38,7 +38,10 @@ const apiConfig = {
   menuTimeout: 15000,
   translateFlag: "N",
   flashTime: 2500,
-
+  authMethods  :{
+    ios:['pincode'],
+    android:['pincode','fingerprint']
+  },
   OneSignal: {
     DV: {
       appId: '430ad45c-c555-41f5-87c4-46f9d4be0cc1',
@@ -181,6 +184,8 @@ angular.module('pele.config', [])
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
+      bioClientId:"NEVER_CHANGE_THIS_VALUE_BIOPELE4U" ,
+      bioClientSecret:"NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
       APP_VERSION: "138",
       SCAN_PRINT_SCANNING_ERROR: "שגיאה בסריקה",
