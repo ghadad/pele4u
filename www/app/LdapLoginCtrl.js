@@ -124,7 +124,7 @@ angular.module('pele', ['ngStorage'])
           };
           if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
             
-              BioAuth.encrypy(credentials).
+              BioAuth.encrypt(credentials).
               then(function(result){
                 alert(result);
                 _.set(PelApi.localStorage, 'ADAUTH.token', result);
