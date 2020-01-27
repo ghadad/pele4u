@@ -112,9 +112,6 @@ angular.module('pele', ['ngStorage'])
           PelApi.sessionStorage.ADAUTH = adLoginInfo;
           PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
 
-
-
-
           PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = adLoginInfo.msisdn;
 
           var credentials = {
@@ -127,7 +124,7 @@ angular.module('pele', ['ngStorage'])
               BioAuth.encrypt(credentials).
               then(function(result){
                 alert(result);
-                _.set(PelApi.localStorage, 'ADAUTH.token', result);
+                _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
                 PelApi.sessionStorage.bioAuthTries =  (PelApi.sessionStorage.bioAuthTries||1) +1;

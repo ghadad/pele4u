@@ -6,7 +6,7 @@ var app = angular.module('pele.GetUserMenu', ['ngStorage', 'ngCordova']);
 //==                         PAGE_1                                  ==//
 //=====================================================================//
 app.controller('GetUserMenuCtrl',
-  function ($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate) {
+  function ($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate,BioAuth) {
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
     PelApi.lagger.checkFile().then(function (logStat) {
@@ -129,14 +129,8 @@ app.controller('GetUserMenuCtrl',
     if ($sessionStorage.PELE4U_MSISDN) {
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN;
     }
-    
-
-
 
     $scope.GetUserMenuMain = function () {
-
-
-
       $rootScope.menuItems = [];
       var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
@@ -190,6 +184,7 @@ app.controller('GetUserMenuCtrl',
 
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
           $rootScope.menuItems = $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
+
           //---------------------------------------------
           //-- Send User Tag for push notifications
           //---------------------------------------------
@@ -410,6 +405,48 @@ app.controller('GetUserMenuCtrl',
     var btnClass = {};
     btnClass.activ = false;
     $scope.class = "pele-menu-item-on-touch item-icon-right";
-    if (!($rootScope.menuItems && $rootScope.menuItems.length))
-    return $scope.doRefresh();     
+    var sessionAdauth = PelApi.sessionStorage.ADAUTH || {} ;
+    var sessionMenuItems =  _.get(sessionAdauth,'menuItems',[]);
+
+    if(sessionMenuItems.length) { 
+      $rootScope.menuItems  = $scope.sort(sessionMenuItems);
+    }
+    /**** Golan : Make GetUserMenu irrelvat when ADlogin return valid menu *****/
+
+    $sessionStorage.token = sessionAdauth.token;
+    $sessionStorage.user = sessionAdauth.user;
+    var UserId = _.get($localStorage.profile, "id")
+    $rootScope.profile = $localStorage.profile;
+    appSettings.config.Pin = sessionAdauth.PinCode;
+    $sessionStorage.userName = sessionAdauth.userName;
+    $sessionStorage.AuthInfo = {
+      pinCode: appSettings.config.Pin,
+      token: appSettings.config.token,
+      user: sessionAdauth.user,
+      userName: sessionAdauth.userName,
+      timeStamp: new Date().getTime()
+    };
+
+    if (!UserId || (UserId && UserId != $sessionStorage.user)) {
+      ApiGateway.get("public/profile", {
+        id: $sessionStorage.user
+      }).then(function (res) {
+        $localStorage.profile = res.data;
+        $localStorage.profile.id = $sessionStorage.user;
+        $rootScope.profile = $localStorage.profile;
+      }).catch(function(err){
+        PelApi.lagger.error("Failed to get public profile for user");
+      })
+    }
+
+   /**************/
+   
+   var authMethod = BioAuth.getMethod();
+   if(!authMethod) 
+       $state.go('app.ldap_login');
+       
+   if (!($rootScope.menuItems && $rootScope.menuItems.length && authMethod == 'pincode'))
+        return $scope.doRefresh();     
+   else
+        $sessionStorage.$reset();
   })
