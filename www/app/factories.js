@@ -1813,8 +1813,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           ConfigObject.username = credentials.username;
           ConfigObject.password = credentials.password;
           window.BiometricAuth.authenticate(
-            function (token) {
-              resolve(token)
+            function (_fingerResult) {
+              console.log("successCallback(): " + JSON.stringify(_fingerResult));
+              resolve(_fingerResult)
             },
             function () {
               return reject("Failed to encrypt user/pass")
