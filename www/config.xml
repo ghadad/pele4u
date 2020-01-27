@@ -74,8 +74,13 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <param name="URL_SCHEME" value="pele4u" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" />
-    <plugin name="cordova-plugin-fingerprint-aio" source="npm" />
+    <!--plugin name="cordova-plugin-fingerprint-aio" source="npm" /-->
     <plugin name="cordova-plugin-ios-keychain" source="npm" />
+    <plugin name="cordova-plugin-android-fingerprint-auth" source="npm" />
+    <plugin name="cordova-plugin-touchid" source="npm" />
+    
+
+
 
       <icon src="icon.png" />
     <icon src="res/icons/ios/icon-1024.png"  platform="ios" width="1024" height="1024" />

@@ -167,7 +167,7 @@ app.controller('GetUserMenuCtrl',
 
         $sessionStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
         $localStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
-
+        _.set(PelApi.sessionStorage.ADAUTH,'msisdn',appSettings.config.MSISDN_VALUE);
 
         //$scope.setMSISDN(appSettings.config.MSISDN_VALUE);
 
@@ -285,8 +285,7 @@ app.controller('GetUserMenuCtrl',
      */
     $scope.doRefresh = function () {
 
-      appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN ;
-      
+      appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN;
       $scope.btn_class = {};
       $scope.btn_class.on_release = true;
 
@@ -412,31 +411,5 @@ app.controller('GetUserMenuCtrl',
     btnClass.activ = false;
     $scope.class = "pele-menu-item-on-touch item-icon-right";
     if (!($rootScope.menuItems && $rootScope.menuItems.length))
-     var svConf = PelApi.getDocApproveServiceUrl("IsSessionValidJson", "login");
-     var appId  = _.get(PelApi.sessionStorage.ADAUTH,'appId',null)
-     var PinCode  = _.get(PelApi.sessionStorage.ADAUTH,'PinCode',null)
-     PelApi.appSettings.config.MSISDN_VALUE = _.get(PelApi.sessionStorage.ADAUTH,'msisdn',null);
-     PelApi.appSettings.config.token = _.get(PelApi.sessionStorage.ADAUTH,'token',null);
-     console.log(appId,PinCode,PelApi.appSettings.config.MSISDN_VALUE);
-    if(!(PinCode && appId)) {
-      console.log("bug 1")
-      appSettings.config.IS_TOKEN_VALID = 'N';
-      return $scope.doRefresh();    
-    }
-    
-    PelApi.IsSessionValidJson(svConf, appId, 0 /* PinCode - there is bug in pincode expiracy checking */).
-    success(function (pinStatus, status, headers, config) {
-      if ("Valid" === pinStatus) {
-        $ionicLoading.hide();
-        return $scope.doRefresh();      
-      } else {
-        //  authMethod == "pincode "
-        appSettings.config.IS_TOKEN_VALID = 'N';
-        return $scope.doRefresh();      
-
-      }
-    }).error(function () {
-      console.log("bug 2")
-      $state.go('app.ldap_login');
-    });
+    return $scope.doRefresh();     
   })

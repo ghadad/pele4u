@@ -112,7 +112,11 @@ angular.module('pele', ['ngStorage'])
           PelApi.sessionStorage.ADAUTH = adLoginInfo;
           PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
 
+
+
+
           PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = adLoginInfo.msisdn;
+
           var credentials = {
             username: user,
             password: password,
@@ -120,8 +124,10 @@ angular.module('pele', ['ngStorage'])
           };
           if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
             BioAuth.show().then(function (hashkey) {
-              BioAuth.setCredentials(credentials,hashkey).
+              BioAuth.encrypy(credentials).
               then(function(result){
+                alert(result);
+                _.set(PelApi.localStorage, 'ADAUTH.token', result);
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
                 PelApi.sessionStorage.bioAuthTries =  (PelApi.sessionStorage.bioAuthTries||1) +1;
@@ -133,6 +139,17 @@ angular.module('pele', ['ngStorage'])
             })
           } else {
             return $state.go("app.p1_appsLists");
+            /*
+            var svConf = PelApi.getDocApproveServiceUrl("IsSessionValidJson", "login");
+            PelApi.IsSessionValidJson(svConf, adLoginInfo.appId, adLoginInfo.PinCode).
+            success(function () {
+              
+            }).error(function () {
+              
+            }).finally(function() { 
+              return $state.go("app.p1_appsLists");
+            });
+            */
           }
         })
         .error(
@@ -148,15 +165,13 @@ angular.module('pele', ['ngStorage'])
     }
 
     if(BioAuth.getMethod().match(/pincode/) && PelApi.localStorage.PELE4U_MSISDN) {
-      PelApi.appSettings.config.MSISDN_VALUE = PelApi.sessionStorage.PELE4U_MSISDN = PelApi.localStorage.PELE4U_MSISDN
-      console.log(PelApi.appSettings.config.MSISDN_VALUE)
       return $state.go("app.p1_appsLists");
     }
 
-    if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
-      BioAuth.show().then(function (hashkey) {
-        BioAuth.getCredentials(hashkey).
-        then(function(decryptedCredentials){
+    if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
+      var token =  BioAuth.getToken();
+         BioAuth.decrypt(token).
+         then(function(decryptedCredentials){
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
           return $scope.doLogIn();
@@ -165,9 +180,6 @@ angular.module('pele', ['ngStorage'])
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
           $state.reload();
         })
-      }).catch(function (error) {
-        $state.reload();
-      })
     } else {
       setTimeout(function () {
         $scope.openModal();

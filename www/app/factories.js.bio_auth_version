@@ -983,7 +983,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         if (self.networkInfo.httpChannel() === "https://") {
 
           if (type !== "login") {
-            var msisdn = appSettings.config.MSISDN_VALUE; //|| $localStorage.PELE4U_MSISDN;
+            var msisdn = appSettings.config.MSISDN_VALUE ; //|| $localStorage.PELE4U_MSISDN;
             if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
             if (!msisdn) {
               self.lagger.error("Service:" + serviceName + " cant find msisdn ! not in config or localStorage or sessionStorage")
@@ -1752,37 +1752,31 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       return $sce.trustAsHtml(text)
     }
   }).factory('BioAuth', function ($q, $sessionStorage, PelApi) {
-
-    var bioOptions = {
-      clientId: PelApi.appSettings.config.bioClientId,
-      clientSecret: PelApi.appSettings.config.bioClientSecret,
-      dialogMessage: "Blaa bla bla"
-    }
-
-    var kfail = function (reject) {
-      return function () {
+    var kfail = function(reject){ 
+      return function() { 
         return reject("Failed to get/set keychain")
       }
     }
 
-    var kwin = function (resolve) {
-      return function (value) {
+    var kwin = function(resolve){ 
+      return function(value) { 
         return resolve(value);
       }
     }
 
     return {
-      isInstalled: function () {
-        return (window.BiometricAuth ? true : false);
+      isInstalled:function(){
+        return (window.Fingerprint ? true : false);
       },
 
-      getMethod: function () {
-        return _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
+      getMethod:function() {
+        return  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
       },
-      clear: function () {
-        _.set(PelApi.localStorage, 'ADAUTH', {});
+      clear: function() { 
+        _.set(PelApi.localStorage, 'ADAUTH', {
+        });
       },
-      setMethod: function (method) {
+      setMethod:function(method) {
         // remove old credentials 
         _.set(PelApi.localStorage, 'ADAUTH', {
           method: method
@@ -1793,47 +1787,92 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       getCap: function () {
         return $q(function (resolve, reject) {
-          if (window.BiometricAuth) {
-            window.BiometricAuth.isAvailable(function (result) {
+          if (window.Fingerprint) {
+            window.Fingerprint.isAvailable(function (result) {
               PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
               resolve(result);
             }, function () {
-              PelApi.lagger.info("BiometricAuth not avaialable in device");
-              reject("BiometricAuth auth not avaialable in this device");
+              PelApi.lagger.info("Fingerprint not avaialable in device");
+              reject("Biometric auth not avaialable in this device");
             });
           } else {
-            reject("BiometricAuth plugin not installed in device")
+            reject("Fingerprint plugin not installed in device")
           }
         })
       },
-      encrypt: function (credentials) {
+      setCredentials:function(credentials,hashKey) {
         return $q(function (resolve, reject) {
-          var ConfigObject = bioOptions;
-          ConfigObject.username = credentials.username;
-          ConfigObject.password = credentials.password;
-          window.BiometricAuth.authenticate(
-            function (token) {
-              resolve(token)
-            },
-            function () {
-              return reject("Failed to encrypt user/pass")
-            }, ConfigObject)
-        });
+        if (ionic.Platform.isAndroid()) {
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(credentials), hashKey).toString();
+
+          PelApi.lagger.info("set cipher and key",ciphertext, hashKey)
+
+          _.set(PelApi.localStorage, 'ADAUTH.cred', {
+            cipher: ciphertext
+          });
+          if(ciphertext) return resolve(true)
+          else
+          return reject("Failed to encrypt user/pass")
+        } else if (ionic.Platform.isIOS()) {
+          return Keychain.setJson(kwin(resolve), kfail(reject),'ADAUTH_cred' , credentials, false);
+        }
+      });
       },
-      decrypt: function (username,token) {
+      getCredentials:function(hashKey) {
         return $q(function (resolve, reject) {
-          var ConfigObject = bioOptions;
-          ConfigObject.username = username;
-          ConfigObject.password = token;
-          window.BiometricAuth.decrypt(
-            function (result) {
-                  return resolve(true)
-            },
-            function () {
+        if (ionic.Platform.isAndroid()) {
+          var adAuth = _.get(PelApi.localStorage, 'ADAUTH.cred', {});
+          if (adAuth.cipher) {
+            PelApi.lagger.info("get cipher and key",adAuth.cipher, hashKey)
+            var bytes = CryptoJS.AES.decrypt(adAuth.cipher, hashKey);
+            var decryptedCredentials 
+            try  {
+               decryptedCredentials = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            } catch(error){
               return reject("Failed to decrypt credentials")
-            }, ConfigObject)
-        })
+            }            
+            if(decryptedCredentials) return resolve(decryptedCredentials)
+            else
+            return reject("Failed to decrypt credentials")
+          }
+        } else if (ionic.Platform.isIOS()) {
+          return Keychain.getJson(kwin(resolve), kfail(reject), 'ADAUTH_cred', false);
+        }
+      });
       },
+      show:function() {
+        
+        var  bioOptions = {
+          clientId: PelApi.appSettings.config.bioClientId,
+          clientSecret: PelApi.appSettings.config.bioClientSecret,
+
+        };
+
+        PelApi.lagger.info("device platform: android ? ",ionic.Platform.isAndroid(),"ios:? ",ionic.Platform.isIOS());
+        
+        if(ionic.Platform.isIOS()) {
+          bioOptions = {
+          };
+        }
+        PelApi.lagger.info("bioauth options",bioOptions);
+
+        return $q(function (resolve, reject) {
+          function successCallback(res) {
+            console.log("success bioAuth:", res)
+          //  alert("Authentication successfull:" + res);
+            resolve(res)
+          }
+  
+          function errorCallback(err) {
+            console.log("error  bioAuth:", err.stack)
+            //alert("Authentication invalid " + err);
+            reject(err.stack)
+          }
+          if (!window.Fingerprint)
+            return reject("Fingerprint not installed in this device");
+          Fingerprint.show(bioOptions, successCallback, errorCallback);
+        });
+      }
     }
   }).factory('Contact', function ($q) {
     var setContactData = function (deviceContact, info) {
