@@ -1796,7 +1796,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (window.BiometricAuth) {
             window.BiometricAuth.isAvailable(function (result) {
               PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
-              resolve(result);
+              if(result && result.hasEnrolledFingerprints)
+              resolve("finger");
             }, function () {
               PelApi.lagger.info("BiometricAuth not avaialable in device");
               reject("BiometricAuth auth not avaialable in this device");
