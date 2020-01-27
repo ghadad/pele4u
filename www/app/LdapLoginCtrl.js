@@ -123,7 +123,7 @@ angular.module('pele', ['ngStorage'])
             msisdn:PelApi.appSettings.config.MSISDN_VALUE
           };
           if (BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
-            BioAuth.show().then(function (hashkey) {
+            
               BioAuth.encrypy(credentials).
               then(function(result){
                 alert(result);
@@ -134,9 +134,7 @@ angular.module('pele', ['ngStorage'])
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
                 $state.reload();
               })
-            }).catch(function (error) {
-              $state.reload();
-            })
+            
           } else {
             return $state.go("app.p1_appsLists");
             /*
