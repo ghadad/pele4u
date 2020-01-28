@@ -1831,12 +1831,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return $q(function (resolve, reject) {
           var ConfigObject = bioOptions;
           ConfigObject.username = username;
+          ConfigObject.token = token;
           window.BiometricAuth.decrypt(
             function (result) {
                   return resolve(result)
             },
-            function () {
-              return reject("Failed to decrypt credentials")
+            function (err) {
+              PelApi.lagger.error("Failed to decrypt credentials:",err)
+              return reject("Failed to decrypt credentials : " + err.stack)
             }, ConfigObject)
         })
       },
