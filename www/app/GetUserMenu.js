@@ -429,6 +429,10 @@ app.controller('GetUserMenuCtrl',
     if(!sessionAdauth.token && authMethod == 'pincode') {
       return $scope.doRefresh(); 
     }
+
+           
+    if(!sessionAdauth.token && authMethod.match(/finger/)) 
+      return  $state.go('app.ldap_login');
     
     var sessionMenuItems =  _.get(sessionAdauth,'menuItems',[]);
 
