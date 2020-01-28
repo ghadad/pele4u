@@ -55,15 +55,8 @@ FingerPrint.prototype.authenticate = function (successCallback, errorCallback,ob
 };
 
 FingerPrint.prototype.decrypt =   function (successCallback, errorCallback,object) {
-    // success callback function for android 
-    var successCbFingerPrintAuth = function(result) {successCallback(null);};
-    // error callback function for android 
-    var errorCbFingerPrintAuth = function(error) {
-			var message = "authenticationFailed"
-			errorCallback(error);
-    };
-    // if the device is android call the FingerprintAuth plugin
-    if(cordova.platformId === "android"){FingerprintAuth.decrypt(object, successCbFingerPrintAuth, errorCbFingerPrintAuth);}
+     // if the device is android call the FingerprintAuth plugin
+    if(cordova.platformId === "android"){FingerprintAuth.decrypt(object, successCallback, errorCallback);}
     // if the device is ios call the touchid plugin 
     if(cordova.platformId === "ios")touchid.authenticate(successCallback, errorCallback, object.dialogMessage);
 };
