@@ -1834,6 +1834,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           ConfigObject.token = token;
           window.BiometricAuth.decrypt(
             function (result) {
+                  result.username  =  username;
+                  if(!result.password)
+                  return reject("cannot get encrypted password");
                   return resolve(result)
             },
             function (err) {
