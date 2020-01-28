@@ -1831,10 +1831,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return $q(function (resolve, reject) {
           var ConfigObject = bioOptions;
           ConfigObject.username = username;
-          ConfigObject.password = token;
           window.BiometricAuth.decrypt(
             function (result) {
-                  return resolve(true)
+                  return resolve(result)
             },
             function () {
               return reject("Failed to decrypt credentials")

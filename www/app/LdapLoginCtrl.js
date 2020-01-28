@@ -177,7 +177,7 @@ angular.module('pele', ['ngStorage'])
         }).catch(function(err){
           PelApi.sessionStorage.bioAuthTries =  (PelApi.sessionStorage.bioAuthTries||1) +1;
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
-          $state.reload();
+         // $state.reload();
         })
     } else {
       BioAuth.clear();
