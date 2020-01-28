@@ -7,6 +7,8 @@ var app = angular.module('pele.GetUserMenu', ['ngStorage', 'ngCordova']);
 //=====================================================================//
 app.controller('GetUserMenuCtrl',
   function ($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate,BioAuth) {
+        
+
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
     PelApi.lagger.checkFile().then(function (logStat) {
@@ -169,7 +171,6 @@ app.controller('GetUserMenuCtrl',
         PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
         if ("Valid" === pinCodeStatus) {
           appSettings.config.token = data.token;
-          _.set(PelApi.sessionStorage.ADAUTH,'token',data.token);
           
           appSettings.config.user = data.user;
           appSettings.config.userName = data.userName;
@@ -184,10 +185,7 @@ app.controller('GetUserMenuCtrl',
 
           $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
           $rootScope.menuItems = $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
-
-          alert( $scope.feeds_categories.activePin);
-
-
+    
           //---------------------------------------------
           //-- Send User Tag for push notifications
           //---------------------------------------------
@@ -222,6 +220,8 @@ app.controller('GetUserMenuCtrl',
           if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
             $state.go('app.login');
           } else {
+            
+            PelApi.sessionStorage.ADAUTH =appSettings.config.GetUserMenu;
             appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
             appSettings.config.IS_TOKEN_VALID = "Y";
 
@@ -408,7 +408,28 @@ app.controller('GetUserMenuCtrl',
     var btnClass = {};
     btnClass.activ = false;
     $scope.class = "pele-menu-item-on-touch item-icon-right";
+
+
+
+          /** Golan  */
+          
+          
+    if(PelApi.sessionStorage.newValidPinCode) { 
+      appSettings.config.Pin =   PelApi.sessionStorage.newValidPinCode;
+      _.set(PelApi.sessionStorage.ADAUTH,'PinCode',PelApi.sessionStorage.newValidPinCode);
+     delete PelApi.sessionStorage.newValidPinCode;
+    }
+
     var sessionAdauth = PelApi.sessionStorage.ADAUTH || {} ;
+    var authMethod = BioAuth.getMethod();
+    if(!authMethod) 
+       return  $state.go('app.ldap_login');
+       
+       
+    if(!sessionAdauth.token && authMethod == 'pincode') {
+      return $scope.doRefresh(); 
+    }
+    
     var sessionMenuItems =  _.get(sessionAdauth,'menuItems',[]);
 
     if(sessionMenuItems.length) { 
@@ -443,13 +464,8 @@ app.controller('GetUserMenuCtrl',
     }
 
    /**************/
-   
-   var authMethod = BioAuth.getMethod();
-   if(!authMethod) 
-      return  $state.go('app.ldap_login');
-       
-   if (!($rootScope.menuItems && $rootScope.menuItems.length && authMethod == 'pincode'))
+   var menuExists = _.get( $rootScope,'menuItems',null);
+    if (!menuExists && authMethod == 'pincode')
         return $scope.doRefresh();     
-   else
-        $sessionStorage.$reset();
+ 
   })

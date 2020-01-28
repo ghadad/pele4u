@@ -61,7 +61,10 @@ app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootSc
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               appSettings.config.Pin = pin;
+
+              
               appSettings.config.IS_TOKEN_VALID = "Y";
+              PelApi.sessionStorage.newValidPinCode = pin;
 
               $sessionStorage.AuthInfo = {
                 pinCode: appSettings.config.Pin,
@@ -74,6 +77,7 @@ app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootSc
                 code: appSettings.config.Pin,
                 apiCode: pinStatus
               })
+              
               $state.go('app.p1_appsLists');
             } else if ("PWA" === pinStatus) {
               $ionicLoading.hide();

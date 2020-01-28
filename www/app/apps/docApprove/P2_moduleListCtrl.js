@@ -21,6 +21,8 @@ angular.module('pele')
     //----------------------- LOGIN --------------------------//
     $scope.appId = $stateParams.AppId;
 
+    PelApi.lagger.info("in p2 list: pin code => " ,appSettings.config.Pin)
+
     // Form data for the login modal
     $scope.loginData = {};
 
@@ -149,6 +151,7 @@ angular.module('pele')
 
       var appId = $stateParams.AppId;
       var pin = $stateParams.Pin;
+      console.log("doRefresh pin",pin)
       var titleDisp = $stateParams.Title;
 
       $sessionStorage.DOC_ID = "";

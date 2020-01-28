@@ -1759,7 +1759,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       clientSecret: PelApi.appSettings.config.bioClientSecret,
       dialogTitle: "זיהוי באמצעות טביעת אצבע",
       dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
-    //  dialogHint: "דיאלוג הינט"
+      dialogHint: "."
     }
 
     var kfail = function (reject) {
