@@ -25,12 +25,16 @@ angular.module('pele', [
   .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', /* 'Idle',*/
     function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings /*, Idle */ ) {
       PelApi.init();
+      _.set(PelApi.sessionStorage,'stat',{httpRequests:0,httpFailed:0,pinCodeFailed:0,bioFailed:0});
+    
 
       /* $rootScope.$on('IdleStart', function() {
         PelApi.lagger.info("Idle found !");
         PelApi.goHome();
       });
       */
+
+
       $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams) {
           // Idle.watch();
@@ -69,6 +73,8 @@ angular.module('pele', [
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
       $ionicPlatform.ready(function() {
+
+        
         var model = ionic.Platform.device().model;
         window.deviceModel = model;
         if (ionic.Platform.isIOS()) {
@@ -109,6 +115,7 @@ angular.module('pele', [
           if (cordova.platformId != 'android') {
             StatusBar.hide();
           }
+        
 
 
         }
@@ -287,6 +294,7 @@ angular.module('pele', [
         config.headers = config.headers || {};
         if (config.url.match(/^http/)) {
           var PelApi = $injector.get('PelApi');
+          _.set(PelApi.sessionStorage, 'stat.httpRequests',_.get(PelApi.sessionStroage, 'stat.httpRequests',0)+1);
           if (PelApi.global.get('debugFlag')) {
             PelApi.lagger.info("---------------------------------------------")
             PelApi.lagger.info("-> " + config.method + " API request : " + config.url)
@@ -316,7 +324,7 @@ angular.module('pele', [
       responseError: function(rejection) {
         // Retry
         var PelApi = $injector.get('PelApi');
-
+        _.set(PelApi.sessionStorage, 'stat.httpFailed',_.get(PelApi.sessionStroage, 'stat.httpFailed',0)+1);
         rejection.config.responseTimestamp = new Date().getTime();
         rejection.config.ms = rejection.config.responseTimestamp - rejection.config.requestTimestamp;
         if (retries < (rejection.config.retry || 0)) {

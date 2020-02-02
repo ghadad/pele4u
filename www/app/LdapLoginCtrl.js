@@ -6,6 +6,22 @@ angular.module('pele', ['ngStorage'])
     if($state.params.reset)
        BioAuth.clear();
 
+
+         
+  $scope.checkTries = function() { 
+    var tries = _.get(PelApi.sessionStorage,'stat.bioFailed',0);
+    if(tries>=5)    
+        BioAuth.clear();
+    _.set(PelApi.sessionStorage, 'stat.bioFailed',tries+1);
+  }
+
+  $scope.resetTries = function() { 
+    var tries = _.set(PelApi.sessionStorage,'stat.bioFailed',0);
+  }
+  
+
+
+  
     $scope.authMethod = BioAuth.getMethod();
     
     $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
@@ -110,7 +126,6 @@ angular.module('pele', ['ngStorage'])
           adLoginInfo.appId = _.get(adLoginInfo, 'menuItems[0].AppId');
           adLoginInfo.msisdn = _.get(adLoginInfo, 'msisdn', "").replace(/^05/, "9725");
           PelApi.sessionStorage.ADAUTH = adLoginInfo;
-          PelApi.sessionStorage.ADAUTH2 = adLoginInfo;
           
           PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
 
@@ -128,9 +143,10 @@ angular.module('pele', ['ngStorage'])
               BioAuth.encrypt(credentials).
               then(function(result){
                 _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
+                $scope.resetTries();
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
-                PelApi.sessionStorage.bioAuthTries =  (PelApi.sessionStorage.bioAuthTries||1) +1;
+                $scope.checkTries();
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
                 $state.reload();
               })
@@ -173,9 +189,10 @@ angular.module('pele', ['ngStorage'])
          then(function(decryptedCredentials){
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
+          $scope.resetTries();
           return $scope.doLogIn();
         }).catch(function(err){
-          PelApi.sessionStorage.bioAuthTries =  (PelApi.sessionStorage.bioAuthTries||1) +1;
+          $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
          // $state.reload();
         })

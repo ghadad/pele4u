@@ -7,7 +7,6 @@ var app = angular.module('pele.GetUserMenu', ['ngStorage', 'ngCordova']);
 //=====================================================================//
 app.controller('GetUserMenuCtrl',
   function ($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate,BioAuth) {
-        
 
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
@@ -169,6 +168,9 @@ app.controller('GetUserMenuCtrl',
 
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
         PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
+        if(PelApi.appSettings.env == 'DV' && data.ActivePin)
+        alert("Pin code:"+data.ActivePin)
+        
         if ("Valid" === pinCodeStatus) {
           appSettings.config.token = data.token;
           

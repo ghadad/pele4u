@@ -1786,6 +1786,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       clear: function () {
         _.set(PelApi.localStorage, 'ADAUTH', {});
+        PelApi.localStorage.PELE4U_MSISDN = ""
+        PelApi.sessionStorage.$reset();        
       },
       setMethod: function (method) {
         // remove old credentials 
