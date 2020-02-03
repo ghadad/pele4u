@@ -381,7 +381,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------//
       //                    GetUserMenu PAGE 1                              //
       //--------------------------------------------------------------------//
-      getMenu: function (links) {
+      getMenu: function(links) {
         var self = this;
         // LOADING
 
@@ -390,7 +390,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         if (self.networkInfo.httpChannel() === "https://") {
           retry = 0;
         }
-        console.log(links.headers)
         return $http({
           url: links.url,
           method: "GET",
@@ -1759,7 +1758,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       clientSecret: PelApi.appSettings.config.bioClientSecret,
       dialogTitle: "זיהוי באמצעות טביעת אצבע",
       dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
-      dialogHint: "."
+      dialogHint: "פלאפון תקשורת"
     }
 
     var kfail = function (reject) {

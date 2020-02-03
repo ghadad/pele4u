@@ -122,7 +122,6 @@ app.controller('P1_appsListCtrl',
      * ==========================================================
      */
     $scope.GetUserMenuMain = function() {
-      
       $rootScope.menuItems = [];
       var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
 
@@ -137,10 +136,6 @@ app.controller('P1_appsListCtrl',
         }
       }
 
-       
-     //  $sessionStorage.$reset();      
-       //console.log(_.get($sessionStorage,"dddd",2222))
-     //  _.set($sessionStorage.newAuth,'bio',true) 
       reMenu.success(function(data, status, headers, config) {
         PelApi.sessionStorage.ApiServiceAuthParams = {}
         $ionicLoading.hide();
@@ -152,10 +147,9 @@ app.controller('P1_appsListCtrl',
             appSettings.config.MSISDN_VALUE = data.msisdn;
           }
         }
-        
+
         $sessionStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
         $localStorage.PELE4U_MSISDN = appSettings.config.MSISDN_VALUE;
-        
 
         //$scope.setMSISDN(appSettings.config.MSISDN_VALUE);
 
@@ -316,8 +310,12 @@ app.controller('P1_appsListCtrl',
       var continueFlag = "Y";
 
       if (PelApi.networkInfo.httpChannel() === "https://") {
-          if (!appSettings.config.MSISDN_VALUE || appSettings.config.MSISDN_VALUE === undefined) {
-          $state.go('app.ldap_login');
+        appSettings.config.MSISDN_VALUE = $localStorage.PELE4U_MSISDN;
+
+        //appSettings.config.MSISDN_VALUE = $scope.getMSISDN();
+
+        if (!appSettings.config.MSISDN_VALUE || appSettings.config.MSISDN_VALUE === undefined) {
+          PelApi.showPopup(appSettings.config.TITLE_WIFI_FIRST_CONNECTION_1, appSettings.config.TITLE_WIFI_FIRST_CONNECTION_2);
           $ionicLoading.hide();
           $scope.$broadcast('scroll.refreshComplete');
         } else {

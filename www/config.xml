@@ -69,8 +69,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 
     <plugin name="cordova-plugin-statusbar"  source="npm" />
     <plugin name="cordova-plugin-app-version" source="npm" />
-    
-    <plugin name="cordova-plugin-customurlscheme">
+        <plugin name="cordova-plugin-customurlscheme">
         <param name="URL_SCHEME" value="pele4u" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" />

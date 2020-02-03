@@ -26,6 +26,7 @@ app.controller('GetUserMenuCtrl',
       speed: 500,
     }
 
+    $scope.showMenu = false;
     $scope.iphonex = window.iphonex;
     $scope.deviceModel = window.deviceModel;
 
@@ -284,7 +285,7 @@ app.controller('GetUserMenuCtrl',
      *****************************************************************
      */
     $scope.doRefresh = function () {
-
+      $scope.showMenu =true;
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN;
       $scope.btn_class = {};
       $scope.btn_class.on_release = true;
@@ -413,7 +414,7 @@ app.controller('GetUserMenuCtrl',
 
 
 
-          /** Golan  */
+    /** Golan  */
           
           
     if(PelApi.sessionStorage.newValidPinCode) { 
@@ -439,6 +440,7 @@ app.controller('GetUserMenuCtrl',
     var sessionMenuItems =  _.get(sessionAdauth,'menuItems',[]);
 
     if(sessionMenuItems.length) { 
+      $scope.showMenu=true;
       $rootScope.menuItems  = $scope.sort(sessionMenuItems);
     }
     /**** Golan : Make GetUserMenu irrelvat when ADlogin return valid menu *****/
