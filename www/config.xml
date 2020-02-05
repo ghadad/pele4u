@@ -12,13 +12,14 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <allow-intent href="market:*" />
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
-    <!--platform name="ios">
+    <platform name="ios">
       <preference name="StatusBarBackgroundColor" value="#60beea" />
+      <preference name="UseSwiftLanguageVersion" value="4.0" />
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="StatusBarStyle" value="blacktranslucent" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-    </platform-->
+    </platform>
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="android-build-tool" value="gradle" />
     <preference name="android-minSdkVersion" value="19" />
@@ -74,7 +75,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <param name="URL_SCHEME" value="pele4u" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" />
-    <!--plugin name="cordova-plugin-fingerprint-aio" source="npm" /-->
+    <plugin name="cordova-plugin-fingerprint-aio" source="npm" />
     <plugin name="cordova-plugin-ios-keychain" source="npm" />
     <plugin name="cordova-plugin-android-fingerprint-auth" source="npm" />
     <plugin name="cordova-plugin-touchid" source="npm" />

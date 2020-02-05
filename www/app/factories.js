@@ -1753,13 +1753,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       return $sce.trustAsHtml(text)
     }
   }).factory('BioAuth', function ($q, $sessionStorage, PelApi) {
-
+    var self = this;
     var bioOptions = {
       clientId: PelApi.appSettings.config.bioClientId,
       clientSecret: PelApi.appSettings.config.bioClientSecret,
       dialogTitle: "זיהוי באמצעות טביעת אצבע",
       dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
-      dialogHint: "."
+      dialogHint: "פלאפון תקשורת",
+      iosKeyChainKey:"pele4u"
     }
 
     var kfail = function (reject) {
@@ -1804,7 +1805,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             window.BiometricAuth.isAvailable(function (result) {
               PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
               if(result && result.hasEnrolledFingerprints)
-              resolve("finger");
+                  return resolve("finger");
+
+              if(_.isString(result) && result.match(/finger|face/)) 
+                  return resolve(result);
+
+              reject("No biometrich auth capabilties found on device")    
             }, function () {
               PelApi.lagger.info("BiometricAuth not avaialable in device");
               reject("BiometricAuth auth not avaialable in this device");
@@ -1822,7 +1828,17 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           window.BiometricAuth.authenticate(
             function (_fingerResult) {
               console.log("successCallback(): " + JSON.stringify(_fingerResult));
-              resolve(_fingerResult)
+              if(ionic.Platform.isAndroid()) { 
+                return resolve(_fingerResult);
+              } else if(ionic.Platform.isIos()){
+                if(!credentials.keychainKey) 
+                  return reject("missing paramater credentials.keychainKey");
+                Keychain.setJson(function(result){
+                  return resolve(result);
+                }, function(err){ 
+                  return reject(err.message);
+                }, bioOptions.keychainKey,credentials, false);
+             }
             },
             function () {
               return reject("Failed to encrypt user/pass")
@@ -1836,10 +1852,24 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           ConfigObject.token = token;
           window.BiometricAuth.decrypt(
             function (result) {
-                  result.username  =  username;
-                  if(!result.password)
-                  return reject("cannot get encrypted password");
-                  return resolve(result)
+
+              if(ionic.Platform.isAndroid()) { 
+                result.username  =  username;
+                if(!result.password)
+                return reject("cannot get encrypted password");
+                return resolve(result)
+              } else if(ionic.Platform.isIos()){
+                if(!credentials.keychainKey) 
+                  return reject("missing paramater credentials.keychainKey");
+                Keychain.getJson(function(result){
+                  return resolve(result);
+                }, function(err){ 
+                  return reject(err.message);
+                }, bioOptions.keychainKey, false);
+             }
+
+
+                
             },
             function (err) {
               PelApi.lagger.error("Failed to decrypt credentials:",err)
