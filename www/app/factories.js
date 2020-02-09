@@ -1820,7 +1820,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               } else if(ionic.Platform.isIos()){
                 if(!credentials.keychainKey) 
                   return reject("missing paramater credentials.keychainKey");
-                Keychain.setJson(function(result){
+                 Keychain.setJson(function(result){
+                  alert(JSON.stringify({username:ConfigObject.username,token:bioOptions.keychainKey}))
                   return resolve({username:ConfigObject.username,token:bioOptions.keychainKey});
                 }, function(err){ 
                   if(PelApi.appSettings.env.match(/QA|DV/i)){ 
@@ -1854,6 +1855,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 if(!credentials.keychainKey) 
                   return reject("missing paramater credentials.keychainKey");
                  Keychain.getJson(function(result){
+                   alert(JSON.stringify(result))
                   return resolve(result);
                 }, function(err){ 
                   if(PelApi.appSettings.env.match(/QA|DV/i)){ 

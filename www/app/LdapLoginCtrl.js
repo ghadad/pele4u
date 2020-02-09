@@ -142,11 +142,13 @@ angular.module('pele', ['ngStorage'])
             
               BioAuth.encrypt(credentials).
               then(function(result){
+                alert(JSON.stringify(result))
                 _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
                 alert(JSON.stringify(result))
                 $scope.resetTries();
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
+                alert("encrypt:" + err.stack)
                 $scope.checkTries();
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
                 $state.reload();
@@ -193,6 +195,7 @@ angular.module('pele', ['ngStorage'])
           $scope.resetTries();
           return $scope.doLogIn();
         }).catch(function(err){
+          alert(err.stack)
           $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
          // $state.reload();
