@@ -1815,14 +1815,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           ConfigObject.password = credentials.password;
           window.BiometricAuth.authenticate(
             function (_fingerResult) {
-              console.log("successCallback(): " + JSON.stringify(_fingerResult));
               if(ionic.Platform.isAndroid()) { 
                 return resolve(_fingerResult);
               } else if(ionic.Platform.isIos()){
                 if(!credentials.keychainKey) 
                   return reject("missing paramater credentials.keychainKey");
                 Keychain.setJson(function(result){
-                  return resolve(result);
+                  return resolve({username:ConfigObject.username,token:bioOptions.keychainKey});
                 }, function(err){ 
                   if(PelApi.appSettings.env.match(/QA|DV/i)){ 
                     $ionicPopup.alert({
@@ -1846,7 +1845,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           ConfigObject.token = token;
           window.BiometricAuth.decrypt(
             function (result) {
-
               if(ionic.Platform.isAndroid()) { 
                 result.username  =  username;
                 if(!result.password)
@@ -1855,7 +1853,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               } else if(ionic.Platform.isIos()){
                 if(!credentials.keychainKey) 
                   return reject("missing paramater credentials.keychainKey");
-                Keychain.getJson(function(result){
+                 Keychain.getJson(function(result){
                   return resolve(result);
                 }, function(err){ 
                   if(PelApi.appSettings.env.match(/QA|DV/i)){ 

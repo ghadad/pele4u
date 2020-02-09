@@ -143,6 +143,7 @@ angular.module('pele', ['ngStorage'])
               BioAuth.encrypt(credentials).
               then(function(result){
                 _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
+                alert(JSON.stringify(result))
                 $scope.resetTries();
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
@@ -186,7 +187,8 @@ angular.module('pele', ['ngStorage'])
       
          BioAuth.decrypt(bioUser,token).
          then(function(decryptedCredentials){
-          $scope.user = decryptedCredentials
+           alert(JSON.stringify(decryptedCredentials))
+          $scope.user = decryptedCredentials          
           $scope.activeForm = false;
           $scope.resetTries();
           return $scope.doLogIn();
