@@ -1752,7 +1752,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
       return $sce.trustAsHtml(text)
     }
-  }).factory('BioAuth', function ($q, $sessionStorage, PelApi) {
+  }).factory('BioAuth', function ($q, $sessionStorage, PelApi,$ionicPopup) {
     var self = this;
     var bioOptions = {
       clientId: PelApi.appSettings.config.bioClientId,
@@ -1761,18 +1761,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
       dialogHint: "פלאפון תקשורת",
       iosKeyChainKey:"pele4u"
-    }
-
-    var kfail = function (reject) {
-      return function () {
-        return reject("Failed to get/set keychain")
-      }
-    }
-
-    var kwin = function (resolve) {
-      return function (value) {
-        return resolve(value);
-      }
     }
 
     return {
@@ -1836,6 +1824,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 Keychain.setJson(function(result){
                   return resolve(result);
                 }, function(err){ 
+                  if(PelApi.appSettings.env.match(/QA|DV/i)){ 
+                    $ionicPopup.alert({
+                      title: 'keychain.setJson error',
+                      template: err.message+":"+err.stack
+                    });
+                  }
                   return reject(err.message);
                 }, bioOptions.keychainKey,credentials, false);
              }
@@ -1864,6 +1858,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 Keychain.getJson(function(result){
                   return resolve(result);
                 }, function(err){ 
+                  if(PelApi.appSettings.env.match(/QA|DV/i)){ 
+                    $ionicPopup.alert({
+                      title: 'keychain.getJson error',
+                      template: err.message+":"+err.stack
+                    });
+                  }
                   return reject(err.message);
                 }, bioOptions.keychainKey, false);
              }

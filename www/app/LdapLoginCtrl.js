@@ -150,7 +150,6 @@ angular.module('pele', ['ngStorage'])
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
                 $state.reload();
               })
-            
           } else {
             return $state.go("app.p1_appsLists");
             /*
