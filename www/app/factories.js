@@ -1827,7 +1827,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                   if(PelApi.appSettings.env.match(/QA|DV/i)){ 
                     $ionicPopup.alert({
                       title: 'keychain.setJson error',
-                      template: err.message+":"+err.stack
+                      template: err.message
                     });
                   }
                   return reject(err.message);
