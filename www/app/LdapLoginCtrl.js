@@ -148,7 +148,7 @@ angular.module('pele', ['ngStorage'])
                 $scope.resetTries();
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
-                alert("encrypt error:" + err.message)
+                alert("encrypt error:" + err)
                 $scope.checkTries();
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
                 $state.reload();
