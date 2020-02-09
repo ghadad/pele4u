@@ -1817,7 +1817,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             function (_fingerResult) {
               if(ionic.Platform.isAndroid()) { 
                 return resolve(_fingerResult);
-              } else if(ionic.Platform.isIos()){
+              } else if(ionic.Platform.isIOS()){
                 if(!credentials.keychainKey) 
                   return reject("missing paramater credentials.keychainKey");
                  Keychain.setJson(function(result){
@@ -1851,7 +1851,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 if(!result.password)
                 return reject("cannot get encrypted password");
                 return resolve(result)
-              } else if(ionic.Platform.isIos()){
+              } else if(ionic.Platform.isIOS()){
                 if(!credentials.keychainKey) 
                   return reject("missing paramater credentials.keychainKey");
                  Keychain.getJson(function(result){
