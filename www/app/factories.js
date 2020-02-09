@@ -1818,20 +1818,23 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               if(ionic.Platform.isAndroid()) { 
                 return resolve(_fingerResult);
               } else if(ionic.Platform.isIOS()){
-                if(!credentials.keychainKey) 
+                if(!bioOptions.iosKeyChainKey) 
                   return reject("missing paramater credentials.keychainKey");
-                 Keychain.setJson(function(result){
-                  alert(JSON.stringify({username:ConfigObject.username,token:bioOptions.keychainKey}))
-                  return resolve({username:ConfigObject.username,token:bioOptions.keychainKey});
-                }, function(err){ 
-                  if(PelApi.appSettings.env.match(/QA|DV/i)){ 
-                    $ionicPopup.alert({
-                      title: 'keychain.setJson error',
-                      template: err.message
-                    });
-                  }
-                  return reject(err.message);
-                }, bioOptions.keychainKey,credentials, false);
+                 Keychain.setJson(
+                    function(result){
+                      alert(JSON.stringify({username:ConfigObject.username,token:bioOptions.iosKeyChainKey}))
+                     return resolve({username:ConfigObject.username,token:bioOptions.iosKeyChainKey});
+                   }, function(err){ 
+                     if(PelApi.appSettings.env.match(/QA|DV/i)){ 
+                        $ionicPopup.alert({
+                         title: 'keychain.setJson error',
+                         template: err.message
+                      });
+                    }
+                    return reject(err.message);
+                }, 
+                bioOptions.iosKeyChainKey,
+                credentials, false);
              }
             },
             function () {
@@ -1852,8 +1855,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 return reject("cannot get encrypted password");
                 return resolve(result)
               } else if(ionic.Platform.isIOS()){
-                if(!credentials.keychainKey) 
-                  return reject("missing paramater credentials.keychainKey");
+                if(!bioOptions.iosKeyChainKey) 
+                  return reject("missing paramater bioOptions.iosKeyChainKey");
                  Keychain.getJson(function(result){
                    alert(JSON.stringify(result))
                   return resolve(result);
@@ -1865,7 +1868,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                     });
                   }
                   return reject(err.message);
-                }, bioOptions.keychainKey, false);
+                }, bioOptions.iosKeyChainKey, false);
              }
 
 
