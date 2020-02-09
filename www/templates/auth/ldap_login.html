@@ -66,6 +66,9 @@
                     <span class="">SMS סיסמא חד פעמית ב</span>
                     <img class="icon-md" src="img/new_icons/pincode.png"></button>
               </div>
+              <div class="item text-center" ng-show="!bioCap">
+                <strong> במידה ומכשירך תומך בזיהוי ביומטרי, ניתן להפעיל את הפונקציונליות במכשיר על מנת לאפשר מימוש זיהוי ביומטרי באפליקציה.</strong>
+              </div>
               <div class="item" ng-show="bioCap=='finger'">
               <button ng-click="setAuthMethod('fingerprint')" class="text-right button-block button-clear button-dark" >
 <span>                טביעת אצבע</span>
