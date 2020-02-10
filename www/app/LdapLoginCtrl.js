@@ -12,8 +12,8 @@ angular.module('pele', ['ngStorage'])
     var tries = _.get(PelApi.sessionStorage,'stat.bioFailed',0);
     if(tries>=5)    {
       BioAuth.clear();
-      $scope.activeForm = false;
-      $scope.openModal();
+ //     $scope.activeForm = false;
+ //     $scope.openModal();
     };
       
     _.set(PelApi.sessionStorage, 'stat.bioFailed',tries+1);
@@ -198,7 +198,7 @@ angular.module('pele', ['ngStorage'])
         }).catch(function(err){
           $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
-         // $state.reload();
+          $state.reload();
         })
     } else {
       BioAuth.clear();
