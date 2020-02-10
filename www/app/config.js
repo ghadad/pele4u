@@ -1,9 +1,10 @@
 /*********************/
-const env = "Q2";
+const env = "P2";
 /********************/
 
 const EnvCodes = {
   PD: "PROD",
+  P2: "PROD",
   DV: "DEV",
   QA: "QA",
   Q2: "QA",
@@ -12,6 +13,7 @@ const EnvCodes = {
 
 const SSOEnv = {
   PD: "PD",
+  P2: "P2",
   DV: "DV",
   QA: "QA",
   Q2: "Q2",
@@ -61,6 +63,11 @@ const apiConfig = {
       logLevel: 0
     },
     PD: {
+      appId: "1d0135a7-da67-4953-b241-2385bfcedcd9",
+      visualLevel: 0,
+      logLevel: 0
+    },
+    P2: {
       appId: "1d0135a7-da67-4953-b241-2385bfcedcd9",
       visualLevel: 0,
       logLevel: 0
@@ -223,6 +230,7 @@ angular.module('pele.config', [])
         QA: "keen@pelephone.co.il",
         Q2: "keen@pelephone.co.il",
         PD: "Mobile_Admins_HR@pelephone.co.il",
+        P2: "Mobile_Admins_HR@pelephone.co.il",
         LP: "Mobile_Admins_HR@pelephone.co.il",
         DEFAULT: "ghadad@gmail.com",
         DV: "ghadad@gmail.com"
