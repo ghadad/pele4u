@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you_qa" version="139" versionCode="139" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
+<widget id="co.il.pelephone.pele4you" version="140" versionCode="140" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PELE4U_QA</name>
+    <name>PELE4U_P2</name>
     <description>
     Work form anywhere
   </description>
@@ -136,7 +136,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
            <string>For Push Notifications</string>
        </config-file>
     <config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>138</string>
+        <string>140</string>
     </config-file>
     <access origin="*" />
     <allow-intent href="http://*/*" />
