@@ -1,11 +1,12 @@
 /*********************/
-const env = "QA";
+const env = "Q2";
 /********************/
 
 const EnvCodes = {
   PD: "PROD",
   DV: "DEV",
   QA: "QA",
+  Q2: "Q2",
   LP: "LP"
 };
 
@@ -49,6 +50,11 @@ const apiConfig = {
       logLevel: 0
     },
     QA: {
+      appId: "922ef47f-6abc-4df5-80ea-801a8b081fa1",
+      visualLevel: 0,
+      logLevel: 0
+    },
+    Q2: {
       appId: "922ef47f-6abc-4df5-80ea-801a8b081fa1",
       visualLevel: 0,
       logLevel: 0
@@ -214,6 +220,7 @@ angular.module('pele.config', [])
       LOG_FILE_NAME: "Pele4U.txt",
       LOG_FILE_MAIL_RECIPIENT: {
         QA: "keen@pelephone.co.il",
+        Q2: "keen@pelephone.co.il",
         PD: "Mobile_Admins_HR@pelephone.co.il",
         LP: "Mobile_Admins_HR@pelephone.co.il",
         DEFAULT: "ghadad@gmail.com",
