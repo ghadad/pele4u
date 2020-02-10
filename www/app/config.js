@@ -6,7 +6,7 @@ const EnvCodes = {
   PD: "PROD",
   DV: "DEV",
   QA: "QA",
-  Q2: "Q2",
+  Q2: "QA",
   LP: "LP"
 };
 
@@ -14,6 +14,7 @@ const SSOEnv = {
   PD: "PD",
   DV: "DV",
   QA: "QA",
+  Q2: "Q2",
   LP: "LP"
 }
 
