@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="co.il.pelephone.pele4you" version="140" versionCode="140" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PELE4U_P2</name>
+    <name>PELE4U_P2_HOTFIX</name>
     <description>
     Work form anywhere
   </description>
