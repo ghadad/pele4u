@@ -181,14 +181,15 @@ angular.module('pele', ['ngStorage'])
  
     if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN && _.get(PelApi.sessionStorage,'ADAUTH.token')) {
       PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
-      PelApi.appSettings.config.MSISDN_VALUE = PelApi.sessionStorage.PELE4U_MSISDN = adLoginInfo.msisdn;
+      if(_.get(PelApi.sessionStorage,'ADAUTH.msisdn'))
+          PelApi.appSettings.config.MSISDN_VALUE = PelApi.sessionStorage.PELE4U_MSISDN = _.get(PelApi.sessionStorage,'ADAUTH.msisdn');
       return $state.go("app.p1_appsLists");
     }
 
     if(BioAuth.getMethod().match(/pincode/)) {
       return $state.go("app.p1_appsLists");
     }
-    
+
     var token =  BioAuth.getToken();
     var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
