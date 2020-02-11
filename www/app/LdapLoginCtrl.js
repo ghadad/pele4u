@@ -3,7 +3,7 @@ angular.module('pele', ['ngStorage'])
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
-    if($state.params.reset)
+    if($state.params.reset )
        BioAuth.clear();
 
 
