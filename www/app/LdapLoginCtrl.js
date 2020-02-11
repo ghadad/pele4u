@@ -11,7 +11,7 @@ angular.module('pele', ['ngStorage'])
   $scope.checkTries = function() { 
     var tries = _.get(PelApi.sessionStorage,'stat.bioFailed',0);
     if(tries>=5)    
-        BioAuth.clear();
+        BioAuth.clear("soft");
     _.set(PelApi.sessionStorage, 'stat.bioFailed',tries+1);
   }
 
@@ -178,6 +178,7 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
+    
  
     if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN && _.get(PelApi.sessionStorage,'ADAUTH.token')) {
       PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
@@ -186,7 +187,8 @@ angular.module('pele', ['ngStorage'])
       return $state.go("app.p1_appsLists");
     }
 
-    if(BioAuth.getMethod().match(/pincode/)) {
+    if(BioAuth.getMethod().match(/pincode/) && PelApi.appSettings.config.IS_TOKEN_VALID != "Y" ) {
+      PelApi.sessionStorage.$reset();
       return $state.go("app.p1_appsLists");
     }
 
