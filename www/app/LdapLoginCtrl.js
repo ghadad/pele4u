@@ -126,7 +126,7 @@ angular.module('pele', ['ngStorage'])
           adLoginInfo.appId = _.get(adLoginInfo, 'menuItems[0].AppId');
           adLoginInfo.msisdn = _.get(adLoginInfo, 'msisdn', "").replace(/^05/, "9725");
           PelApi.sessionStorage.ADAUTH = adLoginInfo;
-          
+          PelApi.appSettings.config.IS_TOKEN_VALID = 'Y'
           PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
 
           PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = adLoginInfo.msisdn;
