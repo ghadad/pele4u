@@ -53,7 +53,7 @@ angular.module('pele')
           var result = apiData.ROW || [];
           //Cursor if empty
           if (result.length && result[0].DOC_NAME === null) {
-            PelApi.appSettings.config.IS_TOKEN_VALID = 'N'
+           // PelApi.appSettings.config.IS_TOKEN_VALID = 'N'
             PelApi.goHome();
           }
 
