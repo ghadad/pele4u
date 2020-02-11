@@ -284,9 +284,15 @@ app.controller('GetUserMenuCtrl',
      *  02/08/2016   R.W.
      *****************************************************************
      */
+    $scope.goToADLogin = function() { 
+      $state.go('app.ldap_login');
+      $ionicLoading.hide();
+      $scope.$broadcast('scroll.refreshComplete');
+    }
     $scope.doRefresh = function () {
       $scope.showMenu =true;
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN;
+ 
       $scope.btn_class = {};
       $scope.btn_class.on_release = true;
 
@@ -319,6 +325,7 @@ app.controller('GetUserMenuCtrl',
           if (appSettings.config.IS_TOKEN_VALID !== "Y") {
             $scope.GetUserMenuMain();
           } else {
+
             $sessionStorage.token = appSettings.config.token;
             $sessionStorage.user = appSettings.config.GetUserMenu.user;
             $sessionStorage.userName = appSettings.config.GetUserMenu.userName;
