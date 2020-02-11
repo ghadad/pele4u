@@ -184,6 +184,8 @@ angular.module('pele')
             $scope.category_sources_length = appSettings.config.GetUserModuleTypes.Response.OutParams.MOBILE_MODULE_REC.length;
 
             $scope.category_sources = category_sources; //appSettings.config.GetUserModuleTypes.Response.OutParams.MOBILE_MODULE_REC;
+            if( $scope.category_sources &&  $scope.category_sources.length == 0 )
+            PelApi.goHome();
           }
 
         } else if ("PWA" === pinCodeStatus) {
