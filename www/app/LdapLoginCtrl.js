@@ -181,7 +181,7 @@ angular.module('pele', ['ngStorage'])
     if(BioAuth.getMethod().match(/pincode/) && PelApi.localStorage.PELE4U_MSISDN) {
       return $state.go("app.p1_appsLists");
     }
-    if(appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN) {
+    if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN) {
       return $state.go("app.p1_appsLists");
     }
     var token =  BioAuth.getToken();
