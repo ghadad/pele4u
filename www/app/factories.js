@@ -1154,6 +1154,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         //$state.go("app.p1_appsLists", options.params || {}, options.options || {});
         $state.go('app.ldap_login');        
       },
+      
       goLogIn: function () {
         $state.go("app.login");
       },
