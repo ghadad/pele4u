@@ -3,6 +3,8 @@ angular.module('pele', ['ngStorage'])
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
+
+    
     if($state.params.reset )
        BioAuth.clear();
 
@@ -180,7 +182,8 @@ angular.module('pele', ['ngStorage'])
 
     
  
-    if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN && _.get(PelApi.sessionStorage,'ADAUTH.token')) {
+    if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN ) {
+      if(_.get(PelApi.sessionStorage,'ADAUTH.token'))
       PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
       if(_.get(PelApi.sessionStorage,'ADAUTH.msisdn'))
           PelApi.appSettings.config.MSISDN_VALUE = PelApi.sessionStorage.PELE4U_MSISDN = _.get(PelApi.sessionStorage,'ADAUTH.msisdn');
@@ -208,7 +211,7 @@ angular.module('pele', ['ngStorage'])
          // $state.reload();
         })
     } else {
-      BioAuth.clear();
+      BioAuth.clear("soft");
       setTimeout(function () {
         $scope.openModal();
       }, 100);
