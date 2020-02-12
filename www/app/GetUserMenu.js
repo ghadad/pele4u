@@ -126,9 +126,7 @@ app.controller('GetUserMenuCtrl',
 
 
     if ($localStorage.PELE4U_MSISDN) {
-   
-      appSettings.config.MSISDN_VALUE = $localStorage.PELE4U_MSISDN;
-      
+         appSettings.config.MSISDN_VALUE = $localStorage.PELE4U_MSISDN;
     }
     if ($sessionStorage.PELE4U_MSISDN) {
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN;
@@ -136,7 +134,8 @@ app.controller('GetUserMenuCtrl',
     }
 
     if(!appSettings.config.MSISDN_VALUE)  {
-      
+       $sessionStorage.$reset();
+       $localStorage.$reset();
         return $state.go('app.ldap_login');
     }
      
@@ -436,7 +435,7 @@ app.controller('GetUserMenuCtrl',
     if(PelApi.sessionStorage.newValidPinCode) { 
       appSettings.config.Pin =   PelApi.sessionStorage.newValidPinCode;
       _.set(PelApi.sessionStorage.ADAUTH,'PinCode',PelApi.sessionStorage.newValidPinCode);
-     delete PelApi.sessionStorage.newValidPinCode;
+       delete PelApi.sessionStorage.newValidPinCode;
     }
 
     var sessionAdauth = PelApi.sessionStorage.ADAUTH || {} ;

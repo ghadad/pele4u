@@ -335,9 +335,12 @@ angular.module('pele', [
       _.set(PelApi.sessionStorage, 'stat.httpFailed',_.get(PelApi.sessionStroage, 'stat.httpFailed',0)+1);
       rejection.config.responseTimestamp = new Date().getTime();
       rejection.config.ms = rejection.config.responseTimestamp - rejection.config.requestTimestamp;
+      if(rejection.config.url.match(/ADLogin/i)){
+        PelApi.hideLoading();
+        return $q.reject(rejection);
+      }
       var cloneConfig =  _.cloneDeep(rejection.config) ;
-
-      if (retries <= (rejection.config.retry || 0)) {
+      if (retries < (rejection.config.retry || 0)) {
         if(cloneConfig.data && cloneConfig.data.password)
         cloneConfig.data.password = "******";
         PelApi.lagger.error("Reject & Retry . number :  " + retries, "on Config : ", cloneConfig)

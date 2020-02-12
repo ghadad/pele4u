@@ -7,9 +7,7 @@ angular.module('pele', ['ngStorage'])
     
     if($state.params.reset )
        BioAuth.clear();
-
-
-         
+        
   $scope.checkTries = function() { 
     var tries = _.get(PelApi.sessionStorage,'stat.bioFailed',0);
     if(tries>=5)    
@@ -20,10 +18,7 @@ angular.module('pele', ['ngStorage'])
   $scope.resetTries = function() { 
     var tries = _.set(PelApi.sessionStorage,'stat.bioFailed',0);
   }
-  
-
-
-  
+    
     $scope.authMethod = BioAuth.getMethod();
     
     
@@ -126,6 +121,11 @@ angular.module('pele', ['ngStorage'])
 
       promise.success(function (data, status, headers, config) {
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
+          if(!adLoginInfo.msisdn) { 
+            $scope.error = "שגיאה בהפעלת אימות משתמש"
+            throw new Error("Failed to get data from ADLogin")
+          }
+
           adLoginInfo.appId = _.get(adLoginInfo, 'menuItems[0].AppId');
           adLoginInfo.msisdn = _.get(adLoginInfo, 'msisdn', "").replace(/^05/, "9725");
           PelApi.sessionStorage.ADAUTH = adLoginInfo;
@@ -133,7 +133,6 @@ angular.module('pele', ['ngStorage'])
           PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
 
           PelApi.appSettings.config.MSISDN_VALUE = PelApi.localStorage.PELE4U_MSISDN = PelApi.sessionStorage.PELE4U_MSISDN = adLoginInfo.msisdn;
-
           var credentials = {
             username: user,
             password: password,
@@ -193,7 +192,7 @@ angular.module('pele', ['ngStorage'])
 
     if(BioAuth.getMethod().match(/pincode/) && PelApi.appSettings.config.IS_TOKEN_VALID != "Y" ) {
       PelApi.sessionStorage.$reset();
-     // return $state.go("app.p1_appsLists");
+      return $state.go("app.p1_appsLists");
     }
 
     var token =  BioAuth.getToken();
