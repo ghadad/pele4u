@@ -81,7 +81,7 @@ const apiConfig = {
   services: {
     ADLogin: {
       timeout: 15000,
-      retry: 2,
+      retry: 0,
       "endpoint": "/" + SSOEnv[env] + "/MobileServices/SSOService.svc/json/ADLogin",
       "RequestHeader": ""
     },

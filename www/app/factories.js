@@ -1787,13 +1787,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       clear: function (soft) {
        
         if(soft && soft == "soft") {
+          
           var method = _.get(PelApi.localStorage, 'ADAUTH.method',"")
+          alert(method);
           _.set(PelApi.localStorage, 'ADAUTH', {method:method});
         } else {
-          _.set(PelApi.localStorage, 'ADAUTH', {method:method});
+          _.set(PelApi.localStorage, 'ADAUTH', {});
         }
 
-        PelApi.localStorage.PELE4U_MSISDN = ""
         PelApi.sessionStorage.$reset();        
       },
       setMethod: function (method) {

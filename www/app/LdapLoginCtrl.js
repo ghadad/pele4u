@@ -26,6 +26,7 @@ angular.module('pele', ['ngStorage'])
   
     $scope.authMethod = BioAuth.getMethod();
     
+    
     $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
     
     $scope.bioErrMessage1 = "שגיאה בהפעלת זיהוי ביומטרי" ; 
@@ -192,7 +193,7 @@ angular.module('pele', ['ngStorage'])
 
     if(BioAuth.getMethod().match(/pincode/) && PelApi.appSettings.config.IS_TOKEN_VALID != "Y" ) {
       PelApi.sessionStorage.$reset();
-      return $state.go("app.p1_appsLists");
+     // return $state.go("app.p1_appsLists");
     }
 
     var token =  BioAuth.getToken();
@@ -212,6 +213,11 @@ angular.module('pele', ['ngStorage'])
         })
     } else {
       BioAuth.clear("soft");
+      if(BioAuth.getMethod() == "pincode") { 
+        $scope.activeForm = true;
+        return ;
+      }
+      
       setTimeout(function () {
         $scope.openModal();
       }, 100);

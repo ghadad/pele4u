@@ -126,11 +126,20 @@ app.controller('GetUserMenuCtrl',
 
 
     if ($localStorage.PELE4U_MSISDN) {
+   
       appSettings.config.MSISDN_VALUE = $localStorage.PELE4U_MSISDN;
+      
     }
     if ($sessionStorage.PELE4U_MSISDN) {
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN;
+      
     }
+
+    if(!appSettings.config.MSISDN_VALUE)  {
+      
+        return $state.go('app.ldap_login');
+    }
+     
 
     $scope.GetUserMenuMain = function () {
       $rootScope.menuItems = [];
