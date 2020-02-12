@@ -5,7 +5,7 @@ angular.module('pele', ['ngStorage'])
     //------------------------------------------------------------//
 
     
-    if($state.params.reset )
+    if($state.params.reset ) 
        BioAuth.clear();
         
   $scope.checkTries = function() { 
@@ -121,6 +121,12 @@ angular.module('pele', ['ngStorage'])
 
       promise.success(function (data, status, headers, config) {
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
+          if(!BioAuth.getMethod()) { 
+            $scope.error = "לא בחרת שיטת  זיהוי"
+            $scope.doRender = true;
+            throw new Error("no method selected")
+          }
+
           if(!adLoginInfo.msisdn) { 
             $scope.error = "שגיאה בהפעלת אימות משתמש"
             throw new Error("Failed to get data from ADLogin")
