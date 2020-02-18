@@ -1804,7 +1804,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             window.BiometricAuth.isAvailable(function (result) {
               PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
               if (result && result.hasEnrolledFingerprints)
-                return resolve("finger");
                 if(_.isString(result) && result.match(/finger|face/)) 
                 return resolve(result);
                 reject("No biometrich auth capabilties found on device")    
@@ -1841,7 +1840,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                     });
                   },
                   function (err) {
-                    if (PelApi.appSettings.env.match(/QA|DV/i)) {
+                    if (PelApi.appSettings.env.match(/P2|QA|DV/i)) {
                       $ionicPopup.alert({
                         title: 'keychain.setJson error',
                         template: err.message
@@ -1877,7 +1876,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                    alert(JSON.stringify(result))
                   return resolve(result);
                 }, function(err){ 
-                  if(PelApi.appSettings.env.match(/QA|DV/i)){ 
+                  if(PelApi.appSettings.env.match(/QA|DV|P2/i)){ 
                     $ionicPopup.alert({
                       title: 'keychain.getJson error',
                       template: err.message+":"+err.stack
