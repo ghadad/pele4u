@@ -21,7 +21,8 @@ angular.module('pele', ['ngStorage'])
     
     $scope.authMethod = BioAuth.getMethod();
     
-    
+    alert("$scope.authMethod :"+$scope.authMethod)
+
     $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
     
     $scope.bioErrMessage1 = "שגיאה בהפעלת זיהוי ביומטרי" ; 
@@ -37,7 +38,7 @@ angular.module('pele', ['ngStorage'])
     $scope.activeForm = false;
     $scope.bioCap = null;
     $scope.doRender = false;
-    alert(1);
+    
     BioAuth.getCap().then(function (result="") {
       alert("cap"+result)
       if(result.match(/bio/i))
@@ -228,7 +229,7 @@ angular.module('pele', ['ngStorage'])
          // $state.reload();
         })
     } else {
-      alert("reache end before clear soft")
+//      alert("reache end before clear soft")
       BioAuth.clear("soft");
       if(BioAuth.getMethod() == "pincode") { 
         $scope.activeForm = true;
@@ -236,9 +237,9 @@ angular.module('pele', ['ngStorage'])
       }
       
       setTimeout(function () {
-        alert("$scope.openModal()")
+        $scope.activeForm = true;
         $scope.openModal();
       }, 100);
-      $scope.activeForm = true;
+
     }
   });

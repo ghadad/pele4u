@@ -1774,6 +1774,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       getMethod: function () {
         return _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
       },
+
       clear: function (soft) {
 
         if (soft && soft == "soft") {
@@ -1803,7 +1804,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             window.BiometricAuth.isAvailable(function (result) {
               PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
               if (result && result.hasEnrolledFingerprints)
-                resolve("finger");
+                return resolve("finger");
+                if(_.isString(result) && result.match(/finger|face/)) 
+                return resolve(result);
+                reject("No biometrich auth capabilties found on device")    
             }, function () {
               PelApi.lagger.info("BiometricAuth not avaialable in device");
               reject("BiometricAuth auth not avaialable in this device");
