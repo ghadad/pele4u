@@ -51,6 +51,7 @@ angular.module('pele', ['ngStorage'])
       PelApi.lagger.info("bioAuth not exists for this device");
     }).finally(function(){ 
       $scope.doRender = true;
+      alert("doRender:"+ $scope.doRender )
     })
 
 
@@ -235,6 +236,7 @@ angular.module('pele', ['ngStorage'])
       }
       
       setTimeout(function () {
+        alert("$scope.openModal()")
         $scope.openModal();
       }, 100);
       $scope.activeForm = true;
