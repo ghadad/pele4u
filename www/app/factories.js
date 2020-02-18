@@ -1752,7 +1752,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
       return $sce.trustAsHtml(text)
     }
-  }).factory('BioAuth', function ($q, $sessionStorage, PelApi) {
+  }).factory('BioAuth', function ($q, $sessionStorage, PelApi,$ionicPopup) {
+    var self = this;
 
     var bioOptions = {
       clientId: PelApi.appSettings.config.bioClientId,
@@ -1761,7 +1762,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
       dialogHint: "פלאפון תקשורת",
       iosKeyChainKey: "pele4u"
-
     }
 
     return {

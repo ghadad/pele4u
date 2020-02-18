@@ -37,8 +37,9 @@ angular.module('pele', ['ngStorage'])
     $scope.activeForm = false;
     $scope.bioCap = null;
     $scope.doRender = false;
-
+    alert(1);
     BioAuth.getCap().then(function (result="") {
+      alert("cap"+result)
       if(result.match(/bio/i))
           $scope.bioCap = "bio";
           else if (result.match(/finger/i))
@@ -46,6 +47,7 @@ angular.module('pele', ['ngStorage'])
           else if (result.match(/face/i))
           $scope.bioCap = "face";
     }).catch(function () {
+      alert("bioAuth not exists for this device")
       PelApi.lagger.info("bioAuth not exists for this device");
     }).finally(function(){ 
       $scope.doRender = true;
@@ -203,7 +205,12 @@ angular.module('pele', ['ngStorage'])
     }
 
     var token =  BioAuth.getToken();
+
+    alert("token"+token)
     var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
+
+    alert("bioUser"+bioUser)
+
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
       
          BioAuth.decrypt(bioUser,token).
@@ -220,6 +227,7 @@ angular.module('pele', ['ngStorage'])
          // $state.reload();
         })
     } else {
+      alert("reache end before clear soft")
       BioAuth.clear("soft");
       if(BioAuth.getMethod() == "pincode") { 
         $scope.activeForm = true;
