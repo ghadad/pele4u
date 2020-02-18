@@ -381,7 +381,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------//
       //                    GetUserMenu PAGE 1                              //
       //--------------------------------------------------------------------//
-      getMenu: function(links) {
+      getMenu: function (links) {
         var self = this;
         // LOADING
 
@@ -1152,9 +1152,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       goHome: function (config) {
         options = config || {};
         //$state.go("app.p1_appsLists", options.params || {}, options.options || {});
-        $state.go('app.ldap_login');        
+        $state.go('app.ldap_login');
       },
-      
+
       goLogIn: function () {
         $state.go("app.login");
       },
@@ -1759,42 +1759,34 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       clientSecret: PelApi.appSettings.config.bioClientSecret,
       dialogTitle: "זיהוי באמצעות טביעת אצבע",
       dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
-      dialogHint: "פלאפון תקשורת"
-    }
+      dialogHint: "פלאפון תקשורת",
+      iosKeyChainKey: "pele4u"
 
-    var kfail = function (reject) {
-      return function () {
-        return reject("Failed to get/set keychain")
-      }
-    }
-
-    var kwin = function (resolve) {
-      return function (value) {
-        return resolve(value);
-      }
     }
 
     return {
       isInstalled: function () {
         return (window.BiometricAuth ? true : false);
       },
-      getToken:function() {
+      getToken: function () {
         return _.get(PelApi.localStorage, 'ADAUTH.token', null);
       },
       getMethod: function () {
         return _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
       },
       clear: function (soft) {
-       
-        if(soft && soft == "soft") {
-          var method = _.get(PelApi.localStorage, 'ADAUTH.method',"")
-          _.set(PelApi.localStorage, 'ADAUTH', {method:method});
+
+        if (soft && soft == "soft") {
+          var method = _.get(PelApi.localStorage, 'ADAUTH.method', "")
+          _.set(PelApi.localStorage, 'ADAUTH', {
+            method: method
+          });
         } else {
           _.set(PelApi.localStorage, 'ADAUTH', {});
         }
 
         PelApi.localStorage.PELE4U_MSISDN = ""
-        PelApi.sessionStorage.$reset();        
+        PelApi.sessionStorage.$reset();
       },
       setMethod: function (method) {
         // remove old credentials 
@@ -1810,8 +1802,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (window.BiometricAuth) {
             window.BiometricAuth.isAvailable(function (result) {
               PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
-              if(result && result.hasEnrolledFingerprints)
-              resolve("finger");
+              if (result && result.hasEnrolledFingerprints)
+                resolve("finger");
             }, function () {
               PelApi.lagger.info("BiometricAuth not avaialable in device");
               reject("BiometricAuth auth not avaialable in this device");
@@ -1828,8 +1820,34 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           ConfigObject.password = credentials.password;
           window.BiometricAuth.authenticate(
             function (_fingerResult) {
-              console.log("successCallback(): " + JSON.stringify(_fingerResult));
-              resolve(_fingerResult)
+              if (ionic.Platform.isAndroid()) {
+                return resolve(_fingerResult);
+              } else if (ionic.Platform.isIOS()) {
+                if (!bioOptions.iosKeyChainKey)
+                  return reject("missing paramater credentials.keychainKey");
+                Keychain.setJson(
+                  function (result) {
+                    alert(JSON.stringify({
+                      username: ConfigObject.username,
+                      token: bioOptions.iosKeyChainKey
+                    }))
+                    return resolve({
+                      username: ConfigObject.username,
+                      token: bioOptions.iosKeyChainKey
+                    });
+                  },
+                  function (err) {
+                    if (PelApi.appSettings.env.match(/QA|DV/i)) {
+                      $ionicPopup.alert({
+                        title: 'keychain.setJson error',
+                        template: err.message
+                      });
+                    }
+                    return reject(err.message);
+                  },
+                  bioOptions.iosKeyChainKey,
+                  credentials, false);
+              }
             },
             function () {
               return reject("Failed to encrypt user/pass")
@@ -1843,17 +1861,34 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           ConfigObject.token = token;
           window.BiometricAuth.decrypt(
             function (result) {
-                  result.username  =  username;
-                  if(!result.password)
-                  return reject("cannot get encrypted password");
-                  return resolve(result)
+              if(ionic.Platform.isAndroid()) { 
+                result.username  =  username;
+                if(!result.password)
+                return reject("cannot get encrypted password");
+                return resolve(result)
+              } else if(ionic.Platform.isIOS()){
+                if(!bioOptions.iosKeyChainKey) 
+                  return reject("missing paramater bioOptions.iosKeyChainKey");
+                 Keychain.getJson(function(result){
+                   alert(JSON.stringify(result))
+                  return resolve(result);
+                }, function(err){ 
+                  if(PelApi.appSettings.env.match(/QA|DV/i)){ 
+                    $ionicPopup.alert({
+                      title: 'keychain.getJson error',
+                      template: err.message+":"+err.stack
+                    });
+                  }
+                  return reject(err.message);
+                }, bioOptions.iosKeyChainKey, false);
+             }
             },
             function (err) {
               PelApi.lagger.error("Failed to decrypt credentials:",err)
               return reject("Failed to decrypt credentials : " + err.stack)
             }, ConfigObject)
         })
-      },
+      }
     }
   }).factory('Contact', function ($q) {
     var setContactData = function (deviceContact, info) {

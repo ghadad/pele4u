@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you" version="140" versionCode="140" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
+<widget id="co.il.pelephone.pele4you_qa" version="141" versionCode="141" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PELE4U_P2_HOTFIX</name>
+    <name>PELE4U_IPHONE_QA</name>
     <description>
     Work form anywhere
   </description>
@@ -12,13 +12,13 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <allow-intent href="market:*" />
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
-    <!--platform name="ios">
+    <platform name="ios">
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="StatusBarStyle" value="blacktranslucent" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-    </platform-->
+    </platform>
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="android-build-tool" value="gradle" />
     <preference name="android-minSdkVersion" value="19" />
@@ -73,15 +73,11 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <param name="URL_SCHEME" value="pele4u" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" />
-    <!--plugin name="cordova-plugin-fingerprint-aio" source="npm" /-->
+    <plugin name="cordova-plugin-fingerprint-aio" source="npm" />
     <plugin name="cordova-plugin-ios-keychain" source="npm" />
     <plugin name="cordova-plugin-android-fingerprint-auth" source="npm" />
     <plugin name="cordova-plugin-touchid" source="npm" />
-    
-
-
-
-      <icon src="icon.png" />
+          <icon src="icon.png" />
     <icon src="res/icons/ios/icon-1024.png"  platform="ios" width="1024" height="1024" />
 
     <icon height="29" platform="ios" src="res/icons/ios/icon-small.png" width="29" />
@@ -117,9 +113,6 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
     <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
 
-
-
-
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
@@ -136,7 +129,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
            <string>For Push Notifications</string>
        </config-file>
     <config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>140</string>
+        <string>141</string>
     </config-file>
     <access origin="*" />
     <allow-intent href="http://*/*" />
