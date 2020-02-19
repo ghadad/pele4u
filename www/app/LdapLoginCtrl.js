@@ -221,7 +221,7 @@ angular.module('pele', ['ngStorage'])
           alert("login after success decrypt:")
           return $scope.doLogIn();
         }).catch(function(err){
-          alert("error decrypt:" +err)
+            alert("error decrypt:" +err)
           $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
          // $state.reload();
@@ -241,3 +241,4 @@ angular.module('pele', ['ngStorage'])
 
     }
   });
+ 
