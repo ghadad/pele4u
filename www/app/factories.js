@@ -1782,11 +1782,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return _.get(PelApi.localStorage, 'ADAUTH.token', null);
       },
       getMethod: function () {
-        return _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
+        var method =  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
+        bioOptions.description = method;
+        return method;
       },
 
       clear: function (soft) {
-
         if (soft && soft == "soft") {
           var method = _.get(PelApi.localStorage, 'ADAUTH.method', "")
           _.set(PelApi.localStorage, 'ADAUTH', {
