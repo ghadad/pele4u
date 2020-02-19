@@ -1830,7 +1830,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               } else if (ionic.Platform.isIOS()) {
                 if (!bioOptions.iosKeyChainKey)
                   return reject("missing paramater credentials.keychainKey");
-                Keychain.setJson(
+                Keychain.set(
                   function (result) {
                     alert(JSON.stringify({
                       username: ConfigObject.username,
@@ -1849,7 +1849,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                     return reject(err.message);
                   },
                   bioOptions.iosKeyChainKey,
-                  credentials, false);
+                  credentials.password, false);
               }
             },
             function () {
@@ -1867,15 +1867,16 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               if(ionic.Platform.isAndroid()) { 
                 result.username  =  username;
                 if(!result.password)
-                return reject("cannot get encrypted password");
+                  return reject("cannot get encrypted password");
+
                 return resolve(result)
               } else if(ionic.Platform.isIOS()){
                 if(!bioOptions.iosKeyChainKey) 
                   return reject("missing paramater bioOptions.iosKeyChainKey");
                   alert("before keychain in decrypt");
-                 Keychain.getJson(function(result){
+                 Keychain.get(function(result){
                    alert("success kc getJson");
-                      return resolve(result);
+                      return resolve({username:username,password:result});
                 }, function(err){ 
                     alert("error afte ks in decrypt"+err)
                     return reject(err);
