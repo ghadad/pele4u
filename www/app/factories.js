@@ -116,9 +116,19 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       cordovaInit: function () {
         //file in device file system
+        var self = this;
+
+        self.secureStorage  = new cordova.plugins.SecureStorage(
+          function() {
+          },
+          function(error) {
+            self.secureStorage = null; 
+          },
+          "pele4u"
+        );
+        
         $sessionStorage.ApiServiceAuthParams = $sessionStorage.ApiServiceAuthParams || {};
 
-        var self = this;
         $rootScope.deviceReady = true;
         deviceReady = true;
         self.isAndroid = ionic.Platform.isAndroid();
@@ -1830,26 +1840,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               } else if (ionic.Platform.isIOS()) {
                 if (!bioOptions.iosKeyChainKey)
                   return reject("missing paramater credentials.keychainKey");
-                Keychain.set(
-                  function (result) {
-                    alert(JSON.stringify({
-                      username: ConfigObject.username,
-                      token: bioOptions.iosKeyChainKey
-                    }))
-                    return resolve({
-                      username: ConfigObject.username,
-                      token: bioOptions.iosKeyChainKey
-                    });
-                  },
-                  function (err) {
-                      $ionicPopup.alert({
-                        title: 'keychain.setJson error',
-                        template: err.message
-                      });
-                    return reject(err.message);
-                  },
-                  bioOptions.iosKeyChainKey,
-                  credentials.password, false);
+                  PelApi.secureStorage.set(function() {
+                    resolve(true)
+                  },function(err) { 
+                    reject(err);
+                  },bioOptions.iosKeyChainKey,
+                  JSON.stringify(credentials))
               }
             },
             function () {
@@ -1868,19 +1864,15 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 result.username  =  username;
                 if(!result.password)
                   return reject("cannot get encrypted password");
-
                 return resolve(result)
               } else if(ionic.Platform.isIOS()){
                 if(!bioOptions.iosKeyChainKey) 
                   return reject("missing paramater bioOptions.iosKeyChainKey");
-                  alert("before keychain in decrypt");
-                 Keychain.get(function(result){
-                   alert("success kc getJson");
-                      return resolve({username:username,password:result});
-                }, function(err){ 
-                    alert("error afte ks in decrypt"+err)
-                    return reject(err);
-                }, bioOptions.iosKeyChainKey, false);
+                  PelApi.secureStorage.get(function(result) {
+                    resolve(JSON.parse(result))
+                  },function(err) { 
+                    reject(err);
+                  },bioOptions.iosKeyChainKey)
              }
             },
             function (err) {
