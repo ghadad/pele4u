@@ -1841,7 +1841,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 if (!bioOptions.iosKeyChainKey)
                   return reject("missing paramater credentials.keychainKey");
                   PelApi.secureStorage.set(function() {
-                    alert("secure set")
                     resolve({token:bioOptions.iosKeyChainKey})
                   },function(err) { 
                     reject(err);
@@ -1870,7 +1869,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                 if(!bioOptions.iosKeyChainKey) 
                   return reject("missing paramater bioOptions.iosKeyChainKey");
                   PelApi.secureStorage.get(function(result) {
-                    alert("secure get:"+JSON.parse(result))
                     resolve(JSON.parse(result))
                   },function(err) { 
                     reject(err);
@@ -1878,8 +1876,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
              }
              },
             function (err) {
-              alert(err)
-              PelApi.lagger.error("Failed to decrypt credentials:",err)
               return reject("Failed to decrypt credentials : " + err)
             }, ConfigObject)
         })

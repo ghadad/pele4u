@@ -108,7 +108,7 @@ angular.module('pele', ['ngStorage'])
       var password = _.trim($scope.user.password);
 
       var httpConf = PelApi.getDocApproveServiceUrl('ADLogin');
-      alert("in do Login:" +user+":"+password)
+
       var promise = $http({
         url: httpConf.url,
         method: "POST",
@@ -148,11 +148,11 @@ angular.module('pele', ['ngStorage'])
             msisdn:PelApi.appSettings.config.MSISDN_VALUE
           };
 
-          alert("credentials"+JSON.stringify(credentials))
+
           _.set(PelApi.localStorage, 'ADAUTH.username',user);
 
           if (!_.get(PelApi.localStorage, 'ADAUTH.token',null) &&  BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
-              alert("encrypt")
+
               BioAuth.encrypt(credentials).
               then(function(result){
                 _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
@@ -210,27 +210,22 @@ angular.module('pele', ['ngStorage'])
     var token =  BioAuth.getToken();
     var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
         
-    alert("bioUser  token  before decrypt :"+bioUser+":"+ token)
+    
   
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
-        alert("now decrypt:")
          BioAuth.decrypt(bioUser,token).
          then(function(decryptedCredentials){
-          alert("success decrypt:")
-          alert(JSON.stringify(decryptedCredentials))
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
           $scope.resetTries();
-          alert("login after success decrypt:")
           return $scope.doLogIn();
         }).catch(function(err){
-            alert("error decrypt:" +err)
           $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
          // $state.reload();
         })
     } else {
-      alert("reache end before clear soft")
+      
       BioAuth.clear("soft");
       if(BioAuth.getMethod() == "pincode") { 
         $scope.activeForm = true;
