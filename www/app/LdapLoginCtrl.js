@@ -21,8 +21,7 @@ angular.module('pele', ['ngStorage'])
     
     $scope.authMethod = BioAuth.getMethod();
     
-    alert("$scope.authMethod :"+$scope.authMethod)
-
+    
     $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
     
     $scope.bioErrMessage1 = "שגיאה בהפעלת זיהוי ביומטרי" ; 
@@ -40,7 +39,6 @@ angular.module('pele', ['ngStorage'])
     $scope.doRender = false;
     
     BioAuth.getCap().then(function (result="") {
-      alert("cap"+result)
       if(result.match(/bio/i))
           $scope.bioCap = "bio";
           else if (result.match(/finger/i))
@@ -48,7 +46,7 @@ angular.module('pele', ['ngStorage'])
           else if (result.match(/face/i))
           $scope.bioCap = "face";
     }).catch(function () {
-      alert("bioAuth not exists for this device")
+      
       PelApi.lagger.info("bioAuth not exists for this device");
     }).finally(function(){ 
       $scope.doRender = true;
@@ -158,7 +156,7 @@ angular.module('pele', ['ngStorage'])
                 $scope.resetTries();
                 return $state.go("app.p1_appsLists");
               }).catch(function(err){
-                alert("encrypt error:" + err)
+                
                 $scope.checkTries();
                 PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
                 $state.reload();
@@ -207,22 +205,20 @@ angular.module('pele', ['ngStorage'])
     }
 
     var token =  BioAuth.getToken();
-
-    alert("token"+token)
     var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
-
-    alert("bioUser"+bioUser)
+    
+    alert("bioUser  token  before decrypt :"+bioUser+":"+ token)
 
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
         alert("now decrypt:")
          BioAuth.decrypt(bioUser,token).
          then(function(decryptedCredentials){
           alert("success decrypt:")
-
           alert(JSON.stringify(decryptedCredentials))
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
           $scope.resetTries();
+          alert("login after success decrypt:")
           return $scope.doLogIn();
         }).catch(function(err){
           alert("error decrypt:" +err)
@@ -231,7 +227,7 @@ angular.module('pele', ['ngStorage'])
          // $state.reload();
         })
     } else {
-//      alert("reache end before clear soft")
+      alert("reache end before clear soft")
       BioAuth.clear("soft");
       if(BioAuth.getMethod() == "pincode") { 
         $scope.activeForm = true;
