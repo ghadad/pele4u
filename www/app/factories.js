@@ -1874,7 +1874,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                     reject(err);
                   },bioOptions.iosKeyChainKey)
              }
-            },
+             },
             function (err) {
               alert(err)
               PelApi.lagger.error("Failed to decrypt credentials:",err)
