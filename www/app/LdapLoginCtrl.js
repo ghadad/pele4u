@@ -214,16 +214,18 @@ angular.module('pele', ['ngStorage'])
     alert("bioUser"+bioUser)
 
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
-      
+        alert("now decrypt:")
          BioAuth.decrypt(bioUser,token).
          then(function(decryptedCredentials){
+          alert("success decrypt:")
+
           alert(JSON.stringify(decryptedCredentials))
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
           $scope.resetTries();
           return $scope.doLogIn();
         }).catch(function(err){
-          alert("erro decrypt:" +err)
+          alert("error decrypt:" +err)
           $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
          // $state.reload();
