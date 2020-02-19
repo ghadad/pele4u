@@ -1874,20 +1874,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               } else if(ionic.Platform.isIOS()){
                 if(!bioOptions.iosKeyChainKey) 
                   return reject("missing paramater bioOptions.iosKeyChainKey");
+                  alert("before keychain in decrypt");
                  Keychain.getJson(function(result){
-                  PelApi.lagger.error("success to Keychain.getJson:",result);
-                  alert("ios decrypt success"+result)
-                  alert(JSON.stringify(result))
+                   alert("success kc getJson");
                   return resolve(result);
                 }, function(err){ 
-
                   if(PelApi.appSettings.env.match(/QA|DV|P2/i)){ 
-                    PelApi.lagger.error("Failed to Keychain.getJson:",err)
+                    alert("error afte ks in decrypt")
                     alert(err.message)
-                    $ionicPopup.alert({
-                      title: 'keychain.getJson error',
-                      template: err.message+":"+err.stack
-                    });
                   }
                   return reject(err.message);
                 }, bioOptions.iosKeyChainKey, false);
