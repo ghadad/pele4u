@@ -1842,12 +1842,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                     });
                   },
                   function (err) {
-                    if (PelApi.appSettings.env.match(/P2|QA|DV/i)) {
                       $ionicPopup.alert({
                         title: 'keychain.setJson error',
                         template: err.message
                       });
-                    }
                     return reject(err.message);
                   },
                   bioOptions.iosKeyChainKey,
@@ -1877,20 +1875,17 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                   alert("before keychain in decrypt");
                  Keychain.getJson(function(result){
                    alert("success kc getJson");
-                  return resolve(result);
+                      return resolve(result);
                 }, function(err){ 
-                  if(PelApi.appSettings.env.match(/QA|DV|P2/i)){ 
-                    alert("error afte ks in decrypt")
-                    alert(err.message)
-                  }
-                  return reject(err.message);
+                    alert("error afte ks in decrypt"+err)
+                    return reject(err);
                 }, bioOptions.iosKeyChainKey, false);
              }
             },
             function (err) {
-              alert(err.message)
+              alert(err)
               PelApi.lagger.error("Failed to decrypt credentials:",err)
-              return reject("Failed to decrypt credentials : " + err.stack)
+              return reject("Failed to decrypt credentials : " + err)
             }, ConfigObject)
         })
       }
