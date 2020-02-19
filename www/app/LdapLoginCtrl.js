@@ -206,9 +206,9 @@ angular.module('pele', ['ngStorage'])
 
     var token =  BioAuth.getToken();
     var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
-    
+        
     alert("bioUser  token  before decrypt :"+bioUser+":"+ token)
-
+  
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
         alert("now decrypt:")
          BioAuth.decrypt(bioUser,token).
