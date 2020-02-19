@@ -1783,7 +1783,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
       getMethod: function () {
         var method =  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
-        bioOptions.description = method;
+        bioOptions.description = method.match(/finger/) ? 
+                                 "יש להניח את האצבע על חיישן ההזדהות של הטלפון" :
+                                 "לצורך אימות זהותך יש לבצע זינוי פנים";
         return method;
       },
 
