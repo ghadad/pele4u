@@ -50,7 +50,7 @@ angular.module('pele', ['ngStorage'])
       PelApi.lagger.info("bioAuth not exists for this device");
     }).finally(function(){ 
       $scope.doRender = true;
-      alert("doRender:"+ $scope.doRender )
+    
     })
 
 
@@ -97,6 +97,7 @@ angular.module('pele', ['ngStorage'])
     });
 
     $scope.doLogIn = function () {
+      
       $scope.error = "";
       if (!($scope.user.username && $scope.user.password)) {
         $scope.error = "יש להזין שם משתמש וסיסמה";
@@ -107,7 +108,7 @@ angular.module('pele', ['ngStorage'])
       var password = _.trim($scope.user.password);
 
       var httpConf = PelApi.getDocApproveServiceUrl('ADLogin');
-
+      alert("in do Login:" +user+":"+password)
       var promise = $http({
         url: httpConf.url,
         method: "POST",
@@ -146,10 +147,12 @@ angular.module('pele', ['ngStorage'])
             password: password,
             msisdn:PelApi.appSettings.config.MSISDN_VALUE
           };
+
+          alert("credentials"+JSON.stringify(credentials))
           _.set(PelApi.localStorage, 'ADAUTH.username',user);
 
           if (!_.get(PelApi.localStorage, 'ADAUTH.token',null) &&  BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
-            
+              alert("encrypt")
               BioAuth.encrypt(credentials).
               then(function(result){
                 _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
