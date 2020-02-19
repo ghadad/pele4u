@@ -218,7 +218,7 @@ angular.module('pele', ['ngStorage'])
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
           $scope.resetTries();
-           alert("login after success decrypt:")
+          alert("login after success decrypt:")
           return $scope.doLogIn();
         }).catch(function(err){
             alert("error decrypt:" +err)
