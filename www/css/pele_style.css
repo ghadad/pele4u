@@ -587,7 +587,7 @@ a.triangle-isosceles.small {
 table.mix-alpha-numeric-table tr td {padding-left:5px}
 div#main-apps-menu div.row-bottom {margin-top:15px}
 /* fix ios 10 title  proble*/
-.platform-ios .app-top-bar ,.platform-ios .app-top-bar .header-item  {background-color: #0160a0 !important}
+.platform-ios .app-top-bar *  {background-color: #0160a0 !important}
 .platform-ios .nav-bar-title {background-color: #0160a0 !important}
 .platform-ios .nav-bar-title .bar .title {margin-top:0 !important;background-color: #0160a0 !important;}
 
