@@ -184,7 +184,13 @@ angular.module('pele', ['ngStorage'])
           function (errorStr, httpStatus, headers, config) {
             var time = config.responseTimestamp - config.requestTimestamp;
             var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
-            $scope.error = "שם משתמש או סיסמה לא נכונים"
+            if(BioAuth.getMethod().match(/finger|face|bio/)) { 
+              $scope.activeForm = true;
+              $scope.error = "שם משתמש או סיסמה לא נכונים , יש לבצע זיהוי ביומטרי חדש ";
+              BioAuth.clear("soft");
+            } else { 
+              $scope.error = "שם משתמש או סיסמה לא נכונים ";
+            }
           }
         ).finally(function () {
           $ionicLoading.hide();
