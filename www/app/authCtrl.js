@@ -138,7 +138,7 @@ app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootSc
       ); /// then
     }
   }; // doLogIn
-alert("in app login controller !")
+
   $scope.user = {};
   $scope.user.pin = "";
   $scope.user.message = "";

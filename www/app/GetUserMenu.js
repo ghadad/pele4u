@@ -159,7 +159,7 @@ app.controller('GetUserMenuCtrl',
 
 
       reMenu.success(function (data, status, headers, config) {
-        alert("remneu success");
+        
         PelApi.sessionStorage.ApiServiceAuthParams = {}
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
@@ -180,10 +180,10 @@ app.controller('GetUserMenuCtrl',
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
         PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
         if(PelApi.appSettings.env == 'DV' && data.ActivePin)
-        alert("pinCodeStatus:"+pinCodeStatus)
+        
         
         if ("Valid" === pinCodeStatus) {
-          alert("pinCodeStatus is valid :"+pinCodeStatus)
+          
           appSettings.config.token = data.token;
           
           appSettings.config.user = data.user;
@@ -230,10 +230,10 @@ app.controller('GetUserMenuCtrl',
           $sessionStorage.userName = appSettings.config.GetUserMenu.userName;
 
           appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
-          alert("appSettings.config.Pin :"+appSettings.config.Pin)
+          
 
           if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
-            alert("go to app.login")
+            
             $state.go('app.login');
           } else {
             
@@ -452,7 +452,7 @@ app.controller('GetUserMenuCtrl',
     if(!authMethod) 
        return  $state.go('app.ldap_login');
        
-    alert("sessionAdauth.token:"+sessionAdauth.token +" method:"+authMethod)   
+    
 
     if(!sessionAdauth.token && authMethod == 'pincode') {
       return $scope.doRefresh(); 
