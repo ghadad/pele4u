@@ -133,7 +133,7 @@ app.controller('GetUserMenuCtrl',
       
     }
 
-    alert("in get user menu ?  msisdn : "+ appSettings.config.MSISDN_VALUE)
+    
     if(!appSettings.config.MSISDN_VALUE)  {
        $sessionStorage.$reset();
        $localStorage.$reset();
@@ -179,7 +179,7 @@ app.controller('GetUserMenuCtrl',
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
         PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
         if(PelApi.appSettings.env == 'DV' && data.ActivePin)
-        alert("Pin code:"+data.ActivePin)
+        
         
         if ("Valid" === pinCodeStatus) {
           appSettings.config.token = data.token;
@@ -433,7 +433,7 @@ app.controller('GetUserMenuCtrl',
 
     /** Golan  */
           
-    alert("PelApi.sessionStorage.newValidPinCode:"+PelApi.sessionStorage.newValidPinCode)
+    
           
     if(PelApi.sessionStorage.newValidPinCode) { 
       appSettings.config.Pin =   PelApi.sessionStorage.newValidPinCode;
@@ -443,7 +443,7 @@ app.controller('GetUserMenuCtrl',
 
     var sessionAdauth = PelApi.sessionStorage.ADAUTH || {} ;
     var authMethod = BioAuth.getMethod();
-    alert("get user menu BioAuth.getMethod :"+BioAuth.getMethod())
+    
 
     if(!authMethod) 
        return  $state.go('app.ldap_login');
