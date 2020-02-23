@@ -15,9 +15,9 @@
                 <span class="input-label" placeholder="{{TITLE_SYSTEM_MESSAGES}}" >{{user.message}}</span>
                 <!--<input type="text" placeholder="{{TITLE_SYSTEM_MESSAGES}}" name="user_message" ng-model="user.message" disabled></a>-->
               </label>
-              <label class="item item-input">
+              <label class="item item-input" focus-me>
                 <span class="input-label">סיסמה</span>
-                <input type="tel" maxlength="4" placeholder="{{TITLE_OTP_INPUT}}" name="user_pin" ng-model="user.pin" focus-me autocomplete="one-time-code" required valid-pin="user.pin" show-hide-input autofocus>
+                <input type="tel" maxlength="4" placeholder="{{TITLE_OTP_INPUT}}" name="user_pin" ng-model="user.pin"  required>
               </label>
             </div>
             <div class="item item-body bottom-content">
