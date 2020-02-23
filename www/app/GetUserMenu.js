@@ -178,12 +178,9 @@ app.controller('GetUserMenuCtrl',
         //$scope.setMSISDN(appSettings.config.MSISDN_VALUE);
 
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
-        PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
-        if (PelApi.appSettings.env == 'DV' && data.ActivePin)
-
+        PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus);
 
           if ("Valid" === pinCodeStatus) {
-
             appSettings.config.token = data.token;
 
             appSettings.config.user = data.user;
