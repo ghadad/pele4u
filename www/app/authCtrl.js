@@ -32,7 +32,7 @@ app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootSc
 
   } 
   
-
+  
 
 
 
@@ -147,8 +147,6 @@ app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootSc
   $scope.TITLE_LOGIN = appSettings.config.TITLE_LOGIN;
   $scope.TITLE_SEND_OTP = appSettings.config.TITLE_SEND_OTP;
   $scope.TITLE_RESET_PASSWORD_LINK = appSettings.config.TITLE_RESET_PASSWORD_LINK;
-
-
 });
 
 app.controller('ForgotPasswordCtrl', function($scope, $state) {
