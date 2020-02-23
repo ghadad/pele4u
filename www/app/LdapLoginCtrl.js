@@ -192,7 +192,9 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
-        
+    
+    
+    
     if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN ) {
       if(_.get(PelApi.sessionStorage,'ADAUTH.token'))
       PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;

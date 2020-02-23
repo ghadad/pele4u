@@ -6,7 +6,7 @@ var app = angular.module('pele.GetUserMenu', ['ngStorage', 'ngCordova']);
 //==                         PAGE_1                                  ==//
 //=====================================================================//
 app.controller('GetUserMenuCtrl',
-  function ($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate,BioAuth) {
+  function ($scope, $http, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate,BioAuth,$timeout) {
 
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
@@ -233,10 +233,8 @@ app.controller('GetUserMenuCtrl',
           
 
           if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
-            
-            $state.go('app.login');
+            return $timeout(function() { $state.go('app.login');});
           } else {
-            
             PelApi.sessionStorage.ADAUTH =appSettings.config.GetUserMenu;
             appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
             appSettings.config.IS_TOKEN_VALID = "Y";
@@ -262,8 +260,8 @@ app.controller('GetUserMenuCtrl',
         } else if ("PAD" === pinCodeStatus) {
 
           if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
-            $state.go('app.login');
-          }
+            return $timeout(function() { $state.go('app.login');});
+            
         } else if ("PCR" === pinCodeStatus) {
           errorMsg = appSettings.PIN_STATUS.PAD;
           //PelApi.showPopup(appSettings.config.pinCodeSubTitlePCR , "");
