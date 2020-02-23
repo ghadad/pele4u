@@ -184,13 +184,7 @@ angular.module('pele', ['ngStorage'])
           function (errorStr, httpStatus, headers, config) {
             var time = config.responseTimestamp - config.requestTimestamp;
             var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
-            if(BioAuth.getMethod().match(/finger|face|bio/)) { 
-              $scope.activeForm = true;
-              $scope.error = "שם משתמש או סיסמה לא נכונים , יש לבצע זיהוי ביומטרי חדש ";
-              BioAuth.clear("soft");
-            } else { 
-              $scope.error = "שם משתמש או סיסמה לא נכונים ";
-            }
+            $scope.error = "שם משתמש או סיסמה לא נכונים"
           }
         ).finally(function () {
           $ionicLoading.hide();
@@ -216,9 +210,12 @@ angular.module('pele', ['ngStorage'])
     var token =  BioAuth.getToken();
     var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
         
-    
-  
+    alert("bioUser:"+bioUser)
+    alert("token:"+token)
+    alert("BioAuth.isInstalled:"+BioAuth.isInstalled())
+    alert("BioAuth.getMethod:",BioAuth.getMethod())
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
+        alert("Now open face dialog")
          BioAuth.decrypt(bioUser,token).
          then(function(decryptedCredentials){
           $scope.user = decryptedCredentials
