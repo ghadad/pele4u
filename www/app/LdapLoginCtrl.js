@@ -192,8 +192,11 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
+    alert ("Start bio check")
     
- 
+    alert("BioAuth.isInstalled:"+BioAuth.isInstalled())
+    alert("BioAuth.getMethod:",BioAuth.getMethod())
+
     if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN ) {
       if(_.get(PelApi.sessionStorage,'ADAUTH.token'))
       PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
@@ -212,8 +215,7 @@ angular.module('pele', ['ngStorage'])
         
     alert("bioUser:"+bioUser)
     alert("token:"+token)
-    alert("BioAuth.isInstalled:"+BioAuth.isInstalled())
-    alert("BioAuth.getMethod:",BioAuth.getMethod())
+
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
         alert("Now open face dialog")
          BioAuth.decrypt(bioUser,token).

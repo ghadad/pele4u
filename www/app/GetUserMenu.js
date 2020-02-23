@@ -133,6 +133,7 @@ app.controller('GetUserMenuCtrl',
       
     }
 
+    alert("in get user menu ?  msisdn : "+ appSettings.config.MSISDN_VALUE)
     if(!appSettings.config.MSISDN_VALUE)  {
        $sessionStorage.$reset();
        $localStorage.$reset();
@@ -297,6 +298,7 @@ app.controller('GetUserMenuCtrl',
       $ionicLoading.hide();
       $scope.$broadcast('scroll.refreshComplete');
     }
+
     $scope.doRefresh = function () {
       $scope.showMenu =true;
       appSettings.config.MSISDN_VALUE = $sessionStorage.PELE4U_MSISDN || $localStorage.PELE4U_MSISDN;
@@ -431,6 +433,7 @@ app.controller('GetUserMenuCtrl',
 
     /** Golan  */
           
+    alert("PelApi.sessionStorage.newValidPinCode:"+PelApi.sessionStorage.newValidPinCode)
           
     if(PelApi.sessionStorage.newValidPinCode) { 
       appSettings.config.Pin =   PelApi.sessionStorage.newValidPinCode;
@@ -440,6 +443,8 @@ app.controller('GetUserMenuCtrl',
 
     var sessionAdauth = PelApi.sessionStorage.ADAUTH || {} ;
     var authMethod = BioAuth.getMethod();
+    alert("get user menu BioAuth.getMethod :"+BioAuth.getMethod())
+
     if(!authMethod) 
        return  $state.go('app.ldap_login');
        
@@ -449,7 +454,7 @@ app.controller('GetUserMenuCtrl',
     }
 
            
-    if(!sessionAdauth.token && authMethod.match(/finger/)) 
+    if(!sessionAdauth.token && authMethod.match(/finger|face|bio/)) 
       return  $state.go('app.ldap_login');
     
     var sessionMenuItems =  _.get(sessionAdauth,'menuItems',[]);
