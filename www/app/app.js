@@ -172,6 +172,7 @@ angular.module('pele', [
     //---------------------------------------------------------------------------//
     .state('app.login', {
       url: '/auth',
+      cache:false,
       views: {
         'menuContent': {
           templateUrl: 'templates/auth/login.html',

@@ -3,10 +3,12 @@
  */
 var app = angular.module('pele.authCtrl', ['ngStorage']);
 
-app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootScope, PelApi, $sessionStorage, $ionicLoading, appSettings,BioAuth) {
+app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $ionicLoading, appSettings) {
   //------------------------------------------------------------//
   //--                    Get AppId                           --//
   //------------------------------------------------------------//
+  PelApi.lagger.info(" LoginCtrl controller");
+  
   $scope.getAppId = function() {
 
     var menuList = appSettings.config.GetUserMenu;
