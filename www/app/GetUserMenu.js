@@ -180,7 +180,7 @@ app.controller('GetUserMenuCtrl',
         var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");
         PelApi.lagger.info("GetUserMenu -> pinCodeStatus:", pinCodeStatus)
         if(PelApi.appSettings.env == 'DV' && data.ActivePin)
-        
+        alert("pinCodeStatus:"+pinCodeStatus)
         
         if ("Valid" === pinCodeStatus) {
           alert("pinCodeStatus is valid :"+pinCodeStatus)
