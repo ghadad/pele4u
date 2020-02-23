@@ -233,7 +233,9 @@ app.controller('GetUserMenuCtrl',
           
 
           if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
-            return $timeout(function() { $state.go('app.login');});
+            $timeout(function() { 
+                    $state.go('app.login');
+                    });
           } else {
             PelApi.sessionStorage.ADAUTH =appSettings.config.GetUserMenu;
             appSettings.config.Pin = appSettings.config.GetUserMenu.PinCode;
@@ -260,8 +262,9 @@ app.controller('GetUserMenuCtrl',
         } else if ("PAD" === pinCodeStatus) {
 
           if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === appSettings.config.Pin) {
-            return $timeout(function() { $state.go('app.login');});
-            
+            $timeout(function() { 
+                $state.go('app.login');
+              });
         } else if ("PCR" === pinCodeStatus) {
           errorMsg = appSettings.PIN_STATUS.PAD;
           //PelApi.showPopup(appSettings.config.pinCodeSubTitlePCR , "");
