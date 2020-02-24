@@ -1,10 +1,17 @@
 angular.module('pele', ['ngStorage'])
-  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http, $ionicLoading, BioAuth, $ionicModal) {
+  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http, $ionicLoading, BioAuth, $ionicModal,$timeout) {
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
 
     
+    $scope.focusMe = function(event) {
+    
+      $timeout(function() {
+        event.target.focus()
+      },200)      
+    }
+
     if($state.params.reset ) 
        BioAuth.clear();
         

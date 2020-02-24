@@ -36,6 +36,12 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
   
   
 
+  $scope.focusMe = function(event) {
+   
+    $timeout(function() {
+      event.target.focus()
+    },200)      
+  }
 
 
   // getAppId
