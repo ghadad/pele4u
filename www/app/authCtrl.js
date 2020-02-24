@@ -34,11 +34,14 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
 
   } 
   
-  
-  $scope.focusMe = function() {
+    
+  $scope.focusMe = function(event) {   
+    var ae =     event.target;
     $timeout(function() {
-      document.activeElement.selectionStart = document.activeElement.selectionStart;
-    },400)      
+     // document.activeElement.selectionStart = document.activeElement.selectionEnd;
+    //  console.log(document.activeElement.selectionEnd)
+    ae.focus()
+    },300)      
   }
 
   // getAppId
