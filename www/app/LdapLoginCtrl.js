@@ -11,7 +11,7 @@ angular.module('pele', ['ngStorage'])
        // document.activeElement.selectionStart = document.activeElement.selectionEnd;
       //  console.log(document.activeElement.selectionEnd)
       ae.focus()
-      },300)      
+      },400)      
     }
 
     if($state.params.reset ) 

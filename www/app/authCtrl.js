@@ -41,7 +41,7 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
      // document.activeElement.selectionStart = document.activeElement.selectionEnd;
     //  console.log(document.activeElement.selectionEnd)
     ae.focus()
-    },300)      
+    },400)      
   }
 
   // getAppId
