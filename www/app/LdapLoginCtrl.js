@@ -9,7 +9,7 @@ angular.module('pele', ['ngStorage'])
     
       $timeout(function() {
         event.target.focus()
-      },200)      
+      },0)      
     }
 
     if($state.params.reset ) 
