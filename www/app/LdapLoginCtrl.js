@@ -5,11 +5,11 @@ angular.module('pele', ['ngStorage'])
     //------------------------------------------------------------//
 
     
-    $scope.focusMe = function(event) {
-    
+    $scope.focusMe = function() {      
       $timeout(function() {
-        event.target.focus()
-      },0)      
+        document.activeElement.selectionStart = document.activeElement.selectionStart;
+        //alert(document.activeElement.selectionStart)
+      },400)      
     }
 
     if($state.params.reset ) 
