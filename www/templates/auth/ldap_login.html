@@ -10,22 +10,22 @@
     <div class="text-center">
     </div>
     
-    <div class="row" ng-if="activeForm">
+    <div class="row" ng-show="activeForm">
       <div class="col col-center">
         <div class="card login-container">
           <form name="" class="" novalidate>
               <div class="list">
-                  <label class="item item-text-wrap text-center item-input" ng-show="authMethod=='faceid'">
+                  <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='faceid'">
                     <strong>
                     שימו לב - בסיום ההתחברות תועבר להזדהות הביומטרית באמצעות זיהוי פנים
                     </strong>
                     </label>
-                    <label class="item item-text-wrap text-center item-input" ng-show="authMethod=='fingerprint'">
+                    <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='fingerprint'">
                       <strong>
                         שימו לב - בסיום ההתחברות תועבר להזדהות הביומטרית באמצעות טביעת אצבע
                       </strong>
                     </label>
-                    <label class="item item-text-wrap text-center item-input" ng-show="authMethod=='bio'">
+                    <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='bio'">
                         <strong>
                           שימו לב - בסיום ההתחברות תועבר חד פעמי להזדהות הביומטרית 
                         </strong>
@@ -84,7 +84,7 @@
                 <span>זיהוי פנים</span>
                   <img class="icon-md" src="img/new_icons/faceid.png"></button>
             </div>
-            <div ng-show="0" class="item">
+            <div ng-if="0" class="item">
                 <button ng-click="setAuthMethod(null)" class="text-right button-block button-clear button-dark">
                     <span class=""> ללא זיהוי מקוצר</span>
                     <img class="icon-md" src="img/new_icons/login_form.png"></button>
