@@ -29,7 +29,7 @@ angular.module('pele')
       
       $scope.normalImages =  [
         window.Ionic.WebView.convertFileSrc(window.location.origin + "/img/new_icons/cibus.png"),
-        window.Ionic.WebView.convertFileSrc("/app/img/new_icons/cibus.png"),
+        window.Ionic.WebView.convertFileSrc("/img/new_icons/cibus.png"),
         window.Ionic.WebView.convertFileSrc("./img/new_icons/cibus.png"),
         window.Ionic.WebView.convertFileSrc("img/new_icons/cibus.png"),
       ]}  else {
