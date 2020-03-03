@@ -128,7 +128,7 @@ angular.module('pele', [
 ])
 .config(function( /* $compileProvider,IdleProvider */ $stateProvider, $urlRouterProvider, appStates, $ionicConfigProvider,$compileProvider) {
   $ionicConfigProvider.backButton.text('')
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|ionic):|data:image/);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile|ionic):|data:image\//);
 
   $ionicConfigProvider.views.swipeBackEnabled(false);
   $ionicConfigProvider.navBar.alignTitle('center');
