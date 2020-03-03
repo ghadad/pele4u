@@ -51,11 +51,13 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="cordova-plugin-ionic-webview" source="npm"  />
 
     <preference name="iosScheme" value="httpsionic" />
-    <allow-navigation href="httpsionic://*" />
+    <!--allow-navigation href="httpsionic://*" /-->
 
     <!--preference name="Scheme" value="https" /-->
 
-  
+
+
+    
 
     <plugin name="cordova-plugin-camera"  source="npm">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
