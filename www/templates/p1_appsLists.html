@@ -23,9 +23,7 @@
         <div class="">
           <a ng-click="forwardToApp(app)" ng-repeat="app in menuItems  | filter: { menu1: true }">
           <img class="links-image" ng-src="{{app.Image}}" />
-          <div class="caption">orig:{{app.origImage}}</div>
-
-          <div class="caption">image:{{app.Image}}</div>
+          <div class="caption">{{app.DisplayName}}</div>
         </a>
         </div>
       </ion-scroll>
@@ -37,8 +35,8 @@
     <div class="grid-layout" ng-show="menuItems">
       <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">
         <i class="circle"><img class="grid-item-image" ng-src="{{app.Image}}" /></i>
-        <div class="caption">orig:{{app.origImage}}</div>
-        <div class="caption">image:{{app.Image}}</div>
+        
+        <div class="caption">{{app.DisplayName}}</div>
       </div>
     </div>
   </ion-content>
