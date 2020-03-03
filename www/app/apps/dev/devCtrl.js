@@ -18,13 +18,10 @@ angular.module('pele')
 
       $scope.images =  [
         window.location.origin + "/img/new_icons/cibus.png",
-        "https://localhost/app/img/new_icons/cibus.png",
-        "http://localhost/app/img/new_icons/cibus.png",
-        "http://localhost:8080/app/img/new_icons/cibus.png",
-        "https://localhost:8080/app/img/new_icons/cibus.png",
-        "/app/img/new_icons/cibus.png",
+        "/img/new_icons/cibus.png",
         "./img/new_icons/cibus.png",
         "img/new_icons/cibus.png",
+        "ionic://img/new_icons/cibus.png",
       ]
 
       if(_.get(window,'Ionic.WebView')) { 
@@ -32,10 +29,6 @@ angular.module('pele')
       
       $scope.normalImages =  [
         window.Ionic.WebView.convertFileSrc(window.location.origin + "/img/new_icons/cibus.png"),
-        window.Ionic.WebView.convertFileSrc("https://localhost/app/img/new_icons/cibus.png"),
-        window.Ionic.WebView.convertFileSrc("http://localhost/app/img/new_icons/cibus.png"),
-        window.Ionic.WebView.convertFileSrc("http://localhost:8080/app/img/new_icons/cibus.png"),
-        window.Ionic.WebView.convertFileSrc("https://localhost:8080/app/img/new_icons/cibus.png"),
         window.Ionic.WebView.convertFileSrc("/app/img/new_icons/cibus.png"),
         window.Ionic.WebView.convertFileSrc("./img/new_icons/cibus.png"),
         window.Ionic.WebView.convertFileSrc("img/new_icons/cibus.png"),
