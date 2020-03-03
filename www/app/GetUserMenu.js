@@ -70,8 +70,8 @@ app.controller('GetUserMenuCtrl',
         i.side = i.menuLocation.match("side|s") ? true : false;
         i.menu1 = i.menuLocation.match("menu1|m1") ? true : false;
         i.menu2 = i.menuLocation.match("menu2|m2") ? true : false;
-        i.Image = window.Ionic ? window.Ionic.WebView.convertFileSrc(i.Image) : i.Image;
-        i.Image = i.Image.match(/^http/) ? i.Image : i.Image.replace(/^(w)/,"./$1");
+        //i.Image = window.Ionic ? window.Ionic.WebView.convertFileSrc(i.Image) : i.Image;
+        //i.Image = i.Image.match(/^http/) ? i.Image : i.Image.replace(/^(w)/,"./$1");
         //i.origImage = i.Image;
         i.newSorter = (i.Sorter || ("99" + idx).toString()).replace(re, "");
         i.level = (i.newSorter.match(/\./g) || []).length;

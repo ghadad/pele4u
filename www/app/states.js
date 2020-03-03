@@ -80,6 +80,18 @@ angular.module('pele.states', [])
       },
       src: ["app/apps/dev/devCtrl.js"]
     }, {
+      state: "app.dev.images",
+      url: '/images',
+      views: {
+        'menuContent@app': {
+          templateUrl: function() {
+            return 'app/apps/dev/images.html';
+          },
+          controller: 'devCtrl',
+        }
+      },
+      src: ["app/apps/dev/devCtrl.js"]
+    }, {
       state: "app.p2_moduleList",
       url: '/p2_moduleList/:AppId/:Title/:Pin',
       views: {
