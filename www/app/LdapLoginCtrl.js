@@ -5,6 +5,7 @@ angular.module('pele', ['ngStorage'])
     //------------------------------------------------------------//
 
     
+    $scope.hideAllforms = false;
     $scope.focusMe = function(event) {   
       var ae =     event.target;
       $timeout(function() {
@@ -171,7 +172,7 @@ angular.module('pele', ['ngStorage'])
           _.set(PelApi.localStorage, 'ADAUTH.username',user);
 
           if (!_.get(PelApi.localStorage, 'ADAUTH.token',null) &&  BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
-
+              $scope.hideAllforms = true;
               BioAuth.encrypt(credentials).
               then(function(result){
                 _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
@@ -232,7 +233,7 @@ angular.module('pele', ['ngStorage'])
         
     
     if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
-        
+      $scope.hideAllforms = true;
          BioAuth.decrypt(bioUser,token).
          then(function(decryptedCredentials){
           $scope.user = decryptedCredentials
