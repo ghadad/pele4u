@@ -1,4 +1,4 @@
-<ion-view cache-view="false" hide-back-button="true" ng-show="doRender">
+<ion-view cache-view="false" hide-back-button="false" ng-show="doRender">
 
   <ion-nav-title>
     <div class="bar bar-header bar-light">
@@ -53,46 +53,44 @@
         </div>
       </div>
     </div>
+    <div  ng-show="!activeForm" class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
+        <div class="item item-text-wrap pele_ltr">
+            <!--button ng-click="closeModal()" class="button-icon ion-close"></button-->
+            <h2 class="text-center"><strong>יש לבחור שיטת זיהוי</strong></h2>             
+            <div class="item no-border">
+              <button ng-click="setAuthMethod('pincode')" class="text-right button-block button-clear button-dark">
+                  <span class="">SMS סיסמא חד פעמית ב</span>
+                  <img class="icon-md" src="img/new_icons/pincode.png"></button>
+            </div>
+            <div class="item text-center pele_rtl" ng-show="!bioCap">
+              <strong> במידה ומכשירך תומך בזיהוי ביומטרי, ניתן להפעיל את הפונקציונליות במכשיר על מנת לאפשר מימוש זיהוי ביומטרי באפליקציה.</strong>
+            </div>
+            <div class="item" ng-show="bioCap=='finger'">
+            <button ng-click="setAuthMethod('fingerprint')" class="text-right button-block button-clear button-dark" >
+<span>                טביעת אצבע</span>
+              <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
+          </div>
+          <div class="item" ng-show="bioCap=='bio'">
+              <button ng-click="setAuthMethod('bio')" class="text-right button-block button-clear button-dark" >
+          <span>זיהוי ברומטרי</span>
+                <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
+            </div>            
+          <div class="item" ng-show="bioCap=='face'">
+            <button ng-click="setAuthMethod('faceid')" class="text-right button-block button-clear button-positive">
+              <span>זיהוי פנים</span>
+                <img class="icon-md" src="img/new_icons/faceid.png"></button>
+          </div>
+          <div ng-if="0" class="item">
+              <button ng-click="setAuthMethod(null)" class="text-right button-block button-clear button-dark">
+                  <span class=""> ללא זיהוי מקוצר</span>
+                  <img class="icon-md" src="img/new_icons/login_form.png"></button>
+            </div>
+        </div>
+      </div>
+      
   </ion-content>
   <script type="text/ng-template" id="authMethods.html">
     <ion-content  id="auth-modal" padding="true" style="margin:60px 25px 25px 25px" ng-show="doRender">
-
-        <div  class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
-          <div class="item item-text-wrap pele_ltr">
-              <!--button ng-click="closeModal()" class="button-icon ion-close"></button-->
-              <h2 class="text-center"><strong>יש לבחור שיטת זיהוי</strong></h2>             
-              <div class="item no-border">
-                <button ng-click="setAuthMethod('pincode')" class="text-right button-block button-clear button-dark">
-                    <span class="">SMS סיסמא חד פעמית ב</span>
-                    <img class="icon-md" src="img/new_icons/pincode.png"></button>
-              </div>
-              <div class="item text-center pele_rtl" ng-show="!bioCap">
-                <strong> במידה ומכשירך תומך בזיהוי ביומטרי, ניתן להפעיל את הפונקציונליות במכשיר על מנת לאפשר מימוש זיהוי ביומטרי באפליקציה.</strong>
-              </div>
-              <div class="item" ng-show="bioCap=='finger'">
-              <button ng-click="setAuthMethod('fingerprint')" class="text-right button-block button-clear button-dark" >
-<span>                טביעת אצבע</span>
-                <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
-            </div>
-            <div class="item" ng-show="bioCap=='bio'">
-                <button ng-click="setAuthMethod('bio')" class="text-right button-block button-clear button-dark" >
-            <span>זיהוי ברומטרי</span>
-                  <img class="icon-md" src="img/new_icons/fingerprint.png"> </button>
-              </div>            
-            <div class="item" ng-show="bioCap=='face'">
-              <button ng-click="setAuthMethod('faceid')" class="text-right button-block button-clear button-positive">
-                <span>זיהוי פנים</span>
-                  <img class="icon-md" src="img/new_icons/faceid.png"></button>
-            </div>
-            <div ng-if="0" class="item">
-                <button ng-click="setAuthMethod(null)" class="text-right button-block button-clear button-dark">
-                    <span class=""> ללא זיהוי מקוצר</span>
-                    <img class="icon-md" src="img/new_icons/login_form.png"></button>
-              </div>
-          </div>
-        </div>
-        
-      </ion-content>
+     </ion-content>
   </script>
-
 </ion-view>

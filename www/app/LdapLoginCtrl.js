@@ -1,5 +1,5 @@
 angular.module('pele', ['ngStorage'])
-  .controller('LdapLoginCtrl', function ($scope, $state, $rootScope, PelApi, $http, $ionicLoading, BioAuth, $ionicModal,$timeout) {
+  .controller('LdapLoginCtrl', function ($scope, $state, $ionicSideMenuDelegate, PelApi, $http, $ionicLoading, BioAuth, $ionicModal,$timeout) {
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
@@ -23,6 +23,10 @@ angular.module('pele', ['ngStorage'])
         BioAuth.clear("soft");
     _.set(PelApi.sessionStorage, 'stat.bioFailed',tries+1);
   }
+
+  $scope.toggleRight = function(){
+    $ionicSideMenuDelegate.toggleRight();
+};
 
   $scope.resetTries = function() { 
     var tries = _.set(PelApi.sessionStorage,'stat.bioFailed',0);
@@ -65,7 +69,8 @@ angular.module('pele', ['ngStorage'])
 
     $ionicModal.fromTemplateUrl('authMethods.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: 'slide-in-up',
+      backdropClickToClose:true
     }).then(function (modal) {
       $scope.modal = modal;
     });
@@ -73,20 +78,21 @@ angular.module('pele', ['ngStorage'])
     $scope.openModal = function () {
       $scope.title = $scope.authTitle
       $scope.activeForm = false;
-      $scope.modal.show();
+     // $scope.modal.show();
     };
 
 
     $scope.setAuthMethod = function (method) {
       $scope.authMethod = method;
       BioAuth.setMethod(method);
+      $scope.activeForm = true;
       $scope.closeModal();
     }
 
 
     $scope.closeModal = function (backToMenu) {
       $scope.title = $scope.regTitle
-      $scope.modal.hide();
+     // $scope.modal.hide();
       if(backToMenu)
       setTimeout(function () {
         $scope.activeForm = true;
@@ -97,10 +103,14 @@ angular.module('pele', ['ngStorage'])
     $scope.$on('$destroy', function () {
       $scope.modal.remove();
     });
-    $scope.$on('modal.hidden', function () {
+
+    $scope.$on('modal.hidden', function (event, modal) {
+  
+     console.log('Modal ' + event.target + ' is hidden!'); 
       $scope.title = $scope.regTitle
       setTimeout(function () {
         $scope.activeForm = true;
+      //  $ionicSideMenuDelegate.toggleRight();
       }, 100)
       // Execute action
     });
