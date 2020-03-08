@@ -126,11 +126,11 @@ angular.module('pele', [
     });
   }
 ])
-.config(function( /* $compileProvider,IdleProvider */ $stateProvider, $urlRouterProvider, appStates, $ionicConfigProvider) {
+.config(function( /* $compileProvider,IdleProvider */ $compileProvider,$stateProvider, $urlRouterProvider, appStates, $ionicConfigProvider) {
   $ionicConfigProvider.backButton.text('')
   $ionicConfigProvider.views.swipeBackEnabled(false);
   $ionicConfigProvider.navBar.alignTitle('center');
-  //$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile):|data:image\//);
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|file|blob|cdvfile):|data:image\//);
   //  IdleProvider.idle(60 * 3);
 
   $stateProvider
