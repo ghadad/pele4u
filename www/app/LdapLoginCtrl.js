@@ -15,10 +15,6 @@ angular.module('pele', ['ngStorage'])
       },300)      
     }
 
-    document.addEventListener("click", function(evnt){
-      console.log(evnt.target.id);
-    });
-  
     if($state.params.reset ) 
        BioAuth.clear();
         

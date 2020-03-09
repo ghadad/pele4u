@@ -1,3 +1,4 @@
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -23,7 +24,12 @@ angular.module('pele', [
 ])
 
 .run(['$rootScope', '$ionicPlatform', '$state', '$ionicLoading', 'PelApi', 'appSettings', /* 'Idle',*/
+
+
+
   function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings /*, Idle */ ) {
+     
+     
     PelApi.init();
     _.set(PelApi.sessionStorage,'stat',{httpRequests:0,httpFailed:0,pinCodeFailed:0,bioFailed:0});
   

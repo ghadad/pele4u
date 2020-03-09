@@ -3,7 +3,7 @@
  */
 var app = angular.module('pele.authCtrl', ['ngStorage']);
 
-app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $ionicLoading, appSettings) {
+app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $ionicLoading, appSettings,$timeout) {
   //------------------------------------------------------------//
   //--                    Get AppId                           --//
   //------------------------------------------------------------//
