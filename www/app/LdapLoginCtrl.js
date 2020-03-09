@@ -232,7 +232,7 @@ angular.module('pele', ['ngStorage'])
     var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
         
     
-    if (bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
+    if (PelApi.appSettings.config.IS_TOKEN_VALID != "Y" && bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
       $scope.hideAllforms = true;
          BioAuth.decrypt(bioUser,token).
          then(function(decryptedCredentials){

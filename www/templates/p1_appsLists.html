@@ -30,7 +30,7 @@
     </div>
   </div>
   <ion-content class="menu2"   ng-show="menuItems.length" class="no-header no-footer" has-bouncing="false">
-    <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
+    <ion-refresher pulling-text="משוך לרענון... " on-refresh="goToADLogin()">
     </ion-refresher>
     <div class="grid-layout" ng-show="menuItems">
       <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">

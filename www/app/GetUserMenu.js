@@ -297,6 +297,8 @@ app.controller('GetUserMenuCtrl',
      *****************************************************************
      */
     $scope.goToADLogin = function () {
+      //appSettings.config.IS_TOKEN_VALID = "N"
+      return $state.reload();
       $state.go('app.ldap_login');
       $ionicLoading.hide();
       $scope.$broadcast('scroll.refreshComplete');
