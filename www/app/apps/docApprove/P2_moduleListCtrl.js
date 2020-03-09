@@ -5,7 +5,7 @@ angular.module('pele')
   //=================================================================
   //==                    PAGE_2
   //=================================================================
-  .controller('P2_moduleListCtrl', function($scope,$ionicHistory,
+  .controller('P2_moduleListCtrl', function($scope,
     $http,
     $stateParams,
     $state,
@@ -20,7 +20,6 @@ angular.module('pele')
   ) {
     //----------------------- LOGIN --------------------------//
     $scope.appId = $stateParams.AppId;
-
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -46,8 +45,6 @@ angular.module('pele')
       return retVal;
 
     }
-
-    $scope.sourceQty = true;
     $scope.pushBtnClass = function(event) {
 
 
@@ -72,15 +69,7 @@ angular.module('pele')
     //--       goHome
     //---------------------------------
     $scope.goHome = function() {
-   
       PelApi.goHome();
-    }
-
-    $scope.goBack = function() {
-     if($scope.sourceQty)
-        $ionicHistory.goBack();
-      else 
-        PelApi.goHome();
     }
 
     // Perform the login action when the user submits the login form
@@ -176,7 +165,7 @@ angular.module('pele')
       var links = PelApi.getDocApproveServiceUrl("GetUserModuleTypes");
 
       var retUserModuleTypes = PelApi.getUserModuleTypes(links, appId, pin);
-     
+
       retUserModuleTypes.success(function(data, status) {
 
         $scope.feeds_categories = [];
@@ -192,12 +181,8 @@ angular.module('pele')
             var category_sources = $scope.insertOnTouchFlag(appSettings.config.GetUserModuleTypes.Response.OutParams.MOBILE_MODULE_REC);
 
             $scope.category_sources_length = appSettings.config.GetUserModuleTypes.Response.OutParams.MOBILE_MODULE_REC.length;
- 
-            $scope.category_sources = category_sources; //appSettings.config.GetUserModuleTypes.Response.OutParams.MOBILE_MODULE_REC;
-            appSettings.config.IS_TOKEN_VALID = "Y";
-            if($scope.category_sources.length ==1 && _.get($scope.category_sources[0],'DOCUMENT_QTY',0) == 0) 
-              $scope.sourceQty = false;
 
+            $scope.category_sources = category_sources; //appSettings.config.GetUserModuleTypes.Response.OutParams.MOBILE_MODULE_REC;
           }
 
         } else if ("PWA" === pinCodeStatus) {

@@ -3,12 +3,10 @@
  */
 var app = angular.module('pele.authCtrl', ['ngStorage']);
 
-app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $ionicLoading, appSettings,$timeout) {
+app.controller('LoginCtrl', function($scope, $state, $templateCache, $q, $rootScope, PelApi, $sessionStorage, $ionicLoading, appSettings) {
   //------------------------------------------------------------//
   //--                    Get AppId                           --//
   //------------------------------------------------------------//
-  PelApi.lagger.info(" LoginCtrl controller");
-  
   $scope.getAppId = function() {
 
     var menuList = appSettings.config.GetUserMenu;
@@ -32,19 +30,7 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
 
     return appId;
 
-  } 
-  
-    
-  $scope.focusMe = function(event) {   
-    var ae =     event.target;
-    $timeout(function() {
-     // document.activeElement.selectionStart = document.activeElement.selectionEnd;
-    //  console.log(document.activeElement.selectionEnd)
-    ae.focus()
-    },300)      
-  }
-
-  // getAppId
+  } // getAppId
   //------------------------------------------------------------//
   //--                                                        --//
   //------------------------------------------------------------//
@@ -72,14 +58,10 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
             PelApi.lagger.info(JSON.stringify(data));
 
             if ("Valid" === pinStatus) {
-              
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               appSettings.config.Pin = pin;
-
-              
               appSettings.config.IS_TOKEN_VALID = "Y";
-              PelApi.sessionStorage.newValidPinCode = pin;
 
               $sessionStorage.AuthInfo = {
                 pinCode: appSettings.config.Pin,
@@ -92,7 +74,6 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
                 code: appSettings.config.Pin,
                 apiCode: pinStatus
               })
-              
               $state.go('app.p1_appsLists');
             } else if ("PWA" === pinStatus) {
               $ionicLoading.hide();
@@ -100,18 +81,22 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
               $scope.user.message = appSettings.config.pinCodeSubTitlePWA;
               $scope.user.pin = "";
             } else if ("PAD" === pinStatus) {
-
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
+
+              //$scope.user.message = appSettings.config.pinCodeSubTitlePDA;
+              //$scope.user.pin = "";
               PelApi.goHome();
 
             } else if ("InValid" === pinStatus) {
+
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               //$state.go("app.p1_appsLists");
               PelApi.goHome();
 
             } else if ("EAI_ERROR" === pinStatus) {
+
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               PelApi.showPopup(appSettings.config.EAI_ERROR_DESC, "");
@@ -123,6 +108,7 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
               PelApi.goHome();
 
             } else if ("ERROR_CODE" === pinStatus) {
+
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               PelApi.showPopup(stat.description, "");
@@ -136,7 +122,6 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
         //--- ERROR ---//
         ,
         function(response) {
-
           PelApi.lagger.error("========== IsSessionValidJson ERROR ==========");
           PelApi.lagger.error(JSON.stringify(response));
           $ionicLoading.hide();
@@ -155,6 +140,8 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
   $scope.TITLE_LOGIN = appSettings.config.TITLE_LOGIN;
   $scope.TITLE_SEND_OTP = appSettings.config.TITLE_SEND_OTP;
   $scope.TITLE_RESET_PASSWORD_LINK = appSettings.config.TITLE_RESET_PASSWORD_LINK;
+
+
 });
 
 app.controller('ForgotPasswordCtrl', function($scope, $state) {
