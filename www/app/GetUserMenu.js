@@ -454,6 +454,7 @@ app.controller('GetUserMenuCtrl',
 
 
     if (!sessionAdauth.token && authMethod == 'pincode') {
+      
       return $scope.doRefresh();
     }
 

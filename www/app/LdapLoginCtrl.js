@@ -4,7 +4,7 @@ angular.module('pele', ['ngStorage'])
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
 
-    
+    console.log("IN ldap login")
     $scope.hideAllforms = false;
     $scope.focusMe = function(event) {   
       var ae =     event.target;
@@ -15,6 +15,10 @@ angular.module('pele', ['ngStorage'])
       },300)      
     }
 
+    document.addEventListener("click", function(evnt){
+      console.log(evnt.target.id);
+    });
+  
     if($state.params.reset ) 
        BioAuth.clear();
         

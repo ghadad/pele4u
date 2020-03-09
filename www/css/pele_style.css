@@ -591,6 +591,10 @@ div#main-apps-menu div.row-bottom {margin-top:15px}
 .platform-ios .nav-bar-title {background-color: #0160a0 !important}
 .platform-ios .nav-bar-title .bar .title {margin-top:0 !important;background-color: #0160a0 !important;}
 
+.platform-ios  .scroll-content { 
+  pointer-events: none !important; /*fix scroll lock on ios12.2*/ 
+}
+
 .docs-menu-head {font-weight:bolder}
 .docs-menu-item-title {font-size: 16px;font-weight:bolder}
 .docs-menu .item.docs-menu-details {padding:7px 11px}
