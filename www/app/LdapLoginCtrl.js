@@ -4,7 +4,7 @@ angular.module('pele', ['ngStorage'])
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
 
-    console.log("IN ldap login")
+    
     $scope.hideAllforms = false;
     $scope.focusMe = function(event) {   
       var ae =     event.target;
@@ -107,7 +107,7 @@ angular.module('pele', ['ngStorage'])
 
     $scope.$on('modal.hidden', function (event, modal) {
   
-     console.log('Modal ' + event.target + ' is hidden!'); 
+     
       $scope.title = $scope.regTitle
       setTimeout(function () {
         $scope.activeForm = true;
