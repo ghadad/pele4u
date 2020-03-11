@@ -116,9 +116,11 @@ angular.module('pele', ['ngStorage'])
       // Execute action
     });
 
-    $scope.doLogIn = function () {
+    $scope.doLogIn = function (isBio) {
       
       $scope.error = "";
+      $scope.error2 = "";
+
       if (!($scope.user.username && $scope.user.password)) {
         $scope.error = "יש להזין שם משתמש וסיסמה";
       }
@@ -205,8 +207,14 @@ angular.module('pele', ['ngStorage'])
             $scope.hideAllforms = false;
             $scope.activeForm = true;
             var time = config.responseTimestamp - config.requestTimestamp;
+            $scope.user.password = "";
+
             var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+            if(isBio)
+            $scope.error = "זוהתה סיסמא שגויה באפליקציה, יש לבצע הזדהות מחדש עם שם המשתמש והסיסמא של המחשב"
+            else
             $scope.error = "שם משתמש או סיסמה לא נכונים"
+            
           }
         ).finally(function () {
           $ionicLoading.hide();
@@ -241,7 +249,7 @@ angular.module('pele', ['ngStorage'])
           $scope.user = decryptedCredentials
           $scope.activeForm = false;
           $scope.resetTries();
-          return $scope.doLogIn();
+          return $scope.doLogIn(true);
         }).catch(function(err){
 
           $scope.checkTries();
