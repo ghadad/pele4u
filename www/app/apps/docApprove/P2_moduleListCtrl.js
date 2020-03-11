@@ -80,7 +80,7 @@ angular.module('pele')
      if($scope.sourceQty)
         $ionicHistory.goBack();
       else 
-        PelApi.goHome();
+        PelApi.goMenu();
     }
 
     // Perform the login action when the user submits the login form

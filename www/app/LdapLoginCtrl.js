@@ -241,6 +241,8 @@ angular.module('pele', ['ngStorage'])
           $scope.resetTries();
           return $scope.doLogIn();
         }).catch(function(err){
+          $scope.hideAllforms = false;
+          $scope.activeForm = true;
           $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
          // $state.reload();

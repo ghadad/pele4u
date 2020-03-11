@@ -13,15 +13,12 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
     <platform name="ios">
-      <!--preference name="KeyboardDisplayRequiresUserAction" value="false" /-->
-      <!-- preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine" /-->
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="StatusBarStyle" value="blacktranslucent" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="android-build-tool" value="gradle" />
     <preference name="android-minSdkVersion" value="19" />
@@ -56,7 +53,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     </plugin>
     <!-- <plugin name="cordova-plugin-console" spec="~1.0.5" /> -->
     <plugin name="cordova-plugin-device"  source="npm" />
-        <plugin name="cordova-plugin-dialogs"  source="npm" />
+    <plugin name="cordova-plugin-dialogs"  source="npm" />
     <plugin name="cordova-plugin-file"  source="npm" />
     <plugin name="cordova-plugin-file-transfer"  source="npm" />
     <plugin name="cordova-plugin-globalization"  source="npm" />
