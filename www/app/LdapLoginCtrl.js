@@ -126,7 +126,7 @@ angular.module('pele', ['ngStorage'])
       }
       PelApi.showLoading();
 
-      var user = _.trim($scope.user.username);
+      var user = _.trim($scope.user.username).replace(/\@.+/,"");
       var password = _.trim($scope.user.password);
 
       var httpConf = PelApi.getDocApproveServiceUrl('ADLogin');
