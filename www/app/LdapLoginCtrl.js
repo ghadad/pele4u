@@ -202,6 +202,8 @@ angular.module('pele', ['ngStorage'])
         })
         .error(
           function (errorStr, httpStatus, headers, config) {
+            $scope.hideAllforms = false;
+            $scope.activeForm = true;
             var time = config.responseTimestamp - config.requestTimestamp;
             var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
             $scope.error = "שם משתמש או סיסמה לא נכונים"
@@ -241,8 +243,7 @@ angular.module('pele', ['ngStorage'])
           $scope.resetTries();
           return $scope.doLogIn();
         }).catch(function(err){
-          $scope.hideAllforms = false;
-          $scope.activeForm = true;
+
           $scope.checkTries();
           PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
          // $state.reload();
