@@ -5,8 +5,8 @@ angular.module('pele')
   //=================================================================
   //==                    PAGE_4
   //=================================================================
-  .controller('phonebookDetailsCtrl', ['Contact', 'ApiService', '$state', '$rootScope', '$scope', '$stateParams', '$ionicLoading', 'PelApi', '$cordovaSocialSharing', '$ionicNavBarDelegate',
-    function(Contact, ApiService, $state, $rootScope, $scope, $stateParams, $ionicLoading, PelApi, $cordovaSocialSharing, $ionicNavBarDelegate) {
+  .controller('phonebookDetailsCtrl', ['Contact', 'ApiService', 'ApiGateway','$state', '$rootScope', '$scope', '$stateParams', '$ionicLoading', 'PelApi', '$cordovaSocialSharing', '$ionicNavBarDelegate',
+    function(Contact, ApiService, ApiGateway,$state, $rootScope, $scope, $stateParams, $ionicLoading, PelApi, $cordovaSocialSharing, $ionicNavBarDelegate) {
       var appId = $stateParams.AppId;
       var personId = $stateParams.personId;
       $scope.today = moment().format('DD/MM');;
@@ -56,6 +56,11 @@ angular.module('pele')
           });
         })
       }
+
+      $scope.getContactFile = function(event, c) {
+
+      }
+
 
       $scope.swalContact = function(event, c) {
         swal({
