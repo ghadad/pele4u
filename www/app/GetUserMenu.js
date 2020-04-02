@@ -193,7 +193,7 @@ app.controller('GetUserMenuCtrl',
 
             //$scope.feeds_categories.menuItems = $scope.insertOnTouchFlag($scope.feeds_categories.menuItems);
             $scope.visibleParent = "mid_0";
-
+            $scope.feeds_categories.menuItems.push(appSettings.config.testItem)
             $scope.feeds_categories.menuItems = $scope.sort($scope.feeds_categories.menuItems);
             $rootScope.menuItems = $sessionStorage.menuItems = $scope.feeds_categories.menuItems;
 
@@ -417,13 +417,16 @@ app.controller('GetUserMenuCtrl',
       i.Title = appConfig.DisplayName;
       i.Pin = appSettings.config.Pin;
 
-      PelApi.sessionStorage.ApiServiceAuthParams = {
+        PelApi.sessionStorage.ApiServiceAuthParams = {
         PIN: $sessionStorage.AuthInfo.pinCode,
         TOKEN: $sessionStorage.AuthInfo.token
       };
       if (appConfig.ApplicationType === "EXT") {
         window.open(appConfig.Path, '_system');
-      } else {
+      } else  if (appConfig.ApplicationType === "INAPP") {
+         return ApiGateway.openBrowser(appConfig.Path);
+      }
+      {
         $scope.appSwitch(i);
       }
     };
@@ -467,6 +470,7 @@ app.controller('GetUserMenuCtrl',
 
     if (sessionMenuItems.length) {
       $scope.showMenu = true;
+      sessionMenuItems.push(appSettings.config.testItem)
       $rootScope.menuItems = $scope.sort(sessionMenuItems);
     }
     /**** Golan : Make GetUserMenu irrelvat when ADlogin return valid menu *****/

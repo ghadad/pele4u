@@ -1,5 +1,5 @@
 /*********************/
-const env = "P2";
+const env = "Q2";
 /********************/
 
 const EnvCodes = {  
@@ -30,6 +30,7 @@ const spinConfig = {
 };
 
 const apiConfig = {
+
   env: env,
   hostname: "msso.pelephone.co.il",
   uri: "http://msso.pelephone.co.il",
@@ -198,6 +199,17 @@ angular.module('pele.config', [])
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
+      testItem : { 
+        AppId: "8AF701F10BD937EBE0535B07AE0A4417",
+        ApplicationType: "INAPP",
+        DisplayName: "דיווח נוכחות",
+        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
+        Location: "s m2",
+        Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
+        Pin: false,
+        Sorter: "21",
+        WorkState: "online"
+      },
       bioClientId:"NEVER_CHANGE_THIS_VALUE_BIOPELE4U" ,
       bioClientSecret:"NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
