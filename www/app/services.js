@@ -264,10 +264,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           token: $sessionStorage.token,
           userId: PelApi.appSettings.config.user || $sessionStorage.user,
           jwtToken: jwtToken,
-          backDoor: window.document.location,
-          url: url
-        }
+          backDoor: window.document.location
+         }
         var qstr = "";
+
         for (var key in extAuth) {
           if (qstr != "") {
             qstr += "&";
@@ -275,8 +275,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           qstr += key + "=" + encodeURIComponent(extAuth[key]);
         }
 
-        window.document.location = "app/external/index.html#/?" + qstr
-      }
+        var fullUrl = url +'?'+qstr
+
+        var ref = cordova.InAppBrowser.open(fullUrl, '_blank', 'location=yes');
+
+
+       }
     }).error(function (error, httpStatus, headers, config) {
       swal(swalObject)
 
