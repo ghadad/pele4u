@@ -71,9 +71,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
 
     var urlBase = PelApi.networkInfo.httpChannel() + PelApi.appSettings.apiConfig.hostname;
     var ServiceUrl = urlBase + '/' + PelApi.appSettings.SSOEnv[env] + '/CallMobileService';
-    var authParams = $sessionStorage.ApiServiceAuthParams || {};
+    var authParams = $sessionStorage.ApiServiceAuthParams;
     authParams.APPID = internalConfig.AppId;
-    var authParamsString = PelApi.toQueryString($sessionStorage.ApiServiceAuthParams||{})
+    var authParamsString = PelApi.toQueryString($sessionStorage.ApiServiceAuthParams)
 
     internal.url = ServiceUrl + '?' + authParamsString;
     var EnvCode = "MobileApp_" + PelApi.appSettings.EnvCodes[env];
@@ -174,7 +174,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
     //headers['withCredentials'] = 'true';
     var ApiServiceAuthParams = _.get($sessionStorage, "ApiServiceAuthParams", {});
     headers['x-appid'] = $sessionStorage.PeleAppId;
-    headers['x-token'] = ApiServiceAuthParams.TOKEN ||$sessionStorage.token;
+    headers['x-token'] = ApiServiceAuthParams.TOKEN;
     headers['x-pincode'] = ApiServiceAuthParams.PIN;
     headers['x-username'] = $sessionStorage.userName;
     headers['x-msisdn'] = ($sessionStorage.PELE4U_MSISDN || PelApi.appSettings.config.MSISDN_VALUE) || $localStorage.PELE4U_MSISDN;
@@ -228,37 +228,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function($htt
       params: params,
       headers: buildHeader(config.headers)
     }
-    
     return $http.get(url, httpConfig);
   };
-  this.getToken = function( params, config) {
-    var url = getUrl("users/token") 
-    params = params || {};
-    config = config || {};
-    var httpConfig = {
-      retry: (config.retry || 2),
-      timeout: (config.timeout || PelApi.appSettings.gw_timeout || 10000),
-      params: params,
-      headers: buildHeader(config.headers)
-    }    
-    return $http.get(url, httpConfig);
-  };
-
-
-  this.openBrowser =function(url) { 
-    this.getToken().success(function(r){
-      var jwtToken = _.get(r,'token',"");
-      if(jwtToken.length <100)
-      {alert("Invalid token");
-      PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
-     }
-      window.open(url+'?jwtToken='+jwtToken+'&token='+$sessionStorage.token,'_system');
-    }).error(function(error, httpStatus, headers, config) {
-           PelApi.throwError("api", "SubmitNotif", "httpStatus : " + httpStatus + tr)
-    }).finally(function() {
-    
-    });
-  }
   this.post = function(service, params, config) {
     var url = getUrlBase() + service;
     config = config || {};

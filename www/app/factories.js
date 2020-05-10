@@ -1,5 +1,5 @@
 angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova', 'pele.messages'])
-  .factory('PelApi', function ($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages) {
+  .factory('PelApi', function($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages) {
     var self = this;
     var PelApiInstance = this;
     var _global = {};
@@ -14,11 +14,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
     self.networkInfo = {
       channels: channels,
-      httpChannel: function () {
-
-        return channels.secure;
-
-        /* 
+      httpChannel: function() {
         if (!$rootScope.deviceReady)
           return channels.insecure;
 
@@ -28,14 +24,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           return channels.insecure;
         };
         return channels.secure;
-        */
       },
-      type: function () {
+      type: function() {
         if ($rootScope.deviceReady)
           return ($cordovaNetwork.getNetwork() || "none");
         return "effective:" + navigator.connection.effectiveType || "none";
       },
-      isOnline: function () {
+      isOnline: function() {
         if ($rootScope.deviceReady)
           return $cordovaNetwork.isOnline();
         return false;
@@ -46,10 +41,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     return {
       http: $http,
       networkInfo: self.networkInfo,
-      safeApply: function (scope, fn) {
+      safeApply: function(scope, fn) {
         (scope.$$phase || scope.$root.$$phase) ? fn(): scope.$apply(fn);
       },
-      getLocalStorageUsage: function () {
+      getLocalStorageUsage: function() {
         var _lsTotal = 0,
           maxLen = 0,
           _xLen, _x, largestX;
@@ -76,13 +71,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           maxSize: (maxLen / (1024 * 1024)).toFixed(2)
         }
       },
-      toQueryString: function (obj) {
-        return Object.keys(obj).map(function (k) {
+      toQueryString: function(obj) {
+        return Object.keys(obj).map(function(k) {
             return encodeURIComponent(k) + "=" + encodeURIComponent(obj[k])
           })
           .join("&");
       },
-      ensureOnline: function () {
+      ensureOnline: function() {
         if ($cordovaNetworky && !$cordovaNetwork.isOnline()) {
           $ionicPopup.alert({
             title: 'בעיית חיבור נתונים',
@@ -91,11 +86,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
         return true;
       },
-      init: function () {
+      init: function() {
         console.log("device ready - init")
         this.global.set('debugFlag', appSettings.debug, true)
         this.cordovaNetwork = {
-          getNetwork: function () {
+          getNetwork: function() {
             return "3g";
           }
         };
@@ -114,21 +109,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         this.localStorage = $localStorage;
 
       },
-      cordovaInit: function () {
+      cordovaInit: function() {
         //file in device file system
-        var self = this;
-
-        self.secureStorage  = new cordova.plugins.SecureStorage(
-          function() {
-          },
-          function(error) {
-            self.secureStorage = null; 
-          },
-          "pele4u"
-        );
-        
         $sessionStorage.ApiServiceAuthParams = $sessionStorage.ApiServiceAuthParams || {};
 
+        var self = this;
         $rootScope.deviceReady = true;
         deviceReady = true;
         self.isAndroid = ionic.Platform.isAndroid();
@@ -145,7 +130,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
 
         // listen for Online event
-        $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
+        $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
           appSettings.config.isOnline = true;
           appSettings.config.network = $cordovaNetwork.getNetwork();
           network = {
@@ -163,7 +148,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         })
 
         // listen for Offline event
-        $rootScope.$on('$cordovaNetwork:offline', function (event, networkState) {
+        $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
           appSettings.config.isOnline = false;
           appSettings.config.network = $cordovaNetwork.getNetwork();
           network = {
@@ -185,22 +170,20 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
         $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME);
         self.lagger.info('start new log');
-        self.lagger.deleteLogfile().then(function () {
+        self.lagger.deleteLogfile().then(function() {
           $fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME)
           self.lagger.info('Flush log ->  start new log');
         });
-        //register Push Notification
         self.registerPushNotification();
       },
-
       apiGateway: {
-        url: function () {
+        url: function() {
           var env = _.get(appSettings.EnvCodes, appSettings.env).toLowerCase()
           var urlBase = self.networkInfo.channels.secure + appSettings.apiConfig.hostname;
           var urlBase = urlBase + '/mobileAppGw/' + env + '/';
           return urlBase;
         },
-        header: function (params) {
+        header: function(params) {
           var headers = params || {};
           //headers['withCredentials'] = 'true';
           var ApiServiceAuthParams = _.get($sessionStorage, "ApiServiceAuthParams", {});
@@ -212,7 +195,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           return headers;
         }
       },
-      registerPushNotification: function () {
+      registerPushNotification: function() {
         //-----------------------------------------
         //--   Registration for Push Notification
         //-----------------------------------------
@@ -236,11 +219,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           visualLevel: oneSignalConf.visualLevel || 0
         });
 
-        var handleNotificationReceived = function (data) {
+        var handleNotificationReceived = function(data) {
 
           self.lagger.info('handleNotificationReceived: ', data);
         }
-        var notificationOpenedCallback = function (data) {
+        var notificationOpenedCallback = function(data) {
 
 
           self.lagger.info('notificationOpenedCallback: ', data);
@@ -254,14 +237,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           .handleNotificationReceived(handleNotificationReceived)
           .endInit();
 
-        window.plugins.OneSignal.getIds(function (ids) {
+        window.plugins.OneSignal.getIds(function(ids) {
           appSettings.config.PLAYER_ID = ids.userId;
           self.lagger.info('window.plugins.OneSignal.getIds :' + ids.userId);
         });
 
       },
 
-      sendPincode: function (pincode) {
+      sendPincode: function(pincode) {
         return $http({
           url: appSettings.api,
           method: "POST",
@@ -274,7 +257,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
         });
       },
-      login: function () {
+      login: function() {
         return $http({
           url: appSettings.api,
           method: "POST",
@@ -285,7 +268,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
         });
       },
-      getAppId: function () {
+      getAppId: function() {
 
         var menuList = appSettings.config.GetUserMenu;
 
@@ -314,7 +297,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
         return appId;
       },
-      sendScanPrint: function (links) {
+      sendScanPrint: function(links) {
         var headers = {
           "Accept": "application/json, text/plain, */*"
         };
@@ -354,7 +337,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------------//
       //--                       IsSessionValidJson                             --//
       //--------------------------------------------------------------------------//
-      IsSessionValidJson: function (links, appId, pin) {
+      IsSessionValidJson: function(links, appId, pin) {
         var envUrl = links.URL;
         var headers = "";
         var version = appSettings.config.APP_VERSION
@@ -391,7 +374,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------//
       //                    GetUserMenu PAGE 1                              //
       //--------------------------------------------------------------------//
-      getMenu: function (links) {
+      getMenu: function(links) {
         var self = this;
         // LOADING
 
@@ -412,7 +395,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //------------------------------------------------------------------------//
       //                        getUserModuleTypes PAGE 2                       //
       //------------------------------------------------------------------------//
-      getUserModuleTypes: function (links, appId, pin) {
+      getUserModuleTypes: function(links, appId, pin) {
 
         var token = appSettings.config.token;
         var userName = appSettings.config.userName;
@@ -442,7 +425,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------------//
       //--                       GetUserFormGroups  PAGE3                       --//
       //--------------------------------------------------------------------------//
-      GetUserFormGroups: function (links, appId, formType, pin) {
+      GetUserFormGroups: function(links, appId, formType, pin) {
 
         var token = appSettings.config.token;
         var userName = appSettings.config.userName;
@@ -474,7 +457,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------
       //--      REQ P3
       //--------------------------------------------------------------
-      GetUserRqGroups: function (links, appId, formType, pin) {
+      GetUserRqGroups: function(links, appId, formType, pin) {
 
 
         var token = appSettings.config.token;
@@ -506,7 +489,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------------//
       //--                       GetUserNotifications  PAGE4                    --//
       //--------------------------------------------------------------------------//
-      GetUserNotifications: function (links, appId, docId, docInitId) {
+      GetUserNotifications: function(links, appId, docId, docInitId) {
         var token = appSettings.config.token;
         var userName = appSettings.config.userName;
         var RequestHeader = links.RequestHeader;
@@ -534,7 +517,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         });
 
       },
-      isValidNote: function (note) {
+      isValidNote: function(note) {
         var chkNote = note;
         if (!chkNote) return false;
         if (chkNote.replace(/[^\wא-ת]+/g, "").length < 2)
@@ -544,7 +527,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------------//
       //--                       SubmitNotification  PAGE4                      --//
       //--------------------------------------------------------------------------//
-      SubmitNotification: function (links, appId, notificationId, note, actionType) {
+      SubmitNotification: function(links, appId, notificationId, note, actionType) {
         var token = appSettings.config.token;
         var userName = appSettings.config.userName;
 
@@ -582,7 +565,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------------//
       //--                       GetFileURI  PAGE_PO4 ATTACHMENTS               --//
       //--------------------------------------------------------------------------//
-      GetFileURI: function (links, appId, pin, fileOrFolder) {
+      GetFileURI: function(links, appId, pin, fileOrFolder) {
 
 
         var token = appSettings.config.token;
@@ -615,7 +598,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------------//
       //--                       GetUserPoOrdGroupGroup  PAGE_PO3                       --//
       //--------------------------------------------------------------------------//
-      GetUserPoOrdGroupGroup: function (links, appId, formType, pin) {
+      GetUserPoOrdGroupGroup: function(links, appId, formType, pin) {
 
 
         var token = appSettings.config.token;
@@ -647,7 +630,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
       },
 
-      throwError: function (category, from, errorString, redirect) {
+      throwError: function(category, from, errorString, redirect) {
         var self = this;
         if (redirect !== false) {
           redirect = true;
@@ -703,7 +686,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         self.$fileLogger.error(lastError);
         self.$fileLogger.error("-------------- END ERROR SECTION  ------------------");
         var errStr = "";
-        Object.keys(lastError).forEach(function (k) {
+        Object.keys(lastError).forEach(function(k) {
           errStr += k + ":" + lastError[k] + "\n\r";
         })
 
@@ -723,8 +706,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
 
         $http.post(self.apiGateway.url() + "public/report", lastError, self.apiGateway.header())
-          .success(function () {})
-          .error(function () {});
+          .success(function() {})
+          .error(function() {});
 
         if (redirect === true) {
           $state.go("app.error", {
@@ -735,7 +718,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         };
       },
 
-      getApiStatus: function (data, interface) {
+      getApiStatus: function(data, interface) {
         var stat = {
           status: "",
           description: ""
@@ -788,7 +771,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return stat;
       },
 
-      checkApiResponse: function (data, interface) {
+      checkApiResponse: function(data, interface) {
         var self = this;
         var apiStat = self.getApiStatus(data, interface);
         var pinStatus = apiStat.status;
@@ -815,7 +798,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //-----------------------------------------------------------------------------//
       //--                      GetPinCodeStatus                                   --//
       //-----------------------------------------------------------------------------//
-      GetPinCodeStatus2: function (data, interface) {
+      GetPinCodeStatus2: function(data, interface) {
         var stat = {
           status: "",
           description: ""
@@ -922,7 +905,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //-----------------------------------------------------------------------------//
       //--                      GetPinCodeStatus                                   --//
       //-----------------------------------------------------------------------------//
-      GetPinCodeStatus: function (data, interface) {
+      GetPinCodeStatus: function(data, interface) {
         var status = "";
         try {
           if ("getMenu" === interface) {
@@ -944,7 +927,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //--------------------------------------------------------------------------------//
       //--                       PincodeAction                                        --//
       //--------------------------------------------------------------------------------//
-      PincodeAction: function (pinRetValue) {
+      PincodeAction: function(pinRetValue) {
         if ("EOL" === pinRetValue) {
 
         }
@@ -974,7 +957,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //----------------------------------------------------------//
       //--                    GetServiceUrl                     --//
       //----------------------------------------------------------//
-      getDocApproveServiceUrl: function (serviceName, type = null) {
+      getDocApproveServiceUrl: function(serviceName) {
         var self = this;
 
         var serviceConf = appSettings.apiConfig.services[serviceName];
@@ -990,17 +973,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         };
 
         if (self.networkInfo.httpChannel() === "https://") {
+          var msisdn = appSettings.config.MSISDN_VALUE || $localStorage.PELE4U_MSISDN;
+          if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
+          if (!msisdn) {
+            self.lagger.error("Service:" + serviceName + " cant find msisdn ! not in config or localStorage or sessionStorage")
 
-          if (type !== "login") {
-            var msisdn = appSettings.config.MSISDN_VALUE; //|| $localStorage.PELE4U_MSISDN;
-            if (!msisdn) msisdn = $sessionStorage.PELE4U_MSISDN;
-            if (!msisdn) {
-              self.lagger.error("Service:" + serviceName + " cant find msisdn ! not in config or localStorage or sessionStorage")
-
-            }
-            headers.msisdn = msisdn;
           }
-
+          headers.msisdn = msisdn;
           serviceConf.url = appSettings.apiConfig.wifi_uri + serviceConf.endpoint;
         } else {
           serviceConf.url = appSettings.apiConfig.uri + serviceConf.endpoint;
@@ -1011,7 +990,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //===========================================================//
       //==               Update Version                          ==//
       //===========================================================//
-      showPopupVersionUpdate: function (title, subTitle) {
+      showPopupVersionUpdate: function(title, subTitle) {
         var storeUrl;
 
         if (!ionic.Platform.is('cordova')) {
@@ -1031,13 +1010,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           confirmButtonAriaLabel: 'Thumbs up, great!',
           cancelButtonText: 'ביטול',
           cancelButtonAriaLabel: 'Thumbs down',
-        }).then(function (btn) {
+        }).then(function(btn) {
           if (btn.value) {
             window.open(storeUrl, '_system');
           }
         })
       },
-      showPopupVersionUpdate_old: function (title, subTitle) {
+      showPopupVersionUpdate_old: function(title, subTitle) {
 
         $rootScope.data = {}
 
@@ -1049,7 +1028,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           buttons: [{
             text: '<a class="pele-popup-positive-text-collot">אישור</a>',
             type: 'button-positive',
-            onTap: function (e) {
+            onTap: function(e) {
               var isIOS = ionic.Platform.isIOS();
               var isAndroid = ionic.Platform.isAndroid();
               if (isAndroid) {
@@ -1061,7 +1040,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             }
           }, ]
         });
-        myPopup.then(function (res) {
+        myPopup.then(function(res) {
 
         });
 
@@ -1069,7 +1048,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //----------------------------------------------------------//
       //                   WI_FI Pop Up
       //----------------------------------------------------------//
-      showPopup: function (title, subTitle) {
+      showPopup: function(title, subTitle) {
         $rootScope.data = {}
 
         // An elaborate, custom popup
@@ -1080,7 +1059,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           buttons: [{
             text: '<a class="pele-popup-positive-text-collot">אישור</a>',
             type: 'button-positive',
-            onTap: function (e) {
+            onTap: function(e) {
               return true;
             }
           }, ]
@@ -1091,7 +1070,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //===========================================================//
       //==                Pin Code PopUp                         ==//
       //===========================================================//
-      showPinCode: function (appId, titleDisp, subTitleTxt) {
+      showPinCode: function(appId, titleDisp, subTitleTxt) {
         $rootScope.data = {}
 
         // An elaborate, custom popup
@@ -1103,7 +1082,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           buttons: [{
               text: '<a class="pele-popup-positive-text-collot">אישור</a>',
               type: 'button-positive',
-              onTap: function (e) {
+              onTap: function(e) {
                 if (!$rootScope.data.pincode) {
                   //don't allow the user to close unless he enters wifi password
                   e.preventDefault();
@@ -1124,18 +1103,18 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             },
           ]
         });
-        myPopup.then(function (res) {
+        myPopup.then(function(res) {
 
         });
       },
       //====================================================//
       //==            Show Loading                        ==//
       //====================================================//
-      showLoading: function (options) {
+      showLoading: function(options) {
         // you can configure default ionicLoadingConfig in  config.js   file
         $ionicLoading.show(options);
       },
-      hideLoading: function () {
+      hideLoading: function() {
         $ionicLoading.hide();
       },
       //===========================================================================================//
@@ -1143,10 +1122,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //== -----------  --------  ----------------------------------------------------------------
       //== 06/01/2015   R.W.      function calculate list Action Buttons Display in Approve page
       //===========================================================================================//
-      getButtons: function (buttonsArr) {
+      getButtons: function(buttonsArr) {
 
         var buttons = [];
-        buttonsArr.forEach(function (b) {
+        buttonsArr.forEach(function(b) {
 
           if (b.DISPLAY_FLAG !== "N" && appSettings[b.LOOKUP_CODE])
             buttons.push(appSettings[b.LOOKUP_CODE]);
@@ -1154,26 +1133,19 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return buttons;
       },
 
-      logger: function () {
+      logger: function() {
         //$fileLogger.setStorageFilename(appSettings.config.LOG_FILE_NAME);
         return $fileLogger;
       },
 
-      goHome: function (config) {
+      goHome: function(config) {
         options = config || {};
-        //$state.go("app.p1_appsLists", options.params || {}, options.options || {});
-        $state.go('app.ldap_login');
+        $state.go("app.p1_appsLists", options.params || {}, options.options || {});
       },
-      goMenu: function (config) {
-        options = config || {};
-        //$state.go("app.p1_appsLists", options.params || {}, options.options || {});
-        $state.go('app.p1_appsLists');
-      },
-
-      goLogIn: function () {
+      goLogIn: function() {
         $state.go("app.login");
       },
-      showIconCollapseInAcctionHistory: function (showFlag, hidenFlag) {
+      showIconCollapseInAcctionHistory: function(showFlag, hidenFlag) {
         var retVal = "";
         if (hidenFlag === true) {
           retVal = "";
@@ -1188,7 +1160,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
 
 
-      getAttchDirectory: function () {
+      getAttchDirectory: function() {
         var retVal = "";
         var platformPath = "";
 
@@ -1205,7 +1177,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return retVal;
       },
 
-      deleteAttachDirecoty: function () {
+      deleteAttachDirecoty: function() {
         var self = this;
         if (!window.cordova) return false;
 
@@ -1218,36 +1190,36 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
         self.lagger.info("platformPath: " + platformPath)
         $cordovaFile.checkDir(platformPath, appSettings.config.ATTACHMENT_DIRECTORY_NAME)
-          .then(function (success) {
+          .then(function(success) {
             // success
             var filePath = platformPath + appSettings.config.ATTACHMENT_DIRECTORY_NAME;
 
             $cordovaFile.removeRecursively(platformPath, appSettings.config.ATTACHMENT_DIRECTORY_NAME)
-              .then(function (success) {
+              .then(function(success) {
                 // successdd
                 $cordovaFile.createDir(platformPath, appSettings.config.SETTINGS_DIRECTORY_NAME, false)
-                  .then(function (success) {
+                  .then(function(success) {
                     // success
-                  }, function (error) {
+                  }, function(error) {
                     // error
                   });
-              }, function (error) {
+              }, function(error) {
                 // error
               });
-          }, function (error) {
+          }, function(error) {
             // error
             if (error.message === "NOT_FOUND_ERR") {
               $cordovaFile.createDir(platformPath, appSettings.config.ATTACHMENT_DIRECTORY_NAME, true)
-                .then(function (success) {
+                .then(function(success) {
                   // success
-                }, function (error) {
+                }, function(error) {
                   // error
                 });
             }
           });
 
       },
-      replaceSpecialChr: function (data) {
+      replaceSpecialChr: function(data) {
         if (data != undefined && data != null) {
           data = data.replace(/[^\w\d\s\א-ת\(\)\@]/g, " ");
           //data = data.replace(/[\\]/g, '\\\\');
@@ -1256,7 +1228,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         }
         return data;
       },
-      checkResponceStatus: function (data) {
+      checkResponceStatus: function(data) {
 
         var retVal = {};
 
@@ -1291,7 +1263,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return retVal;
       },
 
-      getChevronIcon: function (flag) {
+      getChevronIcon: function(flag) {
         var ret_val;
         if (flag) {
           ret_val = "ion-chevron-left";
@@ -1304,7 +1276,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //------------------------------------------------------------//
       //--                  getAttachedDocuments
       //------------------------------------------------------------//
-      getAttachedDocuments: function (arr) {
+      getAttachedDocuments: function(arr) {
         var myArr = [];
         for (var i = 0; i < arr.length; i++) {
 
@@ -1345,7 +1317,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         redirect : bollean , true -> redirect to error page else return undefined
       */
 
-      getJsonString: function (string, path, redirect) {
+      getJsonString: function(string, path, redirect) {
         var self = this;
         var jsVar = self.jsonParse(string, redirect)
         if (typeof jsVar == "undefined")
@@ -1358,7 +1330,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return subJsVar;
       },
 
-      jsonParse: function (str, redirect) {
+      jsonParse: function(str, redirect) {
         var self = this;
         if (typeof redirect == "undefined")
           redirect = true;
@@ -1375,9 +1347,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         return jsVar;
       },
 
-      extendActionHistory: function (doc) {
+      extendActionHistory: function(doc) {
         if (!doc.ACTION_HISTORY) return [];
-        doc.ACTION_HISTORY.forEach(function (action) {
+        doc.ACTION_HISTORY.forEach(function(action) {
           action.display = false;
           action.right_icon = "";
           action.left_icon = "";
@@ -1421,24 +1393,24 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
         })
       },
-      actionSheet: function (actionsObject, cb) {
+      actionSheet: function(actionsObject, cb) {
         var self = this;
         var hideSheet = $ionicActionSheet.show({
           cssClass: (actionsObject.cssClass || "custom-action-sheet"),
           buttons: actionsObject.btns,
           destructiveText: actionsObject.destructiveText,
-          destructiveButtonClicked: (actionsObject.destructiveButtonClicked || function () {
+          destructiveButtonClicked: (actionsObject.destructiveButtonClicked || function() {
             return false
           }),
           titleText: (actionsObject.title || "פעולות"),
           cancelText: (actionsObject.cancelText || "ביטול"),
-          cancel: function () {
+          cancel: function() {
             return true;
           },
           buttonClicked: cb
         });
       },
-      showBtnActions: function (scope, butttons) {
+      showBtnActions: function(scope, butttons) {
         var self = this;
         var buttons = self.getButtons(butttons);
 
@@ -1446,24 +1418,24 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           buttons: buttons,
           titleText: 'רשימת פעולות עבור טופס',
           cancelText: 'ביטול',
-          cancel: function () {
+          cancel: function() {
             return true;
           },
-          buttonClicked: function (index, button) {
+          buttonClicked: function(index, button) {
             scope.updateDoc(buttons[index]);
             return true;
           },
         });
       },
 
-      getErrorsStack: function () {
+      getErrorsStack: function() {
         return _.orderBy(($localStorage.appErrors || []), ['timestamp'], ['desc']);
       },
       global: {
-        getall: function () {
+        getall: function() {
           return _global;
         },
-        get: function (varname, storageInd, defvalue) {
+        get: function(varname, storageInd, defvalue) {
           storageInd = storageInd || true;
 
           if (typeof _global[varname] !== "undefined") {
@@ -1480,7 +1452,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
 
         },
-        set: function (varname, newval, storageInd) {
+        set: function(varname, newval, storageInd) {
           storageInd = storageInd || true;
           _global[varname] = newval;
           if (storageInd) {
@@ -1488,13 +1460,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
           return true;
         },
-        clear: function (varname) {
+        clear: function(varname) {
           delete _global[varname]
           delete $localStorage[varname]
           return true;
         }
       },
-      getLocalJson: function (jsonfile) {
+      getLocalJson: function(jsonfile) {
         return $http.get(jsonfile, {
           headers: {
             "Cache-Control": "no-cache, no-store, must-revalidate",
@@ -1504,7 +1476,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         });
       },
       pinState: {
-        get: function () {
+        get: function() {
           if (typeof this.pinStateData !== "undefined") {
             return this.pinStateData;
           }
@@ -1519,16 +1491,16 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           }
           this.pinStateData = $localStorage.pinStateData;
         },
-        set: function (newState) {
+        set: function(newState) {
           this.pinStateData = newState;
           $localStorage.pinStateData = newState;
         },
-        clear: function () {
+        clear: function() {
           this.pinStateData = undefined;
           $localStorage.pinStateData = undefined;
         }
       },
-      openAttachment: function (file, appId) {
+      openAttachment: function(file, appId) {
 
         var spinOptions = {
           delay: 0,
@@ -1538,16 +1510,16 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         };
 
         appId = appId || "123456";
-        openDoc = function (url, target, propsStr) {
+        openDoc = function(url, target, propsStr) {
           var myPopup = window.open(url, target, propsStr);
-          myPopup.addEventListener('loadend', function () {
+          myPopup.addEventListener('loadend', function() {
             self.hideLoading();
           }, false);
         }
         var self = this;
 
 
-        var timeoutFunction = function () {
+        var timeoutFunction = function() {
           $ionicLoading.hide();
           $rootScope.$broadcast('scroll.refreshComplete');
           self.showPopup(self.appSettings.config.FILE_TIMEOUT, "");
@@ -1564,7 +1536,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         var full_path = self.appSettings.shareFileDirectory + file.TARGET_PATH + "/" + file.TARGET_FILENAME;
 
         var getFilePromise = self.GetFileURI(links, appId, self.pinState.get().code, full_path);
-        getFilePromise.success(function (data) {
+        getFilePromise.success(function(data) {
           self.showLoading(spinOptions);
           var fileApiData = self.checkApiResponse(data);
 
@@ -1587,7 +1559,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             $cordovaFileTransfer.download(fileApiData.URI, targetPath, {}, true)
               .then(
                 //success
-                function (result) {
+                function(result) {
                   $timeout.cancel(filetimeout);
                   if (!result.nativeURL) {
                     self.hideLoading();
@@ -1596,24 +1568,24 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                     openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
                   }
                 },
-                function (error) {
+                function(error) {
                   self.hideLoading()
                   self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
                 },
-                function (progress) {
+                function(progress) {
                   //  self.showLoading(spinOptions);
                 })
           }
-        }).error(function (error) {
+        }).error(function(error) {
           self.hideLoading();
           self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
-        }).finally(function () {
+        }).finally(function() {
           self.hideLoading();
         });
 
       },
 
-      displayNotePopup: function (scope, btn) {
+      displayNotePopup: function(scope, btn) {
         var self = this;
         if (typeof scope.actionNote === "undefined") {
           self.showPopup("Missing scope.actionNote def ", "");
@@ -1628,7 +1600,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           buttons: [{
               text: '<a class="pele-popup-positive-text-collot">המשך</a>',
               type: 'button-positive',
-              onTap: function (e) {
+              onTap: function(e) {
                 if (!self.isValidNote(scope.actionNote.text)) {
                   e.preventDefault();
                   self.showPopup("יש להזין הערה", "יש להזין לפחות 2 אותיות");
@@ -1640,13 +1612,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             {
               text: 'ביטול',
               type: 'button-assertive',
-              onTap: function (e) {
+              onTap: function(e) {
                 return scope.actionNote.text;
               }
             },
           ]
         });
-        noteModal.then(function (res) {
+        noteModal.then(function(res) {
           scope.actionNote.text = res;
           if (typeof btn === "undefined")
             return true;
@@ -1656,7 +1628,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         });
       },
 
-      displayNotePopupChat: function (scope, btn) {
+      displayNotePopupChat: function(scope, btn) {
         var self = this;
         if (typeof scope.actionNote === "undefined") {
           self.showPopup("Missing scope.actionNote def ", "");
@@ -1671,7 +1643,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           buttons: [{
               text: '<a class="pele-popup-positive-text-collot">שלח</a>',
               type: 'button-positive',
-              onTap: function (e) {
+              onTap: function(e) {
                 if (!self.isValidNote(scope.actionNote.text)) {
                   e.preventDefault();
                   self.showPopup("יש להזין מענה", "יש להזין לפחות 2 אותיות");
@@ -1683,14 +1655,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             {
               text: 'ביטול',
               type: 'button-assertive',
-              onTap: function (e) {
+              onTap: function(e) {
                 scope.actionNote.text = '';
                 return scope.actionNote.text;
               }
             },
           ]
         });
-        noteModal.then(function (res) {
+        noteModal.then(function(res) {
           scope.actionNote.text = res;
           if (typeof btn === "undefined")
             return true;
@@ -1700,7 +1672,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         });
       },
 
-      displayNotePopupChatQues: function (scope, btn) {
+      displayNotePopupChatQues: function(scope, btn) {
         var self = this;
         if (typeof scope.actionNote === "undefined") {
           self.showPopup("Missing scope.actionNote def ", "");
@@ -1715,7 +1687,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           buttons: [{
               text: '<a class="pele-popup-positive-text-collot">שלח</a>',
               type: 'button-positive',
-              onTap: function (e) {
+              onTap: function(e) {
                 if (!self.isValidNote(scope.actionNote.text)) {
                   e.preventDefault();
                   self.showPopup("יש להזין מענה", "יש להזין לפחות 2 אותיות");
@@ -1727,14 +1699,14 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             {
               text: 'ביטול',
               type: 'button-assertive',
-              onTap: function (e) {
+              onTap: function(e) {
                 scope.actionNote.text = '';
                 return scope.actionNote.text;
               }
             },
           ]
         });
-        noteModal.then(function (res) {
+        noteModal.then(function(res) {
           scope.actionNote.text = res;
           if (typeof btn === "undefined")
             return true;
@@ -1747,150 +1719,30 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     };
 
   })
-  .filter('peldate', function () {
-    return function (dateString, opt1, opt2) {
+  .filter('peldate', function() {
+    return function(dateString, opt1, opt2) {
       var date = moment(dateString, "YYYYMMDDHHmmss");
       return date.unix() * 1000;
     }
-  }).filter('replace', function () {
-    return function (str, text1, text2) {
+  }).filter('replace', function() {
+    return function(str, text1, text2) {
       str = str || "";
 
       var regexp = new RegExp(text1, 'ig');
       return str.replace(regexp, text2);
     }
-  }).filter('highlight', function ($sce) {
-    return function (text, phrase) {
+  }).filter('highlight', function($sce) {
+    return function(text, phrase) {
       if (!text)
         return null;
       text = text.toString();
       if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'), '<span class="highlighted">$1</span>');
       return $sce.trustAsHtml(text)
     }
-  }).factory('BioAuth', function ($q, $sessionStorage, PelApi,$ionicPopup) {
-    var self = this;
+  }).factory('Contact', function($q) {
 
-    var bioOptions = {
-      clientId: PelApi.appSettings.config.bioClientId,
-      clientSecret: PelApi.appSettings.config.bioClientSecret,
-      dialogTitle: "זיהוי באמצעות טביעת אצבע",
-      dialogMessage: "הניחו את האצבע על חיישן ההזדהות",
-      dialogHint: "פלאפון תקשורת",
-      iosKeyChainKey: "pele4u"
-    }
 
-    return {
-      isInstalled: function () {
-        return (window.BiometricAuth ? true : false);
-      },
-      getToken: function () {
-        return _.get(PelApi.localStorage, 'ADAUTH.token', null);
-      },
-      getMethod: function () {
-        var method =  _.get(PelApi.localStorage, 'ADAUTH.method', "") || "";
-        if(method.match(/finger/) ) { 
-          bioOptions.description =   "יש להניח את האצבע על חיישן ההזדהות של הטלפון" ;
-        }
-        return method;
-      },
-
-      clear: function (soft) {
-        if (soft && soft == "soft") {
-          var method = _.get(PelApi.localStorage, 'ADAUTH.method', "")
-          _.set(PelApi.localStorage, 'ADAUTH', {
-            method: method
-          });
-        } else {
-          _.set(PelApi.localStorage, 'ADAUTH', {});
-        }
-
-        PelApi.localStorage.PELE4U_MSISDN = ""
-        PelApi.sessionStorage.$reset();
-      },
-      setMethod: function (method) {
-        // remove old credentials 
-        _.set(PelApi.localStorage, 'ADAUTH', {
-          method: method
-        });
-        _.set(PelApi.sessionStorage, 'ADAUTH', {
-          method: method
-        });
-      },
-      getCap: function () {
-        return $q(function (resolve, reject) {
-          if (window.BiometricAuth) {
-            window.BiometricAuth.isAvailable(function (result) {
-              PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
-              console.log(result)
-              if(result && result.hasEnrolledFingerprints)
-                return resolve("finger");
-              if(_.isString(result) && result.match(/finger|face/)) 
-                return resolve(result);
-                reject("No biometrich auth capabilties found on device")    
-            }, function () {
-              PelApi.lagger.info("BiometricAuth not avaialable in device");
-              reject("BiometricAuth auth not avaialable in this device");
-            });
-          } else {
-            reject("BiometricAuth plugin not installed in device")
-          }
-        })
-      },
-      encrypt: function (credentials) {
-        return $q(function (resolve, reject) {
-          var ConfigObject = bioOptions;
-          ConfigObject.username = credentials.username;
-          ConfigObject.password = credentials.password;
-          window.BiometricAuth.authenticate(
-            function (_fingerResult) {
-              if (ionic.Platform.isAndroid()) {
-                return resolve(_fingerResult);
-              } else if (ionic.Platform.isIOS()) {
-                if (!bioOptions.iosKeyChainKey)
-                  return reject("missing paramater credentials.keychainKey");
-                  PelApi.secureStorage.set(function() {
-                    resolve({token:bioOptions.iosKeyChainKey})
-                  },function(err) { 
-                    reject(err);
-                  },bioOptions.iosKeyChainKey,
-                  JSON.stringify(credentials))
-              }
-            },
-            function () {
-              return reject("Failed to encrypt user/pass")
-            }, ConfigObject)
-        });
-      },
-      decrypt: function (username,token) {
-        return $q(function (resolve, reject) {
-          var ConfigObject = bioOptions;
-          ConfigObject.username = username;
-          ConfigObject.token = token;
-          window.BiometricAuth.decrypt(
-            function (result) {
-              if(ionic.Platform.isAndroid()) { 
-                result.username  =  username;
-                if(!result.password)
-                  return reject("cannot get encrypted password");
-                return resolve(result)
-              } else if(ionic.Platform.isIOS()){
-                if(!bioOptions.iosKeyChainKey) 
-                  return reject("missing paramater bioOptions.iosKeyChainKey");
-                  PelApi.secureStorage.get(function(result) {
-                    resolve(JSON.parse(result))
-                  },function(err) { 
-                    reject(err);
-                  },bioOptions.iosKeyChainKey)
-             }
-             },
-            function (err) {
-              return reject("Failed to decrypt credentials : " + err)
-            }, ConfigObject)
-        })
-      }
-    }
-  }).factory('Contact', function ($q) {
-    var setContactData = function (deviceContact, info) {
+    var setContactData = function(deviceContact, info) {
       var targetContact = deviceContact;
       targetContact.rawId = info.personId;
 
@@ -1946,7 +1798,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       return targetContact;
     }
 
-    var find = function (term) {
+    var find = function(term) {
       var deferred = $q.defer();
       var options = new ContactFindOptions();
       options.filter = term;
@@ -1964,9 +1816,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         navigator.contacts.fieldType.organizations
       ];
       options.hasPhoneNumber = true;
-      navigator.contacts.find(fields, function (result) {
+      navigator.contacts.find(fields, function(result) {
         deferred.resolve(result);
-      }, function (err) {
+      }, function(err) {
         deferred.reject(err);
       }, options);
 
@@ -1974,7 +1826,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
     }
 
     return {
-      newContact: function () {
+      newContact: function() {
         return navigator.contacts.create();
       },
       find: find,
