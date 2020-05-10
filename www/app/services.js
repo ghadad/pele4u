@@ -275,7 +275,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           qstr += key + "=" + encodeURIComponent(extAuth[key]);
         }
 
-        window.document.location = cordova.file.applicationDirectoryn + "/www/app/external/index.html#/?" + qstr
+        window.document.location = cordova.file.applicationDirectory + "/www/app/external/index.html#/?" + qstr
       }
     }).error(function (error, httpStatus, headers, config) {
       swal(swalObject)
