@@ -274,7 +274,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           }
           qstr += key + "=" + encodeURIComponent(extAuth[key]);
         }
-        window.document.location = "/external/index.html#/?" + qstr
+        alert(location.origin + "/external/index.html#/?" + qstr)
+
+        window.document.location = location.origin + "/external/index.html#/?" + qstr
       }
     }).error(function (error, httpStatus, headers, config) {
       swal(swalObject)
