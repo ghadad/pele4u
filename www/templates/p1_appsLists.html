@@ -1,4 +1,4 @@
-<ion-view class="feeds-categories-view newlook newlook4 {{deviceModel}}" cache-view="false" hide-back-button="true" ng-class="{'loading':!menuItems.length,'iphonex':iphonex}">
+<ion-view  class="feeds-categories-view newlook newlook4 {{deviceModel}}" cache-view="false" hide-back-button="true" ng-class="{'loading':!menuItems.length,'iphonex':iphonex}">
   <div class="row top-menu-buttons">
     <div class="col pele4u-logo  text-left">
       <img src="img/new_icons/transparent-pele4u.png" />
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div id="menu-plasma" class="menu-plasma" ng-show="menuItems.length">
-    <div class="plasma">
+    <div class="plasma" ng-if="showMenu">
       <div class="text-center profile">
         <img ng-show="profile.pic" ng-src="data:image/JPEG;base64,{{profile.pic}}" class="image-cropper">
         <img ng-show="!profile.pic" ng-src="img/new_icons/blue_avatar.png" class="image-cropper">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="menu1">
-      <div class="text-right pele_rtl useful caption ">קישורים שימושיים <img style="height:20px;margin-right:7px" src="img/new_icons/white-h-scroll.png"></div>
+    <div class="text-right pele_rtl useful caption ">קישורים שימושיים <img style="height:20px;margin-right:7px" src="img/new_icons/white-h-scroll.png"></div>
       <ion-scroll direction="x" class="tsb-hscroll" has-bouncing="false" delegate-handle="menu1-handle">
         <div class="">
           <a ng-click="forwardToApp(app)" ng-repeat="app in menuItems  | filter: { menu1: true }">
@@ -29,8 +29,8 @@
       </ion-scroll>
     </div>
   </div>
-  <ion-content class="menu2" ng-show="menuItems.length" class="no-header no-footer" has-bouncing="false">
-    <ion-refresher pulling-text="משוך לרענון... " on-refresh="doRefresh() ">
+  <ion-content class="menu2"   ng-show="menuItems.length" class="no-header no-footer" has-bouncing="false">
+    <ion-refresher pulling-text="משוך לרענון... " on-refresh="goToADLogin()">
     </ion-refresher>
     <div class="grid-layout" ng-show="menuItems">
       <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">

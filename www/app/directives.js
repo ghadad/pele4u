@@ -438,4 +438,15 @@ angular.module('tabSlideBox', [])
         ngModelCtrl.$parsers.length = 0;
       }
     };
-  });
+  }).directive('focusMe', function($timeout) {
+    return {
+      link: function(scope, element, attrs) {
+        console.log(element[0])
+        $timeout(function() {
+     
+          element[0].focus(); 
+        });
+      }
+    };
+  }); 
+  

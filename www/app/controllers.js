@@ -121,6 +121,9 @@ angular.module('pele.controllers', ['ngStorage'])
     $scope.forwardTo = function(statePath) {
       $state.go(statePath);
     }
+    $scope.updateAuthMethod = function(){
+      $state.go("app.ldap_login",{reset:true});
+    }
 
     $scope.forwardToApp = function(appConfig) {
       if (!appConfig.Path) {

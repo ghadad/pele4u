@@ -1,15 +1,11 @@
 <ion-view cache-view="false" hide-back-button="true">
-
-  <ion-nav-title>
+    <ion-nav-title>
     <div class="bar bar-header bar-light">
-      <div class="title" id="logo">
+      <div class="title" id="logo">  <h4 class=" white">{{TITLE_LOGIN}} </h4>
       </div>
     </div>
   </ion-nav-title>
   <ion-content class="pele-background" scroll="false">
-    <div class="pele-page-title pele-img-size pele-page-title-font">
-      <a class="description">{{TITLE_LOGIN}}</a>
-    </div>
     <div class="row">
       <div class="col col-center">
         <div class="card login-container">
@@ -21,7 +17,7 @@
               </label>
               <label class="item item-input">
                 <span class="input-label">סיסמה</span>
-                <input type="tel" maxlength="4" placeholder="{{TITLE_OTP_INPUT}}" name="user_pin" ng-model="user.pin" required valid-pin="user.pin" show-hide-input>
+                <input type="tel" maxlength="4" placeholder="{{TITLE_OTP_INPUT}}" name="user_pin" ng-model="user.pin" ng-click="focusMe($event)" required>
               </label>
             </div>
             <div class="item item-body bottom-content">
