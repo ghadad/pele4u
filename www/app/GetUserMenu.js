@@ -63,8 +63,10 @@ app.controller('GetUserMenuCtrl',
       items[4].Path = null;
       */
 
-      if (appSettings.config.testItem) {
-        items.push(appSettings.config.testItem);
+      if (appSettings.config.testItems) {
+        appSettings.config.testItems.forEach(function(i){
+          items.push(i);
+        })
       }
       var re = new RegExp("(\\@[a-z]+[\\s\\w]+)", "gi")
       var idx = 0;
@@ -437,9 +439,11 @@ app.controller('GetUserMenuCtrl',
       };
       if (appConfig.ApplicationType === "EXT") {
         window.open(appConfig.Path, '_system');
-      } else if (appConfig.ApplicationType === "INAPP") {
+      } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
-      } {
+      } else if (appConfig.ApplicationType === "IEB") {
+        return ApiGateway.openBrowser(appConfig.Path);
+      }{
         $scope.appSwitch(i);
       }
     };

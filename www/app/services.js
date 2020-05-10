@@ -279,14 +279,18 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url +'?'+qstr
 
-        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', 'beforeload=yes,location=no,zoom=no,toolbar=no');
+        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', 'beforeload=yes,location=no,zoom=no,toolbar=no,closebuttoncaption=חזרה');
        inAppBrowserRef.addEventListener('beforeload', function(){ 
             PelApi.hideLoading();
        });
-
-
-
-       }
+       inAppBrowserRef.addEventListener('beforeload', function(){ 
+        PelApi.hideLoading();
+       });
+       inAppBrowserRef.addEventListener('loaderror', function(){ 
+        PelApi.hideLoading();
+        swal(swalObject);
+       });     
+      }
     }).error(function (error, httpStatus, headers, config) {
         PelApi.hideLoading();
       swal(swalObject)

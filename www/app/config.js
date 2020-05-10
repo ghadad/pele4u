@@ -199,17 +199,27 @@ angular.module('pele.config', [])
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
-      testItem: {
+      testItems: [ {
         AppId: "8AF701F10BD937EBE0535ddd7",
-        ApplicationType: "INAPP",
-        DisplayName: "דיווח נוכחות",
+        ApplicationType: "IAB",
+        DisplayName: "inapp browser",
         Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
         Location: "s m2",
         Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
         Pin: false,
         Sorter: "121",
         WorkState: "online"
-      },
+      },{
+        AppId: "8AF701F10BD937EBE0535ddd7",
+        ApplicationType: "IEB",
+        DisplayName: "external browser",
+        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
+        Location: "s m2",
+        Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
+        Pin: false,
+        Sorter: "121",
+        WorkState: "online"
+      }],
       bioClientId: "NEVER_CHANGE_THIS_VALUE_BIOPELE4U",
       bioClientSecret: "NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
