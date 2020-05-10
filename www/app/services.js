@@ -253,11 +253,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       showConfirmButton: false,
       timer: 2500
     };
-
+    PelApi.showLoading();
+   
     this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
       var userId = PelApi.appSettings.config.user || $sessionStorage.user;
       if (jwtToken.length < 100) {
+        PelApi.hideLoading();
         swal(swalObject)
       } else {
         var extAuth = {
@@ -277,14 +279,17 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url +'?'+qstr
 
-        var ref = cordova.InAppBrowser.open(fullUrl, '_blank', 'location=yes');
+        PelApi.hideLoading();
+        var ref = cordova.InAppBrowser.open(fullUrl, '_blank', 'location=no,zoom=no,toolbar=no');
 
 
        }
     }).error(function (error, httpStatus, headers, config) {
+        PelApi.hideLoading();
       swal(swalObject)
 
     }).finally(function () {
+        PelApi.hideLoading();
 
     });
   }
