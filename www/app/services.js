@@ -232,6 +232,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     return $http.get(url, httpConfig);
   };
   this.getToken = function (params, config) {
+    
     var url = getUrl("users/token")
     params = params || {};
     config = config || {};
@@ -283,9 +284,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        inAppBrowserRef.addEventListener('beforeload', function(){ 
             PelApi.hideLoading();
        });
-       inAppBrowserRef.addEventListener('beforeload', function(){ 
-        PelApi.hideLoading();
-       });
+       
        inAppBrowserRef.addEventListener('loaderror', function(){ 
         PelApi.hideLoading();
         swal(swalObject);
@@ -323,6 +322,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       showConfirmButton: false,
       timer: 2500
     };
+    PelApi.showLoading();
 
     this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
@@ -334,9 +334,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       }
     }).error(function (error, httpStatus, headers, config) {
       swal(swalObject)
-
     }).finally(function () {
-
+      PelApi.hideLoading();
     });
   }
   this.post = function (service, params, config) {
