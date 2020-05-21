@@ -344,7 +344,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            'document.getElementById("login").value="golanh";'+
            'document.getElementById("passwd").value="Perach148";'+
            'document.getElementsByClassName("credentialform")[0].submit();'+            
-           'document.location = "https://peleportal.pelephone.co.il";';
+           'document.location.href = "https://peleportal.pelephone.co.il";';
        //    '},100);';
             
              inAppBrowserRef.executeScript({
