@@ -326,7 +326,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading();
    
    
-        var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+        var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/logon/LogonPoint/index.html", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
        inAppBrowserRef.addEventListener('beforeload', function(){ 
             PelApi.hideLoading();
        });
@@ -345,6 +345,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            'document.getElementById("passwd").value="Perach148";'+
            'document.getElementsByClassName("credentialform")[0].submit();'+
            'alert("Hello");'+
+           'document.location = "' + url + '";'+
            '},3000);';
   
              inAppBrowserRef.executeScript({
