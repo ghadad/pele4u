@@ -340,6 +340,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         inAppBrowserRef
          var code = 
            'setTimeout(function() { '+
+           'window.onerror = function(message, source, lineno, colno, error) { alert(message) ;};'+
            'document.getElementById("login").value="xxxxxxx";'+
            'document.getElementById("passwd").value="yyyyyyy";'+
        //    'document.getElementsByClassName("credentialform")[0].submit();
