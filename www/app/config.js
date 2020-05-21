@@ -215,7 +215,7 @@ angular.module('pele.config', [])
         DisplayName: "pelePortal",
         Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
         Location: "s m2",
-        Path: "https://peleportal.pelephone.co.il/Pages/userarea.aspx",
+        Path: "https://peleportal.pelephone.co.il",
         Pin: false,
         Sorter: "129",
         WorkState: "online"
