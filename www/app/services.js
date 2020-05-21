@@ -326,7 +326,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading();
    
    
-        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+        var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
        inAppBrowserRef.addEventListener('beforeload', function(){ 
             PelApi.hideLoading();
        });
@@ -337,6 +337,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        });     
 
        inAppBrowserRef.addEventListener( "loadstop", function(){
+        inAppBrowserRef
          var code = 
            'document.getElementById("login").value="golanh";'+
            'document.getElementById("passwd").value="Perach148";'+
