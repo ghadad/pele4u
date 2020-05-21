@@ -64,7 +64,7 @@ app.controller('GetUserMenuCtrl',
       */
 
       if (appSettings.config.testItems) {
-        appSettings.config.testItems.forEach(function(i){
+        appSettings.config.testItems.forEach(function (i) {
           items.push(i);
         })
       }
@@ -443,9 +443,12 @@ app.controller('GetUserMenuCtrl',
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
         return ApiGateway.openBrowser(appConfig.Path);
-      }{
-        $scope.appSwitch(i);
+      } else if (appConfig.ApplicationType === "PORTAL") {
+        return ApiGateway.openPortal(appConfig.Path);
       }
+
+      $scope.appSwitch(i);
+
     };
     //-------------------------------//
     //--       Code Section        --//

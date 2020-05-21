@@ -211,6 +211,16 @@ angular.module('pele.config', [])
         WorkState: "online"
       },{
         AppId: "8AF701F10BD937EBE0535ddd7",
+        ApplicationType: "PORTAL",
+        DisplayName: "pelePortal",
+        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
+        Location: "s m2",
+        Path: "https://peleportal.pelephone.co.il",
+        Pin: false,
+        Sorter: "129",
+        WorkState: "online"
+      },{
+        AppId: "8AF701F10BD937EBE0535ddd7",
         ApplicationType: "IEB",
         DisplayName: "external browser",
         Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",

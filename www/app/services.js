@@ -314,6 +314,41 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
   }
 
+
+  this.openPortal = function (url) {
+    var swalObject = {
+      type: 'error',
+      title: 'לא מצליח לפתוח את היישום',
+      text: 'תהליך אימות העובד נכשל ',
+      showConfirmButton: false,
+      timer: 2500
+    };
+    PelApi.showLoading();
+   
+   
+        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+       inAppBrowserRef.addEventListener('beforeload', function(){ 
+            PelApi.hideLoading();
+       });
+       
+       inAppBrowserRef.addEventListener('loaderror', function(){ 
+        PelApi.hideLoading();
+        swal(swalObject);
+       });     
+
+       inAppBrowserRef.addEventListener( "loadstop", function(){
+         var code = 
+           'document.getElementById("login").value="golanh";'+
+           'document.getElementById("passwd").value="Perach148";'+
+           'document.getElementsByClassName("credentialform")[0].submit();';
+  
+             inAppBrowserRef.executeScript({
+                    code: code
+                });
+          });
+   }
+ 
+
   this.openBrowser = function (url) {
     var swalObject = {
       type: 'error',
@@ -338,6 +373,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       PelApi.hideLoading();
     });
   }
+
   this.post = function (service, params, config) {
     var url = getUrlBase() + service;
     config = config || {};
