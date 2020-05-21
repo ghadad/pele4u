@@ -1,0 +1,39 @@
+<html>
+<script>
+    function openSecure() {
+        var win = window.open('https://peleportal.pelephone.co.il');
+        win.focus();
+        var loginAction = function () {
+            document.getElementById("login").value = "golanh";
+            document.getElementById("passwd").value = "xxxxxxxxx";
+            document.getElementsByClassName("credentialform")[0].submit();
+        };
+        var loginScript = '(' + loginAction.toString() + '());';
+        win.addEventListener('load', function () {
+            win.alert(1);
+        }, true);
+
+    };
+
+    function getUrl() {
+        var bodyString = openSecure.toString();
+        var url = bodyString.substring(bodyString.indexOf("{") + 1, bodyString.lastIndexOf("}")).replace(/[\r\n]/g, "");
+        return "javascript: " + url;
+    }
+</script>
+
+<a id="portal-link" href="javascript: openSecure()">Link</a>
+<div>Link <span id="secure-link"></span></div>
+<script type="text/javascript">
+    document.getElementById("portal-link").setAttribute("href", getUrl());
+    document.getElementById("secure-link").innerHTML = getUrl()
+    // openSecure()
+    // document.getElementById("portal-link2").click();
+    // document.getElementById("portal-link").setAttribute = openSecure();
+    //  document.getElementById("portal-link").click();
+    // document.getElementById("login").value = ("golanh");
+    //   document.getElementById("passwd").value = ("Perach148")
+    // document.getElementsByClassName("credentialform")[0].submit();
+</script>
+
+</html>
