@@ -343,10 +343,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            'alert("start");window.onerror = function(message, source, lineno, colno, error) { alert(message) ;};'+
            'document.getElementById("login").value="golanh";'+
            'document.getElementById("passwd").value="Perach148";'+
-           'document.getElementsByClassName("credentialform")[0].submit();'+
-           'alert("Hello");'+
+           'document.getElementsByClassName("credentialform")[0].submit();'+            
            'document.location = "' + url + '";'+
-           '},3000);';
+           '},200);';
   
              inAppBrowserRef.executeScript({
                     code: code
