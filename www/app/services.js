@@ -341,7 +341,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          var code = 
            'setTimeout(function() { document.getElementById("login").value="golanh";'+
            'document.getElementById("passwd").value="Perach148";'+
-           'document.getElementsByClassName("credentialform")[0].submit();},1000);'+
+           'document.getElementsByClassName("credentialform")[0].click();},1000);'+
            'inAppBrowserRef.alert("Hello");';
   
              inAppBrowserRef.executeScript({
