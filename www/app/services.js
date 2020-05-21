@@ -339,14 +339,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        inAppBrowserRef.addEventListener( "loadstop", function(){
         inAppBrowserRef
          var code = 
-          // 'setTimeout(function() { '+
-          // 'alert("start");window.onerror = function(message, source, lineno, colno, error) { alert(message) ;};'+
+           'setTimeout(function() { '+
+           'window.onerror = function(message, source, lineno, colno, error) { alert(message) ;};'+
            'document.getElementById("login").value="golanh";'+
            'document.getElementById("passwd").value="Perach148";'+
+           '},1000);' +
+           'setTimeout(function() { '+
            'document.getElementsByClassName("credentialform")[0].submit();'+            
-           'document.location.href = "https://peleportal.pelephone.co.il";';
-       //    '},100);';
-            
+           'location.href = "https://peleportal.pelephone.co.il";'+
+           '},2000);'
+  
              inAppBrowserRef.executeScript({
                     code: code
                 });
