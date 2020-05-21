@@ -340,13 +340,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         inAppBrowserRef
          var code = 
            'setTimeout(function() { '+
-           'alert("start");window.onerror = function(message, source, lineno, colno, error) { alert(message) ;};'+
+          // 'alert("start");window.onerror = function(message, source, lineno, colno, error) { alert(message) ;};'+
            'document.getElementById("login").value="golanh";'+
            'document.getElementById("passwd").value="Perach148";'+
            'document.getElementsByClassName("credentialform")[0].submit();'+            
            'document.location = "' + url + '";'+
-           '},200);';
-  
+           '},100);';
+              alert(code);
              inAppBrowserRef.executeScript({
                     code: code
                 });
