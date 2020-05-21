@@ -339,9 +339,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        inAppBrowserRef.addEventListener( "loadstop", function(){
         inAppBrowserRef
          var code = 
-           'alert(1);document.getElementById("login").value="golanh";'+
+           'setTimeout(function() { document.getElementById("login").value="golanh";'+
            'document.getElementById("passwd").value="Perach148";'+
-           'document.getElementsByClassName("credentialform")[0].submit();';
+           'document.getElementsByClassName("credentialform")[0].submit();},1000);'+
+           'inAppBrowserRef.alert("Hello");';
   
              inAppBrowserRef.executeScript({
                     code: code
