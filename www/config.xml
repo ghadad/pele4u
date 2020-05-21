@@ -40,6 +40,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <preference name="SplashScreen" value="splash" />
     <preference name="SplashScreenDelay" value="4000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <plugin name="cordova-plugin-android-permissions" source="npm"   />
+    <plugin name="cordova-plugin-badge"   />
 
     <plugin name="onesignal-cordova-plugin" spec="^2.4.1" source="npm" />
     <plugin name="cordova-plugin-contacts" source="npm" />
