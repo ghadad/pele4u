@@ -344,10 +344,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         'document.getElementById("login").value="golanh";' +
         'document.getElementById("passwd").value="Perach148";' +
         'document.getElementsByTagName("form")[0].submit();' +
-        '},1000);' +
-        'setTimeout(function() { ' +
-       'location.href = "https://peleportal.pelephone.co.il";' +
-        '},2000);'
+        '},3000);' +
+        'document.getElementsByTagName("form")[0].onsubmit=function() {'+
+         'location.href = "https://peleportal.pelephone.co.il";' +
+         'return false;};'
 
       inAppBrowserRef.executeScript({
         code: code
