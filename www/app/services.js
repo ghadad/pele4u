@@ -232,7 +232,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     return $http.get(url, httpConfig);
   };
   this.getToken = function (params, config) {
-    
+
     var url = getUrl("users/token")
     params = params || {};
     config = config || {};
@@ -255,7 +255,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       timer: 2500
     };
     PelApi.showLoading();
-   
+
     this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
       var userId = PelApi.appSettings.config.user || $sessionStorage.user;
@@ -268,7 +268,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           userId: PelApi.appSettings.config.user || $sessionStorage.user,
           jwtToken: jwtToken,
           backDoor: window.document.location
-         }
+        }
         var qstr = "";
 
         for (var key in extAuth) {
@@ -278,35 +278,35 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           qstr += key + "=" + encodeURIComponent(extAuth[key]);
         }
 
-        var fullUrl = url +'?'+qstr
+        var fullUrl = url + '?' + qstr
 
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
-       inAppBrowserRef.addEventListener('beforeload', function(){ 
-            PelApi.hideLoading();
-       });
-       
-       inAppBrowserRef.addEventListener('loaderror', function(){ 
-        PelApi.hideLoading();
-        swal(swalObject);
-       });     
+        inAppBrowserRef.addEventListener('beforeload', function () {
+          PelApi.hideLoading();
+        });
 
-       inAppBrowserRef.addEventListener( "loadstop", function(){
-        var loop = window.setInterval(function(){
-          inAppBrowserRef.executeScript({
-                    code: "window.shouldClose"
-                },
-                function(values){
-                    if(values[0]){
-                      win.close();
-                      window.clearInterval(loop);
-                    }
+        inAppBrowserRef.addEventListener('loaderror', function () {
+          PelApi.hideLoading();
+          swal(swalObject);
+        });
+
+        inAppBrowserRef.addEventListener("loadstop", function () {
+          var loop = window.setInterval(function () {
+            inAppBrowserRef.executeScript({
+                code: "window.shouldClose"
+              },
+              function (values) {
+                if (values[0]) {
+                  win.close();
+                  window.clearInterval(loop);
                 }
+              }
             );
-        },200);
-    });
-   }
-  }).error(function (error, httpStatus, headers, config) {
-        PelApi.hideLoading();
+          }, 200);
+        });
+      }
+    }).error(function (error, httpStatus, headers, config) {
+      PelApi.hideLoading();
       swal(swalObject)
 
     }).finally(function () {
@@ -324,37 +324,37 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       timer: 2500
     };
     PelApi.showLoading();
-   
-   
-        var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/logon/LogonPoint/index.html", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
-       inAppBrowserRef.addEventListener('beforeload', function(){ 
-            PelApi.hideLoading();
-       });
-       
-       inAppBrowserRef.addEventListener('loaderror', function(){ 
-        PelApi.hideLoading();
-        swal(swalObject);
-       });     
 
-       inAppBrowserRef.addEventListener( "loadstop", function(){
-        inAppBrowserRef
-         var code = 
-           'setTimeout(function() { '+
-           'window.onerror = function(message, source, lineno, colno, error) { alert(message) ;};'+
-           'document.getElementById("login").value="golanh";'+
-           'document.getElementById("passwd").value="Perach148";'+
-           '},1000);' +
-           'setTimeout(function() { '+
-           'document.getElementsByClassName("credentialform")[0].submit();'+            
-           'location.href = "https://peleportal.pelephone.co.il";'+
-           '},2000);'
-  
-             inAppBrowserRef.executeScript({
-                    code: code
-                });
-          });
-   }
- 
+
+    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/logon/LogonPoint/index.html", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+    inAppBrowserRef.addEventListener('beforeload', function () {
+      PelApi.hideLoading();
+    });
+
+    inAppBrowserRef.addEventListener('loaderror', function () {
+      PelApi.hideLoading();
+      swal(swalObject);
+    });
+
+    inAppBrowserRef.addEventListener("loadstop", function () {
+      inAppBrowserRef
+      var code =
+        'setTimeout(function() { ' +
+        'window.onerror = function(message, source, lineno, colno, error) { alert(error.stack) ;};' +
+        'document.getElementById("login").value="golanh";' +
+        'document.getElementById("passwd").value="Perach148";' +
+        'document.getElementsByTagName("form")[0].submit();' +
+        '},1000);' +
+        'setTimeout(function() { ' +
+       'location.href = "https://peleportal.pelephone.co.il";' +
+        '},2000);'
+
+      inAppBrowserRef.executeScript({
+        code: code
+      });
+    });
+  }
+
 
   this.openBrowser = function (url) {
     var swalObject = {
