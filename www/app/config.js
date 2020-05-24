@@ -20,6 +20,16 @@ const SSOEnv = {
   LP: "LP"
 }
 
+const callMobileSvcEnvs = {
+  PD: "PD",
+  P2: "P2",
+  DV: "DV",
+  QA: "QA",
+  Q2: "QA",
+  LP: "LP"
+}
+
+
 const spinConfig = {
   template: '<img ng-click="stopLoading()" class="spinner" src="./img/spinners/puff.svg">',
   animation: 'fade-in',
@@ -196,30 +206,21 @@ angular.module('pele.config', [])
     debug: false,
     EnvCodes: EnvCodes,
     SSOEnv: SSOEnv,
+    callMobileSvcEnvs: callMobileSvcEnvs,
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
-      testItems: [ {
+      testItem: {
         AppId: "8AF701F10BD937EBE0535ddd7",
-        ApplicationType: "IAB",
-        DisplayName: "inapp browser",
+        ApplicationType: "INAPP",
+        DisplayName: "דיווח נוכחות",
         Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
         Location: "s m2",
         Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
         Pin: false,
         Sorter: "121",
         WorkState: "online"
-      },{
-        AppId: "8AF701F10BD937EBE0535ddd7",
-        ApplicationType: "IEB",
-        DisplayName: "external browser",
-        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
-        Location: "s m2",
-        Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
-        Pin: false,
-        Sorter: "121",
-        WorkState: "online"
-      }],
+      },
       bioClientId: "NEVER_CHANGE_THIS_VALUE_BIOPELE4U",
       bioClientSecret: "NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
