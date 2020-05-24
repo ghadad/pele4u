@@ -58,7 +58,8 @@ angular.module('pele')
       }
 
       $scope.getContactFile = function (event, c) {
-        return ApiGateway.openBrowser(appConfig.Path);
+
+        return ApiGateway.openBrowser(ApiGateway.getUrl("/users/" + c.personId + "/contact.vcf"));
       }
 
 
