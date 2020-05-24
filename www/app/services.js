@@ -70,13 +70,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     internalConfig.params = internalConfig.params || {};
 
     var urlBase = PelApi.networkInfo.httpChannel() + PelApi.appSettings.apiConfig.hostname;
-    var ServiceUrl = urlBase + '/' + PelApi.appSettings.SSOEnv[env] + '/CallMobileService';
+    var ServiceUrl = urlBase + '/' + PelApi.appSettings.callMobileSvcEnvs[env] + '/CallMobileService';
     var authParams = $sessionStorage.ApiServiceAuthParams || {};
     authParams.APPID = internalConfig.AppId;
     var authParamsString = PelApi.toQueryString($sessionStorage.ApiServiceAuthParams || {})
 
     internal.url = ServiceUrl + '?' + authParamsString;
-    var EnvCode = "MobileApp_" + PelApi.appSettings.EnvCodes[env];
+    var EnvCode = "MobileApp_" + PelApi.appSettings.callMobileSvcEnvs[env];
 
     var request = {
       "Request": {
@@ -187,8 +187,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
 
-  //return PelApi.throwError("api", "ApiService.checkResponse-InvalidJsonResponse", "(httpStatus : " + httpStatus + ") " + errorMsg)
-  //return PelApi.throwError("api", "ApiService.checkResponse-" + errorMsg, "(httpStatus : " + httpStatus + ") " + JSON.stringify(data), false)
   this.getHeaders = buildHeader;
   this.getUrl = getUrl;
 
@@ -232,7 +230,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     return $http.get(url, httpConfig);
   };
   this.getToken = function (params, config) {
-    
     var url = getUrl("users/token")
     params = params || {};
     config = config || {};
@@ -250,63 +247,34 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
-      text: 'תהליך אימות העובד נכשל ',
+      text: 'תהליך אימות העובד נכשל - יש לצאת ולהתחבר שוב לאפליקציה',
       showConfirmButton: false,
       timer: 2500
     };
-    PelApi.showLoading();
-   
+
     this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
       var userId = PelApi.appSettings.config.user || $sessionStorage.user;
       if (jwtToken.length < 100) {
-        PelApi.hideLoading();
         swal(swalObject)
       } else {
         var extAuth = {
           token: $sessionStorage.token,
           userId: PelApi.appSettings.config.user || $sessionStorage.user,
           jwtToken: jwtToken,
-          backDoor: window.document.location
-         }
+          backDoor: window.document.location,
+          url: url
+        }
         var qstr = "";
-
         for (var key in extAuth) {
           if (qstr != "") {
             qstr += "&";
           }
           qstr += key + "=" + encodeURIComponent(extAuth[key]);
         }
-
-        var fullUrl = url +'?'+qstr
-
-        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
-       inAppBrowserRef.addEventListener('beforeload', function(){ 
-            PelApi.hideLoading();
-       });
-       
-       inAppBrowserRef.addEventListener('loaderror', function(){ 
-        PelApi.hideLoading();
-        swal(swalObject);
-       });     
-
-       inAppBrowserRef.addEventListener( "loadstop", function(){
-        var loop = window.setInterval(function(){
-          inAppBrowserRef.executeScript({
-                    code: "window.shouldClose"
-                },
-                function(values){
-                    if(values[0]){
-                      win.close();
-                      window.clearInterval(loop);
-                    }
-                }
-            );
-        },200);
-    });
-   }
-  }).error(function (error, httpStatus, headers, config) {
-        PelApi.hideLoading();
+        window.document.location = "/external/index.html#/?" + qstr
+      }
+    }).error(function (error, httpStatus, headers, config) {
       swal(swalObject)
 
     }).finally(function () {
@@ -318,11 +286,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
-      text: 'תהליך אימות העובד נכשל ',
+      text: 'תהליך אימות העובד נכשל - יש לצאת ולהתחבר שוב לאפליקציה',
       showConfirmButton: false,
       timer: 2500
     };
-    PelApi.showLoading();
 
     this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
@@ -334,8 +301,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       }
     }).error(function (error, httpStatus, headers, config) {
       swal(swalObject)
+
     }).finally(function () {
-      PelApi.hideLoading();
+
     });
   }
   this.post = function (service, params, config) {
