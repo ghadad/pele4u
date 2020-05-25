@@ -210,17 +210,6 @@ angular.module('pele.config', [])
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
-      testItem: {
-        AppId: "8AF701F10BD937EBE0535ddd7",
-        ApplicationType: "INAPP",
-        DisplayName: "דיווח נוכחות",
-        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
-        Location: "s m2",
-        Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
-        Pin: false,
-        Sorter: "121",
-        WorkState: "online"
-      },
       bioClientId: "NEVER_CHANGE_THIS_VALUE_BIOPELE4U",
       bioClientSecret: "NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
