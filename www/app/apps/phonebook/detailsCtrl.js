@@ -160,7 +160,7 @@ angular.module('pele')
             $scope.contact = result;
             $scope.tree = $scope.getTreeData(result)
             $scope.contact.vcardUrl = $scope.getContactFileUrl($scope.contact);
-            alert($scope.contact.vcardUrl)
+
           })
           .error(function (errorStr, httpStatus, headers, config) {
             swal({
