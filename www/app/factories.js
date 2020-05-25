@@ -1533,7 +1533,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         self.showLoading();
         var targetPath = self.getAttchDirectory() + '/' + targetName;
 
-        openDoc = function (url, target, propsStr) {
+        var openDoc = function (url, target, propsStr) {
           var myPopup = window.open(url, target, propsStr);
           myPopup.addEventListener('loadend', function () {
             self.hideLoading();
