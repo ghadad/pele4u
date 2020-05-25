@@ -77,7 +77,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
     internal.url = ServiceUrl + '?' + authParamsString;
     var EnvCode = "MobileApp_" + PelApi.appSettings.callMobileSvcEnvs[env];
-
     var request = {
       "Request": {
         "RequestHeader": {
@@ -229,6 +228,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
     return $http.get(url, httpConfig);
   };
+
+
   this.getToken = function (params, config) {
     var url = getUrl("users/token")
     params = params || {};
@@ -243,44 +244,76 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   };
 
 
+
   this.openInApp = function (url) {
     var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
-      text: 'תהליך אימות העובד נכשל - יש לצאת ולהתחבר שוב לאפליקציה',
+      text: 'תהליך אימות העובד נכשל ',
       showConfirmButton: false,
       timer: 2500
     };
+    PelApi.showLoading();
 
     this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
       var userId = PelApi.appSettings.config.user || $sessionStorage.user;
       if (jwtToken.length < 100) {
+        PelApi.hideLoading();
         swal(swalObject)
       } else {
         var extAuth = {
           token: $sessionStorage.token,
           userId: PelApi.appSettings.config.user || $sessionStorage.user,
           jwtToken: jwtToken,
-          backDoor: window.document.location,
-          url: url
+          backDoor: window.document.location
         }
         var qstr = "";
+
         for (var key in extAuth) {
           if (qstr != "") {
             qstr += "&";
           }
           qstr += key + "=" + encodeURIComponent(extAuth[key]);
         }
-        window.document.location = "/external/index.html#/?" + qstr
+
+        var fullUrl = url + '?' + qstr
+
+        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', PelApi.appSettings.config.iabOptions || 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+        inAppBrowserRef.addEventListener('beforeload', function () {
+          PelApi.hideLoading();
+        });
+
+        inAppBrowserRef.addEventListener('loaderror', function () {
+          PelApi.hideLoading();
+          swal(swalObject);
+        });
+
+        inAppBrowserRef.addEventListener("loadstop", function () {
+          var loop = window.setInterval(function () {
+            inAppBrowserRef.executeScript({
+                code: "window.shouldClose"
+              },
+              function (values) {
+                if (values[0]) {
+                  win.close();
+                  window.clearInterval(loop);
+                }
+              }
+            );
+          }, 200);
+        });
       }
     }).error(function (error, httpStatus, headers, config) {
+      PelApi.hideLoading();
       swal(swalObject)
 
     }).finally(function () {
 
     });
   }
+
+
 
   this.openBrowser = function (url) {
     var swalObject = {
@@ -290,13 +323,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       showConfirmButton: false,
       timer: 2500
     };
-
     this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
       var userId = PelApi.appSettings.config.user || $sessionStorage.user;
       if (jwtToken.length < 100) {
         swal(swalObject)
       } else {
+        $sessionStorage.jwtToken = jwtToken;
         window.open(url + '?jwtToken=' + jwtToken + '&token=' + $sessionStorage.token + '&userId=' + userId, '_system');
       }
     }).error(function (error, httpStatus, headers, config) {
@@ -306,6 +339,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
     });
   }
+
+
+  this.getTokenUrl = function (path) {
+    return this.getUrl(path) + $sessionStorage.gwTokensQuery
+  }
+
+  this.setSessionTokens = function () {
+
+    return this.getToken().success(function (r) {
+      var jwtToken = _.get(r, 'token', "");
+      var userId = PelApi.appSettings.config.user || $sessionStorage.user;
+      if (jwtToken.length > 100) {
+        $sessionStorage.gwTokensQuery = '?jwtToken=' + jwtToken + '&token=' + $sessionStorage.token + '&userId=' + userId;
+      }
+    }).error(function (error, httpStatus, headers, config) {
+      $sessionStorage.jwtToken = "";
+    })
+  }
+
   this.post = function (service, params, config) {
     var url = getUrlBase() + service;
     config = config || {};
