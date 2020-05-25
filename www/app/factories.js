@@ -1539,7 +1539,12 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             self.hideLoading();
           }, false);
         }
-
+      var timeoutFunction = function () {
+          $ionicLoading.hide();
+          $rootScope.$broadcast('scroll.refreshComplete');
+          self.showPopup(self.appSettings.config.FILE_TIMEOUT, "");
+        };
+           
         if (!window.cordova) {
           self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
           openDoc(uri, "_system", "location=yes,enableViewportScale=yes,hidden=no");
