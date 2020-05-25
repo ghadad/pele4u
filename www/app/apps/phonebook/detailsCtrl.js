@@ -57,11 +57,10 @@ angular.module('pele')
         })
       }
 
-      $scope.getContactFile = function (event, c) {
 
-        return ApiGateway.openBrowser(ApiGateway.getUrl("/users/" + c.personId + "/contact.vcf"));
+      $scope.getContactFileUrl = function (c) {
+        return ApiGateway.getTokenUrl("/users/" + c.personId + "/contact.vcf");
       }
-
 
       $scope.swalContact = function (event, c) {
         swal({
@@ -109,6 +108,11 @@ angular.module('pele')
 
       $scope.managerInfo = {}
 
+      $scope.getContactFileUrl = function (c) {
+
+        return ApiGateway.getTokenUrl("/users/" + c.personId + "/contact.vcf")
+      }
+
       $scope.getTreeData = function (person) {
         var tree = {};
 
@@ -155,7 +159,8 @@ angular.module('pele')
             $scope.page = 'result';
             $scope.contact = result;
             $scope.tree = $scope.getTreeData(result)
-
+            $scope.contact.vcardUrl = $scope.getContactFileUrl($scope.contact);
+            alert($scope.contact.vcardUrl)
           })
           .error(function (errorStr, httpStatus, headers, config) {
             swal({
