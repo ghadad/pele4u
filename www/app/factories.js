@@ -1530,16 +1530,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
          download: function(uri, targetName) {
         var self = this;
-        self.showLoading();
+       // self.showLoading();
         var targetPath = self.getAttchDirectory() + '/' + targetName;
-
-        var openDoc = function (url, target, propsStr) {
-          var myPopup = window.open(url, target, propsStr);
-          myPopup.addEventListener('load', function () {
-            self.hideLoading();
-          }, false);
-        }
-      var timeoutFunction = function () {
+        var timeoutFunction = function () {
           $ionicLoading.hide();
           $rootScope.$broadcast('scroll.refreshComplete');
           self.showPopup(self.appSettings.config.FILE_TIMEOUT, "");
@@ -1560,7 +1553,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                      if (!result.nativeURL) {
                       self.hideLoading();
                     } else {
-                      openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+                      window.open(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
                      }
               },function (error) {
                 self.hideLoading()
