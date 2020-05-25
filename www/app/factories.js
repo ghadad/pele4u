@@ -1552,11 +1552,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           openDoc(uri, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
         } else if (self.isAndroid) {
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
-         var ft = new FileTransfer();
+         var fileTransfer = new FileTransfer();
 
-          ft.download(uri, targetPath,
-                      function (result) {
+          fileTransfer.download(uri, targetPath,function (result) {
                     $timeout.cancel(filetimeout);
+                     
                      if (!result.nativeURL) {
                       self.hideLoading();
                     } else {
@@ -1565,8 +1565,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
               },function (error) {
                 self.hideLoading()
                 self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
-              },function (progress) {
-                //  self.showLoading(spinOptions);
               });
         }
       },
