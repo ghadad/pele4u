@@ -1553,7 +1553,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                      if (!result.nativeURL) {
                       self.hideLoading();
                     } else {
-                      window.open(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+                      window.open(result.nativeURL, "contact-file", "location=yes,enableViewportScale=yes,hidden=no");
                      }
               },function (error) {
                 self.hideLoading()
