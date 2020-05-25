@@ -1528,6 +1528,47 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           $localStorage.pinStateData = undefined;
         }
       },
+         download(uri, targetName) {
+        var self = this;
+        self.showLoading();
+        var targetPath = self.getAttchDirectory() + '/' + targetName;
+
+        openDoc = function (url, target, propsStr) {
+          var myPopup = window.open(url, target, propsStr);
+          myPopup.addEventListener('loadend', function () {
+            self.hideLoading();
+          }, false);
+        }
+
+        if (!window.cordova) {
+          self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
+          openDoc(uri, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+        } else if (self.isIOS) {
+          openDoc(uri, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
+        } else if (self.isAndroid) {
+          var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
+
+          $cordovaFileTransfer.download(uri, targetPath, {}, true)
+            .then(
+              //success
+              function (result) {
+                $timeout.cancel(filetimeout);
+                if (!result.nativeURL) {
+                  self.hideLoading();
+                  // self.throwError("api", "cordovaFileTransfer.download", JSON.stringify(result), false);
+                } else {
+                  openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+                }
+              },
+              function (error) {
+                self.hideLoading()
+                self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
+              },
+              function (progress) {
+                //  self.showLoading(spinOptions);
+              })
+        }
+      },
       openAttachment: function (file, appId) {
 
         var spinOptions = {
