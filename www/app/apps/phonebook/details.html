@@ -35,25 +35,26 @@
                 <ul class="list pele_rtl text-right treeview level1">
                   <li class="direct_admin tree-item" ng-class="{'noadmin':!contact.directManagerName}">
                     <a ui-sref="app.phonebook.details({personId:contact.directManagerNumber})">
-                  <strong>  {{contact.directManagerName}}</strong>
-                  </a>
+                      <strong> {{contact.directManagerName}}</strong>
+                    </a>
                     <ul class="list level2">
-                      <li ng-class="{'noadmin':!contact.directManagerName}" class="{{member.relation}} tree-item" ng-show="v.personId" ng-repeat="(k,v) in tree">
+                      <li ng-class="{'noadmin':!contact.directManagerName}" class="{{member.relation}} tree-item"
+                        ng-show="v.personId" ng-repeat="(k,v) in tree">
                         <div class="links" ng-class="{'last':$last}"></div>
                         <a ui-sref="app.phonebook.details({personId:k})">
-                        <i ng-if="contact.personId==k" class="ion-android-person blue"></i>
-                        <span ng-class="{active:contact.personId==k}">
-                          {{v.lastName}},
-                          {{v.firstName}}
-                        </span>
-                      </a>
+                          <i ng-if="contact.personId==k" class="ion-android-person blue"></i>
+                          <span ng-class="{active:contact.personId==k}">
+                            {{v.lastName}},
+                            {{v.firstName}}
+                          </span>
+                        </a>
                         <ul ng-if="v.members.length" class="list level3">
                           <li class="{{member.relation}} tree-item" ng-repeat="member in v.members">
                             <div class="links" ng-class="{'last':$last}"></div>
                             <a ui-sref="app.phonebook.details({personId:member.personId})">
-                            {{member.lastName}},
-                            {{member.firstName}}
-                          </a>
+                              {{member.lastName}},
+                              {{member.firstName}}
+                            </a>
                           </li>
                         </ul>
                       </li>
@@ -73,8 +74,9 @@
               <li class="item no-border">
                 <div class="text-center">
                   <img class="contact-avatar" ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}" /-->
-                  <img class="no-contact-pic" ng-if="!contact.pic" ng-src="img/new_icons/blue_avatar.png" />
-                  <img ng-show="contact.birthday==today" class="contact-avatar" style="border:0;border-radius:0" ng-src="img/new_icons/happybirthday.gif">
+                    <img class="no-contact-pic" ng-if="!contact.pic" ng-src="img/new_icons/blue_avatar.png" />
+                  <img ng-show="contact.birthday==today" class="contact-avatar" style="border:0;border-radius:0"
+                    ng-src="img/new_icons/happybirthday.gif">
                 </div>
 
               </li>
@@ -156,13 +158,14 @@
                 </div>
               </li>
               <li class="item item-info no-border contact-icons text-center">
-                <a href="#" ng-click="getContactFile($event,contact)">
+                <a ng-href="{{contact.vcardUrl}}" target="_blank">
                   <img class="pel_icon medium" src="img/new_icons/purple_add_contact.png "></a>
                 <a ng-show="contact.mobilePhone" ng-href="sms://{{contact.mobilePhone}}">
                   <img class="pel_icon medium" src="img/new_icons/blue_sms.png "></a>
                 <a href="#" ng-click="shareViaEmail(contact.emailAddress)">
                   <img class="pel_icon medium" src="img/new_icons/red_email.png "></a>
-                <a ng-show="contact.workPhone" ng-href="tel:{{contact.workPhone}}"><img class=" pel_icon medium " src="img/new_icons/gray_phone.png"></a>
+                <a ng-show="contact.workPhone" ng-href="tel:{{contact.workPhone}}"><img class=" pel_icon medium "
+                    src="img/new_icons/gray_phone.png"></a>
                 <a ng-show="contact.mobilePhone" ng-href="tel:{{contact.mobilePhone}}">
                   <img class="pel_icon medium" src="img/new_icons/green_mobile.png"></a>
                 <!--div class="item-section"> <a href="#" ng-click="shareViaEmail(contact.emailAddress)"> e-mail</a> <br \> <a ng-href="sms:{{contact.mobilePhone}}"> <img class="pel_icon medium" src="img/sms.png"></a> <br \> <a href="#"
