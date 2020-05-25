@@ -29,7 +29,7 @@ angular.module('pele')
         })
       }
       $scope.download = function(vcardUri,fname) {
-        PelApi.download(vcardUri,fname);
+        PelApi.download(vcardUri,fname +".vcf");
       }
       
       $scope.saveContact = function (c, info) {
