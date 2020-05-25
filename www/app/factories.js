@@ -1552,9 +1552,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           openDoc(uri, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
         } else if (self.isAndroid) {
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
+         var ft = new FileTransfer();
 
-          $cordovaFileTransfer.download(uri, targetPath, {}, true)
-            .then(function (result) {
+          ft.download(uri, targetPath,
+                      function (result) {
                     $timeout.cancel(filetimeout);
                      if (!result.nativeURL) {
                       self.hideLoading();
