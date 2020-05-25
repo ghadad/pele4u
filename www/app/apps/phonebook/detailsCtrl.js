@@ -28,7 +28,10 @@ angular.module('pele')
           reload: true
         })
       }
-
+      $scope.download(vcardUri,fname) {
+        PelApi.download(vcardUri,fname);
+      }
+      
       $scope.saveContact = function (c, info) {
         var deviceContact = c;
         if (c.id) {
