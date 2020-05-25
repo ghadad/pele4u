@@ -28,7 +28,7 @@ angular.module('pele')
           reload: true
         })
       }
-      $scope.download(vcardUri,fname) {
+      $scope.download = function(vcardUri,fname) {
         PelApi.download(vcardUri,fname);
       }
       
