@@ -1535,7 +1535,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
         var openDoc = function (url, target, propsStr) {
           var myPopup = window.open(url, target, propsStr);
-          myPopup.addEventListener('loadend', function () {
+          myPopup.addEventListener('load', function () {
             self.hideLoading();
           }, false);
         }
