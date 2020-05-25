@@ -1528,7 +1528,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           $localStorage.pinStateData = undefined;
         }
       },
-         download(uri, targetName) {
+         download: function(uri, targetName) {
         var self = this;
         self.showLoading();
         var targetPath = self.getAttchDirectory() + '/' + targetName;
@@ -1554,24 +1554,19 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
 
           $cordovaFileTransfer.download(uri, targetPath, {}, true)
-            .then(
-              //success
-              function (result) {
-                $timeout.cancel(filetimeout);
-                if (!result.nativeURL) {
-                  self.hideLoading();
-                  // self.throwError("api", "cordovaFileTransfer.download", JSON.stringify(result), false);
-                } else {
-                  openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
-                }
-              },
-              function (error) {
+            .then(function (result) {
+                    $timeout.cancel(filetimeout);
+                     if (!result.nativeURL) {
+                      self.hideLoading();
+                    } else {
+                      openDoc(result.nativeURL, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+                     }
+              },function (error) {
                 self.hideLoading()
                 self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
-              },
-              function (progress) {
+              },function (progress) {
                 //  self.showLoading(spinOptions);
-              })
+              });
         }
       },
       openAttachment: function (file, appId) {
