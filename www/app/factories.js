@@ -1537,12 +1537,19 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           $rootScope.$broadcast('scroll.refreshComplete');
           self.showPopup(self.appSettings.config.FILE_TIMEOUT, "");
         };
+         
+         var openDoc2 = function (url, target, propsStr) {
+          var myPopup = window.open(url, target, propsStr);
+          myPopup.addEventListener('loadend', function () {
+            self.hideLoading();
+          }, false);
+        }
            
         if (!window.cordova) {
           self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
-          openDoc(uri, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+          openDoc2(uri, "_system", "location=yes,enableViewportScale=yes,hidden=no");
         } else if (self.isIOS) {
-          openDoc(uri, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
+          openDoc2(uri, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
         } else if (self.isAndroid) {
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
          var fileTransfer = new FileTransfer();
