@@ -326,7 +326,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading();
 
 
-    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/Pages/peleportalhome.aspx", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
     inAppBrowserRef.addEventListener('beforeload', function () {
       PelApi.hideLoading();
     });
