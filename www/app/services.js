@@ -341,13 +341,11 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       var code =
         'setTimeout(function() { ' +
         'window.onerror = function(message, source, lineno, colno, error) { alert(error.stack) ;};' +
+        'document.cookie.NSC_TASS  = "https://peleportal.pelephone.co.il"'+
         'document.getElementById("login").value="golanh";' +
         'document.getElementById("passwd").value="Perach148";' +
         'document.getElementById("nsg-x1-logon-button").click();' +
-        '},1500);' +
-        'setTimeout(function() { ' +
-         'location.href = "https://peleportal.pelephone.co.il";' +
-         '},3000);' 
+        '},1500);' 
          
       inAppBrowserRef.executeScript({
         code: code
