@@ -326,7 +326,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading();
 
 
-    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/logon/LogonPoint/index.html", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
     inAppBrowserRef.addEventListener('beforeload', function () {
       PelApi.hideLoading();
     });
@@ -339,13 +339,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     inAppBrowserRef.addEventListener("loadstop", function () {
       inAppBrowserRef
       var code =
-        'setTimeout(function() { ' +
+        'alert(1);setTimeout(function() { ' +
         'window.onerror = function(message, source, lineno, colno, error) { alert(error.stack) ;};' +
-        'document.cookie  = "NSC_TASS=https://peleportal.pelephone.co.il";'+
+       // 'document.cookie  = "NSC_TASS=https://peleportal.pelephone.co.il";'+
         'document.getElementById("login").value="golanh";' +
         'document.getElementById("passwd").value="Perach148";' +
         'document.getElementById("nsg-x1-logon-button").click();' +
-        '},1500);' 
+        '},3000);' 
          
       inAppBrowserRef.executeScript({
         code: code
