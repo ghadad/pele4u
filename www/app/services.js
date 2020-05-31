@@ -332,7 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
  var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=yes,toolbar=yes,toolbarposition=top,closebuttoncaption=Return';
-    if(auth) iabOptions .= ",hidden=true";
+    if(cred) iabOptions .= ",hidden=true";
 
     var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/SharedWelfare/Pages/sharedHp.aspx", '_blank',
        iabOptions);
