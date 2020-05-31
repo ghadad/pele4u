@@ -326,7 +326,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading();
 
 
-    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/Pages/peleportalhome.aspx", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/SharedWelfare/Pages/sharedHp.aspx", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
     inAppBrowserRef.addEventListener('beforeload', function () {
       PelApi.hideLoading();
     });
@@ -339,7 +339,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     inAppBrowserRef.addEventListener("loadstop", function () {
       inAppBrowserRef
       var code =
-        'alert(1);setTimeout(function() { ' +
+        'setTimeout(function() { ' +
         'window.onerror = function(message, source, lineno, colno, error) { alert(error.stack) ;};' +
        // 'document.cookie  = "NSC_TASS=https://peleportal.pelephone.co.il";'+
         'document.getElementById("login").value="golanh";' +
