@@ -1,5 +1,5 @@
 angular.module('pele', ['ngStorage'])
-  .controller('LdapLoginCtrl', function ($scope, $state, $ionicSideMenuDelegate, PelApi, $http, $ionicLoading, BioAuth, $ionicModal,$timeout) {
+  .controller('LdapLoginCtrl', function (ApiGateway,$scope, $state, $ionicSideMenuDelegate, PelApi, $http, $ionicLoading, BioAuth, $ionicModal,$timeout) {
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
@@ -143,6 +143,11 @@ angular.module('pele', ['ngStorage'])
         headers: httpConf.headers
       });
 
+      
+      ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,{
+          UserName: user,
+          password: password
+        });
 
       promise.success(function (data, status, headers, config) {
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
