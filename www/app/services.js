@@ -320,7 +320,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
 
-  this.openPortal = function (url,auth=false) {
+  this.openPortal = function (url,cred) {
     var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
@@ -347,11 +347,11 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
     inAppBrowserRef.addEventListener("loadstop", function () {
       inAppBrowserRef
-      if(auth) {
+      if(cred) {
       var code =
          'setTimeout(function() { ' +
-         'document.getElementById("login").value="golanh";' +
-         'document.getElementById("passwd").value="Perach148";' +
+         'document.getElementById("login").value="'+cred.UserName+'";' +
+         'document.getElementById("passwd").value="'+cred.password+'";' +
          'document.getElementById("nsg-x1-logon-button").click();' +
          '},2000);' 
          
