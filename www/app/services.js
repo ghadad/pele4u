@@ -352,7 +352,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          'setTimeout(function() { ' +
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
-         'document.getElementById("nsg-x1-logon-button").click();' +
+         'document.getElementById("Log_On").click();' +
          '},2000);' 
          
         inAppBrowserRef.executeScript({
