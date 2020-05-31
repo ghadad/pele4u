@@ -320,7 +320,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
 
-  this.openPortal = function (url) {
+  this.openPortal = function (url,auth=false) {
     var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
@@ -332,6 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
  var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=yes,toolbar=yes,toolbarposition=top,closebuttoncaption=Return';
+    if(auth) iabOptions .= ",hidden=true";
 
     var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/SharedWelfare/Pages/sharedHp.aspx", '_blank',
        iabOptions);
@@ -346,18 +347,18 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
     inAppBrowserRef.addEventListener("loadstop", function () {
       inAppBrowserRef
+      if(auth) {
       var code =
-        'setTimeout(function() { ' +
-        'window.onerror = function(message, source, lineno, colno, error) { alert(error.stack) ;};' +
-       // 'document.cookie  = "NSC_TASS=https://peleportal.pelephone.co.il";'+
-        'document.getElementById("login").value="golanh";' +
-        'document.getElementById("passwd").value="Perach148";' +
-        'document.getElementById("nsg-x1-logon-button").click();' +
-        '},3000);' 
+         'setTimeout(function() { ' +
+         'document.getElementById("login").value="golanh";' +
+         'document.getElementById("passwd").value="Perach148";' +
+         'document.getElementById("nsg-x1-logon-button").click();' +
+         '},2000);' 
          
-      inAppBrowserRef.executeScript({
-        code: code
-      });
+        inAppBrowserRef.executeScript({
+          code: code
+        });
+      }
     });
   }
 
