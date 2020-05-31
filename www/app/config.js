@@ -193,6 +193,7 @@ const apiConfig = {
 angular.module('pele.config', [])
   .constant('$ionicLoadingConfig', spinConfig)
   .value('appSettings', {
+    portalUrl:"https://peleportal.pelephone.co.il",
     debug: false,
     EnvCodes: EnvCodes,
     SSOEnv: SSOEnv,
