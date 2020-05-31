@@ -192,14 +192,14 @@ const apiConfig = {
 
 angular.module('pele.config', [])
   .constant('$ionicLoadingConfig', spinConfig)
-  .value('appSettings', {
-    portalUrl:"https://peleportal.pelephone.co.il",
+  .value('appSettings', {   
     debug: false,
     EnvCodes: EnvCodes,
     SSOEnv: SSOEnv,
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
+       portalUrl:"https://peleportal.pelephone.co.il",
       testItems: [ {
         AppId: "8AF701F10BD937EBE0535ddd7",
         ApplicationType: "IAB",
