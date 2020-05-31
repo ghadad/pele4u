@@ -329,9 +329,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       timer: 2500
     };
     PelApi.showLoading();
+ var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
+        if(cordova && cordova.platformId === "ios")
+          iabOptions =  'location=yes,toolbar=yes,toolbarposition=top,closebuttoncaption=Return';
 
-
-    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/SharedWelfare/Pages/sharedHp.aspx", '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+    var inAppBrowserRef = cordova.InAppBrowser.open("https://peleportal.pelephone.co.il/SharedWelfare/Pages/sharedHp.aspx", '_blank',
+       iabOptions);
     inAppBrowserRef.addEventListener('beforeload', function () {
       PelApi.hideLoading();
     });
