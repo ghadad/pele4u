@@ -280,12 +280,17 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url + '?' + qstr
 
-        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה');
+        var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,location=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
+        if(cordova && cordova.platformId === "ios")
+          iabOptions =  'location=yes,toolbar=yes,toolbarposition=top,closebuttoncaption=Return';
+          
+        var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
         inAppBrowserRef.addEventListener('beforeload', function () {
           PelApi.hideLoading();
         });
 
-        inAppBrowserRef.addEventListener('loaderror', function () {
+       
+         inAppBrowserRef.addEventListener('loaderror', function () {
           PelApi.hideLoading();
           swal(swalObject);
         });
