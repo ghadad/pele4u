@@ -361,14 +361,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         
       if(cred) {
         code =        
-         'throw new Error("E1");if(document.getElementById("errorMessageLabel"))  throw new Error("E1");'+
+      //   'if(document.getElementById("errorMessageLabel"))  throw new Error("E1");'+
          'if(document.getElementById("Log_On")) { '+
+         '  alert(document.getElementById("Log_On")) ;'+
          '  document.getElementById("login").value="'+cred.UserName+'";' +
          '  document.getElementById("passwd").value="'+cred.password+'";' +
          '  document.getElementById("Log_On").click();'+
          '}'; 
       } else {
-        code =  'throw new Error("E1");if(document.getElementById("Log_On") || document.getElementById("errorMessageLabel") ) throw new Error("E2");';        
+        code =  'document.getElementById("Log_On") || document.getElementById("errorMessageLabel")';        
       }
       
       var loop = window.setInterval(function () {
@@ -377,19 +378,17 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             code: code
           },
           function (values) {
-           // if (values[0]) {
-             // inAppBrowserRef.close();
+            if (values[0]) {
+             
              swal(intd);
+             swal(values[0]);
              if(intd>6) {
             
               window.clearInterval(loop);
               swal(swalObject);
              }
-            
-            // swal(values.toString())
-          //  }
           }
-        );
+        });
       }, 500);
          
     });
