@@ -360,6 +360,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         code =
          'var intc=0;var intv = setInterval(function() { ' +
          'intc++;'+
+        'if(document.getElementById("errorMessageLabel"))  throw new Error("A1");'+
          'if(!document.getElementById("Log_On") && intc>10)  throw new Error("A1");'+
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
@@ -368,7 +369,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          '},500);' 
       } else {
         code = 'setTimeout(function(){'+
-        'if(!document.getElementById("pele-content")){'+
+        'if(!document.getElementById("peleLoaderBox")){'+
            'throw new Error("A2");'+
         '}'+
         '},3000);'
