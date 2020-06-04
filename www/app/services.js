@@ -360,7 +360,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         code =
          'var intc=0;var intv = setInterval(function() { ' +
          'intc++;'+
-        'if(document.getElementById("errorMessageLabel"))  throw new Error("A1");'+
+        'if(document.getElementById("feedbackStyle"))  throw new Error("A1");'+
         'var btn = document.getElementById("Log_On");'+
          'if(!btn && intc>10)  throw new Error("A1");'+
          'if(!btn)  return false ;' + 
