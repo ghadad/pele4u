@@ -381,15 +381,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             code: code
           },
           function (values) {
-            if (values[0]) {
+            
              
           
-             swal(values[0]);
+          
              if(intd>6) {
               window.clearInterval(loop);
               swal(swalObject);
              }
-          }
+         
         });
       }, 500);
          
