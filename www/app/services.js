@@ -287,7 +287,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=yes,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=yes,closebuttoncaption=סגור';
-          
+
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
         
 
@@ -361,7 +361,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          'var intc=0;var intv = setInterval(function() { ' +
          'intc++;'+
         'if(document.getElementById("errorMessageLabel"))  throw new Error("A1");'+
-         'if(!document.getElementById("Log_On") && intc>10)  throw new Error("A1");'+
+        'var btn = document.getElementById("Log_On");'+
+         'if(!btn && intc>10)  throw new Error("A1");'+
+         'if(!btn)  return false ;' + 
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
          'clearInterval(intv);'+
