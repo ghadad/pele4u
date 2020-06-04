@@ -341,7 +341,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,toolbarposition=top,closebuttoncaption=Return';
-    //if(cred) iabOptions += ",hidden=false,clearsessioncache=true";
+    if(cred) iabOptions += ",hidden=true";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
     inAppBrowserRef.addEventListener('beforeload', function () {
@@ -352,12 +352,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       PelApi.hideLoading();
       swal(swalObject);
     });
+
+    
       var code =
          'setTimeout(function() { ' +
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
          'document.getElementById("Log_On").click();' +
          '},2000);' 
+
+
     inAppBrowserRef.addEventListener("loadstop", function () {
      
       if(cred) {

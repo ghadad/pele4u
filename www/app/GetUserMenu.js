@@ -443,7 +443,7 @@ app.controller('GetUserMenuCtrl',
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
         return ApiGateway.openBrowser(appConfig.Path);
-      } else if (appConfig.ApplicationType === "PORTAL") {
+      } else if (appConfig.ApplicationType === "IPB") {
         return ApiGateway.openPortal(appConfig.Path);
       }
 
