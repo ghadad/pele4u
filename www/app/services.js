@@ -358,17 +358,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         var code ;
       if(cred) {
         code =
-         'var intc=0;var intv = setInterval(function() { ' +
-         'intc++;'+
-        'if(document.getElementById("feedbackStyle"))  throw new Error("A1");'+
-        'var btn = document.getElementById("Log_On");'+
-         'if(!btn && intc>10)  throw new Error("A1");'+
-         'if(!btn)  return false ;' + 
+             'var intv =setTimeout(function() { ' +
+         'if(!document.getElementById("Log_On"))  throw new Error("AAAA");'+
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
-         'clearInterval(intv);'+
          'document.getElementById("Log_On").click();' +
-         '},500);' 
+         '},3000);' 
       } else {
         code = 'setTimeout(function(){'+
         'console.log(document.getElementById("peleLoaderBox"));'+
@@ -377,6 +372,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         '}'+
         '},3000);'
       }
+      
         inAppBrowserRef.executeScript({
           code: code
         });
