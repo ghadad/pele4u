@@ -389,11 +389,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           }
         );
       }, 300);
-      if(cred)
-      setTimeout(function() { 
-        inAppBrowserRef.close();
-      },5000)
+         
     });
+    if(cred)
+    setTimeout(function() { 
+      PelApi.hideLoading();
+
+      inAppBrowserRef.close();
+    },5000)
   }
 
 
