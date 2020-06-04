@@ -300,7 +300,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         inAppBrowserRef.addEventListener("loadstop", function () {
           var loop = window.setInterval(function () {
             inAppBrowserRef.executeScript({
-                code: "window.shouldClose"
+                code: "window.shouldClose || window.closed"
               },
               function (values) {
                 if (values[0]) {
