@@ -374,24 +374,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       inAppBrowserRef.onerror = function(e) { 
         swal(e.message)
       }
-      var loop = window.setInterval(function () {
-        intd++;
-        swal(intd);
+       window.setTimeout(function () {
+   
+       
         inAppBrowserRef.executeScript({
             code: code
-          },
-          function (values) {
-            
-             
-          
-          
-             if(intd>6) {
-              window.clearInterval(loop);
-              swal(swalObject);
-             }
-         
-        });
-      }, 500);
+          } );
+      }, 3000);
          
     });
     if(cred)
