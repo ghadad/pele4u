@@ -284,7 +284,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url + '?' + qstr
 
-        var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,zoom=yes,toolbar=no,closebuttoncaption=חזרה'; 
+        var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,toolbarposition=top,closebuttoncaption=Return';
           
@@ -338,7 +338,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       timer: 2500
     };
     PelApi.showLoading();
-        var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,zoom=yes,toolbar=no,closebuttoncaption=חזרה'; 
+        var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'closebuttoncaption=Return';
     if(cred) iabOptions += ",hidden=true,clearsessioncache=true";
@@ -354,7 +354,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
 
     inAppBrowserRef.addEventListener("loadstop", function () {
-      inAppBrowserRef
+     
       if(cred) {
       var code =
          'setTimeout(function() { ' +
