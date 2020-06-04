@@ -354,19 +354,19 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
 
     
-      var code =
+ 
+
+    inAppBrowserRef.addEventListener("loadstop", function () {
+     
+      if(cred) {
+     
+              var code =
          'setTimeout(function() { ' +
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
          'document.getElementById("Log_On").click();' +
          '},2000);' 
 
-
-    inAppBrowserRef.addEventListener("loadstop", function () {
-     
-      if(cred) {
-     
-         
         inAppBrowserRef.executeScript({
           code: code
         });
