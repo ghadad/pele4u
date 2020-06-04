@@ -362,14 +362,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       if(cred) {
         code =        
       //   'if(document.getElementById("errorMessageLabel"))  throw new Error("E1");'+
-      'if(document.getElementById("errorMessageLabel")) { alert (document.getElementById("errorMessageLabel").innerHTML) ;};'+
+      'if(document.getElementById("errorMessageLabel") != null) { alert (document.getElementById("errorMessageLabel").innerHTML) ;};'+
          ' if(document.getElementById("Log_On") !=null) { '+
          '  document.getElementById("login").value="'+cred.UserName+'";' +
          '  document.getElementById("passwd").value="'+cred.password+'";' +
          '  document.getElementById("Log_On").click();'+
          '}'; 
       } else {
-        code =  'document.getElementById("Log_On") || document.getElementById("errorMessageLabel")';        
+        code =   'if(document.getElementById("errorMessageLabel") !=null) { alert (document.getElementById("errorMessageLabel").innerHTML) ;}' 
       }
       inAppBrowserRef.onerror = function(e) { 
         swal(e.message)
