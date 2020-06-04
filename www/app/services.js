@@ -332,8 +332,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     }
     var swalObject = {
       type: 'error',
-      title: 'לא מצליח לפתוח את היישום',
-      text: 'תהליך אימות העובד נכשל ',
+      title: 'פתיחת פורטל נכשלה',
+      text: 'נא צא מהאפליקציה ונסה שוב',
       showConfirmButton: false,
       timer: 2500
     };
@@ -344,9 +344,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     if(cred) iabOptions += ",hidden=true";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
-    inAppBrowserRef.addEventListener('beforeload', function () {
-      PelApi.hideLoading();
-    });
 
     inAppBrowserRef.addEventListener('loaderror', function () {
       PelApi.hideLoading();
@@ -361,14 +358,20 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         var code ;
       if(cred) {
         code =
-         'setTimeout(function() { ' +
-         'if(!document.getElementById("Log_On"))  throw new Error("AAAA");'+
+         'var intc=0;var intv = setInterval(function() { ' +
+         'intc++;'+
+         'if(!document.getElementById("Log_On") && intc>10)  throw new Error("A1");'+
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
+         'clearInterval(intv);'+
          'document.getElementById("Log_On").click();' +
-         '},2000);' 
+         '},500);' 
       } else {
-        code = 'setInterval(function(){ alert(window.html);},5000);'
+        code = 'setTimeout(function(){'+
+        'if(!document.getElementById("pele-content")){'+
+           'throw new Error("A2");'+
+        '}'+
+        '},3000);'
       }
         inAppBrowserRef.executeScript({
           code: code
