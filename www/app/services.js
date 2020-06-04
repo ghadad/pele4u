@@ -376,13 +376,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       }
       var loop = window.setInterval(function () {
         intd++;
+        swal(intd);
         inAppBrowserRef.executeScript({
             code: code
           },
           function (values) {
             if (values[0]) {
              
-             swal(intd);
+          
              swal(values[0]);
              if(intd>6) {
               window.clearInterval(loop);
