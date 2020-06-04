@@ -367,6 +367,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          '},500);' 
       } else {
         code = 'setTimeout(function(){'+
+        'console.log(document.getElementById("peleLoaderBox"));'+
         'if(!document.getElementById("peleLoaderBox")){'+
            'throw new Error("A2");'+
         '}'+
