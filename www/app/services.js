@@ -304,8 +304,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
               },
               function (values) {
                 if (values[0]) {
-                  win.close();
+                  window.close();
                   window.clearInterval(loop);
+                  inAppBrowserRef.close();
                 }
               }
             );
