@@ -284,9 +284,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url + '?' + qstr
 
-      var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=yes,closebuttoncaption=סגור'; 
+      var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
-          iabOptions =  'location=no,toolbar=no,footer=yes,closebuttoncaption=סגור';
+          iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
 
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
         
@@ -338,9 +338,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=yes,closebuttoncaption=סגור'; 
+         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
-          iabOptions =  'location=no,toolbar=no,footer=yes,closebuttoncaption=סגור';
+          iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
     if(cred) iabOptions += ",hidden=true";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
