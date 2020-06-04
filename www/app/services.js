@@ -377,14 +377,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           function (values) {
            // if (values[0]) {
              // inAppBrowserRef.close();
-             if(intd>5)
+             if(intd>10)
               window.clearInterval(loop);
-              
+
               console.log(values)
           //  }
           }
         );
-      }, 1000);
+      }, 300);
     });
   }
 
