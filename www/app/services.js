@@ -362,7 +362,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       if(cred) {
         code =        
       //   'if(document.getElementById("errorMessageLabel"))  throw new Error("E1");'+
-      'if(document.getElementById("errorMessageLabel")) { alert (document.getElementById("errorMessageLabel").innerHTML ;};'+
+      'if(document.getElementById("errorMessageLabel")) { alert (document.getElementById("errorMessageLabel").innerHTML) ;};'+
          ' if(document.getElementById("Log_On")) { '+
          '  alert(document.getElementById("Log_On").innerHTML) ;'+
          '  document.getElementById("login").value="'+cred.UserName+'";' +
