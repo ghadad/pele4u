@@ -152,14 +152,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             isOnline: true,
             network: $cordovaNetwork.getNetwork()
           };
-          if (appSettings.env == "DV") {
-            var alertPopup = $ionicPopup.alert({
-              title: 'Network Changed',
-              template: 'network - DEV only : ' + appSettings.config.network
-            });
-          }
-
-          $rootScope.$apply();
+           $rootScope.$apply();
         })
 
         // listen for Offline event

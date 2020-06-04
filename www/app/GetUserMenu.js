@@ -444,7 +444,7 @@ app.controller('GetUserMenuCtrl',
       } else if (appConfig.ApplicationType === "IEB") {
         return ApiGateway.openBrowser(appConfig.Path);
       } else if (appConfig.ApplicationType === "IPB") {
-        return ApiGateway.openPortal(appConfig.Path);
+        return ApiGateway.openPortal(appConfig.Path); 
       }
 
       $scope.appSwitch(i);
