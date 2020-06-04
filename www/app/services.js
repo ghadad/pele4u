@@ -357,11 +357,11 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
  
 
     inAppBrowserRef.addEventListener("loadstop", function () {
-     
+      PelApi.hideLoading();
       if(cred) {
-     
-              var code =
+      var code =
          'setTimeout(function() { ' +
+         'if(!document.getElementById("Log_On"))  throw new Error("AAAA");'+
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
          'document.getElementById("Log_On").click();' +
