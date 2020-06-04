@@ -341,7 +341,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         var iabOptions =PelApi.appSettings.config.iabOptions || 'beforeload=yes,zoom=no,toolbar=no,closebuttoncaption=חזרה'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'closebuttoncaption=Return';
-    if(cred) iabOptions += ",hidden=true,clearsessioncache=true";
+    if(cred) iabOptions += ",hidden=false,clearsessioncache=true";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
     inAppBrowserRef.addEventListener('beforeload', function () {
