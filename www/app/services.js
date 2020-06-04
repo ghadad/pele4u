@@ -341,7 +341,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
-    if(cred) iabOptions += ",hidden=true";
+    if(cred) iabOptions += ",hidden=true,clearsessioncache=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
 
@@ -356,27 +356,35 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     inAppBrowserRef.addEventListener("loadstop", function () {
       PelApi.hideLoading();
         var code ;
+
+      var intd = 0;
+        
       if(cred) {
-        code =
-             'var intv =setTimeout(function() { ' +
-         'if(!document.getElementById("Log_On"))  throw new Error("AAAA");'+
+        code =        
+         'if(document.getElementById("errorMessageLabel"))  throw new Error("E1");'+
          'document.getElementById("login").value="'+cred.UserName+'";' +
          'document.getElementById("passwd").value="'+cred.password+'";' +
-         'document.getElementById("Log_On").click();' +
-         '},3000);' 
+         'document.getElementById("Log_On").click();' 
       } else {
-        code = 'setTimeout(function(){'+
-        'console.log(document.getElementById("peleLoaderBox"));'+
-        'if(!document.getElementById("peleLoaderBox")){'+
-           'throw new Error("A2");'+
-        '}'+
-        '},3000);'
+        code =  'if(document.getElementById("Log_On") || document.getElementById("errorMessageLabel") ) throw new Error("E2");';        
       }
       
+      var loop = window.setInterval(function () {
+        intd++;
         inAppBrowserRef.executeScript({
-          code: code
-        });
-      
+            code: code
+          },
+          function (values) {
+           // if (values[0]) {
+             // inAppBrowserRef.close();
+             if(intd>5)
+              window.clearInterval(loop);
+              
+              console.log(values)
+          //  }
+          }
+        );
+      }, 1000);
     });
   }
 
