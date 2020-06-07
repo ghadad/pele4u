@@ -363,6 +363,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('login').value='"+cred.UserName+"' ; \
                document.getElementById('passwd').value='"+cred.password+"' ; \
                btn.click(); \
+               } \
             },1000); \
            setTimeout(function(){ \
              if(document.getElementById('errorMessageLabel') !== undefined) \
