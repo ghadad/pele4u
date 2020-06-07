@@ -308,8 +308,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   inAppBrowserRef.close();
                   window.clearInterval(loop);
                 }
-              }
-            );
+              });
           }, 200);
         });
       }
@@ -351,27 +350,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     inAppBrowserRef.addEventListener("loadstop", function () {
       alert("stopcode")
       PelApi.hideLoading();
-        var code ;
- 
-        
+        var code ;        
       if(cred) {
-          code =
-          " setTimeout(function(){ \
+          code = "setTimeout(function(){ \
             var btn = document.getElementById('Log_On') ; \
             if(btn) { \
-               document.getElementById('login').value='"+cred.UserName+"' ; \
-               document.getElementById('passwd').value='"+cred.password+"' ; \
+               document.getElementById('login').value = '__username' ; \
+               document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
-               } \
+             } \
             },1000); \
            setTimeout(function(){ \
-             var errMessage = document.getElementById('errorMessageLabel'); \ 
+             var errMessage = document.getElementById('errorMessageLabel'); \
              if(errMessage !== undefined) \
              alert(errMessage); \
               var message = JSON.stringify({error:errMessage}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
             },1700); ";
-          alert(code)
+            code = code.replace("__username", cred.UserName );
+            code = code.replace("__password", cred.password );
           console.log("code:",code)
       } else {
         code = "setTimeout(function(){ \
@@ -384,6 +381,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         }
        
        inAppBrowserRef.executeScript({code: code} );
+ 
        inAppBrowserRef.addEventListener('message', function(eMessage){
             swal(JSON.stringify(eMessage.data));
           });
