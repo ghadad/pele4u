@@ -341,7 +341,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
-    if(cred) iabOptions += ",hidden=true";
+    if(cred) iabOptions += ",hidden=true,clearsessioncache=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
   
@@ -350,7 +350,11 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     inAppBrowserRef.addEventListener("loadstop", function () {
       PelApi.hideLoading();
         var code ;
+
+      var intd = 0;
+        
       if(cred) {
+ 
         code =
           "var btn = document.getElementById('Log_On') ; \
           if(btn) { \
@@ -371,16 +375,20 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 },1000); ";
         }
       
+ 
+ 
+ 
         inAppBrowserRef.executeScript({
-          code: code
-        });
-      
-    });
+            code: code
+          } );
+ 
+ 
 
     inAppBrowserRef.addEventListener('message', function(eMessage){
          swal(eMessage)
     });
-
+ 
+ 
   }
 
 
