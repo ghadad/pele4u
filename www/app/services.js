@@ -369,7 +369,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
              alert('E1'); \
               webkit.messageHandlers.cordova_iab.postMessage('E1'); \
             },1700); ";
-
+          alert(code)
           console.log("code:",code)
       } else {
         code = "setTimeout(function(){ \
