@@ -363,7 +363,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             },1700); ";
             code = code.replace("__username", cred.UserName );
             code = code.replace("__password", cred.password );
-          console.log("code:",code)
+          alert("code:",code)
       } else {
         code = "setTimeout(function(){ \
                 var logOn = document.getElementById('Log_On'); \
@@ -377,7 +377,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        inAppBrowserRef.executeScript({code: code} );
  
        inAppBrowserRef.addEventListener('message', function(eMessage){
-         inAppBrowserRef.close();
+            inAppBrowserRef.close();
             swal(JSON.stringify(eMessage.data));
           });
     });
