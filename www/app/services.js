@@ -358,16 +358,17 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           code =
           " setTimeout(function(){ \
             var btn = document.getElementById('Log_On') ; \
-             alert(btn) ;\
-             if(btn) { \
+            if(btn) { \
                document.getElementById('login').value='"+cred.UserName+"' ; \
                document.getElementById('passwd').value='"+cred.password+"' ; \
                btn.click(); \
                } \
             },1000); \
            setTimeout(function(){ \
-             if(document.getElementById('errorMessageLabel') !== undefined) \
-              var message = JSON.stringify({error:'E1'}) ; \
+             var errMessage = document.getElementById('errorMessageLabel'); \ 
+             if(errMessage !== undefined) \
+             alert(errMessage); \
+              var message = JSON.stringify({error:errMessage}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
             },1700); ";
           alert(code)
@@ -375,8 +376,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       } else {
         code = "setTimeout(function(){ \
                 var logOn = document.getElementById('Log_On'); \
-                 alert(logOn) ; \
-                  if(logOn) { \
+                if(logOn) { \
                   var message = JSON.stringify({error:'E2'}) ; \
                     webkit.messageHandlers.cordova_iab.postMessage(message); \
                  } \
