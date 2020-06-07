@@ -290,9 +290,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
 
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
-        
-
-       
+         
          inAppBrowserRef.addEventListener('loaderror', function () {
           PelApi.hideLoading();
           swal(swalObject);
@@ -344,12 +342,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
-  
-   
-
+    
     inAppBrowserRef.addEventListener("loadstop", function () {
-      alert("stopcode")
-      PelApi.hideLoading();
+        PelApi.hideLoading();
         var code ;        
       if(cred) {
           code = "setTimeout(function(){ \
@@ -363,8 +358,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            setTimeout(function(){ \
              var errMessage = document.getElementById('errorMessageLabel'); \
              if(errMessage !== undefined) \
-             alert(errMessage); \
-              var message = JSON.stringify({error:errMessage}) ; \
+              var message = JSON.stringify({error:errMessage.innerHTML}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
             },1700); ";
             code = code.replace("__username", cred.UserName );
@@ -383,6 +377,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        inAppBrowserRef.executeScript({code: code} );
  
        inAppBrowserRef.addEventListener('message', function(eMessage){
+         inAppBrowserRef.close();
             swal(JSON.stringify(eMessage.data));
           });
     });
