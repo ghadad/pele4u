@@ -340,7 +340,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
    // if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
-    if(cred) iabOptions += "clearsessioncache=yes";
+  //  if(cred) iabOptions += "clearsessioncache=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
     
@@ -364,7 +364,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             },2000); ";
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
-          alert(code)
+         console.log("code:",code)
       } else {
         code = "setTimeout(function(){ \
                 var logOn = document.getElementById('Log_On'); \
@@ -379,7 +379,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
  
        inAppBrowserRef.addEventListener('message', function(eMessage){
            swal(JSON.stringify(eMessage.data));
-              inAppBrowserRef.close();
+           //   inAppBrowserRef.close();
           });
     });
 
