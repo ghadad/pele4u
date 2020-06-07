@@ -393,7 +393,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
 
     inAppBrowserRef.addEventListener('message', function(eMessage){
-         swal(eMessage);
+          swal(eMessage);
 
     });
  
