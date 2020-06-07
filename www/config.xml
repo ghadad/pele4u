@@ -73,6 +73,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="cordova-plugin-whitelist" />
      <plugin name="cordova-plugin-secure-storage" source="npm" />
        <plugin name="cordova-plugin-android-fingerprint-auth" source="npm" />
+                <plugin name="onesignal-cordova-plugin"  source="npm" />
+
     <!--
          <plugin name="onesignal-cordova-plugin" spec="2.4.1" source="npm" />
          <plugin name="cordova-plugin-fingerprint-aio" source="npm" />
