@@ -354,17 +354,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },1000); \
+            },2000); \
            setTimeout(function(){ \
              var errMessage = document.getElementById('errorMessageLabel'); \
              if(errMessage !== undefined) \
               var message = JSON.stringify({error:errMessage.innerHTML}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
-            },1700); ";
+            },3000); ";
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
-
-          alert("code:",code)
+          alert(code)
       } else {
         code = "setTimeout(function(){ \
                 var logOn = document.getElementById('Log_On'); \
