@@ -2,6 +2,7 @@
  * Created by User on 27/01/2016.
  */
 var app = angular.module('pele.services', []);
+
 app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($http, PelApi, $localStorage) {
   // ttl - time ( seconds to live)
 
@@ -382,7 +383,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        
        inAppBrowserRef.executeScript({code: code} );
           inAppBrowserRef.addEventListener('message', function(eMessage){
-            swal(eMessage);
+            swal("error");
           });
     });
 
@@ -393,6 +394,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
 
   this.openBrowser = function (url) {
+    
     var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
