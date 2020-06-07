@@ -348,27 +348,27 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
    
 
     inAppBrowserRef.addEventListener("loadstop", function () {
+      alert("stopcode")
       PelApi.hideLoading();
         var code ;
-
-      var intd = 0;
+ 
         
       if(cred) {
- 
-        code =
+          code =
           " setTimeout(function(){ \
-           var btn = document.getElementById('Log_On') ; \
-           alert(btn) ;\
-           if(btn) { \
-             document.getElementById('login').value='"+cred.UserName+"' ; \
-             document.getElementById('passwd').value='"+cred.password+"' ; \
-             btn.click(); \
-           },500); \
+            var btn = document.getElementById('Log_On') ; \
+             alert(btn) ;\
+             if(btn) { \
+               document.getElementById('login').value='"+cred.UserName+"' ; \
+               document.getElementById('passwd').value='"+cred.password+"' ; \
+               btn.click(); \
+            },1000); \
            setTimeout(function(){ \
              if(document.getElementById('errorMessageLabel') !== undefined) \
+             alert('E1'); \
               webkit.messageHandlers.cordova_iab.postMessage('E1'); \
-            },1000); \
-          } ";
+            },1700); ";
+
           console.log("code:",code)
       } else {
         code = "setTimeout(function(){ \
@@ -379,23 +379,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                  } \
                 },1000); ";
         }
-      
- 
- 
        
-        
-          setTimeout(function() { 
-             inAppBrowserRef.executeScript({
-               code: code
-           } );
-        },500);
-
+       inAppBrowserRef.executeScript({code: code} );
+          inAppBrowserRef.addEventListener('message', function(eMessage){
+            swal(eMessage);
+          });
     });
 
-    inAppBrowserRef.addEventListener('message', function(eMessage){
-          swal(eMessage);
-
-    });
+ 
  
  
   }
