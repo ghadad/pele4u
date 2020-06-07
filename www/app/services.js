@@ -344,40 +344,43 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     if(cred) iabOptions += ",hidden=true";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
-
-    inAppBrowserRef.addEventListener('loaderror', function () {
-      PelApi.hideLoading();
-      swal(swalObject);
-    });
-
-    
- 
+  
+   
 
     inAppBrowserRef.addEventListener("loadstop", function () {
       PelApi.hideLoading();
         var code ;
       if(cred) {
         code =
-             'var intv =setTimeout(function() { ' +
-         'if(!document.getElementById("Log_On"))  throw new Error("AAAA");'+
-         'document.getElementById("login").value="'+cred.UserName+'";' +
-         'document.getElementById("passwd").value="'+cred.password+'";' +
-         'document.getElementById("Log_On").click();' +
-         '},3000);' 
+          "var btn = document.getElementById('Log_On') ; \
+          if(btn) { \
+           document.getElementById('login').value='"+cred.UserName+"' ; \
+           document.getElementById('passwd').value='"+cred.password+"' ; \
+           btn.click(); \
+           setTimeout(function(){ \
+             if(document.getElementById('errorMessageLabel') !== undefined) \
+              webkit.messageHandlers.cordova_iab.postMessage('E1'); \
+            },1000); \
+          } ";
       } else {
-        code = 'setTimeout(function(){'+
-        'console.log(document.getElementById("peleLoaderBox"));'+
-        'if(!document.getElementById("peleLoaderBox")){'+
-           'throw new Error("A2");'+
-        '}'+
-        '},3000);'
-      }
+        code = " setTimeout(function(){ \
+                userIsIn = document.getElementById('peleLoaderBox'); \
+                  if(!userIsIn ) \
+                    webkit.messageHandlers.cordova_iab.postMessage('E2'); \
+                  } \
+                },1000); ";
+        }
       
         inAppBrowserRef.executeScript({
           code: code
         });
       
     });
+
+    inAppBrowserRef.addEventListener('message', function(eMessage){
+         swal(eMessage)
+    });
+
   }
 
 
