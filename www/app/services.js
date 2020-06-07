@@ -365,30 +365,27 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            setTimeout(function(){ \
              if(document.getElementById('errorMessageLabel') !== undefined) \
               webkit.messageHandlers.cordova_iab.postMessage('E1'); \
-            },500); \
+            },1000); \
           } ";
       } else {
-        code = " setTimeout(function(){ \
+        code = "setTimeout(function(){ \
                 userIsIn = document.getElementById('peleLoaderBox'); \
-                 alert(userIsIn) ;\
-                  if(!userIsIn ) \
+                 alert(userIsIn) ; \
+                  if(!userIsIn ) { \
                     webkit.messageHandlers.cordova_iab.postMessage('E2'); \
-                  } \
-                },500); ";
+                 } \
+                },1000); ";
         }
       
  
  
-        var intv ;
-        var intc = 0 ; 
-        intv = setInterval(function() { 
-          intc++ ;
-          if(intc >=3 )
-          clearInterval(intv);
-           inAppBrowserRef.executeScript({
+       
+        
+          setTimeout(function() { 
+             inAppBrowserRef.executeScript({
                code: code
-          } );
-        },400);
+           } );
+        },500);
 
     });
 
