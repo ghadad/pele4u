@@ -362,7 +362,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
               webkit.messageHandlers.cordova_iab.postMessage(message); \
             },1700); ";
             code = code.replace(/__username/g, cred.UserName );
-            code = code.replace(/__passwor/g, cred.password );
+            code = code.replace(/__password/g, cred.password );
 
           alert("code:",code)
       } else {
