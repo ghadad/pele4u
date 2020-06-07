@@ -382,7 +382,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             code: code
           } );
  
- 
+    });
 
     inAppBrowserRef.addEventListener('message', function(eMessage){
          swal(eMessage)
