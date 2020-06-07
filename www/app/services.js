@@ -339,14 +339,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
-    if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
+   // if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
+    if(cred) iabOptions += "clearsessioncache=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
     
     inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
         var code ;        
-      if(cred) {
+        if(cred) {
           code = "setTimeout(function(){ \
             var btn = document.getElementById('Log_On') ; \
             if(btn) { \
@@ -354,13 +355,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },2000); \
+            },1000); \
            setTimeout(function(){ \
              var errMessage = document.getElementById('errorMessageLabel'); \
              if(errMessage !== undefined) \
               var message = JSON.stringify({error:errMessage.innerHTML}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
-            },3000); ";
+            },2000); ";
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
           alert(code)
