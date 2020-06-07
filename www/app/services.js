@@ -365,7 +365,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            setTimeout(function(){ \
              if(document.getElementById('errorMessageLabel') !== undefined) \
               webkit.messageHandlers.cordova_iab.postMessage('E1'); \
-            },1000); \
+            },500); \
           } ";
       } else {
         code = " setTimeout(function(){ \
@@ -374,7 +374,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   if(!userIsIn ) \
                     webkit.messageHandlers.cordova_iab.postMessage('E2'); \
                   } \
-                },1000); ";
+                },500); ";
         }
       
  
@@ -385,7 +385,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           intc++ ;
           if(intc >=3 )
           clearInterval(intv);
-        inAppBrowserRef.executeScript({
+           inAppBrowserRef.executeScript({
                code: code
           } );
         },400);
