@@ -361,8 +361,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
               var message = JSON.stringify({error:errMessage.innerHTML}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
             },1700); ";
-            code = code.replace("__username", cred.UserName );
-            code = code.replace("__password", cred.password );
+            code = code.replace(/__username/g, cred.UserName );
+            code = code.replace(/__passwor/g, cred.password );
+
           alert("code:",code)
       } else {
         code = "setTimeout(function(){ \
@@ -377,8 +378,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        inAppBrowserRef.executeScript({code: code} );
  
        inAppBrowserRef.addEventListener('message', function(eMessage){
-            inAppBrowserRef.close();
-            swal(JSON.stringify(eMessage.data));
+           swal(JSON.stringify(eMessage.data));
+              inAppBrowserRef.close();
           });
     });
 
