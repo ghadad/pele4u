@@ -356,22 +356,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       if(cred) {
  
         code =
-          "var btn = document.getElementById('Log_On') ; \
-          alert(btn) ;\
-          if(btn) { \
-           document.getElementById('login').value='"+cred.UserName+"' ; \
-           document.getElementById('passwd').value='"+cred.password+"' ; \
-           btn.click(); \
+          " setTimeout(function(){ \
+           var btn = document.getElementById('Log_On') ; \
+           alert(btn) ;\
+           if(btn) { \
+             document.getElementById('login').value='"+cred.UserName+"' ; \
+             document.getElementById('passwd').value='"+cred.password+"' ; \
+             btn.click(); \
+           },500); \
            setTimeout(function(){ \
              if(document.getElementById('errorMessageLabel') !== undefined) \
               webkit.messageHandlers.cordova_iab.postMessage('E1'); \
             },1000); \
           } ";
+          console.log("code:",code)
       } else {
         code = "setTimeout(function(){ \
-                userIsIn = document.getElementById('peleLoaderBox'); \
-                 alert(userIsIn) ; \
-                  if(!userIsIn ) { \
+                var logOn = document.getElementById('Log_On'); \
+                 alert(logOn) ; \
+                  if(logOn) { \
                     webkit.messageHandlers.cordova_iab.postMessage('E2'); \
                  } \
                 },1000); ";
