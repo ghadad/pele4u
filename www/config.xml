@@ -40,9 +40,10 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <preference name="SplashScreen" value="splash" />
     <preference name="SplashScreenDelay" value="4000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
-    <!--
+  
 <plugin name="cordova-plugin-android-fingerprint-auth" spec="1.5.0" />
 <plugin name="cordova-plugin-android-permissions" spec="1.0.2" />
+  <!--
  <plugin name="cordova-plugin-app-version" spec="0.1.9" />
         <plugin name="cordova-plugin-customurlscheme">
         <param name="URL_SCHEME" value="pele4u" />
