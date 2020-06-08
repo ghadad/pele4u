@@ -58,7 +58,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <plugin name="cordova-plugin-dialogs" spec="2.0.2" />
 <plugin name="cordova-plugin-file" spec="6.0.2" />
 <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
-
+  -->
 <plugin name="cordova-plugin-filepath" spec="1.5.8" />
 <plugin name="cordova-plugin-fingerprint-aio" spec="3.0.1" />
 <plugin name="cordova-plugin-globalization" spec="1.11.0" />
@@ -74,7 +74,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <plugin name="cordova-plugin-whitelist" spec="1.3.4" />
 <plugin name="cordova-plugin-x-socialsharing" spec="6.0.0" />
 <plugin name="onesignal-cordova-plugin" spec="2.4.7" />
-  -->
+
      <icon src="icon.png" />
     <icon src="res/icons/ios/icon-1024.png"  platform="ios" width="1024" height="1024" />
 
