@@ -48,10 +48,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <param name="URL_SCHEME" value="pele4u" />
     </plugin>
 <plugin name="cordova-plugin-badge" spec="0.8.8" />
-<plugin name="cordova-plugin-camera" spec="4.1.0">
-     <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
-  </plugin>
+
 <plugin name="cordova-plugin-customurlscheme" spec="5.0.1" />
 <plugin name="cordova-plugin-device" spec="2.0.3" />
 <plugin name="cordova-plugin-dialogs" spec="2.0.2" />
@@ -72,9 +69,14 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 
 <plugin name="cordova-plugin-secure-storage" spec="3.0.2" />
 <plugin name="cordova-plugin-splashscreen" spec="5.0.3" />
-<plugin name="cordova-plugin-network-information" spec="2.0.2" />
    <!--
-       <plugin name="cordova-plugin-android-fingerprint-auth" spec="1.5.0" />
+       <plugin name="cordova-plugin-network-information" spec="2.0.2" />
+
+       <plugin name="cordova-plugin-camera" spec="4.1.0">
+     <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
+  </plugin>
+ <plugin name="cordova-plugin-android-fingerprint-auth" spec="1.5.0" />
 <plugin name="cordova-plugin-android-permissions" spec="1.0.2" />
 <plugin name="cordova-plugin-contacts" spec="3.0.1" />
 <plugin name="cordova-plugin-fingerprint-aio" spec="3.0.1" />
