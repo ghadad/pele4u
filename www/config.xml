@@ -8,6 +8,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <author email="oren@pelephone.co.il" href="http://www.pelephone.co.il">
     Pelephone IT
   </author>
+      <plugin name="onesignal-cordova-plugin" spec="2.4.1" source="npm" />
+
     <platform name="android">
         <allow-intent href="market:*" />
         <preference name="StatusBarBackgroundColor" value="#60beea" />
@@ -43,7 +45,6 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="cordova-plugin-android-permissions" source="npm"   />
     <plugin name="cordova-plugin-badge"   />
     <plugin name="cordova-plugin-x-socialsharing" source="npm" spec="5.6.4" />
-    <plugin name="onesignal-cordova-plugin" spec="2.4.1" source="npm" />
     <plugin name="cordova-plugin-contacts" source="npm" />
     <plugin name="cordova-plugin-filepath"  source="npm" />
     
