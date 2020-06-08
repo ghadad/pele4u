@@ -82,9 +82,10 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <plugin name="cordova-plugin-contacts" spec="3.0.1" />
 <plugin name="cordova-plugin-fingerprint-aio" spec="3.0.1" />
 <!--
-<plugin name="cordova-plugin-x-socialsharing" spec="6.0.0" />
+
 <plugin name="onesignal-cordova-plugin" spec="2.4.7" />
  -->
+ <plugin name="cordova-plugin-x-socialsharing" spec="6.0.0" />
      <icon src="icon.png" />
     <icon src="res/icons/ios/icon-1024.png"  platform="ios" width="1024" height="1024" />
 
