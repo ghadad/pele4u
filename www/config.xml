@@ -50,14 +50,14 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <plugin name="cordova-plugin-camera" spec="4.1.0">
      <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
-    </plugin>
+    </plugin><!--
 <plugin name="cordova-plugin-contacts" spec="3.0.1" />
 <plugin name="cordova-plugin-customurlscheme" spec="5.0.1" />
 <plugin name="cordova-plugin-device" spec="2.0.3" />
 <plugin name="cordova-plugin-dialogs" spec="2.0.2" />
 <plugin name="cordova-plugin-file" spec="6.0.2" />
 <plugin name="cordova-plugin-file-transfer" spec="1.7.1" />
-<!--
+
 <plugin name="cordova-plugin-filepath" spec="1.5.8" />
 <plugin name="cordova-plugin-fingerprint-aio" spec="3.0.1" />
 <plugin name="cordova-plugin-globalization" spec="1.11.0" />
