@@ -14,7 +14,7 @@
         שליחת נתונים לתחקור
       </a>
 
-      <a ng-show="env!='PD'" class="item  item-icon-right" ui-sref="app.dev">
+      <a ng-show="env!='PD'" class="item  item-icon-right" ui-sref="app.ldap_login(reset:true)">
         <i class="icon ion-code-working"></i>
       תפריט מפתחים
       <span><strong class="alert">(סביבה : {{env}})</strong></span>
@@ -32,6 +32,11 @@
       </a>
       
       <a class="item item-icon-right" ng-click="updateAuthMethod()">
+          <img class="icon-sm icon" src="img/new_icons/fingerprint.png" style="top:10px"> 
+          איפוס ושינוי שיטת הזדהות
+        </a>
+
+        <a class="item item-icon-right" ng-click="updateAuthMethod()">
           <img class="icon-sm icon" src="img/new_icons/fingerprint.png" style="top:10px"> 
           איפוס ושינוי שיטת הזדהות
         </a>
