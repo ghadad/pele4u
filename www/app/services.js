@@ -355,7 +355,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
    // if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
-      if(cred) iabOptions += ",clearsessioncache=yes,clearcache=yes,cleardata=yes";
+     // if(cred) iabOptions += ",clearsessioncache=yes,clearcache=yes,cleardata=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
     inAppBrowserRef.hide();
