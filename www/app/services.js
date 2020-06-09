@@ -366,9 +366,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       },300) 
      }
 
+     var loginTries = 0;
+
     inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
         var code ;        
+        loginTries++;
+  
         if(cred) {
           code = "setTimeout(function(){ \
             var btn = document.getElementById('Log_On') ; \
@@ -396,12 +400,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                  } \
                 },1000); ";
         }
-       
-       inAppBrowserRef.executeScript({code: code} );
+             if(loginTries  <2 ) {
+                inAppBrowserRef.executeScript({code: code} );
+             } else { 
+                PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                inAppBrowserRef.close();
+            }    
  
-       inAppBrowserRef.addEventListener('message', function(eMessage){
-           swal(JSON.stringify(eMessage.data));
-           //   inAppBrowserRef.close();
+          inAppBrowserRef.addEventListener('message', function(eMessage){
+                PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+              inAppBrowserRef.close();
           });
     });
 
@@ -412,8 +420,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
 
   this.openBrowser = function (url) {
-    
-    var swalObject = {
+      var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
       text: 'תהליך אימות העובד נכשל ',

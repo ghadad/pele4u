@@ -1064,7 +1064,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       //----------------------------------------------------------//
       //                   WI_FI Pop Up
       //----------------------------------------------------------//
-      showPopup: function (title, subTitle) {
+      showPopup: function (title, subTitle,type) {
         $rootScope.data = {}
 
         // An elaborate, custom popup
@@ -1074,7 +1074,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           scope: $rootScope,
           buttons: [{
             text: '<a class="pele-popup-positive-text-collot">אישור</a>',
-            type: 'button-positive',
+            type: type || 'button-positive',
             onTap: function (e) {
               return true;
             }
