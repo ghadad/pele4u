@@ -4,7 +4,7 @@ angular.module('pele', ['ngStorage'])
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
 
-    
+    console.log("$state.params:",$state.params)
     $scope.hideAllforms = false;
     $scope.focusMe = function(event) {   
       var ae =     event.target;
