@@ -340,10 +340,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
    // if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
-     if(cred) iabOptions += ",clearsessioncache=yes";
+   //  if(cred) iabOptions += ",clearsessioncache=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
-     if(cred) inAppBrowserRef.hide();
+    inAppBrowserRef.hide();
+    
+     if(!cred) {
+      setTimeout(function(){
+        inAppBrowserRef.show();
+      },300) 
+     }
 
     inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
