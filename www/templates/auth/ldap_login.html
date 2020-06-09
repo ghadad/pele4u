@@ -30,12 +30,14 @@
                       </label>
                       <table id="login-table">
                         <tbody>
-                          <tr><td class="label">  שם משתמש  </td> 
+                          <tr><td style="width:240px" class="label">  שם משתמש  </td> 
                             <td>  <label> 
                               <input type="text" class="pele_ltr" placeholder="" name="username" ng-model="user.username" required>
                             </label>
                                </td></tr>
-                            <tr><td style="width:200px" class="label"><span ng-click="togglePass()"><span class="text">סיסמה</span></span> <img class="icon pel_icon icon-sm" src="{{eyeIcon}}"></span> </td>
+                            <tr><td  class="label" ng-click="togglePass()"> 
+                              <span class="text">סיסמה</span>
+                              <img class="icon pel_icon icon-sm" src="{{eyeIcon}}"> </td>
                             <td >
                               <label class=" ">
                               <input  type="{{passwordType}}"  class="pele_ltr" placeholder="" name="password" ng-model="user.password" required>
