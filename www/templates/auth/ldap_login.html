@@ -13,12 +13,12 @@
         <div class="card login-container">
           <form name="" class="" novalidate>
               <div class="list">
-                  <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='faceid'">
+                  <label class="item item-text-wrap text-center" ng-if="authMethod=='faceid'">
                     <strong>
                     שימו לב - בסיום ההתחברות תועבר להזדהות הביומטרית באמצעות זיהוי פנים
                     </strong>
                     </label>
-                    <label class="item item-text-wrap text-center item-input" ng-if="authMethod=='fingerprint'">
+                    <label class="item item-text-wrap text-center" ng-if="authMethod=='fingerprint'">
                       <strong>
                         שימו לב - בסיום ההתחברות תועבר להזדהות הביומטרית באמצעות טביעת אצבע
                       </strong>
@@ -30,18 +30,18 @@
                       </label>
                       <table id="login-table">
                         <tbody>
-                          <tr><td style="width:240px" class="label">  שם משתמש  </td> 
-                            <td>  <label> 
+                          <tr><td class="label"> שם משתמש  </td> 
+                            <td>  
                               <input type="text" class="pele_ltr" placeholder="" name="username" ng-model="user.username" required>
-                            </label>
+                            
                                </td></tr>
                             <tr><td  class="label" ng-click="togglePass()"> 
                               <span class="text">סיסמה</span>
                               <img class="icon pel_icon icon-sm" src="{{eyeIcon}}"> </td>
-                            <td >
-                              <label class=" ">
+                            <td>
+                               
                               <input  type="{{passwordType}}"  class="pele_ltr" placeholder="" name="password" ng-model="user.password" required>
-                              </label>
+                              
                            </td></tr>
    
                         </tbody>
