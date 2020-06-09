@@ -246,6 +246,22 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     return $http.get(url, httpConfig);
   };
 
+  this.getTokenUrl = function (path) {
+    return this.getUrl(path) + $sessionStorage.gwTokensQuery
+  }
+
+  this.setSessionTokens = function () {
+
+    return this.getToken().success(function (r) {
+      var jwtToken = _.get(r, 'token', "");
+      var userId = PelApi.appSettings.config.user || $sessionStorage.user;
+      if (jwtToken.length > 100) {
+        $sessionStorage.gwTokensQuery = '?jwtToken=' + jwtToken + '&token=' + $sessionStorage.token + '&userId=' + userId;
+      }
+    }).error(function (error, httpStatus, headers, config) {
+      $sessionStorage.jwtToken = "";
+    })
+  }
 
   this.openInApp = function (url) {
      if(!window.cordova) {
@@ -344,7 +360,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
     inAppBrowserRef.hide();
-    
+
      if(!cred) {
       setTimeout(function(){
         inAppBrowserRef.show();
