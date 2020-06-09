@@ -117,8 +117,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       cordovaInit: function () {
         //file in device file system
         var self = this;
-
-        self.secureStorage  = new cordova.plugins.SecureStorage(
+        if(cordova.plugins.SecureStorage) {
+            self.secureStorage  = new cordova.plugins.SecureStorage(
           function() {
           },
           function(error) {
@@ -126,6 +126,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           },
           "pele4u"
         );
+        }
+       
         
         $sessionStorage.ApiServiceAuthParams = $sessionStorage.ApiServiceAuthParams || {};
 
