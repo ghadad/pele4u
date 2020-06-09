@@ -353,12 +353,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
          var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
-          iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
+          iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור,hidden=yes';
    // if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
-     // if(cred) iabOptions += ",clearsessioncache=yes,clearcache=yes,cleardata=yes";
+   // if(cred) iabOptions += ",hidden=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
-    inAppBrowserRef.hide();
+   // inAppBrowserRef.hide();
 
      if(!cred) {
       setTimeout(function(){
