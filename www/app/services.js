@@ -355,7 +355,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         if(cordova && cordova.platformId === "ios")
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
    // if(cred) iabOptions += ",hidden=false,clearsessioncache=yes";
-   //  if(cred) iabOptions += ",clearsessioncache=yes";
+      if(cred) iabOptions += ",clearsessioncache=yes,clearcache=yes,cleardata=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
     inAppBrowserRef.hide();
@@ -381,13 +381,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },1000); \
+            },500); \
            setTimeout(function(){ \
              var errMessage = document.getElementById('errorMessageLabel'); \
              if(errMessage !== undefined) \
               var message = JSON.stringify({error:errMessage.innerHTML}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
-            },2000); ";
+            },1000); ";
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
          console.log("code:",code)
@@ -409,7 +409,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
  
           inAppBrowserRef.addEventListener('message', function(eMessage){
                 PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-              inAppBrowserRef.close();
+                inAppBrowserRef.close();
           });
     });
 
