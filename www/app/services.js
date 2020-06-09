@@ -353,7 +353,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
          var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
 
-
+      if(cred) iabOptions += ",clearsessioncache=yes";
+      
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
      if(!cred) {
       setTimeout(function(){
@@ -385,7 +386,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             },1000); ";
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
-         console.log("code:",code)
+       
       } else {
         code = "setTimeout(function(){ \
                 var logOn = document.getElementById('Log_On'); \
