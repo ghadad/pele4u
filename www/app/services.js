@@ -174,7 +174,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     var headers = params || {};
     //headers['withCredentials'] = 'true';
     var ApiServiceAuthParams = _.get($sessionStorage, "ApiServiceAuthParams", {});
-    headers['x-appid'] = $sessionStorage.PeleAppId;
+    headers['x-appid'] = $sessionStorage.PeleAppId || "xyz";
     headers['x-token'] = ApiServiceAuthParams.TOKEN || $sessionStorage.token;
     headers['x-pincode'] = ApiServiceAuthParams.PIN;
     headers['x-username'] = $sessionStorage.userName;
@@ -251,7 +251,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
   this.setSessionTokens = function () {
-
     return this.getToken().success(function (r) {
       var jwtToken = _.get(r, 'token', "");
       var userId = PelApi.appSettings.config.user || $sessionStorage.user;

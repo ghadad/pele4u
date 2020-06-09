@@ -1523,6 +1523,46 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           $localStorage.pinStateData = undefined;
         }
       },
+        download: function(uri, targetName) {
+        var self = this;
+       // self.showLoading();
+        var targetPath = self.getAttchDirectory() + '/' + targetName;
+        var timeoutFunction = function () {
+          $ionicLoading.hide();
+          $rootScope.$broadcast('scroll.refreshComplete');
+          self.showPopup(self.appSettings.config.FILE_TIMEOUT, "");
+        };
+         
+         var openDoc2 = function (url, target, propsStr) {
+          var myPopup = window.open(url, target, propsStr);
+          myPopup.addEventListener('loadend', function () {
+            self.hideLoading();
+          }, false);
+        }
+           
+        if (!window.cordova) {
+          self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
+          openDoc2(uri, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+        } else if (self.isIOS) {
+          openDoc2(uri, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
+        } else if (self.isAndroid) {
+          var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
+         var fileTransfer = new FileTransfer();
+
+          fileTransfer.download(uri, targetPath,function (result) {
+                    $timeout.cancel(filetimeout);
+                     
+                     if (!result.nativeURL) {
+                      self.hideLoading();
+                    } else {
+                      cordova.plugins.fileOpener2.open(result.nativeURL, "text/vcard", function(){},function(){});
+                     }
+              },function (error) {
+                self.hideLoading()
+                self.showPopup(self.appSettings.config.FILE_NOT_FOUND, "");
+              });
+        }
+      },
       openAttachment: function (file, appId) {
 
         var spinOptions = {

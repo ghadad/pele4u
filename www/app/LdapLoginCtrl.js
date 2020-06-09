@@ -144,12 +144,17 @@ angular.module('pele', ['ngStorage'])
       });
 
       
-      ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,{
-          UserName: user,
-          password: password
-        });
-
+  
       promise.success(function (data, status, headers, config) {
+         ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,{
+             UserName: user,
+             password: password
+         });
+
+          setTimeout(function() { 
+               ApiGateway.setSessionTokens();
+          },1000);
+
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
           if(!BioAuth.getMethod()) { 
             $scope.error = "לא בחרת שיטת  זיהוי"
