@@ -13,6 +13,21 @@ angular.module('pele', ['ngStorage'])
       ae.focus()
       },300)      
     }
+    $scope.passwordType='password';
+    $scope.eyeIcon = "img/new_icons/eye-outline.svg";
+
+    $scope.togglePass = function() { 
+      if($scope.passwordType=='password' ) { 
+         $scope.passwordType =  "text";
+       $scope.eyeIcon = "img/new_icons/eye-off-outline.svg";
+      } else {
+
+ $scope.passwordType =  "password";
+     $scope.eyeIcon = "img/new_icons/eye-outline.svg";
+     
+      }
+     
+    }
 
     if($state.params.reset ) 
        BioAuth.clear();
