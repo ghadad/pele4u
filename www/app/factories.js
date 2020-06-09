@@ -117,7 +117,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       cordovaInit: function () {
         //file in device file system
         var self = this;
-        if(cordova.plugins.SecureStorage) {
+        if(ionic.Platform.isIOS()) {
             self.secureStorage  = new cordova.plugins.SecureStorage(
           function() {
           },
