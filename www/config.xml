@@ -45,7 +45,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <preference name="SplashShowOnlyFirstTime" value="false" />
 
 
- 
+ <plugin name="cordova-plugin-androidx-adapter"  />
+
  <plugin name="cordova-plugin-app-version" spec="0.1.9" />
         <plugin name="cordova-plugin-customurlscheme">
         <param name="URL_SCHEME" value="pele4u" />
