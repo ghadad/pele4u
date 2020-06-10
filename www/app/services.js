@@ -356,15 +356,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     if(cred) iabOptions += ",clearcache=yes,clearsessioncache=yes";
   
     var inAppBrowserRef ; 
-    if(cred) {
-     inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(url, '_self',iabOptions);
+  //  if(cred) {
+     inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(encodeURI(url), '_self',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
         PelApi.hideLoading();
         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
      });
-    } else {
-      inAppBrowserRef = _.cloneDeep(window.pele4uInAppBrowserRef)  ; 
-    }
+  //  } else {
+  //    inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
+ //   }
       
      if(!cred) {
        code = "window.location.href =  '"+url +"'";
