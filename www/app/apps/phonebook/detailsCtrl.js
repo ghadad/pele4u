@@ -28,7 +28,10 @@ angular.module('pele')
           reload: true
         })
       }
-
+      $scope.download = function(vcardUri,fname) {
+        PelApi.download(vcardUri,fname +".vcf");
+      }
+      
       $scope.saveContact = function (c, info) {
         var deviceContact = c;
         if (c.id) {
@@ -57,10 +60,10 @@ angular.module('pele')
         })
       }
 
-      $scope.getContactFile = function (event, c) {
-        return ApiGateway.openBrowser(appConfig.Path);
-      }
 
+      $scope.getContactFileUrl = function (c) {
+        return ApiGateway.getTokenUrl("/users/" + c.personId + "/contact.vcf");
+      }
 
       $scope.swalContact = function (event, c) {
         swal({
@@ -108,6 +111,11 @@ angular.module('pele')
 
       $scope.managerInfo = {}
 
+      $scope.getContactFileUrl = function (c) {
+
+        return ApiGateway.getTokenUrl("/users/" + c.personId + "/contact.vcf")
+      }
+
       $scope.getTreeData = function (person) {
         var tree = {};
 
@@ -154,6 +162,7 @@ angular.module('pele')
             $scope.page = 'result';
             $scope.contact = result;
             $scope.tree = $scope.getTreeData(result)
+            $scope.contact.vcardUrl = $scope.getContactFileUrl($scope.contact);
 
           })
           .error(function (errorStr, httpStatus, headers, config) {

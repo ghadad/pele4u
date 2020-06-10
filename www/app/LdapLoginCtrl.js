@@ -4,8 +4,7 @@ angular.module('pele', ['ngStorage'])
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
 
-    
-    $scope.hideAllforms = false;
+     $scope.hideAllforms = false;
     $scope.focusMe = function(event) {   
       var ae =     event.target;
       $timeout(function() {
@@ -13,6 +12,21 @@ angular.module('pele', ['ngStorage'])
       //  console.log(document.activeElement.selectionEnd)
       ae.focus()
       },300)      
+    }
+    $scope.passwordType='password';
+    $scope.eyeIcon = "img/new_icons/eye-outline.svg";
+
+    $scope.togglePass = function() { 
+      if($scope.passwordType=='password' ) { 
+         $scope.passwordType =  "text";
+       $scope.eyeIcon = "img/new_icons/eye-off-outline.svg";
+      } else {
+
+ $scope.passwordType =  "password";
+     $scope.eyeIcon = "img/new_icons/eye-outline.svg";
+     
+      }
+     
     }
 
     if($state.params.reset ) 
@@ -144,12 +158,14 @@ angular.module('pele', ['ngStorage'])
       });
 
       
-      ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,{
-          UserName: user,
-          password: password
-        });
-
+  
       promise.success(function (data, status, headers, config) {
+         ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,{
+             UserName: user,
+             password: password
+         });
+ 
+
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
           if(!BioAuth.getMethod()) { 
             $scope.error = "לא בחרת שיטת  זיהוי"

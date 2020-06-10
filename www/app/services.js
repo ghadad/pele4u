@@ -2,6 +2,7 @@
  * Created by User on 27/01/2016.
  */
 var app = angular.module('pele.services', []);
+
 app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($http, PelApi, $localStorage) {
   // ttl - time ( seconds to live)
 
@@ -173,7 +174,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     var headers = params || {};
     //headers['withCredentials'] = 'true';
     var ApiServiceAuthParams = _.get($sessionStorage, "ApiServiceAuthParams", {});
-    headers['x-appid'] = $sessionStorage.PeleAppId;
+    headers['x-appid'] = $sessionStorage.PeleAppId || "xyz";
     headers['x-token'] = ApiServiceAuthParams.TOKEN || $sessionStorage.token;
     headers['x-pincode'] = ApiServiceAuthParams.PIN;
     headers['x-username'] = $sessionStorage.userName;
@@ -245,6 +246,21 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     return $http.get(url, httpConfig);
   };
 
+  this.getTokenUrl = function (path) {
+    return this.getUrl(path) + $sessionStorage.gwTokensQuery
+  }
+
+  this.setSessionTokens = function () {
+    return this.getToken().success(function (r) {
+      var jwtToken = _.get(r, 'token', "");
+      var userId = PelApi.appSettings.config.user || $sessionStorage.user;
+      if (jwtToken.length > 100) {
+        $sessionStorage.gwTokensQuery = '?jwtToken=' + jwtToken + '&token=' + $sessionStorage.token + '&userId=' + userId;
+      }
+    }).error(function (error, httpStatus, headers, config) {
+      $sessionStorage.jwtToken = "";
+    })
+  }
 
   this.openInApp = function (url) {
      if(!window.cordova) {
@@ -289,9 +305,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
 
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
-        
-
-       
+         
          inAppBrowserRef.addEventListener('loaderror', function () {
           PelApi.hideLoading();
           swal(swalObject);
@@ -307,8 +321,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   inAppBrowserRef.close();
                   window.clearInterval(loop);
                 }
-              }
-            );
+              });
           }, 200);
         });
       }
@@ -335,68 +348,83 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       showConfirmButton: false,
       timer: 2500
     };
+
     PelApi.showLoading({
       duration: 1000 * 3
     });
-         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
-        if(cordova && cordova.platformId === "ios")
-          iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
-    if(cred) iabOptions += ",hidden=true,clearsessioncache=yes";
+    var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
+    if(cred) iabOptions += ",clearcache=yes,clearsessioncache=yes";
+  
+    var inAppBrowserRef ; 
+    if(cred) {
+     inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
+       inAppBrowserRef.addEventListener("loaderror", function () {
+        PelApi.hideLoading();
+        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+     });
+    } else {
+      inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
+    }
+      
+     if(!cred) {
+       code = "window.location.href =  '"+url +"'";
+       inAppBrowserRef.executeScript({code: code} );
+       var loop = setInterval(function() {
+       inAppBrowserRef.executeScript(
+         {
+             code: "document.getElementById('Log_On')"
+         },
+       function( values ) {
+           var err = values[ 0 ];
+             if ( err ) {
+               clearInterval( loop );
+               //browserRef.close();
+              PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+           }
+       } )},500);
 
-    var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
 
-    inAppBrowserRef.addEventListener('loaderror', function () {
-      PelApi.hideLoading();
-      swal(swalObject);
-    });
-
-    
+      setTimeout(function(){
+        inAppBrowserRef.show();
+      },300) 
+     }
  
 
+     if(cred) {
     inAppBrowserRef.addEventListener("loadstop", function () {
-      PelApi.hideLoading();
-        var code ;
+        PelApi.hideLoading();
+       var   code = "setTimeout(function(){ \
+            var btn = document.getElementById('Log_On') ; \
+            if(btn) { \
+               document.getElementById('login').value = '__username' ; \
+               document.getElementById('passwd').value = '__password' ; \
+               btn.click(); \
+             } \
+            },1000); "
 
-      var intd = 0;
-        
-      if(cred) {
-        code =        
-      //   'if(document.getElementById("errorMessageLabel"))  throw new Error("E1");'+
-      'if(document.getElementById("errorMessageLabel") != null) { alert (document.getElementById("errorMessageLabel").innerHTML) ;};'+
-         ' if(document.getElementById("Log_On") !=null) { '+
-         '  document.getElementById("login").value="'+cred.UserName+'";' +
-         '  document.getElementById("passwd").value="'+cred.password+'";' +
-         '  document.getElementById("Log_On").click();'+
-         '}'; 
-      } else {
-        code =   'if(document.getElementById("errorMessageLabel") !=null) { alert (document.getElementById("errorMessageLabel").innerHTML) ;}' 
-      }
-      inAppBrowserRef.onerror = function(e) { 
-        swal(e.message)
-      }
-       window.setTimeout(function () {
-   
-       
-        inAppBrowserRef.executeScript({
-            code: code,function(p) { 
-              if(p[0] == null)
-              swall(swalObject)
-            }
-          } );
-      }, 3000);
-         
+            code = code.replace(/__username/g, cred.UserName );
+            code = code.replace(/__password/g, cred.password );
+      
+           inAppBrowserRef.executeScript({code: code} );
+            var loop = setInterval(function() {
+                inAppBrowserRef.executeScript({
+                     code: "document.getElementById('errorMessageLabel')"
+                 },
+                function( values ) {
+                   var err = values[ 0 ];
+                    if ( err ) {
+                       clearInterval( loop );
+                       inAppBrowserRef.close();
+                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                  }})
+            },500 );
+    
     });
-    if(cred)
-    setTimeout(function() { 
-      PelApi.hideLoading();
-
-      inAppBrowserRef.close();
-    },5000)
   }
 
 
   this.openBrowser = function (url) {
-    var swalObject = {
+      var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
       text: 'תהליך אימות העובד נכשל ',

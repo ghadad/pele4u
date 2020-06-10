@@ -199,38 +199,7 @@ angular.module('pele.config', [])
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
-       portalUrl:"https://peleportal.pelephone.co.il",
-      testItems: [ {
-        AppId: "8AF701F10BD937EBE0535ddd7",
-        ApplicationType: "IAB",
-        DisplayName: "inapp browser",
-        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
-        Location: "s m2",
-        Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
-        Pin: false,
-        Sorter: "121",
-        WorkState: "online"
-      },{
-        AppId: "8AF701F10BD937EBE0535ddd7",
-        ApplicationType: "IPB",
-        DisplayName: "פורטל חדש",
-        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
-        Location: "s m2",
-        Path: "https://peleportal.pelephone.co.il",
-        Pin: false,
-        Sorter: "129",
-        WorkState: "online"
-      },{
-        AppId: "8AF701F10BD937EBE0535ddd7",
-        ApplicationType: "IEB",
-        DisplayName: "external browser",
-        Image: "https://msso.pelephone.co.il/mobileAppGw/public/media/fix.png",
-        Location: "s m2",
-        Path: "https://msso.pelephone.co.il/mobileAppGw/public/portal/index.html#/maof/attendency",
-        Pin: false,
-        Sorter: "121",
-        WorkState: "online"
-      }],
+      portalUrl:"https://peleportal.pelephone.co.il",
       bioClientId: "NEVER_CHANGE_THIS_VALUE_BIOPELE4U",
       bioClientSecret: "NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
