@@ -353,8 +353,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
          var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
 
-      if(cred) iabOptions += ",clearsessioncache=yes";
-      
+      if(cred) iabOptions += "clearcache=yes,clearsessioncache=yes";
+
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
      if(!cred) {
       setTimeout(function(){
