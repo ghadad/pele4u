@@ -377,13 +377,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },500); \
+            },1000); \
            setTimeout(function(){ \
              var errMessage = document.getElementById('errorMessageLabel'); \
              if(errMessage !== undefined) \
               var message = JSON.stringify({error:errMessage.innerHTML}) ; \
               webkit.messageHandlers.cordova_iab.postMessage(message); \
-            },1000); ";
+            },1700); ";
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
        
@@ -396,14 +396,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                  } \
                 },1000); ";
         }
-             if(loginTries ==1 ) {
-                inAppBrowserRef.executeScript({code: code} );
-             } else { 
-                PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                inAppBrowserRef.close();
-            }    
+        inAppBrowserRef.executeScript({code: code} );
  
-          inAppBrowserRef.addEventListener('message', function(eMessage){
+         inAppBrowserRef.addEventListener('message', function(eMessage){
                 PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                 inAppBrowserRef.close();
           });
