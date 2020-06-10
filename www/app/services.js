@@ -351,14 +351,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
+         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
 
       if(cred) iabOptions += ",clearcache=yes,clearsessioncache=yes";
-    var   browser = window.pele4uInAppBrowser || cordova.InAppBrowser ;
-    var inAppBrowserRef = browser.open(url, '_blank',iabOptions);
+
+     
+    
+    var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
 
      if(cred)
-      window.pele4uInAppBrowser = inAppBrowserRef ;
+      window.pele4uInAppBrowserRef = inAppBrowserRef ;
       
      inAppBrowserRef.addEventListener("loaderror", function () {
         PelApi.hideLoading();
@@ -371,8 +373,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       },300) 
      }
 
- 
-    inAppBrowserRef.addEventListener("loadstop", function () {
+    let browserRef = window.pele4uInAppBrowserRef || inAppBrowserRef ;
+
+    browserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
         var code ;        
    
@@ -389,16 +392,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
       
-           inAppBrowserRef.executeScript({code: code} );
+           browserRef.executeScript({code: code} );
             var loop = setInterval(function() {
-                inAppBrowserRef.executeScript({
+                browserRef.executeScript({
                      code: "document.getElementById('errorMessageLabel')"
                  },
                 function( values ) {
                    var err = values[ 0 ];
                     if ( err ) {
                        clearInterval( loop );
-                       inAppBrowserRef.close();
+                       browserRef.close();
                         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                   }})
             },500 );
@@ -407,9 +410,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
  
  if(!cred) {
              code = "window.location.href =  '"+url +"'";
-             inAppBrowserRef.executeScript({code: code} );
+             browserRef.executeScript({code: code} );
             var loop = setInterval(function() {
-           inAppBrowserRef.executeScript(
+           browserRef.executeScript(
             {
                 code: "document.getElementById('Log_On')"
             },
@@ -417,7 +420,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 var err = values[ 0 ];
                   if ( err ) {
                     clearInterval( loop );
-                    inAppBrowserRef.close();
+                    //browserRef.close();
                    PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                 }
             } )},500);
