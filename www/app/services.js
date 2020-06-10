@@ -363,7 +363,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
      });
     } else {
-      inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
+      inAppBrowserRef = _.cloneDeep(window.pele4uInAppBrowserRef)  ; 
     }
       
      if(!cred) {
