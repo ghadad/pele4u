@@ -421,7 +421,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     
     });
   }
-
+  }
 
   this.openBrowser = function (url) {
       var swalObject = {
