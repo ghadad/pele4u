@@ -396,7 +396,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                  } \
                 },1000); ";
         }
-             if(loginTries  <2 ) {
+             if(loginTries ==1 ) {
                 inAppBrowserRef.executeScript({code: code} );
              } else { 
                 PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
