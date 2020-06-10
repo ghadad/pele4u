@@ -365,8 +365,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     //}
       
      if(!cred) {
-       code = "window.location.href =  '"+url +"'";
-       inAppBrowserRef.executeScript({code: code} );
+     //  code = "window.location.href =  '"+url +"'";
+     //  inAppBrowserRef.executeScript({code: code} );
        var loop = setInterval(function() {
        inAppBrowserRef.executeScript(
          {
@@ -422,7 +422,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
   this.openBrowser = function (url) {
-    return   cordova.plugins.browsertab.openUrl(encodeURI(url));
+    //`return   cordova.plugins.browsertab.openUrl(encodeURI(url));
       
 
       var swalObject = {
