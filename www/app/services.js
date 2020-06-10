@@ -351,24 +351,27 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
+         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
 
-      if(cred) iabOptions += "clearcache=yes,clearsessioncache=yes";
+    //if(cred) iabOptions += "clearcache=yes,clearsessioncache=yes";
 
     var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
+     inAppBrowserRef.addEventListener("loaderror", function () {
+        PelApi.hideLoading();
+        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+     });
+
      if(!cred) {
       setTimeout(function(){
         inAppBrowserRef.show();
       },300) 
      }
 
-     var loginTries = 0;
-
+ 
     inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
         var code ;        
-        loginTries++;
-  
+   
         if(cred) {
           code = "setTimeout(function(){ \
             var btn = document.getElementById('Log_On') ; \
@@ -379,43 +382,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
              } \
             },1000); "
 
-            "\
-           setTimeout(function(){ \
-             var errMessage = document.getElementById('errorMessageLabel'); \
-             if(errMessage !== undefined) \
-              var message = JSON.stringify({error:errMessage.innerHTML}) ; \
-              webkit.messageHandlers.cordova_iab.postMessage(message); \
-            },1700); ";
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
-       
-      } else {
-        code = "setTimeout(function(){ \
-                var logOn = document.getElementById('Log_On'); \
-                if(logOn) { \
-                  var message = JSON.stringify({error:'E2'}) ; \
-                    webkit.messageHandlers.cordova_iab.postMessage(message); \
-                 } \
-                },1000); ";
+      
+           inAppBrowserRef.executeScript({code: code} );
+            var loop = setInterval(function() {
+                inAppBrowserRef.executeScript({
+                     code: "document.getElementById('errorMessageLabel')"
+                 },
+                function( values ) {
+                   var err = values[ 0 ];
+                    if ( err ) {
+                       clearInterval( loop );
+                       inAppBrowserRef.close();
+                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                  }})
+            },500 );
         }
-      inAppBrowserRef.executeScript({code: code} );
 
-      if(cred)
-      var loop = setInterval(function() {
-             inAppBrowserRef.executeScript(
-            {
-                code: "document.getElementById('errorMessageLabel')"
-            },
-            function( values ) {
-                var err = values[ 0 ];
-
-                 if ( err ) {
-                    clearInterval( loop );
-                    inAppBrowserRef.close();
-                   PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                }})
-            },200 );
-
+ 
  if(!cred)
   var loop = setInterval(function() {
     inAppBrowserRef.executeScript(
@@ -429,12 +414,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                     inAppBrowserRef.close();
                    PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                 }
-            } )},200);
-
-      //   inAppBrowserRef.addEventListener('message', function(eMessage){
-      //         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-     //           inAppBrowserRef.close();
-    //      });
+            } )},500);
+ 
     });
   }
 
