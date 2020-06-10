@@ -377,7 +377,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },1000); \
+            },1000); "
+
+            "\
            setTimeout(function(){ \
              var errMessage = document.getElementById('errorMessageLabel'); \
              if(errMessage !== undefined) \
@@ -396,12 +398,43 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                  } \
                 },1000); ";
         }
-        inAppBrowserRef.executeScript({code: code} );
- 
-         inAppBrowserRef.addEventListener('message', function(eMessage){
-                PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                inAppBrowserRef.close();
-          });
+      inAppBrowserRef.executeScript({code: code} );
+
+      if(cred)
+      var loop = setInterval(function() {
+             inAppBrowserRef.executeScript(
+            {
+                code: "document.getElementById('errorMessageLabel')"
+            },
+            function( values ) {
+                var err = values[ 0 ];
+
+                 if ( err ) {
+                    clearInterval( loop );
+                    inAppBrowserRef.close();
+                   PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                }})
+            },200 );
+
+ if(!cred)
+  var loop = setInterval(function() {
+    inAppBrowserRef.executeScript(
+            {
+                code: "document.getElementById('Log_On')"
+            },
+            function( values ) {
+                var err = values[ 0 ];
+                  if ( err ) {
+                    clearInterval( loop );
+                    inAppBrowserRef.close();
+                   PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                }
+            } )},200);
+
+      //   inAppBrowserRef.addEventListener('message', function(eMessage){
+      //         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+     //           inAppBrowserRef.close();
+    //      });
     });
   }
 
