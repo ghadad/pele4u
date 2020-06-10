@@ -2,7 +2,7 @@
  * Created by User on 25/08/2016.
  */
 angular.module('pele')
-  .controller('phonebookListCtrl', function($scope, ApiService, StorageService, $stateParams, $ionicLoading, $state, PelApi, Contact, $ionicModal, $ionicNavBarDelegate, $ionicHistory) {
+  .controller('phonebookListCtrl', function($scope, ApiGateway,ApiService, StorageService, $stateParams, $ionicLoading, $state, PelApi, Contact, $ionicModal, $ionicNavBarDelegate, $ionicHistory) {
 
     $scope.$on('$ionicView.beforeEnter', function() {
       // Ignore cacheView when previous state is ManiMenu
@@ -25,6 +25,7 @@ angular.module('pele')
       sectorId: ""
     };
 
+    ApiGateway.setSessionTokens();
 
     $scope.title = "אלפון"
     $scope.goHome = function() {

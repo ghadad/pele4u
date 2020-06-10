@@ -164,10 +164,7 @@ angular.module('pele', ['ngStorage'])
              UserName: user,
              password: password
          });
-
-          setTimeout(function() { 
-               ApiGateway.setSessionTokens();
-          },1000);
+ 
 
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
           if(!BioAuth.getMethod()) { 
