@@ -378,7 +378,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
    
        
         inAppBrowserRef.executeScript({
-            code: code
+            code: code,function(p) { 
+              if(p[0] == null)
+              swall(swalObject)
+            }
           } );
       }, 3000);
          
