@@ -354,16 +354,18 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     });
     var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
     if(cred) iabOptions += ",clearcache=yes,clearsessioncache=yes";
-
-    var inAppBrowserRef = window.pele4uInAppBrowserRef || cordova.InAppBrowser.open(url, '_blank',iabOptions);
-
-     if(cred) window.pele4uInAppBrowserRef = inAppBrowserRef ;
-      
-     inAppBrowserRef.addEventListener("loaderror", function () {
+  
+    var inAppBrowserRef ; 
+    if(cred) {
+      window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
+       inAppBrowserRef.addEventListener("loaderror", function () {
         PelApi.hideLoading();
         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
      });
-
+    } else {
+      inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
+    }
+      
      if(!cred) {
       setTimeout(function(){
         inAppBrowserRef.show();
@@ -374,8 +376,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
         var code ;        
-   
-        if(cred) {
+           if(cred) {
           code = "setTimeout(function(){ \
             var btn = document.getElementById('Log_On') ; \
             if(btn) { \
