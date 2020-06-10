@@ -352,19 +352,17 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-    var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
-    if(cred) iabOptions += ",clearcache=yes,clearsessioncache=yes";
-  
-    var inAppBrowserRef ; 
-    if(cred) {
-     inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+    var iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
+    if(cred) 
+      iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+    var inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
         PelApi.hideLoading();
         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
      });
-    } else {
-      inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
-    }
+  //  } //else {
+     // inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
+    //}
       
      if(!cred) {
        code = "window.location.href =  '"+url +"'";
