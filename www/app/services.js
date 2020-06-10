@@ -357,7 +357,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   
     var inAppBrowserRef ; 
     if(cred) {
-      window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
+     inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
         PelApi.hideLoading();
         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
