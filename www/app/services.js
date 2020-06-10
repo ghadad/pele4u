@@ -357,8 +357,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
     var inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
-        PelApi.hideLoading();
-        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+          PelApi.hideLoading();
+           PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
      });
   //  } //else {
      // inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
@@ -422,6 +422,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
   this.openBrowser = function (url) {
+    return   cordova.plugins.browsertab.openUrl(encodeURI(url));
+      
+
       var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
