@@ -336,7 +336,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
 
   this.openPortal = function (url,cred) {
+    //disable it until next production
+    return false ;
 
+    
     if(!window.cordova) {
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
@@ -398,7 +401,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },2000); "
+            },1500); "
 
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
@@ -413,7 +416,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                     if ( err ) {
                        clearInterval( loop );
                        inAppBrowserRef.close();
-                     //   PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                   }})
             },500 );
     
