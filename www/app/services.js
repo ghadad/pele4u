@@ -398,7 +398,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },1000); "
+            },2000); "
 
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
@@ -413,7 +413,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                     if ( err ) {
                        clearInterval( loop );
                        inAppBrowserRef.close();
-                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                     //   PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                   }})
             },500 );
     
