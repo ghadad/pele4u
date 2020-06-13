@@ -25,7 +25,7 @@ angular.module('pele')
       sectorId: ""
     };
 
-    //ApiGateway.setSessionTokens();
+    ApiGateway.setSessionTokens();
 
     $scope.title = "אלפון"
     $scope.goHome = function() {
