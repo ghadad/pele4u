@@ -1544,7 +1544,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
           openDoc2(encodeURI(uri), "_system", "location=yes,enableViewportScale=yes,hidden=no");
         } else if (self.isIOS) {
-         openDoc2(encodeURI(uri), "_system", "charset=utf-8,hidden=yes");
+         openDoc2(encodeURI(uri), "_blank", "charset=utf-8,location=no,enableViewportScale=yes,hidden=no");
         
         } else if (self.isAndroid) {
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
