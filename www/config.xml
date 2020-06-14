@@ -13,6 +13,12 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
     <platform name="ios">
+<feature name="File">
+    <param name="ios-package" value="CDVFile" />
+</feature>
+<feature name="FileTransfer">
+    <param name="ios-package" value="CDVFileTransfer" />
+</feature>
 
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
@@ -145,6 +151,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <config-file parent="CFBundleShortVersionString" platform="ios">
         <string>145</string>
     </config-file>
+    
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
