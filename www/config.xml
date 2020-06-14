@@ -53,8 +53,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
     </plugin>
-    <!-- <plugin name="cordova-plugin-console" spec="~1.0.5" /> -->
-    <plugin name="cordova-plugin-device"  source="npm" />
+     <plugin name="cordova-plugin-device"  source="npm" />
     <plugin name="cordova-plugin-dialogs"  source="npm" />
     <plugin name="cordova-plugin-file"  source="npm" />
     <plugin name="cordova-plugin-file-transfer"  source="npm" />
