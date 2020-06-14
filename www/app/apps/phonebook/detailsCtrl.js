@@ -66,21 +66,26 @@ angular.module('pele')
       }
 
       $scope.swalContact = function (event, c) {
-        swal({
-          html: '<div>' + "שים לב, איש הקשר ישמר בנייד כאיש קשר חדש" + '</div>',
-          showCloseButton: true,
-          showCancelButton: true,
-          focusConfirm: false,
-          confirmButtonText: 'שמירה',
-          confirmButtonAriaLabel: 'Thumbs up, great!',
-          cancelButtonText: 'ביטול',
-          cancelButtonAriaLabel: 'Thumbs down',
-        }).then(function (btn) {
-          if (btn.value) {
-            var targetContact = Contact.setContactData(Contact.newContact(), c);
-            $scope.saveContact(targetContact, c)
-          }
-        })
+        try { 
+          swal({
+            html: '<div>' + "שים לב, איש הקשר ישמר בנייד כאיש קשר חדש" + '</div>',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'שמירה',
+            confirmButtonAriaLabel: 'Thumbs up, great!',
+            cancelButtonText: 'ביטול',
+            cancelButtonAriaLabel: 'Thumbs down',
+          }).then(function (btn) {
+            if (btn.value) {
+              var targetContact = Contact.setContactData(Contact.newContact(), c);
+              $scope.saveContact(targetContact, c)
+            }
+          })
+        } catch(e) { 
+          console.log(e)
+        }
+        
       }
 
 

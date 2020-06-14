@@ -160,6 +160,7 @@ angular.module('pele', ['ngStorage'])
       
   
       promise.success(function (data, status, headers, config) {
+        
          ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,{
              UserName: user,
              password: password
