@@ -1555,10 +1555,11 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
           fileTransfer.download(encodeURI(uri), targetPath,function (result) {
                     $timeout.cancel(filetimeout);
-                    if (!result.nativeURL) {
+                     
+                     if (!result.nativeURL) {
                       self.hideLoading();
                     } else {
-                      cordova.plugins.fileOpener2.open(result.toURL(), "text/vcard", function(){},function(){});
+                      cordova.plugins.fileOpener2.open(result.nativeURL, "text/vcard", function(){},function(){});
                      }
               },function (error) {
                 self.hideLoading()
