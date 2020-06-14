@@ -13,6 +13,22 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
     <platform name="ios">
+        <config-file target="*-Info.plist" parent="CFBundleDocumentTypes">
+            <array>
+    <dict>
+        <key>CFBundleTypeName</key>
+        <string>VCard Files</string>
+        <key>CFBundleTypeRole</key>
+        <string>Viewer</string>
+        <key>LSHandlerRank</key>
+        <string>Alternate</string>
+        <key>LSItemContentTypes</key>
+        <array>
+            <string>public.vcard</string>
+        </array>
+    </dict>
+</array>
+        </config-file>
 <feature name="File">
     <param name="ios-package" value="CDVFile" />
 </feature>
