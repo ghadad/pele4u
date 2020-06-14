@@ -398,7 +398,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                    var err = values[ 0 ];
                     if ( err ) {
                        clearInterval( loop );
-                       inAppBrowserRef.close();
+                     // inAppBrowserRef.close();
                         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                   }})
             },500 );
