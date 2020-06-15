@@ -355,7 +355,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-<<<<<<< HEAD
     var iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
     if(cred) 
       iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
@@ -368,12 +367,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      // inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
     //}
       
-=======
-         var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
-
-
-    var inAppBrowserRef = cordova.InAppBrowser.open(url, '_blank',iabOptions);
->>>>>>> parent of 1477390... wip
      if(!cred) {
      //  code = "window.location.href =  '"+url +"'";
      //  inAppBrowserRef.executeScript({code: code} );
@@ -412,8 +405,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
-<<<<<<< HEAD
-<<<<<<< HEAD
       
            inAppBrowserRef.executeScript({code: code} );
             var loop = setInterval(function() {
@@ -429,31 +420,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   }})
             },500 );
     
-=======
-=======
->>>>>>> parent of 1477390... wip
-         console.log("code:",code)
-      } else {
-        code = "setTimeout(function(){ \
-                var logOn = document.getElementById('Log_On'); \
-                if(logOn) { \
-                  var message = JSON.stringify({error:'E2'}) ; \
-                    webkit.messageHandlers.cordova_iab.postMessage(message); \
-                 } \
-                },1000); ";
-        }
-             if(loginTries  <2 ) {
-                inAppBrowserRef.executeScript({code: code} );
-             } else { 
-                PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                inAppBrowserRef.close();
-            }    
- 
-          inAppBrowserRef.addEventListener('message', function(eMessage){
-                PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                inAppBrowserRef.close();
-          });
->>>>>>> parent of 1477390... wip
     });
   }
   }
