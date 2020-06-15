@@ -438,8 +438,8 @@ app.controller('GetUserMenuCtrl',
         TOKEN: $sessionStorage.AuthInfo.token
       };
       if (appConfig.ApplicationType === "EXT") {
-         window.open(appConfig.Path, '_system');
-       
+      //   window.open(appConfig.Path, '_system');
+         cordova.InAppBrowser.open(appConfig.Path, '_blank', 'location=yes');
       } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
