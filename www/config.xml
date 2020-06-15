@@ -50,6 +50,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <plugin name="cordova-plugin-android-permissions" source="npm"   />
      <plugin name="cordova-plugin-ios-contacts-permissions" source="npm"   />
+
     
     <plugin name="cordova-plugin-badge"   />
     <plugin name="cordova-plugin-x-socialsharing" source="npm" spec="5.6.4" />
@@ -130,7 +131,6 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 
 <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
     <string>נדרשת הרשאה לשמירת התמונות במכשיר </string>
-
 </edit-config>
 
  
@@ -146,8 +146,13 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
        </config-file>
 
        <edit-config target="NSContactsUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need contacts access to search friends</string>
-</edit-config>
+           <string>need contacts access to search friends</string>
+     </edit-config>
+
+       <edit-config target="Contacts" file="*-Info.plist" mode="merge">
+           <string>CDVContacts</string>
+     </edit-config>
+
        <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
            <string>For Push Notifications</string>
        </config-file>
