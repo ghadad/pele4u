@@ -162,6 +162,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <string>145</string>
     </config-file>
     <access origin="*" />
+    <allow-navigation href="*://*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="file://*/*" />
