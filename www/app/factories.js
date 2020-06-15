@@ -1559,7 +1559,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                      if (!result.nativeURL) {
                       self.hideLoading();
                     } else {
-                      cordova.plugins.fileOpener2.showOpenWithDialog(result.nativeURL, "text/vcard", function(){},function(){});
+                      cordova.plugins.disusered.open(result.nativeURL,
+                       function(){},
+                       function(){},function(){});
+                    //  cordova.plugins.fileOpener2.showOpenWithDialog(result.nativeURL, "text/vcard", function(){},function(){});
                      }
               },function (error) {
                 self.hideLoading()
