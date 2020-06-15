@@ -71,9 +71,7 @@ angular.module('pele', [
     $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
     $ionicPlatform.ready(function() {
-
       window.open = cordova.InAppBrowser.open;
-
       var model = ionic.Platform.device().model;
       window.deviceModel = model;
       if (ionic.Platform.isIOS()) {

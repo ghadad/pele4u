@@ -47,6 +47,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="onesignal-cordova-plugin" spec="2.4.1" source="npm" />
     <plugin name="cordova-plugin-contacts" source="npm" />
     <plugin name="cordova-plugin-filepath"  source="npm" />
+     <plugin name="cordova-plugin-androidx"  />
      <plugin name="cordova-plugin-androidx-adapter"  />
 
     <plugin name="cordova-plugin-camera"  source="npm">
@@ -61,6 +62,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="cordova-plugin-globalization"  source="npm" />
     <plugin name="cordova-plugin-inappbrowser"  source="npm" />
     <plugin name="cordova-plugin-media" source="npm">
+  <plugin name="cordova-plugin-file-opener2" source="npm">
+
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
     </plugin>
