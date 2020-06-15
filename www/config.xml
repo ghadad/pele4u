@@ -13,12 +13,11 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
     <platform name="ios">
-
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="StatusBarStyle" value="blacktranslucent" />
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
+     <allow-intent href="itms:*" />
+    <allow-intent href="itms-apps:*" />
     </platform>
     <preference name="phonegap-version" value="cli-9.0.0" /> 
     <preference name="android-build-tool" value="ant" />
@@ -111,28 +110,22 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <splash platform="android" qualifier="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
     <splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
     <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
-<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
     <string>נדרשת הרשאה להשתמש במצלמה </string>
 </edit-config>
 
-<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
     <string>נדרשת הרשאה לספריית התמונות</string>
 </edit-config>
 
-<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
     <string>נדרשת הרשאה לשמירת התמונות במכשיר </string>
 
 </edit-config>
-
- 
-
-
-    <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
-
-
-    <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
+      <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
            <string> For Push Notifications</string>
        </config-file>
 
@@ -142,22 +135,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
        <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
            <string>For Push Notifications</string>
        </config-file>
-             <config-file target="*-Info.plist" parent="CFBundleDocumentTypes" platform="ios">
-            <array>
-    <dict>
-        <key>CFBundleTypeName</key>
-        <string>VCard Files</string>
-        <key>CFBundleTypeRole</key>
-        <string>Viewer</string>
-        <key>LSHandlerRank</key>
-        <string>Alternate</string>
-        <key>LSItemContentTypes</key>
-        <array>
-            <string>public.vcard</string>
-        </array>
-    </dict>
-</array>
-        </config-file>
+         
     <config-file parent="CFBundleShortVersionString" platform="ios">
         <string>145</string>
     </config-file>
@@ -170,5 +148,4 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-
 </widget>
