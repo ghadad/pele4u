@@ -147,12 +147,12 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     </config-file>
     <access origin="*" />
     <allow-navigation href="*" />
-
-     <allow-intent href="http://*/*" />
+    <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="file://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
- </widget>
+
+</widget>
