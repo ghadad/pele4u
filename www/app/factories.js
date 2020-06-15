@@ -1548,7 +1548,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
         } else if (self.isAndroid) {
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
          var fileTransfer = new FileTransfer();
-
+ 
           fileTransfer.download(uri, targetPath,function (result) {
                     $timeout.cancel(filetimeout);
                      
