@@ -19,8 +19,6 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
       <preference name="StatusBarStyle" value="blacktranslucent" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-            <allow-navigation href="*" />
-
     </platform>
     <preference name="phonegap-version" value="cli-9.0.0" /> 
     <preference name="android-build-tool" value="ant" />
@@ -148,6 +146,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <string>145</string>
     </config-file>
     <access origin="*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="http://*/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="file://*/*" />
