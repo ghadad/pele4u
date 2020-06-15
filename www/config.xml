@@ -20,6 +20,9 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <feature name="FileTransfer">
     <param name="ios-package" value="CDVFileTransfer" />
 </feature>
+<feature name="Contacts">
+    <param name="ios-package" value="CDVContacts" />
+</feature>
 
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
