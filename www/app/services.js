@@ -413,6 +413,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
 <<<<<<< HEAD
+<<<<<<< HEAD
       
            inAppBrowserRef.executeScript({code: code} );
             var loop = setInterval(function() {
@@ -429,6 +430,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             },500 );
     
 =======
+=======
+>>>>>>> parent of 1477390... wip
          console.log("code:",code)
       } else {
         code = "setTimeout(function(){ \
