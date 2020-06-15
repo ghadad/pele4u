@@ -115,27 +115,18 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
     <string>נדרשת הרשאה להשתמש במצלמה </string>
 </edit-config>
-
 <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
     <string>נדרשת הרשאה לספריית התמונות</string>
 </edit-config>
-
 <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
     <string>נדרשת הרשאה לשמירת התמונות במכשיר </string>
 </edit-config>
-
- 
-
-
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
-
-
-    <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
+   <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
            <string> For Push Notifications</string>
        </config-file>
-
        <edit-config target="NSContactsUsageDescription" file="*-Info.plist" mode="merge">
     <string>need contacts access to search friends</string>
 </edit-config>
