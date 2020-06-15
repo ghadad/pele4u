@@ -145,12 +145,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
            <string> For Push Notifications</string>
        </config-file>
 
-       <edit-config target="NSContactsUsageDescription" file="*-Info.plist" mode="merge">
+       <edit-config target="NSContactsUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
            <string>need contacts access to search friends</string>
-     </edit-config>
-
-       <edit-config target="Contacts" file="*-Info.plist" mode="merge">
-           <string>CDVContacts</string>
      </edit-config>
 
        <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
