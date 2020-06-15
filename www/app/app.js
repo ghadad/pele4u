@@ -112,9 +112,10 @@ angular.module('pele', [
         if (cordova.platformId != 'android') {
           StatusBar.hide();
         }
-      
 
-
+       if (cordova.platformId  == 'android') {
+         window.open = cordova.InAppBrowser.open ;
+        }
       }
       //----------------------------------
       //--    Go To Application List
