@@ -438,12 +438,7 @@ app.controller('GetUserMenuCtrl',
         TOKEN: $sessionStorage.AuthInfo.token
       };
       if (appConfig.ApplicationType === "EXT") {
-         try {
-              window.open(appConfig.Path, '_system');
-         } catch(e){ 
-           console.log(e.stack)
-         }
-            return   ;
+         window.open(appConfig.Path, '_system');
        
       } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
@@ -451,9 +446,11 @@ app.controller('GetUserMenuCtrl',
         return ApiGateway.openBrowser(appConfig.Path);
       } else if (appConfig.ApplicationType === "IPB") {
         return ApiGateway.openPortal(appConfig.Path); 
+      } else {
+           $scope.appSwitch(i);
       }
 
-      $scope.appSwitch(i);
+     
 
     };
     //-------------------------------//
