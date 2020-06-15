@@ -1542,9 +1542,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
            
         if (!window.cordova) {
           self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
-          openDoc2(uri, "_system", "location=yes,enableViewportScale=yes,hidden=no");
+          window.open(encodeURI(uri), "_blank", "location=yes,enableViewportScale=yes,hidden=no");
         } else if (self.isIOS) {
-          openDoc2(uri, "_system", "charset=utf-8,location=yes,enableViewportScale=yes,hidden=no");
+          window.open(encodeURI(uri), "_blank", "charset=utf-8,location=no,enableViewportScale=yes,hidden=no");
         } else if (self.isAndroid) {
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
          var fileTransfer = new FileTransfer();
@@ -1555,7 +1555,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                      if (!result.nativeURL) {
                       self.hideLoading();
                     } else {
-                      cordova.plugins.fileOpener2.open(result.nativeURL, "text/vcard", function(){},function(){});
+                      cordova.plugins.fileOpener2.showOpenWithDialog(result.nativeURL, "text/vcard", function(){},function(){});
                      }
               },function (error) {
                 self.hideLoading()
