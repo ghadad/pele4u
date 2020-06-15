@@ -20,9 +20,6 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <feature name="FileTransfer">
     <param name="ios-package" value="CDVFileTransfer" />
 </feature>
-<feature name="Contacts">
-    <param name="ios-package" value="CDVContacts" />
-</feature>
 
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
@@ -52,6 +49,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <preference name="SplashScreenDelay" value="4000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <plugin name="cordova-plugin-android-permissions" source="npm"   />
+     <plugin name="cordova-plugin-ios-contacts-permissions" source="npm"   />
+    
     <plugin name="cordova-plugin-badge"   />
     <plugin name="cordova-plugin-x-socialsharing" source="npm" spec="5.6.4" />
     <plugin name="onesignal-cordova-plugin" spec="2.4.1" source="npm" />
