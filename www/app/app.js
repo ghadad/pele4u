@@ -86,6 +86,10 @@ angular.module('pele', [
         }
       }
 
+      if(ionic.Platform.isAndroid()) {
+        window.open = cordova.InAppBrowser.open ;
+      }
+
       //----------------------------------------
       //--    Get Version from config.xml
       //----------------------------------------
@@ -113,9 +117,7 @@ angular.module('pele', [
           StatusBar.hide();
         }
 
-       if (cordova.platformId  == 'android') {
-         window.open = cordova.InAppBrowser.open ;
-        }
+    
       }
       //----------------------------------
       //--    Go To Application List
