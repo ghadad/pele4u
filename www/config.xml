@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you_qa_portal" version="145" versionCode="145" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
+<widget id="co.il.pelephone.pele4you_qa_portal" version="146" versionCode="146" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>PELE4U_Q2_PORTAL</name>
     <description>
@@ -117,10 +117,8 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
 <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
     <string>נדרשת הרשאה לספריית התמונות</string>
 </edit-config>
-
 <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
     <string>נדרשת הרשאה לשמירת התמונות במכשיר </string>
-
 </edit-config>
      <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
@@ -128,7 +126,6 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
       <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
            <string> For Push Notifications</string>
        </config-file>
-
        <edit-config target="NSContactsUsageDescription" file="*-Info.plist" mode="merge">
     <string>need contacts access to search friends</string>
 </edit-config>
@@ -137,7 +134,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
        </config-file>
          
     <config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>145</string>
+        <string>146</string>
     </config-file>
  <access origin="*"/>
  <allow-intent href="http://*/*"/>

@@ -53,7 +53,6 @@ app.controller('GetUserMenuCtrl',
     //$scope.tilesEnabled = true;
     $scope.sort = function (items) {
 
-
       /*  items[0].Sorter = "1@cls1 dsds ddssd";
       items[1].Sorter = "2@cls3";
       items[2].Sorter = "4.1@cls3";
@@ -439,7 +438,7 @@ app.controller('GetUserMenuCtrl',
         TOKEN: $sessionStorage.AuthInfo.token
       };
       if (appConfig.ApplicationType === "EXT") {
-        window.open(appConfig.Path, '_system');
+        window.open(appConfig.Path, '_system','location=yes');
       } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
