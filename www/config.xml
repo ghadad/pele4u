@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you_qa_portal" version="146" versionCode="146" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
+<widget id="co.il.pelephone.pele4you_portal" version="141" versionCode="141" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PELE4U_Q2_PORTAL</name>
+    <name>PELE4U_PORTAL</name>
     <description>
     Work form anywhere
   </description>
@@ -13,11 +13,13 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
     <platform name="ios">
+        <plugin name="cordova-plugin-secure-storage" source="npm" />
+
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="StatusBarStyle" value="blacktranslucent" />
-     <allow-intent href="itms:*" />
-    <allow-intent href="itms-apps:*" />
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
     </platform>
     <preference name="phonegap-version" value="cli-9.0.0" /> 
     <preference name="android-build-tool" value="ant" />
@@ -46,13 +48,14 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="onesignal-cordova-plugin" spec="2.4.1" source="npm" />
     <plugin name="cordova-plugin-contacts" source="npm" />
     <plugin name="cordova-plugin-filepath"  source="npm" />
-     <plugin name="cordova-plugin-androidx-adapter"  platform="android" />
+     <plugin name="cordova-plugin-androidx-adapter"  />
 
     <plugin name="cordova-plugin-camera"  source="npm">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
     </plugin>
-     <plugin name="cordova-plugin-device"  source="npm" />
+    <!-- <plugin name="cordova-plugin-console" spec="~1.0.5" /> -->
+    <plugin name="cordova-plugin-device"  source="npm" />
     <plugin name="cordova-plugin-dialogs"  source="npm" />
     <plugin name="cordova-plugin-file"  source="npm" />
     <plugin name="cordova-plugin-file-transfer"  source="npm" />
@@ -73,8 +76,9 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="cordova-plugin-whitelist" />
     <plugin name="cordova-plugin-fingerprint-aio" source="npm" />
     <plugin name="cordova-plugin-android-fingerprint-auth" source="npm" />
-    <plugin name="cordova-plugin-secure-storage" source="npm" />
-     <plugin name="cordova-plugin-file-opener2" source="npm" />
+    <!-- plugin name="cordova-plugin-ionic-keyboard" source="npm" /-->
+        <!--plugin name="cordova-plugin-androidx"  source="npm" /-->
+
           <icon src="icon.png" />
     <icon src="res/icons/ios/icon-1024.png"  platform="ios" width="1024" height="1024" />
 
@@ -110,39 +114,48 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <splash platform="android" qualifier="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
     <splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
     <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
-<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
+<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
     <string>נדרשת הרשאה להשתמש במצלמה </string>
 </edit-config>
 
-<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
+<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
     <string>נדרשת הרשאה לספריית התמונות</string>
 </edit-config>
-<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge" platform="ios">
+
+<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
     <string>נדרשת הרשאה לשמירת התמונות במכשיר </string>
+
 </edit-config>
-     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+
+ 
+
+
+    <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
-      <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
+
+
+    <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
            <string> For Push Notifications</string>
        </config-file>
+
        <edit-config target="NSContactsUsageDescription" file="*-Info.plist" mode="merge">
     <string>need contacts access to search friends</string>
 </edit-config>
        <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
            <string>For Push Notifications</string>
        </config-file>
-         
     <config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>146</string>
+        <string>141</string>
     </config-file>
- <access origin="*"/>
- <allow-intent href="http://*/*"/>
- <allow-intent href="https://*/*"/>
- <allow-intent href="file://*/*"/>
- <allow-intent href="tel:*"/>
- <allow-intent href="sms:*"/>
- <allow-intent href="mailto:*"/>
- <allow-intent href="geo:*"/>
- <allow-navigation href="*"/>
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="file://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+<allow-navigation href="*" />
+
 </widget>
