@@ -425,10 +425,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
   this.openBrowser = function (url) {
-    //`return   cordova.plugins.browsertab.openUrl(encodeURI(url));
-      
-
-      var swalObject = {
+    //return   cordova.plugins.browsertab.openUrl(encodeURI(url));
+            var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
       text: 'תהליך אימות העובד נכשל ',

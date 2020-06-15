@@ -1,10 +1,4 @@
-
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
+ 
 angular.module('pele', [
   'ionic',
   'ngCordova',
@@ -28,9 +22,7 @@ angular.module('pele', [
 
 
   function($rootScope, $ionicPlatform, $state, $ionicLoading, PelApi, appSettings /*, Idle */ ) {
-     
-     
-    PelApi.init();
+     PelApi.init();
     _.set(PelApi.sessionStorage,'stat',{httpRequests:0,httpFailed:0,pinCodeFailed:0,bioFailed:0});
   
 
@@ -80,7 +72,8 @@ angular.module('pele', [
 
     $ionicPlatform.ready(function() {
 
-      
+      window.open = cordova.InAppBrowser.open;
+
       var model = ionic.Platform.device().model;
       window.deviceModel = model;
       if (ionic.Platform.isIOS()) {
