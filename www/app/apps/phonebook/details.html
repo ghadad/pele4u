@@ -1,142 +1,183 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you_qa" version="141" versionCode="141" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PELE4U_Q2_ALL</name>
-    <description>
-    Work form anywhere
-  </description>
-    <author email="oren@pelephone.co.il" href="http://www.pelephone.co.il">
-    Pelephone IT
-  </author>
-    <platform name="android">
-        <allow-intent href="market:*" />
-        <preference name="StatusBarBackgroundColor" value="#60beea" />
-    </platform>
-    <platform name="ios">
-      <preference name="StatusBarBackgroundColor" value="#60beea" />
-      <preference name="StatusBarOverlaysWebView" value="false" />
-      <preference name="StatusBarStyle" value="blacktranslucent" />
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
-    </platform>
-    <preference name="phonegap-version" value="cli-9.0.0" />
-    <preference name="android-build-tool" value="gradle" />
-    <preference name="android-minSdkVersion" value="19" />
-    <preference name="android-targetSdkVersion" value="28" />
-    <preference name="permissions" value="none" />
-    <preference name="orientation" value="portrait" />
-    <preference name="target-device" value="handset" />
-    <preference name="fullscreen" value="false" />
-    <preference name="webviewbounce" value="true" />
-    <preference name="prerendered-icon" value="true" />
-    <preference name="stay-in-webview" value="false" />
-    <preference name="ios-statusbarstyle" value="black-opaque" />
-    <preference name="detect-data-types" value="true" />
-    <preference name="exit-on-suspend" value="false" />
-    <preference name="show-splash-screen-spinner" value="true" />
-    <preference name="auto-hide-splash-screen" value="true" />
-    <preference name="disable-cursor" value="false" />
-    <preference name="android-installLocation" value="auto" />
-    <preference name="SplashScreen" value="splash" />
-    <preference name="SplashScreenDelay" value="4000" />
-    <preference name="SplashShowOnlyFirstTime" value="false" />
-    <plugin name="cordova-plugin-android-permissions" source="npm"   />
-    <plugin name="cordova-plugin-badge"   />
-    <plugin name="cordova-plugin-x-socialsharing" source="npm" />
-    <plugin name="onesignal-cordova-plugin" spec="2.4.7" source="npm"  />
-    <plugin name="cordova-plugin-contacts" source="npm" />
-    <plugin name="cordova-plugin-filepath"  source="npm" />
-    
-    <plugin name="cordova-plugin-camera"  source="npm">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
-    </plugin>
-    <!-- <plugin name="cordova-plugin-console" spec="~1.0.5" /> -->
-    <plugin name="cordova-plugin-device"  source="npm" />
-    <plugin name="cordova-plugin-dialogs"  source="npm" />
-    <plugin name="cordova-plugin-file"  source="npm" />
-    <plugin name="cordova-plugin-file-transfer"  source="npm" />
-    <plugin name="cordova-plugin-globalization"  source="npm" />
-    <plugin name="cordova-plugin-inappbrowser"  source="npm" />
-    <plugin name="cordova-plugin-media" source="npm">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
-    </plugin>
-    <plugin name="cordova-plugin-network-information" source="npm" />
-    <plugin name="cordova-plugin-splashscreen" source="npm" />
+<ion-view cache-view="true">
+  <ion-nav-buttons side="left">
+    <a class="button button-icon icon ion-ios-search" ng-click="goSearchForm()"></a>
+  </ion-nav-buttons>
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}
+      </div>
+    </div>
+  </ion-nav-title>
+  <ion-content scroll="false" padding="true" id="phonebook_details">
+    <tab-slide-box tab="2">
 
-    <plugin name="cordova-plugin-statusbar"  source="npm" />
-    <plugin name="cordova-plugin-app-version" source="npm" />
-        <plugin name="cordova-plugin-customurlscheme">
-        <param name="URL_SCHEME" value="pele4u" />
-    </plugin>
-    <plugin name="cordova-plugin-whitelist" />
-    <plugin name="cordova-plugin-fingerprint-aio" source="npm" />
-    <plugin name="cordova-plugin-android-fingerprint-auth" source="npm" />
-    <plugin name="cordova-plugin-secure-storage" source="npm" />
-    <!-- plugin name="cordova-plugin-ionic-keyboard" source="npm" /-->
-    
-          <icon src="icon.png" />
-    <icon src="res/icons/ios/icon-1024.png"  platform="ios" width="1024" height="1024" />
+      <div class="tsb-icons">
+        <div class="tsb-ic-wrp">
+          <ion-scroll has-bouncing="false" class="tsb-hscroll">
+            <!--a href="#" ng-click="swalContact(contact)" class=""> <img class="fab" src="img/new_icons/purple_add_contact.png "></a-->
+            <a class="triangle-isosceles" on-finish-render="test()">
+              עץ ארגוני
+            </a>
+            <a class="triangle-isosceles" on-finish-render="test()">
+              פרטי העובד
+            </a>
+          </ion-scroll>
+        </div>
+      </div>
+      <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+        <ion-slide on-drag-left="enable('drag')" on-drag-right="disable('drag')">
+          <ion-content>
+            <div style="height:{{treeHeight}}">
+              <strong class="pele_rtl text-right string-badge">{{managerInfo.orgName || 'פלאפון תקשורת'}}</strong>
+              <!--h5 class="pele_rtl text-right"> הוסף לאנשי קשר : <span class="pel-badge blue"><i ng-click="actions('members_tree',contact,contact.orgTree)" class="icon white medium ion-person-stalker"></i></span> <span class="pel-badge blue"><i
+            ng-click="actions('manager_tree',managerInfo,contact.orgTree)" class="icon white medium ion-ios-people"></i></span> </h5-->
+              <div class="pele_rtl">
+                <ul class="list pele_rtl text-right treeview level1">
+                  <li class="direct_admin tree-item" ng-class="{'noadmin':!contact.directManagerName}">
+                    <a ui-sref="app.phonebook.details({personId:contact.directManagerNumber})">
+                      <strong> {{contact.directManagerName}}</strong>
+                    </a>
+                    <ul class="list level2">
+                      <li ng-class="{'noadmin':!contact.directManagerName}" class="{{member.relation}} tree-item"
+                        ng-show="v.personId" ng-repeat="(k,v) in tree">
+                        <div class="links" ng-class="{'last':$last}"></div>
+                        <a ui-sref="app.phonebook.details({personId:k})">
+                          <i ng-if="contact.personId==k" class="ion-android-person blue"></i>
+                          <span ng-class="{active:contact.personId==k}">
+                            {{v.lastName}},
+                            {{v.firstName}}
+                          </span>
+                        </a>
+                        <ul ng-if="v.members.length" class="list level3">
+                          <li class="{{member.relation}} tree-item" ng-repeat="member in v.members">
+                            <div class="links" ng-class="{'last':$last}"></div>
+                            <a ui-sref="app.phonebook.details({personId:member.personId})">
+                              {{member.lastName}},
+                              {{member.firstName}}
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </ion-content>
+        </ion-slide>
+        <!------------------------------------------------------------------------------->
+        <!----------------------------- Doc Details Slide ------------------------------->
+        <!------------------------------------------------------------------------------->
+        <ion-slide on-drag-right="enable('drag')" on-drag-left="disable('drag')">
+          <ion-content scroll="true" has-header="true">
+            <ul class="list pele_rtl text-right" style="height: 125%;">
+              <li class="item no-border">
+                <div class="text-center">
+                  <img class="contact-avatar" ng-if="contact.pic" ng-src="data:image/JPEG;base64,{{contact.pic}}" /-->
+                    <img class="no-contact-pic" ng-if="!contact.pic" ng-src="img/new_icons/blue_avatar.png" />
+                  <img ng-show="contact.birthday==today" class="contact-avatar" style="border:0;border-radius:0"
+                    ng-src="img/new_icons/happybirthday.gif">
+                </div>
 
-    <icon height="29" platform="ios" src="res/icons/ios/icon-small.png" width="29" />
-    <icon height="58" platform="ios" src="res/icons/ios/icon-small-2x.png" width="58" />
-    <icon height="87" platform="ios" src="res/icons/ios/icon-small-3x.png" width="87" />
-    <icon height="40" platform="ios" src="res/icons/ios/icon-40.png" width="40" />
-    <icon height="80" platform="ios" src="res/icons/ios/icon-40-2x.png" width="80" />
-    <icon height="50" platform="ios" src="res/icons/ios/icon-50.png" width="50" />
-    <icon height="100" platform="ios" src="res/icons/ios/icon-50-2x.png" width="100" />
-    <icon height="57" platform="ios" src="res/icons/ios/icon.png" width="57" />
-    <icon height="114" platform="ios" src="res/icons/ios/icon-2x.png" width="114" />
-    <icon height="60" platform="ios" src="res/icons/ios/icon-60.png" width="60" />
-    <icon height="120" platform="ios" src="res/icons/ios/icon-60-2x.png" width="120" />
-    <icon height="180" platform="ios" src="res/icons/ios/icon-60-3x.png" width="180" />
-    <icon height="72" platform="ios" src="res/icons/ios/icon-72.png" width="72" />
-    <icon height="144" platform="ios" src="res/icons/ios/icon-72-2x.png" width="144" />
-    <icon height="76" platform="ios" src="res/icons/ios/icon-76.png" width="76" />
-    <icon height="152" platform="ios" src="res/icons/ios/icon-76-2x.png" width="152" />
-    <splash src="splash.png" />
+              </li>
+              <li class="item item-info no-border item-thumbnail-left item-avatar">
+                <div class="item-section">
+                  <table class="pele_rtl text-right">
+                    <tbody>
+                      <tr>
+                        <td class="pb label">שם פרטי:
+                        </td>
+                        <td class="info">
+                          {{contact.firstName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">שם משפחה:
+                        </td>
+                        <td class="info">
+                          {{contact.lastName}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">נייד:
+                        </td>
+                        <td class="info">
+                          <a ng-href="tel://{{contact.mobilePhone}}">{{contact.mobilePhone}}</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">שלוחה:
+                        </td>
+                        <td class="info">
+                          <a ng-href="tel://{{contact.workPhone}}">{{contact.workPhone}}
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">דוא"ל:
+                        </td>
+                        <td class="info">
+                          {{contact.emailAddress}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">מיקום:
+                        </td>
+                        <td class="info">
+                          {{contact.orgLocation}}</td>
+                      </tr>
+                      <tr>
+                        <td class="pb label">ת.לידה:
+                        </td>
+                        <td class="info">
+                          {{contact.birthday}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_sector">
+                        <td class="pb label">חטיבה:
+                        </td>
+                        <td class="info">
+                          {{contact.sector}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_section">
+                        <td class="pb label">אגף:
+                        </td>
+                        <td class="info">
+                          {{contact.section|replace:"no sector":""}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_department">
+                        <td class="pb label">מחלקה:
+                        </td>
+                        <td class="info">
+                          {{contact.department|replace:"no sector":""}}</td>
+                      </tr>
+                      <tr ng-show="contact.has_team">
+                        <td class="pb label">צוות
+                        </td>
+                        <td class="info">
+                          {{contact.team|replace:"no sector":""}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li class="item item-info no-border contact-icons text-center">
+                <a href="#" ng-click="download(contact.vcardUrl,contact.login)">
+                  <img class="pel_icon medium" src="img/new_icons/purple_add_contact.png "></a>
+                <a ng-show="contact.mobilePhone" ng-href="sms://{{contact.mobilePhone}}">
+                  <img class="pel_icon medium" src="img/new_icons/blue_sms.png "></a>
+                <a href="#" ng-click="shareViaEmail(contact.emailAddress)">
+                  <img class="pel_icon medium" src="img/new_icons/red_email.png "></a>
+                <a ng-show="contact.workPhone" ng-href="tel:{{contact.workPhone}}"><img class=" pel_icon medium "
+                    src="img/new_icons/gray_phone.png"></a>
+                <a ng-show="contact.mobilePhone" ng-href="tel:{{contact.mobilePhone}}">
+                  <img class="pel_icon medium" src="img/new_icons/green_mobile.png"></a>
+                <!--div class="item-section"> <a href="#" ng-click="shareViaEmail(contact.emailAddress)"> e-mail</a> <br \> <a ng-href="sms:{{contact.mobilePhone}}"> <img class="pel_icon medium" src="img/sms.png"></a> <br \> <a href="#"
+                ng-click="shareViaSMS(contact.mobilePhone)"> ng-click <img class=" pel_icon medium " src="img/sms.png "></a> <br \> <a ng-href="tel:{{contact.mobilePhone}} "> <img class="pel_icon medium " src="img/smartphone.png "></a> <br \> <a href="#"
+                ng-click="shareViaWhatsAppToReceiver(contact.mobilePhone)">iver : :<img class="pel_icon medium " src="img/whatsapp.png "></a> <br \> <a href="#" ng-click="shareViaWhatsApp()"> no receiver : <img class="pel_icon medium" src="img/sms.png"></a> </div-->
+              </li>
+            </ul>
+          </ion-content>
+        </ion-slide>
 
-    <splash src="res/screens/ios/Default@2x~universal~anyany.png" />
+      </ion-slide-box>
 
-    <icon platform="android" qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png" />
-    <icon platform="android" qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png" />
-    <icon platform="android" qualifier="hdpi" src="res/icons/android/icon-72-hdpi.png" />
-    <icon platform="android" qualifier="xhdpi" src="res/icons/android/icon-96-xhdpi.png" />
-    <icon platform="android" qualifier="xxhdpi" src="res/icons/android/icon-144-xxhdpi.png" />
-    <icon platform="android" qualifier="xxxhdpi" src="res/icons/android/icon-192-xxxhdpi.png" />
-    <splash platform="android" qualifier="ldpi" src="res/screens/android/screen-ldpi-portrait.png" />
-    <splash platform="android" qualifier="mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
-    <splash platform="android" qualifier="hdpi" src="res/screens/android/screen-hdpi-portrait.png" />
-    <splash platform="android" qualifier="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
-    <splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
-    <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
-
-    <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-        <application android:usesCleartextTraffic="true" />
-    </edit-config>
-
-
-    <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
-           <string> For Push Notifications</string>
-       </config-file>
-
-       <edit-config target="NSContactsUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need contacts access to search friends</string>
-</edit-config>
-       <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
-           <string>For Push Notifications</string>
-       </config-file>
-    <config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>141</string>
-    </config-file>
-    <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="file://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-
-</widget>
+    </tab-slide-box>
+  </ion-content>
+</ion-view>
