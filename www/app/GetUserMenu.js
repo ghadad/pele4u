@@ -439,7 +439,7 @@ app.controller('GetUserMenuCtrl',
       };
       if (appConfig.ApplicationType === "EXT") {
          window.open(appConfig.Path, '_system');
-          retuen  ;
+          return   ;
       } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
