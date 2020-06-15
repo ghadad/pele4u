@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you_portal" version="141" versionCode="141" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
+<widget id="co.il.pelephone.pele4you_portal" version="145" versionCode="145" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>PELE4U_PORTAL</name>
     <description>
@@ -14,7 +14,6 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     </platform>
     <platform name="ios">
         <plugin name="cordova-plugin-secure-storage" source="npm" />
-
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="StatusBarStyle" value="blacktranslucent" />
@@ -126,14 +125,9 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <string>נדרשת הרשאה לשמירת התמונות במכשיר </string>
 
 </edit-config>
-
- 
-
-
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:usesCleartextTraffic="true" />
     </edit-config>
-
 
     <config-file parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
            <string> For Push Notifications</string>
@@ -146,7 +140,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
            <string>For Push Notifications</string>
        </config-file>
     <config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>141</string>
+        <string>145</string>
     </config-file>
     <access origin="*" />
     <allow-intent href="http://*/*" />
