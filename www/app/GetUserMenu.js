@@ -439,7 +439,8 @@ app.controller('GetUserMenuCtrl',
       };
       if (appConfig.ApplicationType === "EXT") { 
          window.open(appConfig.Path, '_system'); //, 'location=yes,footer=no');
-       
+        var iabOptions =  'enableViewportScale=yes,footer=no,closebuttoncaption=סגור'; 
+        window.open(encodeURI(url), '_blank',iabOptions);
       } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
