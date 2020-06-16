@@ -1542,9 +1542,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
            
         if (!window.cordova) {
           self.showPopup("הקובץ ירד לספריית ההורדות במחשב זה", "");
-          window.open(encodeURI(uri), "_blank", "location=yes,enableViewportScale=yes,hidden=no");
+          window.open(encodeURI(uri), "_system", "location=yes,enableViewportScale=yes,hidden=no");
         } else if (self.isIOS) {
-           window.open(encodeURI(uri), "_blank", "charset=utf-8,location=yes,footer=no");
+           window.open(encodeURI(uri), "_system", "charset=utf-8,location=yes,footer=no");
         } else if (self.isAndroid) {
           var filetimeout = $timeout(timeoutFunction, appSettings.config.ATTACHMENT_TIME_OUT);
          var fileTransfer = new FileTransfer();
