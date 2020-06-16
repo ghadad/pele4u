@@ -300,10 +300,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url + '?' + qstr
 
-      var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no'; 
-        if(cordova && cordova.platformId === "ios")
-          iabOptions =  'location=no,toolbar=no,footer=no,zoom=no';
-
+        var iabOptions = 'location=no,zoom=no,footer=no'; 
+       
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
          
          inAppBrowserRef.addEventListener('loaderror', function () {
