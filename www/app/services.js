@@ -300,9 +300,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url + '?' + qstr
 
-      var iabOptions =PelApi.appSettings.config.iabOptions || 'hideurlbar=yes,location=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
+      var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
-          iabOptions =  'hideurlbar=yes,location=yes,toolbar=yes,footer=no,closebuttoncaption=סגור';
+          iabOptions =  'location=no,toolbar=no,zoom=no,footer=no,closebuttoncaption=סגור';
 
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
          
