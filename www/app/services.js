@@ -302,7 +302,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
       var iabOptions =PelApi.appSettings.config.iabOptions || 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
         if(cordova && cordova.platformId === "ios")
-          iabOptions =  'location=no,toolbar=no,footer=no,closebuttoncaption=סגור';
+          iabOptions =  'location=no,toolbar=yes,footer=no,closebuttoncaption=סגור,';
 
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
          
@@ -426,7 +426,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
   this.openBrowser = function (url) {
     //return   cordova.plugins.browsertab.openUrl(encodeURI(url));
-            var swalObject = {
+     var swalObject = {
       type: 'error',
       title: 'לא מצליח לפתוח את היישום',
       text: 'תהליך אימות העובד נכשל ',
