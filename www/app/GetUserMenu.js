@@ -437,7 +437,7 @@ app.controller('GetUserMenuCtrl',
         PIN: $sessionStorage.AuthInfo.pinCode,
         TOKEN: $sessionStorage.AuthInfo.token
       };
-      if (appConfig.ApplicationType === "EXT") {
+      if (appConfig.ApplicationType === "EXT") { 
          window.open(appConfig.Path, '_system'); //, 'location=yes,footer=no');
        
       } else if (appConfig.ApplicationType === "IAB") {
