@@ -438,7 +438,7 @@ app.controller('GetUserMenuCtrl',
         TOKEN: $sessionStorage.AuthInfo.token
       };
       if (appConfig.ApplicationType === "EXT") {
-         window.open(appConfig.Path, '_blank', 'location=yes,footer=no');
+         window.open(appConfig.Path, '_system'); //, 'location=yes,footer=no');
        
       } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
