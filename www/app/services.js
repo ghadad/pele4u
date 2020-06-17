@@ -366,8 +366,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
        // inAppBrowserRef.insertCSS({file: "floatbtn.css"});
 
-        var btnCode = "alert('done') ; \
-                       var backtopele4uElm = document.createElement('button'); \
+        var btnCode = "var backtopele4uElm = document.createElement('button'); \
                        backtopele4uElm.className = 'backtopele4u'; \
                        backtopele4uElm.innerHTML = 'pele4u' ;\
                        backtopele4uElm.onclick = function() { window.shouldClose ='exit'; }; \
@@ -389,7 +388,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                //browserRef.close();
               PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
            }
-       } )},500);
+       } )},1000);
 
 
       setTimeout(function(){
