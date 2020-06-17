@@ -364,7 +364,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      //  code = "window.location.href =  '"+url +"'";
      //  inAppBrowserRef.executeScript({code: code} );
         var floatBtnCss = "#backtopele4u { position:fixed;width:60px;" +
-         "height:60px;	bottom:40px;	right:40px;	background-color:#0C9; " + 
+         "height:60px;	bottom:10px;	left:10px;	background-color:#1877F2; " + 
          "color:#FFF;	border-radius:50px;	text-align:center;" + 
          "box-shadow: 2px 2px 3px #999;}" ;
  
@@ -376,15 +376,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           var backtopele4uElm = document.createElement('button'); \
                           backtopele4uElm.className = 'backtopele4u'; \
                           backtopele4uElm.id = 'backtopele4u'; \
-                          backtopele4uElm.innerHTML = 'pele4u' ;\
+                          backtopele4uElm.innerHTML = '<img style='height:20px' src=\"https://msso.pelephone.co.il/mobileAppGw/public/media/pele4u.png\">' ;\
                           backtopele4uElm.onclick = function() { window.shouldClose ='exit'; }; \
                           var backtopele4uElmNodes = document.getElementsByTagName('BODY'); \
                           backtopele4uElmNodes[0].appendChild(backtopele4uElm); }"
 
-            btnCode = btnCode.replace(/__btncss/g, floatBtnCss );
+        btnCode = btnCode.replace(/__btncss/g, floatBtnCss );
 
        var loop = setInterval(function() {
-       inAppBrowserRef.executeScript({code: btnCode});
+       if(ionic.Platform.isIOS())
+          inAppBrowserRef.executeScript({code: btnCode});
 
        inAppBrowserRef.executeScript(
          {
