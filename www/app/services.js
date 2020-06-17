@@ -363,7 +363,20 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      if(!cred) {
      //  code = "window.location.href =  '"+url +"'";
      //  inAppBrowserRef.executeScript({code: code} );
+
+        inAppBrowserRef.insertCSS({file: "floatbtn.css"});
+
+        var btnCode = "var elm = document.createElement('a'); \
+                       elm.className = 'backtopele4u'; \
+                       elm.innerHTML = 'pele4u' ;\
+                       elm.onclick = function() { window.shoulkdClose ='exit'; }; \
+                       elm.href= '#' ;\
+                       var bodyNode = document.getElementsByTagName('body')[0]; \
+                       bodyNode.appendChild(elm);"
+       inAppBrowserRef.executeScript({code: btnCode});
+
        var loop = setInterval(function() {
+         
        inAppBrowserRef.executeScript(
          {
              code: "document.getElementById('Log_On')"
