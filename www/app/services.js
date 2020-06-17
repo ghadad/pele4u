@@ -384,7 +384,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         btnCode = btnCode.replace(/__btncss/g, floatBtnCss );
 
        var loop = setInterval(function() {
-       if(1 || ionic.Platform.isIOS())
+      // if(cordova && cordova.platform =='ios')
           inAppBrowserRef.executeScript({code: btnCode});
 
        inAppBrowserRef.executeScript(
