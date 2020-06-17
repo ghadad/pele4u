@@ -363,14 +363,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      if(!cred) {
      //  code = "window.location.href =  '"+url +"'";
      //  inAppBrowserRef.executeScript({code: code} );
-        var floatBtnCss = "#backtopele4u { position:fixed;width:60px;	" +
+        var floatBtnCss = "#backtopele4u { position:fixed;width:60px;" +
          "height:60px;	bottom:40px;	right:40px;	background-color:#0C9; " + 
-         "	color:#FFF;	border-radius:50px;	text-align:center;" + 
-         "	box-shadow: 2px 2px 3px #999; }" ;
+         "color:#FFF;	border-radius:50px;	text-align:center;" + 
+         "box-shadow: 2px 2px 3px #999;}" ;
  
- 
-document.head.appendChild(styleSheet)
-        var btnCode = "if(!document.getElementsByTagName('backtopele4u')) {\
+         var btnCode = "if(!document.getElementsByTagName('backtopele4u')) {\
                         var pele4uStyleSheet=  document.createElement('style') ;\
                         pele4uStyleSheet.type  = 'text/css' ;\
                         pele4uStyleSheet.innerText = '__btncss' ;\
