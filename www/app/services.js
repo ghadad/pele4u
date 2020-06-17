@@ -376,7 +376,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           var backtopele4uElm = document.createElement('button'); \
                           backtopele4uElm.className = 'backtopele4u'; \
                           backtopele4uElm.id = 'backtopele4u'; \
-                          backtopele4uElm.innerHTML = '<img style=\"height:20px\" src=\"__pele4uicon\">' ;\
+                          backtopele4uElm.innerHTML = 'PELE4U';\
                           backtopele4uElm.onclick = function() { window.shouldClose ='exit'; }; \
                           var backtopele4uElmNodes = document.getElementsByTagName('BODY'); \
                           backtopele4uElmNodes[0].appendChild(backtopele4uElm); }"
