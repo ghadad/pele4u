@@ -350,7 +350,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-    var iabOptions =  'presentationstyle=fullscreen,clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
+    var iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,presentationstyle=fullscreen'; 
     if(cred) 
     //  iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
     iabOptions = "hidden=yes";
@@ -437,7 +437,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                              popupIdx++;
                         }
                        }
-                        
               }})
             },500 );
      }
