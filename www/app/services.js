@@ -395,7 +395,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
              } \
-            },1500); "
+            },2000); "
 
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
@@ -422,17 +422,22 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   } else { 
        var loop = setInterval(function() {
                 inAppBrowserRef.executeScript({
-                     code: "document.getElementById('Log_On')"
+                     code: "document.getElementById('Log_On') || window.shouldClose"
                  },
                 function( values ) {
-                   var loginState = values[ 0 ];
-                    if ( loginState ) {
+                   var exitCmd = values[ 0 ];
+                    if ( exitCmd ) {
                        clearInterval( loop );
-                         if(popupIdx==1) {
-                           inAppBrowserRef.close();
-                           PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                           popupIdx++;
-                      }
+                       if(exitCmd=="exit") {
+                            inAppBrowserRef.close();
+                       } else {
+                          if(popupIdx==1) {
+                             inAppBrowserRef.close();
+                             PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                             popupIdx++;
+                        }
+                       }
+                        
               }})
             },500 );
      }
