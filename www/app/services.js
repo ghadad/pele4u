@@ -384,7 +384,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         btnCode = btnCode.replace(/__btncss/g, floatBtnCss );
 
        var loop = setInterval(function() {
-       if(ionic.Platform.isIOS())
+       if(1 || ionic.Platform.isIOS())
           inAppBrowserRef.executeScript({code: btnCode});
 
        inAppBrowserRef.executeScript(
