@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.il.pelephone.pele4you_fix_contact" version="148" versionCode="148" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
+<widget id="co.il.pelephone.pele4you_fix_contact" version="149" versionCode="149" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>PELE4U_FIX_CONTACT</name>
     <description>
@@ -60,7 +60,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
     <plugin name="cordova-plugin-file"  source="npm" />
     <plugin name="cordova-plugin-file-transfer"  source="npm" />
     <plugin name="cordova-plugin-globalization"  source="npm" />
-    <plugin name="cordova-plugin-inappbrowser"  spec="3.2.0" source="npm" />
+    <plugin name="cordova-plugin-inappbrowser"  spec="3.1.0" source="npm" />
     <plugin name="cordova-plugin-media" source="npm">
     <plugin name="cordova-plugin-file-opener2" source="npm" />
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
@@ -141,7 +141,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
            <string>For Push Notifications</string>
        </config-file>
     <config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>148</string>
+        <string>149</string>
     </config-file>
     <access origin="*" />
     <allow-intent href="http://*/*" />

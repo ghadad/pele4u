@@ -269,8 +269,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     }
     var swalObject = {
       type: 'error',
-      title: 'לא מצליח לפתוח את היישום',
-      text: 'תהליך אימות העובד נכשל ',
+      title: 'תהליך אימות העובד נכשל',
+      text: 'נא צאו והתחברו שוב ונסו שנית ',
       showConfirmButton: false,
       timer: 2500
     };
@@ -300,7 +300,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url + '?' + qstr
 
-        var iabOptions = 'location=no,zoom=no,footer=no'; 
+        var iabOptions = 'location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
        
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
          
