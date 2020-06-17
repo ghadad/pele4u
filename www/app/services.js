@@ -369,14 +369,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         var btnCode = "var elm = document.createElement('a'); \
                        elm.className = 'backtopele4u'; \
                        elm.innerHTML = 'pele4u' ;\
-                       elm.onclick = function() { window.shoulkdClose ='exit'; }; \
+                       elm.onclick = function() { window.shouldClose ='exit'; }; \
                        elm.href= '#' ;\
                        var bodyNode = document.getElementsByTagName('body')[0]; \
-                       bodyNode.appendChild(elm);"
-       inAppBrowserRef.executeScript({code: btnCode});
+                       bodyNode.appendChild(elm); \
+                       alert('done') ;"
+
 
        var loop = setInterval(function() {
-         
+                inAppBrowserRef.executeScript({code: btnCode});
+
        inAppBrowserRef.executeScript(
          {
              code: "document.getElementById('Log_On')"
