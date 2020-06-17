@@ -300,7 +300,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
         var fullUrl = url + '?' + qstr
 
-        var iabOptions = 'toolbar=no,presentationstyle=fullscreen,location=no,zoom=no,footer=no,closebuttoncaption=סגור'; 
+        var iabOptions = 'toolbar=no,presentationstyle=fullscreen,location=no,zoom=no,closebuttoncaption=סגור'; 
        
         var inAppBrowserRef = cordova.InAppBrowser.open(fullUrl, '_blank', iabOptions);
          
