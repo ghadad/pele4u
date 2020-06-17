@@ -368,18 +368,18 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
          "color:#FFF;	border-radius:50px;	text-align:center;" + 
          "box-shadow: 2px 2px 3px #999;}" ;
  
-         var btnCode = "if(!document.getElementsByTagName('backtopele4u')) {\
-                        var pele4uStyleSheet=  document.createElement('style') ;\
-                        pele4uStyleSheet.type  = 'text/css' ;\
-                        pele4uStyleSheet.innerText = '__btncss' ;\
-                        document.head.appendChild(styleSheet) ;\
-                        var backtopele4uElm = document.createElement('button'); \
-                       backtopele4uElm.className = 'backtopele4u'; \
-                       backtopele4uElm.id = 'backtopele4u'; \
-                       backtopele4uElm.innerHTML = 'pele4u' ;\
-                       backtopele4uElm.onclick = function() { window.shouldClose ='exit'; }; \
-                       var backtopele4uElmNodes = document.getElementsByTagName('BODY'); \
-                       backtopele4uElmNodes[0].appendChild(backtopele4uElm); }"
+         var btnCode = "if(!document.getElementById('backtopele4u')) { \
+                          var pele4uStyleSheet=  document.createElement('style') ;\
+                          pele4uStyleSheet.type  = 'text/css' ;\
+                          pele4uStyleSheet.innerText = '__btncss' ;\
+                          document.head.appendChild(pele4uStyleSheet) ;\
+                          var backtopele4uElm = document.createElement('button'); \
+                          backtopele4uElm.className = 'backtopele4u'; \
+                          backtopele4uElm.id = 'backtopele4u'; \
+                          backtopele4uElm.innerHTML = 'pele4u' ;\
+                          backtopele4uElm.onclick = function() { window.shouldClose ='exit'; }; \
+                          var backtopele4uElmNodes = document.getElementsByTagName('BODY'); \
+                          backtopele4uElmNodes[0].appendChild(backtopele4uElm); }"
 
             btnCode = btnCode.replace(/__btncss/g, floatBtnCss );
 
