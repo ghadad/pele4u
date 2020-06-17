@@ -364,20 +364,19 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      //  code = "window.location.href =  '"+url +"'";
      //  inAppBrowserRef.executeScript({code: code} );
 
-        inAppBrowserRef.insertCSS({file: "floatbtn.css"});
+       // inAppBrowserRef.insertCSS({file: "floatbtn.css"});
 
-        var btnCode = "var elm = document.createElement('a'); \
-                       elm.className = 'backtopele4u'; \
-                       elm.innerHTML = 'pele4u' ;\
-                       elm.onclick = function() { window.shouldClose ='exit'; }; \
-                       elm.href= '#' ;\
-                       var bodyNode = document.getElementsByTagName('body')[0]; \
-                       bodyNode.appendChild(elm); \
-                       alert('done') ;"
+        var btnCode = "alert('done') ; \
+                       var backtopele4uElm = document.createElement('button'); \
+                       backtopele4uElm.className = 'backtopele4u'; \
+                       backtopele4uElm.innerHTML = 'pele4u' ;\
+                       backtopele4uElm.onclick = function() { window.shouldClose ='exit'; }; \
+                       var backtopele4uElmNodes = document.getElementsByTagName('BODY'); \
+                       backtopele4uElmNodes[0].appendChild(backtopele4uElm); "
 
 
        var loop = setInterval(function() {
-                inAppBrowserRef.executeScript({code: btnCode});
+       inAppBrowserRef.executeScript({code: btnCode});
 
        inAppBrowserRef.executeScript(
          {
