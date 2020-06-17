@@ -363,16 +363,27 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      if(!cred) {
      //  code = "window.location.href =  '"+url +"'";
      //  inAppBrowserRef.executeScript({code: code} );
-
-       // inAppBrowserRef.insertCSS({file: "floatbtn.css"});
-
-        var btnCode = "var backtopele4uElm = document.createElement('button'); \
+        var floatBtnCss = "#backtopele4u { position:fixed;width:60px;	" +
+         "height:60px;	bottom:40px;	right:40px;	background-color:#0C9; " + 
+         "	color:#FFF;	border-radius:50px;	text-align:center;" + 
+         "	box-shadow: 2px 2px 3px #999; }" ;
+ 
+ 
+document.head.appendChild(styleSheet)
+        var btnCode = "if(!document.getElementsByTagName('backtopele4u')) {\
+                        var pele4uStyleSheet=  document.createElement('style') ;\
+                        pele4uStyleSheet.type  = 'text/css' ;\
+                        pele4uStyleSheet.innerText = '__btncss' ;\
+                        document.head.appendChild(styleSheet) ;\
+                        var backtopele4uElm = document.createElement('button'); \
                        backtopele4uElm.className = 'backtopele4u'; \
+                       backtopele4uElm.id = 'backtopele4u'; \
                        backtopele4uElm.innerHTML = 'pele4u' ;\
                        backtopele4uElm.onclick = function() { window.shouldClose ='exit'; }; \
                        var backtopele4uElmNodes = document.getElementsByTagName('BODY'); \
-                       backtopele4uElmNodes[0].appendChild(backtopele4uElm); "
+                       backtopele4uElmNodes[0].appendChild(backtopele4uElm); }"
 
+            btnCode = btnCode.replace(/__btncss/g, floatBtnCss );
 
        var loop = setInterval(function() {
        inAppBrowserRef.executeScript({code: btnCode});
