@@ -334,10 +334,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
 
   this.openPortal = function (url,cred) {
-    //disable it until next production
-    return false ;
-
-    
+     
     if(!window.cordova) {
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
@@ -353,18 +350,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-    var iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
+    var iabOptions =  'presentationstyle=fullscreen,clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
     if(cred) 
-      iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    var inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+    //  iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+    iabOptions = "hidden=yes";
+    var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
           PelApi.hideLoading();
 //           PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
      });
-  //  } //else {
-     // inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
-    //}
-      
+ 
      if(!cred) {
      //  code = "window.location.href =  '"+url +"'";
      //  inAppBrowserRef.executeScript({code: code} );
@@ -419,7 +414,20 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             },500 );
     
     });
-  }
+  } else { 
+       var loop = setInterval(function() {
+                inAppBrowserRef.executeScript({
+                     code: "document.getElementById('Log_On')"
+                 },
+                function( values ) {
+                   var loginState = values[ 0 ];
+                    if ( loginState ) {
+                       clearInterval( loop );
+                        inAppBrowserRef.close();
+                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                  }})
+            },500 );
+     }
   }
 
   this.openBrowser = function (url) {
