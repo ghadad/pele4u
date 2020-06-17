@@ -383,8 +383,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       },300) 
      }
  
-
+    var  popupIdx = 1 ;
      if(cred) {
+    
     inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
        var   code = "setTimeout(function(){ \
@@ -408,8 +409,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                    var err = values[ 0 ];
                     if ( err ) {
                        clearInterval( loop );
-                     // inAppBrowserRef.close();
-                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                        if(popupIdx==1) {
+                         inAppBrowserRef.close();
+                         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                         popupIdx++;
+                      }
+                       
                   }})
             },500 );
     
@@ -423,9 +428,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                    var loginState = values[ 0 ];
                     if ( loginState ) {
                        clearInterval( loop );
-                        inAppBrowserRef.close();
-                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                  }})
+                         if(popupIdx==1) {
+                           inAppBrowserRef.close();
+                           PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+                           popupIdx++;
+                      }
+              }})
             },500 );
      }
   }
