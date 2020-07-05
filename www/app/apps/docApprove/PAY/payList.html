@@ -1,0 +1,31 @@
+<ion-view cache-view="false">
+
+  <ion-nav-title>
+    <div class="bar bar-header bar-positive">
+      <div class="title">{{title}}
+      </div>
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="pele-background" onload="doRefresh()">
+    <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
+    </ion-refresher>
+    <label class="item item-input item-search">
+      <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש" ng-model="searchText">
+      <a class="search-icon" ></a>
+    </label>
+
+    <ion-list>
+      <div class="docs-menu" ng-repeat="docsGroup in docsGroups">
+        <ion-item class="docs-menu-details item-icon-left pele_rtl" ng-repeat="item in docsGroup.DOCUMENTS.DOCUMENTS_ROW | filter:searchText as filtered" ng-show="activeGroup == docsGroup.DOC_NAME" ng-click="forwardToDoc(docsGroup.DOC_ID, item.DOC_INIT_ID, item.PAYS.NOTIFICATION_ID)">
+          <img class="icon doc-redirect" ng-src="img/DocApprove/document_redirect.png">
+          <div class=""><strong>שם אצווה: {{item.PAYS.CHECKRUN_NAME}}</strong></div>
+          <div>סכום: <strong>{{item.PAYS.PAYMENT_TOTAL}}</strong></div>
+          <div ng-hide="item.PAYS.PAY_THRU_DATE == null">ת. פירעון: <span class="peldate">{{item.PAYS.PAY_THRU_DATE|peldate | date : 'hh:ss dd-MM-yyyy'}} </span></div>
+          <div>כמות חשבוניות: {{item.PAYS.INVOICE_COUNT}}</div> 
+          <div>מדרגה: {{item.PAYS.FORMAT_INTERVAL}} </div>  
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

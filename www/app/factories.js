@@ -1401,6 +1401,13 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
             action.left_icon = "";
             action.right_icon = 'ion-help-circled';
           }
+          if (action.ACTION_CODE === "OPEN_CHAT" && action.NOTE) {
+            action.short_text = 'ביאור';
+            action.right_icon = 'ion-help-circled';            
+          }if (action.ACTION_CODE === "CLOSE_CHAT" && action.NOTE) {
+            action.short_text = 'ביאור';
+            action.right_icon = 'ion-help-circled';            
+          }            
           if (!action.ACTION_CODE && action.NOTE) {
             action.display = false;
             action.left_icon = 'ion-chevron-left';
@@ -1778,7 +1785,89 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if ((btn.note && res) || (!btn.note))
             scope.submitUpdateInfo(btn, res);
         });
-      }
+      }, 
+
+        //Yanis adding chat for pay 
+        displayChatQuesNew: function (scope) {
+          var self = this;
+          if (typeof scope.actionNote === "undefined") {
+            self.showPopup("Missing scope.actionNote def ", "");
+          }
+          var noteModal = $ionicPopup.show({
+            template: 
+            '<div class="list pele_rtl">'+
+              '<label class="item item-input pele_rtl"><select class="pele_rtl text-right" ng-style="{\'width\': \'150%\'}" ng-model="formData.subject" ng-init="formData.subject = chatSubjects[0].CHAT_SUBJECT_CODE" ng-options="item.CHAT_SUBJECT_CODE as item.CHAT_SUBJECT_DESC for item in chatSubjects"></select></label>' +
+              '<label class="item item-input pele_rtl"><select class="pele_rtl text-right" ng-style="{\'width\': \'150%\'}" ng-model="formData.forwardUserName" ng-options="item.CHAT_USER_NAME as item.CHAT_FULL_NAME for item in chatPersons"><option value="">נמענים</option></select></label>' +
+              '<label class="item item-input pele_rtl"><textarea autofocus rows="8" ng-model="actionNote.text" type="text">{{actionNote.text}}</textarea></label>' +
+            '</div>',
+            title: '<strong class="float-right">שליחת ביאור</strong>',
+            subTitle: '',
+            scope: scope,
+            buttons: [{
+                text: '<a class="pele-popup-positive-text-collot">שלח</a>',
+                type: 'button-positive',
+                onTap: function (e) {
+
+                  formQuestion = {
+                    subject: "",
+                    forwardUserName: "",
+                    text: ""
+                  };
+              
+                  if (!self.isValidNote(scope.actionNote.text)) {
+                    e.preventDefault();
+                    self.showPopup("יש להזין שאלה", "יש להזין לפחות 2 אותיות");
+                  } else if (!self.isValidNote(scope.formData.subject)) {
+                    e.preventDefault();
+                    self.showPopup("יש לבחור נושא של ביאור");
+                  } else if (!self.isValidNote(scope.formData.forwardUserName)) {
+                    e.preventDefault();
+                    self.showPopup("יש לבחור נמען");
+                  } else {                    
+
+                    formQuestion.subject = scope.formData.subject;
+                    formQuestion.forwardUserName = scope.formData.forwardUserName;
+                    formQuestion.text = scope.actionNote.text;
+
+                    return (formQuestion);
+                  }
+                }
+              },
+              {
+                text: 'ביטול',
+                type: 'button-assertive',
+                onTap: function (e) {
+
+                  formQuestion = {
+                    subject: "",
+                    forwardUserName: "",
+                    text: ""
+                  };
+
+                  scope.formData.subject = '';
+                  scope.formData.forwardUserName = '';
+                  scope.actionNote.text = '';
+                  
+                  formQuestion.subject = scope.formData.subject;
+                  formQuestion.forwardUserName = scope.formData.forwardUserName;
+                  formQuestion.text = scope.actionNote.text;
+
+                  return (formQuestion);
+                }
+              },
+            ]
+          });
+          noteModal.then(function (res) {
+            if (res){
+              if(!res.text && res.text === ""){
+                return true;
+              }else{                
+                scope.sendQuestion(res);
+              }
+            }
+          });
+        }
+        //Yanis adding chat for pay      
 
     };
 

@@ -177,6 +177,30 @@ angular.module('pele.states', [])
       },
       src: ["app/apps/docApprove/INV/invDetailsCtrl.js"]
     }, {
+      state: 'app.pay_list',
+      url: "/pay_list/:AppId/:FormType/:Pin",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/PAY/payList.html";
+          },
+          controller: 'payListCtrl',
+        }
+      },
+      src: ["app/apps/docApprove/PAY/payListCtrl.js"]
+    }, {
+      state: 'app.pay_details',
+      url: "/pay_details/:formType/:AppId/:docId/:docInitId",
+      views: {
+        'menuContent': {
+          templateUrl: function() {
+            return "app/apps/docApprove/PAY/payDetails.html";
+          },
+          controller: 'payDetailsCtrl'
+        }
+      },
+      src: ["app/apps/docApprove/PAY/payDetailsCtrl.js"]
+    }, {      
       state: 'app.chat_list',
       url: "/chat_list/:AppId/:FormType/:Pin",
       views: {
