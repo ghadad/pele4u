@@ -144,10 +144,14 @@ app.controller('GetUserMenuCtrl',
 
 
     if (!appSettings.config.MSISDN_VALUE) {
+      PelApi.lagger.info("MSISDN_VALUE not found in getUserMenu -> reset and go to ldapLogin ");
       $sessionStorage.$reset();
       $localStorage.$reset();
       return $state.go('app.ldap_login');
+    }  else {
+      PelApi.lagger.info("MSISDN_VALUE found in getUserMenu -> continue ! ");
     }
+    
 
 
     $scope.GetUserMenuMain = function () {

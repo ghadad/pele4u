@@ -29,14 +29,18 @@ angular.module('pele', ['ngStorage'])
      
     }
 
-    if($state.params.reset ) 
-       BioAuth.clear();
+    if($state.params.reset ) {
+      PelApi.lagger.info("User click on reset !");
+      BioAuth.clear();
+    }
+
         
   $scope.checkTries = function() { 
     var tries = _.get(PelApi.sessionStorage,'stat.bioFailed',0);
     if(tries>=5)    
         BioAuth.clear("soft");
     _.set(PelApi.sessionStorage, 'stat.bioFailed',tries+1);
+    PelApi.lagger.info("AdLogin checkTries : " + tries);
   }
 
   $scope.toggleRight = function(){

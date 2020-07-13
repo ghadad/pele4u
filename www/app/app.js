@@ -73,7 +73,8 @@ angular.module('pele', [
     $ionicPlatform.ready(function() {
     //  window.open = cordova.InAppBrowser.open;
       var model = ionic.Platform.device().model;
-      window.open = cordova.InAppBrowser.open ;
+      if(_.get(window,"cordova.InAppBrowser"))
+        window.open = cordova.InAppBrowser.open ;
       window.deviceModel = model;
       if (ionic.Platform.isIOS()) {
         var ratio = window.devicePixelRatio || 1;

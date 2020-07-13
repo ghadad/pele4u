@@ -1831,6 +1831,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       },
 
       clear: function (soft) {
+
+        PelApi.lagger.info("storage will clear : " +soft);
+
         if (soft && soft == "soft") {
           var method = _.get(PelApi.localStorage, 'ADAUTH.method', "")
           _.set(PelApi.localStorage, 'ADAUTH', {
@@ -1857,7 +1860,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           if (window.BiometricAuth) {
             window.BiometricAuth.isAvailable(function (result) {
               PelApi.localStorage.bioAuthCap = PelApi.sessionStorage.bioAuthCap = result;
-              console.log(result)
               if(result && result.hasEnrolledFingerprints)
                 return resolve("finger");
               if(_.isString(result) && result.match(/finger|face/)) 
