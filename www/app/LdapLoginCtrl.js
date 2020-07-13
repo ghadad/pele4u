@@ -283,7 +283,12 @@ angular.module('pele', ['ngStorage'])
          // $state.reload();
         })
     } else {
-      
+      PelApi.lagger.info("token valid :" +PelApi.appSettings.config.IS_TOKEN_VALID);
+      PelApi.lagger.info("bioUser :" +bioUser);
+      PelApi.lagger.info("token :" +token);
+      PelApi.lagger.info("BioAuth.isInstalled :" +BioAuth.isInstalled());
+      PelApi.lagger.info("BioAuth.getMethod().match(/finger|face|bio/) :" +BioAuth.getMethod().match(/finger|face|bio/));
+
       BioAuth.clear("soft");
       if(BioAuth.getMethod() == "pincode") { 
         $scope.activeForm = true;
