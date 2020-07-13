@@ -353,7 +353,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     var iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,presentationstyle=fullscreen'; 
     if(cred) 
     //  iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions = "hidden=yes";
+    iabOptions = "clearcache=yes,clearsessioncache=yes,hidden=yes";
     var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
           PelApi.hideLoading();
