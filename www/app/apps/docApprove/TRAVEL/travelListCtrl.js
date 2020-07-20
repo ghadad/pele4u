@@ -46,7 +46,12 @@ angular.module('pele')
           var result = apiData.ROW || [];
 
           if (result.length && result[0].DOC_NAME === null) {
-            PelApi.goHome();
+            $state.go("app.p2_moduleList", {
+              "AppId":  $scope.appId,
+              "Title": "",
+              "Pin":  $state.pin
+            });
+            //PelApi.goHome();
           }
           
           $scope.docsGroups = $scope.parse(result);

@@ -50,7 +50,13 @@ angular.module('pele')
           //Cursor if empty
           if (result.length && result[0].DOC_NAME === null) {
             //PelApi.appSettings.config.IS_TOKEN_VALID = 'N'
-            PelApi.goHome();
+            $state.go("app.p2_moduleList", {
+              "AppId":  $scope.appId,
+              "Title": "",
+              "Pin":  $state.pin
+            });
+
+            // PelApi.goHome();
           }
 
           $scope.docsGroups = $scope.parse(result);
