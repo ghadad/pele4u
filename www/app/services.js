@@ -335,7 +335,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
   this.openPortal = function (url,cred) {
     //disable it until next production
-    return false ;
+    // return false ;
 
     
     if(!window.cordova) {
