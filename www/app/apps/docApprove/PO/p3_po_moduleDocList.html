@@ -1,30 +1,20 @@
-<ion-view class="feed-entries-view " cache-view="false">
- 
+<ion-view cache-view="false">
   <ion-nav-title>
     <div class="bar bar-header bar-positive">
-      <h1 class="title">אישור הזמנת רכש</h1>
+      <div class="title">{{title}}
+      </div>
     </div>
   </ion-nav-title>
-
   <ion-content class="pele-background" onload="doRefresh()">
     <!-- Refresh to get the new posts -->
     <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
     </ion-refresher>
-
-    <div ng-if="0" class="list list-inset list-item-search">
-      <label class="item item-input item-search-new">
-      <input type="text" placeholder="חיפוש" ng-model="searchText.text" class="" ng-change="searchBarCreteria()">
-        <i class="icon pel_icon ion-search placeholder-icon"></i>
-      </input>
-    </label>
-    </div>
-    <label class="item item-input item-search" ng-click="searchBarCreteria()">
-
-     <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש" ng-model="searchText.text">
-     <a class="search-icon" ></a>
-   </label>
-
-    <ion-list>
+ 
+      <label class="item item-input item-search" ng-click="searchBarCreteria()">
+        <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש" ng-model="searchText.text">
+        <a class="search-icon" ></a>
+       </label>
+      <ion-list>
       <div ng-repeat="chat in chats">
         <ion-item class="item-stable" ng-click="toggleGroup(chat.ORG_NAME)" ng-class="{active: isGroupShown(chat.ORG_NAME)}">
           <ion-icon ng-class="isGroupShown(chat.ORG_NAME) ? 'ion-arrow-left-b' : 'ion-arrow-down-b'"></ion-icon>
@@ -48,7 +38,6 @@
           <div><strong>{{item.VENDOR_NAME}}</strong></div>
         </ion-item>
 
-      </div>
     </ion-list>
   </ion-content>
 </ion-view>

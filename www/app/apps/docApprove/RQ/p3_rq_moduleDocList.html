@@ -1,8 +1,7 @@
-<ion-view class="feed-entries-view" cache-view="false">
+<ion-view cache-view="false">
   <ion-nav-title>
     <div class="bar bar-header bar-positive">
-      <div class="title" id="logo">{{title}}
-        <!--<img src="img/DocApprove/logo.png" style="max-width: 100%;  height: 100%;"/>-->
+      <div class="title">{{title}}
       </div>
     </div>
   </ion-nav-title>
@@ -11,10 +10,7 @@
     <!-- Refresh to get the new posts -->
     <ion-refresher pulling-text="משוך לרענון..." on-refresh="doRefresh()">
     </ion-refresher>
-    <div ng-if="0" class="pele-page-title pele-img-size pele-page-title-font">
-      <a class="description">{{title}}</a>
-    </div>
-
+ 
     <label class="item item-input item-search" ng-click="searchBarCreteria()">
 
       <input type="search" class="search-area" style="color:#fafafa;" placeholder="חיפוש"ng-model="searchText.text">

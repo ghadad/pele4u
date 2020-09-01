@@ -4,7 +4,7 @@ Created by User on 27/05/2020.
 angular.module('pele')
   .controller('payDetailsCtrl', ['$scope', '$location', '$timeout','ApiService', '$ionicScrollDelegate', '$anchorScroll', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$cordovaFileTransfer',
     function($scope, $location, $timeout, ApiService, $ionicScrollDelegate, $anchorScroll, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $cordovaFileTransfer) {
-      $scope.actionNote = {};
+      $scope.actionNote = {}; 
       $scope.prevTopPos = 0;
       $scope.genTopPos = 0;
       $scope.formData = {
@@ -80,6 +80,7 @@ angular.module('pele')
           $scope.chatSubjects = $scope.docDetails.CHAT_SUBJECTS || [];
           $scope.chatPersons = $scope.docDetails.CHAT_PERSONS || [];
           PelApi.extendActionHistory($scope.docDetails);
+          $scope.title =  $scope.docDetails.CHECKRUN_NAME + " שם אצווה";
           $scope.buttonsArr = $scope.docDetails.BUTTONS || [];  
           
         }).error(function(error, httpStatus, headers, config) {

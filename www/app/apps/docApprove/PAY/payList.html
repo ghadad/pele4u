@@ -21,7 +21,7 @@
           <img class="icon doc-redirect" ng-src="img/DocApprove/document_redirect.png">
           <div class=""><strong>שם אצווה: {{item.PAYS.CHECKRUN_NAME}}</strong></div>
           <div>סכום: <strong>{{item.PAYS.PAYMENT_TOTAL}}</strong></div>
-          <div ng-hide="item.PAYS.PAY_THRU_DATE == null">ת. פירעון: <span class="peldate">{{item.PAYS.PAY_THRU_DATE|peldate | date : 'hh:ss dd-MM-yyyy'}} </span></div>
+          <div ng-hide="item.PAYS.PAY_THRU_DATE == null">ת. פירעון: <span class="peldate">{{item.PAYS.PAY_THRU_DATE|peldate | date : 'hh:mm dd-MM-yyyy'}} </span></div>
           <div>כמות חשבוניות: {{item.PAYS.INVOICE_COUNT}}</div> 
           <div>מדרגה: {{item.PAYS.FORMAT_INTERVAL}} </div>  
         </ion-item>

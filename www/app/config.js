@@ -1,5 +1,5 @@
 /*********************/
-const env = "Q2";
+const env = "QA";
 /********************/
 
 const EnvCodes = {
@@ -203,7 +203,7 @@ angular.module('pele.config', [])
       bioClientId: "NEVER_CHANGE_THIS_VALUE_BIOPELE4U",
       bioClientSecret: "NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
-      APP_VERSION: "151",
+      APP_VERSION: "155",
       SCAN_PRINT_SCANNING_ERROR: "שגיאה בסריקה",
       PIN_CODE_AUTHENTICATION_REQUIRED_CODE: "10000",
       IS_TOKEN_VALID: "N",
@@ -356,6 +356,9 @@ angular.module('pele.config', [])
       "TRAVEL": {
         state: "app.travel_list"
       },
+      "PAY": {
+        state: "app.pay_list"
+      },      
     },
     ACTION_HISTORY: {
       "FORWARD": "אישור",

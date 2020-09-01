@@ -1813,7 +1813,10 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                     forwardUserName: "",
                     text: ""
                   };
-              
+                  
+                  var error = false;
+                  var illegalChars = /[\u0022-\u0027\u002f\u003c\u003e\u0040\u005b-\u005e\u0060\u007b-\u007e]/;
+                  
                   if (!self.isValidNote(scope.actionNote.text)) {
                     e.preventDefault();
                     self.showPopup("יש להזין שאלה", "יש להזין לפחות 2 אותיות");
@@ -1823,6 +1826,9 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
                   } else if (!self.isValidNote(scope.formData.forwardUserName)) {
                     e.preventDefault();
                     self.showPopup("יש לבחור נמען");
+                  } else if (illegalChars.test(scope.actionNote.text)){
+                    e.preventDefault();
+                    self.showPopup("מנסה להשתמש באחד או יותר סימנים לא חוקיים! נא למחוק את הסימן ולהגיש ביאור מחדש");
                   } else {                    
 
                     formQuestion.subject = scope.formData.subject;
