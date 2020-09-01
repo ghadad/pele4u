@@ -312,7 +312,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         inAppBrowserRef.addEventListener("loadstop", function () {
           var loop = window.setInterval(function () {
             inAppBrowserRef.executeScript({
-                code: "window.shouldClose || window.closed"
+                code: "window.backToPele4u"
               },
               function (values) {
                 if (values[0]) {
@@ -356,18 +356,13 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     var iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
     if(cred) 
       iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    var inAppBrowserRef = window.pele4uInAppBrowserRef = cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+      var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
           PelApi.hideLoading();
-//           PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+
      });
-  //  } //else {
-     // inAppBrowserRef = window.pele4uInAppBrowserRef  ; 
-    //}
       
      if(!cred) {
-     //  code = "window.location.href =  '"+url +"'";
-     //  inAppBrowserRef.executeScript({code: code} );
        var loop = setInterval(function() {
        inAppBrowserRef.executeScript(
          {
@@ -377,7 +372,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            var err = values[ 0 ];
              if ( err ) {
                clearInterval( loop );
-               //browserRef.close();
               PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
            }
        } )},500);
@@ -404,8 +398,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
       
-           inAppBrowserRef.executeScript({code: code} );
-            var loop = setInterval(function() {
+              inAppBrowserRef.executeScript({code: code} );
+               var loop = setInterval(function() {
                 inAppBrowserRef.executeScript({
                      code: "document.getElementById('errorMessageLabel')"
                  },
@@ -413,7 +407,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                    var err = values[ 0 ];
                     if ( err ) {
                        clearInterval( loop );
-                     // inAppBrowserRef.close();
                         PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
                   }})
             },500 );
