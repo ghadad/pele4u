@@ -333,7 +333,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
 
-  this.openPortal = function (url,cred) {
+  this.authPortal = function (url,cred) {
     //disable it until next production
     // return false ;
  
@@ -343,24 +343,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
     }
-    var swalObject = {
-      type: 'error',
-      title: 'פתיחת פורטל נכשלה',
-      text: 'נא צא מהאפליקציה ונסה שוב',
-      showConfirmButton: false,
-      timer: 2500
-    };
+
 
     PelApi.showLoading({
       duration: 1000 * 3
     });
-    var iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no,closebuttoncaption=סגור'; 
-    if(cred) 
-      iabOptions = "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-      var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+    var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+     var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
           PelApi.hideLoading();
-
      });
       
      if(!cred) {
@@ -388,18 +379,18 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      if(cred) {
       inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
-        var   code = "setTimeout(function(){ \
-            var btn = document.getElementById('Log_On') ; \
+        var  code = "(function() { \
+           var btn = document.getElementById('Log_On') ; \
             if(btn) { \
-              window.pele4uLogin = 'no' ; \
                document.getElementById('login').value = '__username' ; \
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
+               return 'no' ;\
              } \
              else { \
-              window.pele4uLogin = 'yes' ; \
+              return 'yes' ;\
              } \
-            },1500); "
+            })()";
 
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
@@ -408,9 +399,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 inAppBrowserRef.executeScript({code: code,
                   function( values ) {
                     var res = values[0];
+                    alert(res);
+                    if ( res == 'yes' ) {
+                      clearInterval( loop );
+                    }     
                     PelApi.store.set("portalLogin",res);
                   }
                 });
+
                 inAppBrowserRef.executeScript({
                   code: "document.getElementById('errorMessageLabel')"
                 },
