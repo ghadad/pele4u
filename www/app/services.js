@@ -377,25 +377,27 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
 
      if(cred) {
+      var  code = "(function() { \
+        alert(1) ; \
+        var btn = document.getElementById('Log_On') ; \
+         if(btn) { \
+          alert(2) ; \
+            document.getElementById('login').value = '__username' ; \
+            document.getElementById('passwd').value = '__password' ; \
+            btn.click(); \
+            return 'no' ;\
+          } \
+          else { \
+           return 'yes' ;\
+          } \
+         })()";
+
+         code = code.replace(/__username/g, cred.UserName );
+         code = code.replace(/__password/g, cred.password );
+         
       inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
-        var  code = "(function() { \
-           var btn = document.getElementById('Log_On') ; \
-            if(btn) { \
-               document.getElementById('login').value = '__username' ; \
-               document.getElementById('passwd').value = '__password' ; \
-               btn.click(); \
-               return 'no' ;\
-             } \
-             else { \
-              return 'yes' ;\
-             } \
-            })()";
-
-            code = code.replace(/__username/g, cred.UserName );
-            code = code.replace(/__password/g, cred.password );
-            
-            var loop  =  setInterval( function() { 
+               var loop  =  setInterval( function() { 
                 inAppBrowserRef.executeScript({code: code,
                   function( values ) {
                     var res = values[0];
