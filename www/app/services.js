@@ -390,13 +390,27 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     
     //        code = code.replace(/__username/g, cred.UserName );
     //        code = code.replace(/__password/g, cred.password );
+    var  parentCode = "alert('holla') ; \
+                      var tryPele4ULogin(username,password) { \
+                      alert('try connect'); \
+                      var btn = document.getElementById('Log_On') ; \
+                      if(btn) { \
+                        document.getElementById('login').value = username ; \
+                        document.getElementById('passwd').value = password ; \
+                        btn.click(); \
+                      return 'no'; \
+                      } \
+                      return 'yes'; \
+                     }";
+    
               var childCode = "tryPele4ULogin('" +cred.username +"','"+ cred.password+"')";
+
               inAppBrowserRef.executeScript({code: code} );
               var startTime = new Date().getTime();
               var loginSuccess = "no";
               
                 ref.executeScript(
-                  { file:'https://msso.pelephone.co.il/mobileAppGw/public/js/portal_auth.js' },
+                  { code:parentCode },
                   function() {
                     var loop = setInterval(function() {
                         ref.executeScript(
