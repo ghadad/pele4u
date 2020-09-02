@@ -390,7 +390,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     
     //        code = code.replace(/__username/g, cred.UserName );
     //        code = code.replace(/__password/g, cred.password );
-              var childCode = "tryPele4ULogin('" +username +"','"+ password+"')";
+              var childCode = "tryPele4ULogin('" +cred.username +"','"+ cred.password+"')";
               inAppBrowserRef.executeScript({code: code} );
               var startTime = new Date().getTime();
               var loginSuccess = "no";
