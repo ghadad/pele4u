@@ -378,10 +378,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
      if(cred) {
       var  code = "(function() { \
-        alert(1) ; \
         var btn = document.getElementById('Log_On') ; \
          if(btn) { \
-          alert(2) ; \
             document.getElementById('login').value = '__username' ; \
             document.getElementById('passwd').value = '__password' ; \
             btn.click(); \
