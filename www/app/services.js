@@ -333,7 +333,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
 
-  this.authPortal = function (url,cred) {
+  this.openPortal = function (url,cred) {
     //disable it until next production
     // return false ;
  
