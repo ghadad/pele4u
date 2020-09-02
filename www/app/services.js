@@ -384,87 +384,47 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      }
  
 
+
      if(cred) {
-    inAppBrowserRef.addEventListener("loadstop", function () {
+      inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
-    
-    //        code = code.replace(/__username/g, cred.UserName );
-    //        code = code.replace(/__password/g, cred.password );
-    var  parentCode = "alert('holla') ; \
-                      var tryPele4ULogin(username,password) { \
-                      alert('try connect'); \
-                      var btn = document.getElementById('Log_On') ; \
-                      if(btn) { \
-                        document.getElementById('login').value = username ; \
-                        document.getElementById('passwd').value = password ; \
-                        btn.click(); \
-                      return 'no'; \
-                      } \
-                      return 'yes'; \
-                     }";
-    
-              var childCode = "tryPele4ULogin('" +cred.username +"','"+ cred.password+"')";
-
-              // inAppBrowserRef.executeScript({code: parentCode} );
-              var startTime = new Date().getTime();
-              var loginSuccess = "no";
-              
-              inAppBrowserRef.executeScript(
-                  { code:parentCode },
-                  function() {
-                    var loop = setInterval(function() {
-                      inAppBrowserRef.executeScript(
-                          { code:childCode },
-                          function(values){
-                            loginSuccess= values[0];
-                            PelApi.store.set("portalLogin",loginSuccess);
-                          });
-                          var timePast   = new Date().getTime() - startTime ; 
-                          if(timePast > 2000 && loginSuccess == "yes"){
-                            clearInterval(loop);
-                            return;
-                          }
-                          if(timePast > 10000){
-                            clearInterval(loop);
-                            return;
-                          }
-                    },500 );
-                  }
-                );
-               
-     });
-   }
-
-     if(0 && cred) {
-    inAppBrowserRef.addEventListener("loadstop", function () {
-        PelApi.hideLoading();
-       var   code = "setTimeout(function(){ \
+        var   code = "setTimeout(function(){ \
             var btn = document.getElementById('Log_On') ; \
             if(btn) { \
+              window.pele4uLogin = 'no' ; \
                document.getElementById('login').value = '__username' ; \
                document.getElementById('passwd').value = '__password' ; \
                btn.click(); \
+             } \
+             else { \
+              window.pele4uLogin = 'yes' ; \
              } \
             },1500); "
 
             code = code.replace(/__username/g, cred.UserName );
             code = code.replace(/__password/g, cred.password );
-      
-              inAppBrowserRef.executeScript({code: code} );
-               var loop = setInterval(function() {
+            
+            var loop  =  setInterval( function() { 
+                inAppBrowserRef.executeScript({code: code,
+                  function( values ) {
+                    var res = values[0];
+                    PelApi.store.set("portalLogin",res);
+                  }
+                });
                 inAppBrowserRef.executeScript({
-                     code: "document.getElementById('errorMessageLabel')"
-                 },
+                  code: "document.getElementById('errorMessageLabel')"
+                },
                 function( values ) {
-                   var err = values[ 0 ];
-                    if ( err ) {
-                       clearInterval( loop );
-                        PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
-                  }})
-            },500 );
-    
-    });
-  }
+                  var err = values[0];
+                  if ( err ) {
+                        clearInterval( loop );
+                        PelApi.store.set("portalLogin","error");
+                   }
+                 }
+                )
+              },1000);
+     });
+    }
   }
 
   this.openBrowser = function (url) {
