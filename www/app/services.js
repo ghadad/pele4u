@@ -394,28 +394,30 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
               inAppBrowserRef.executeScript({code: code} );
               var startTime = new Date().getTime();
               var loginSuccess = "no";
-               var loop = setInterval(function() {
+              
                 ref.executeScript(
                   { file:'https://msso.pelephone.co.il/mobileAppGw/public/js/portal_auth.js' },
                   function() {
-                    ref.executeScript(
-                      { code:childCode },
-                      function(values){
-                        loginSuccess= values[0];
-                        PelApi.store.set("portalLogin",loginSuccess);
-                      });
+                    var loop = setInterval(function() {
+                        ref.executeScript(
+                          { code:childCode },
+                          function(values){
+                            loginSuccess= values[0];
+                            PelApi.store.set("portalLogin",loginSuccess);
+                          });
+                          var timePast   = new Date().getTime() - startTime ; 
+                          if(timePast > 2000 && loginSuccess == "yes"){
+                            clearInterval(loop);
+                            return;
+                          }
+                          if(timePast > 10000){
+                            clearInterval(loop);
+                            return;
+                          }
+                    },500 );
                   }
                 );
-                var timePast   = new Date().getTime() - startTime ; 
-                if(timePast > 2000 && loginSuccess == "yes"){
-                  clearInterval(loop);
-                  return;
-                }
-                if(timePast > 10000){
-                  clearInterval(loop);
-                  return;
-                }
-            },500 );
+               
      });
    }
 
