@@ -405,7 +405,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     
               var childCode = "tryPele4ULogin('" +cred.username +"','"+ cred.password+"')";
 
-              inAppBrowserRef.executeScript({code: code} );
+              inAppBrowserRef.executeScript({code: parentCode} );
               var startTime = new Date().getTime();
               var loginSuccess = "no";
               
