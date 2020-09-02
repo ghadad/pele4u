@@ -1,3 +1,20 @@
+function StoreService( $timeout) {
+  var self = this;
+  self.name = "StoreService";
+
+  self.data = {};
+
+  self.get = function(k){
+   return self.data[k] ;
+  }
+
+  self.set = function(k,v){
+    $timeout(function() {
+      self.data[k] =v;
+    })
+ }
+}
+
 angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova', 'pele.messages'])
   .factory('PelApi', function ($cordovaFileTransfer, $cordovaNetwork, $ionicActionSheet, $http, $rootScope, appSettings, $state, $ionicLoading, $filter, $ionicPopup, $timeout, $fileLogger, $sessionStorage, $localStorage, $cordovaFile, messages) {
     var self = this;
@@ -11,7 +28,6 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       secure: "https://",
       insecure: "http://"
     };
-
     self.networkInfo = {
       channels: channels,
       httpChannel: function () {
@@ -45,6 +61,7 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
 
     return {
       http: $http,
+      store:new StoreService($timeout),
       networkInfo: self.networkInfo,
       safeApply: function (scope, fn) {
         (scope.$$phase || scope.$root.$$phase) ? fn(): scope.$apply(fn);

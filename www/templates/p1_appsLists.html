@@ -33,8 +33,9 @@
     <ion-refresher pulling-text="משוך לרענון... " on-refresh="goToADLogin()">
     </ion-refresher>
     <div class="grid-layout" ng-show="menuItems">
-      <div ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">
+      <div ng-show="app.ApplicationType != 'IPB' || (app.ApplicationType == 'IPB' && globalStore.portalLogin == 'yes')" ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">
         <i class="circle"><img class="grid-item-image" ng-src="{{app.Image}}" /></i>
+        {{globalStore.portalLogin}}
         <div class="caption">{{app.DisplayName}}</div>
       </div>
     </div>

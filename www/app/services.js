@@ -336,8 +336,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   this.openPortal = function (url,cred) {
     //disable it until next production
     // return false ;
+ 
+    PelApi.store.set("portalLogin","progress");
 
-    
     if(!window.cordova) {
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
@@ -372,7 +373,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            var err = values[ 0 ];
              if ( err ) {
                clearInterval( loop );
-              PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+               PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
            }
        } )},500);
 
@@ -384,6 +385,41 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
  
 
      if(cred) {
+    inAppBrowserRef.addEventListener("loadstop", function () {
+        PelApi.hideLoading();
+    
+    //        code = code.replace(/__username/g, cred.UserName );
+    //        code = code.replace(/__password/g, cred.password );
+              var childCode = "tryPele4ULogin('" +username +"','"+ password+"')";
+              inAppBrowserRef.executeScript({code: code} );
+              var startTime = new Date().getTime();
+              var loginSuccess = "no";
+               var loop = setInterval(function() {
+                ref.executeScript(
+                  { file:'https://msso.pelephone.co.il/mobileAppGw/public/js/portal_auth.js' },
+                  function() {
+                    ref.executeScript(
+                      { code:childCode },
+                      function(values){
+                        loginSuccess= values[0];
+                        PelApi.store.set("portalLogin",loginSuccess);
+                      });
+                  }
+                );
+                var timePast   = new Date().getTime() - startTime ; 
+                if(timePast > 2000 && loginSuccess == "yes"){
+                  clearInterval(loop);
+                  return;
+                }
+                if(timePast > 10000){
+                  clearInterval(loop);
+                  return;
+                }
+            },500 );
+     });
+   }
+
+     if(0 && cred) {
     inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
        var   code = "setTimeout(function(){ \

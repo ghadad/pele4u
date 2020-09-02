@@ -17,7 +17,7 @@ app.controller('GetUserMenuCtrl',
         })
       }
     })
-    //$ionicScrollDelegate.$getByHandle('menu1-handle').scrollTo('300px');
+    $scope.globalStore = PelApi.store.data;
 
     $rootScope.menuItems = [];
     $scope.options = {
@@ -53,26 +53,12 @@ app.controller('GetUserMenuCtrl',
     //$scope.tilesEnabled = true;
     $scope.sort = function (items) {
 
-      /*  items[0].Sorter = "1@cls1 dsds ddssd";
-      items[1].Sorter = "2@cls3";
-      items[2].Sorter = "4.1@cls3";
-      items[2].Path = null;
-      items[3].Sorter = "4.1@wide";
-      //items[3].Path = null;
-      items[4].Sorter = "4";
-      items[4].Path = null;
-      */
-
-      if (appSettings.config.testItems) {
-        appSettings.config.testItems.forEach(function (i) {
-          items.push(i);
-        })
-      }
       var re = new RegExp("(\\@[a-z]+[\\s\\w]+)", "gi")
       var idx = 0;
 
       var sortedMenu = _.sortBy(items, function (i) {
         idx++;
+
         i.menuLocation = i.Location || "side";
         i.side = i.menuLocation.match("side|s") ? true : false;
         i.menu1 = i.menuLocation.match("menu1|m1") ? true : false;
