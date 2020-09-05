@@ -390,6 +390,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                       document.getElementById('passwd').value = '__password' ; \
                       btnFired=1 ; \
                       btn.click(); \
+                      alert('btnFired = '+btnFired+ ' idx = ' +idx ) ;\
                       } \
                     },200 * idx) \
                    } ";
