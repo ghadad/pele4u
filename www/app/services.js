@@ -382,27 +382,37 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             document.getElementById('login').value = '__username' ; \
             document.getElementById('passwd').value = '__password' ; \
             btn.click(); \
-          } ";
-
+          } \
+          setTimeout(function() { \
+            if(btn) { \
+              document.getElementById('login').value = '__username' ; \
+              document.getElementById('passwd').value = '__password' ; \
+              btn.click(); \
+            } \
+          },3000) \
+          setTimeout(function() { \
+            if(btn) { \
+              document.getElementById('login').value = '__username' ; \
+              document.getElementById('passwd').value = '__password' ; \
+              btn.click(); \
+            } \
+          },6000)"
+          var code2 = "document.getElementById('pele4u-logout').src"
+            
+         
          code = code.replace(/__username/g, cred.UserName );
          code = code.replace(/__password/g, cred.password );
          
       inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
-                inAppBrowserRef.executeScript({code: code});
+          inAppBrowserRef.executeScript({code: code});
+          setTimeout(function(){
+            inAppBrowserRef.executeScript({code: code2,
+              function( values ) {
+               alert( values[0]);
+             }})
+          },8000);
 
-               /*  inAppBrowserRef.executeScript({
-                  code: "document.getElementById('errorMessageLabel') || window.pele4ulogin"
-                },
-                function( values ) {
-                  var err = values[0];
-                  if ( err ) {
-                        clearInterval( loop );
-                        PelApi.store.set("portalLogin","error");
-                   }
-                 }
-                )
-                */
      });
     }
   }
