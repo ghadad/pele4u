@@ -349,6 +349,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+
+    if(!cred)
+     iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
+
      var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
        inAppBrowserRef.addEventListener("loaderror", function () {
           PelApi.hideLoading();
@@ -390,7 +394,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
               document.getElementById('passwd').value = '__password' ; \
               btn.click(); \
             } \
-          },3000) \
+          },3000) ;\
           setTimeout(function() { \
             var btn = document.getElementById('Log_On') ;\
             if(btn) { \
@@ -398,7 +402,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
               document.getElementById('passwd').value = '__password' ; \
               btn.click(); \
             } \
-          },6000)"
+          },6000);"
           var code2 = "document.getElementById('pele4u-logout').src"
             
          
