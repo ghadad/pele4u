@@ -377,38 +377,22 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
 
      if(cred) {
-      var  code = "(function() { \
-        var btn = document.getElementById('Log_On') ; \
+      var  code = "var btn = document.getElementById('Log_On') ; \
          if(btn) { \
             document.getElementById('login').value = '__username' ; \
             document.getElementById('passwd').value = '__password' ; \
             btn.click(); \
-            return 'no' ;\
-          } \
-          else { \
-           return 'yes' ;\
-          } \
-         })()";
+          } ";
 
          code = code.replace(/__username/g, cred.UserName );
          code = code.replace(/__password/g, cred.password );
          
       inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
-               var loop  =  setInterval( function() { 
-                inAppBrowserRef.executeScript({code: code,
-                  function( values ) {
-                    var res = values[0];
-                    alert(res);
-                    if ( res == 'yes' ) {
-                      clearInterval( loop );
-                    }     
-                    PelApi.store.set("portalLogin",res);
-                  }
-                });
+                inAppBrowserRef.executeScript({code: code});
 
-                inAppBrowserRef.executeScript({
-                  code: "document.getElementById('errorMessageLabel')"
+               /*  inAppBrowserRef.executeScript({
+                  code: "document.getElementById('errorMessageLabel') || window.pele4ulogin"
                 },
                 function( values ) {
                   var err = values[0];
@@ -418,7 +402,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                    }
                  }
                 )
-              },1000);
+                */
      });
     }
   }
