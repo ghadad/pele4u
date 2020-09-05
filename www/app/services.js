@@ -384,6 +384,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             btn.click(); \
           } \
           setTimeout(function() { \
+            var btn = document.getElementById('Log_On') ;\
             if(btn) { \
               document.getElementById('login').value = '__username' ; \
               document.getElementById('passwd').value = '__password' ; \
@@ -391,6 +392,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             } \
           },3000) \
           setTimeout(function() { \
+            var btn = document.getElementById('Log_On') ;\
             if(btn) { \
               document.getElementById('login').value = '__username' ; \
               document.getElementById('passwd').value = '__password' ; \
