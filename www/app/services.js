@@ -368,7 +368,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
            var err = values[ 0 ];
              if ( err ) {
                clearInterval( loop );
-               PelApi.showPopup("התחברות  לפורטל נכשלה","צאו והתחברו שוב לאפליקציה",'button-assertive');
+               PelApi.store.set("portalLogin","error");
            }
        } )},500);
 
@@ -381,29 +381,19 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
 
      if(cred) {
-      var  code = "var btn = document.getElementById('Log_On') ; \
-         if(btn) { \
-            document.getElementById('login').value = '__username' ; \
-            document.getElementById('passwd').value = '__password' ; \
-            btn.click(); \
-          } \
-          setTimeout(function() { \
-            var btn = document.getElementById('Log_On') ;\
-            if(btn) { \
-              document.getElementById('login').value = '__username' ; \
-              document.getElementById('passwd').value = '__password' ; \
-              btn.click(); \
-            } \
-          },3000) ;\
-          setTimeout(function() { \
-            var btn = document.getElementById('Log_On') ;\
-            if(btn) { \
-              document.getElementById('login').value = '__username' ; \
-              document.getElementById('passwd').value = '__password' ; \
-              btn.click(); \
-            } \
-          },6000);"
-          var code2 = "document.getElementById('pele4u-logout').src"
+      var  code = "var btnFired = 0; var idx ;\
+                   for(idx=1;idx<=10;idx++) { \
+                     setTimeout(function() { \
+                     var btn = document.getElementById('Log_On') ;\
+                     if(btn && btnFired ==0 ) { \
+                      document.getElementById('login').value = '__username' ; \
+                      document.getElementById('passwd').value = '__password' ; \
+                      btnFired=1 ; \
+                      btn.click(); \
+                      } \
+                    },200 * idx) \
+                   } ";
+          var code2 = "document.getElementById('pele4u-logout')"
             
          
          code = code.replace(/__username/g, cred.UserName );
@@ -415,7 +405,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           setTimeout(function(){
             inAppBrowserRef.executeScript({code: code2,
               function( values ) {
-               alert( values[0]);
+               if( values[0]) { 
+                PelApi.store.set("portalLogin","success");
+               };
              }})
           },8000);
 
