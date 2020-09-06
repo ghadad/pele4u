@@ -349,7 +349,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-
+    iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
 
@@ -358,59 +358,71 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           PelApi.hideLoading();
      });
       
+    
      if(!cred) {
+      var noCredCode =  "(function getPele$uState() { \
+                          if(window.backToPele4u) \
+                            return 'close-pele4u' ; \
+                          if(document.getElementById('pele4u-logout')) \
+                            return 'login-success' ; \
+                          if(document.getElementById('Log_On')) \
+                            return 'login-error' ; \
+                          })();"
+ 
        var loop = setInterval(function() {
        inAppBrowserRef.executeScript(
-         {
-             code: "document.getElementById('Log_On')"
-         },
+       {
+             code: noCredCode
+       },
        function( values ) {
-           var err = values[ 0 ];
-             if ( err ) {
-               clearInterval( loop );
-               PelApi.store.set("portalLogin","error");
+           var res = values[ 0 ];
+             if ( res ) {
+               if(res == "close-pele4u" && res == "login-error") {
+                clearInterval( loop );
+                inAppBrowserRef.close();
+               }
+               PelApi.store.set("portalLogin",res);
            }
-       } )},500);
+       })},200);
 
 
       setTimeout(function(){
         inAppBrowserRef.show();
       },300) 
      }
- 
-
-
-     if(cred) {
+     else {
       var  code = "var btnFired = 0; var idx ;\
                    for(idx=1;idx<=10;idx++) { \
                      setTimeout(function() { \
                      var btn = document.getElementById('Log_On') ;\
                      if(btn && btnFired ==0 ) { \
+                      alert('btnFired = '+btnFired+ ' idx = ' +idx ) ;\
                       document.getElementById('login').value = '__username' ; \
                       document.getElementById('passwd').value = '__password' ; \
                       btnFired=1 ; \
                       btn.click(); \
-                      alert('btnFired = '+btnFired+ ' idx = ' +idx ) ;\
-                      } \
-                    },200 * idx) \
+                     } \
+                    },300 * idx) \
                    } ";
           var code2 = "document.getElementById('pele4u-logout')"
             
          
-         code = code.replace(/__username/g, cred.UserName );
-         code = code.replace(/__password/g, cred.password );
+     code = code.replace(/__username/g, cred.UserName );
+     code = code.replace(/__password/g, cred.password );
          
       inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
           inAppBrowserRef.executeScript({code: code});
-          setTimeout(function(){
+          var loop = setInterval(function(){
             inAppBrowserRef.executeScript({code: code2,
               function( values ) {
                if( values[0]) { 
+                alert('success')
                 PelApi.store.set("portalLogin","success");
+                clearInterval( loop );
                };
              }})
-          },8000);
+          },200);
 
      });
     }
