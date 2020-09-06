@@ -374,14 +374,17 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       PelApi.store.set("portalLogin","progress");
       var  loginCode = "var pele4UbtnFired = false; var pele4uIdx ; \
                       function tryLoginPortal(pele4uIdxParam) { \
+                        if(pele4UbtnFired) return true; \
                         setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
                           if(btn && pele4UbtnFired == false ) { \
-                          document.getElementById('login').value = '__username' ; \
-                          document.getElementById('passwd').value = '__password' ; \
                           pele4UbtnFired = true ; \
-                          alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
-                          btn.click(); \
+                          document.addEventListener('DOMContentLoaded', (event) => { \
+                            document.getElementById('login').value = '__username' ; \
+                            document.getElementById('passwd').value = '__password' ; \
+                            btn.click(); \
+                          }); \
+                         // alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
                           } \
                         },200 * pele4uIdxParam) ;\
                     } ; \
