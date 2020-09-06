@@ -409,13 +409,11 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             inAppBrowserRef.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[ 0 ];
-                if ( res ) {
+                if (res) {
+                  PelApi.store.set("portalLogin",res);
                   if(res == "error" || (new Date().getTime() - ts1)  > 20*1000) {
-                    PelApi.store.set("portalLogin","error");
                     clearInterval( loop );
                    inAppBrowserRef.close();
-                  } else { 
-                    PelApi.store.set("portalLogin",res);
                   }                   
               }
              })
