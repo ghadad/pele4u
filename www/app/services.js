@@ -332,7 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+    iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
 
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
@@ -418,17 +418,17 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 switch ( res ) {
                   case "error" :
                     clearInterval( loop );
-                    inAppBrowserRef.close();
+                 //   inAppBrowserRef.close();
                     break ;
                     case "success" :
                     clearInterval( loop );
                     break ;
                     case "timeout" :
                     clearInterval( loop );
-                    inAppBrowserRef.close();
+                  //  inAppBrowserRef.close();
                     break ;
                     case "progress":
-                      break 
+                    break 
                 }
              })
           },200);
