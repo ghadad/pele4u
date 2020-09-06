@@ -332,7 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-   // iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
+    iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
 
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
@@ -377,10 +377,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                         setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
                           if(btn && pele4UbtnFired == false ) { \
-                          //alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
                           document.getElementById('login').value = '__username' ; \
                           document.getElementById('passwd').value = '__password' ; \
                           pele4UbtnFired = true ; \
+                          alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
                           btn.click(); \
                           } \
                         },200 * pele4uIdxParam) ;\
