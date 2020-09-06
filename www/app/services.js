@@ -343,7 +343,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      });
       
     if(!cred) {
-      var noCredCode =  "(function getPele$uState() { \
+      var noCredCode =  "(function() { \
                           if(window.backToPele4u) \
                             return 'close' ; \
                           if(document.getElementById('pele4u-logout')) \
@@ -387,18 +387,19 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                    for(pele4uIdx=1; pele4uIdx<=20;pele4uIdx++) { \
                      tryLoginPortal(pele4uIdx); \
                    }";
-
-     var testLoginCode = "(function(){ \
-                     if(document.getElementById('pele4u-logout')) \
-                        return 'success'; \
-                     if(document.getElementById('errorMessageLabel')) \
-                        return 'error'; \
-                      return 'progress'  ; \
-                    })()";
-            
-         
+                            
      loginCode = loginCode.replace(/__username/g, cred.UserName );
      loginCode = loginCode.replace(/__password/g, cred.password );
+
+     var testLoginCode = "(function(){ \
+                       if(document.getElementById('pele4u-logout')) \
+                          return 'success'; \
+                       if(document.getElementById('errorMessageLabel')) \
+                          return 'error'; \
+                        return 'progress'  ; \
+                     })()";
+            
+
          
       inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
