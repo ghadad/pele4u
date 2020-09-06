@@ -332,7 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
+    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
 
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
@@ -372,7 +372,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      }
      else {
       PelApi.store.set("portalLogin","progress");
-      var  loginCode = "var pele4UbtnFired = false; var pele4uIdx ; \
+      var  loginCode = "var pele4UbtnFired = false; var pele4uIdx =0; \
                         function tryLoginPortal(pele4uIdxParam) { \
                           if(pele4UbtnFired) return true; \
                           setTimeout(function() { \
