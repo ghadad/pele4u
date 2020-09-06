@@ -331,8 +331,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     PelApi.showLoading({
       duration: 1000 * 3
     });
-    var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
+    var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=no";
+   iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
 
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
@@ -372,26 +372,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      }
      else {
       PelApi.store.set("portalLogin","progress");
-      var  loginCode = "var pele4UbtnFired = false; var pele4uIdx ; \
+        var  loginCode = "var pele4UbtnFired = false; var pele4uIdx ; \
                       function tryLoginPortal(pele4uIdxParam) { \
                         if(pele4UbtnFired) return true; \
                         setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
-                          if(btn && pele4UbtnFired == false ) { \
-                          pele4UbtnFired = true ; \
-                          document.addEventListener('DOMContentLoaded', (event) => { \
-                            document.getElementById('login').value = '__username' ; \
-                            document.getElementById('passwd').value = '__password' ; \
+                          var userInput = document.getElementById('login') ;\
+                          var passInput = document.getElementById('passwd') ;\
+                          if(btn && userInput && passInput ) { \
+                            pele4UbtnFired = true ; \
+                            userInput.value = '__username' ; \
+                            passInput.value = '__password' ; \
                             btn.click(); \
-                          }); \
-                         // alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
                           } \
                         },200 * pele4uIdxParam) ;\
                     } ; \
                    for(pele4uIdx=1; pele4uIdx<=20;pele4uIdx++) { \
                      tryLoginPortal(pele4uIdx); \
                    }";
-                            
+                   
      loginCode = loginCode.replace(/__username/g, cred.UserName );
      loginCode = loginCode.replace(/__password/g, cred.password );
 
@@ -419,14 +418,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 switch ( res ) {
                   case "error" :
                     clearInterval( loop );
-                    inAppBrowserRef.close();
+                //    inAppBrowserRef.close();
                     break ;
                     case "success" :
                     clearInterval( loop );
                     break ;
                     case "timeout" :
                     clearInterval( loop );
-                    inAppBrowserRef.close();
+                //    inAppBrowserRef.close();
                     break ;
                     case "progress":
                       break 
