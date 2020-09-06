@@ -376,14 +376,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                         function tryLoginPortal(pele4uIdxParam) { \
                           if(pele4UbtnFired) return true; \
                           setTimeout(function() { \
+                            alert(1);\
                             var btn = document.getElementById('Log_On') ;\
                             var userInput = document.getElementById('login') ;\
                             var passInput = document.getElementById('passwd') ;\
                             if(btn && userInput && passInput ) { \
-                            pele4UbtnFired = true ; \
                               userInput.value = '__username' ; \
                               passInput.value = '__password' ; \
                               btn.click(); \
+                              pele4UbtnFired = true ; \
                             } \
                           },200 * pele4uIdxParam) ;\
                       } ; \
