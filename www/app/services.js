@@ -376,7 +376,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                         setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
                           if(btn && pele4UbtnFired == false ) { \
-                          alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
+                          //alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
                           document.getElementById('login').value = '__username' ; \
                           document.getElementById('passwd').value = '__password' ; \
                           pele4UbtnFired = true ; \
