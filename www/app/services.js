@@ -408,17 +408,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
           var loop = setInterval(function(){
             inAppBrowserRef.executeScript({code: testLoginCode},
               function( values ) {
-                var res = values[ 0 ];
-                if ( res ) {
-                  
-                  if(res == "error" || (new Date().getTime() - ts1)  > 20*1000) {
-                    PelApi.store.set("portalLogin",res);
+                var res = values[0];
+                if( (new Date().getTime() - ts1)  > 20*1000) 
+                  res = "timeout";
+                PelApi.store.set("portalLogin",res);
+                switch ( res ) {
+                  case "error" :
                     clearInterval( loop );
-                   inAppBrowserRef.close();
-                  } else { 
-                    PelApi.store.set("portalLogin",res);
-                  }                   
-              }
+                    inAppBrowserRef.close();
+                    break ;
+                    case "success" :
+                    clearInterval( loop );
+                    break ;
+                    case "timeout" :
+                    clearInterval( loop );
+                    inAppBrowserRef.close();
+                    break ;
+                    case "progress":
+                      break 
+                }
              })
           },200);
      });
