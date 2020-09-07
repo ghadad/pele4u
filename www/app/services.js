@@ -345,7 +345,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       
     if(!cred) {
       var noCredCode =  "(function() { \
-                          return 'success' ; \
                           if(window.backToPele4u) \
                             return 'close' ; \
                           if(document.getElementById('pele4u-logout')) \
@@ -432,7 +431,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 var res = values[0];
                 console.log(res);
                 if(res) 
-                PelApi.store.set("portalLogin","success");
+                  PelApi.store.set("portalLogin","success");
                 if( (new Date().getTime() - ts1)  > 40*1000)                
                    clearInterval( loop2 );
              })
