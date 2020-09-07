@@ -382,10 +382,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                             if(btn && userInput && passInput ) { \
                               userInput.value = '__username' ; \
                               passInput.value = '__password' ; \
-                              btn.click(); \
+                             if(!pele4UbtnFired) btn.click(); \
                               pele4UbtnFired = true ; \
                             } \
-                          },200 * pele4uIdxParam) ;\
+                          },500 * pele4uIdxParam) ;\
                       } ; \
                     for(pele4uIdx=1; pele4uIdx<=20;pele4uIdx++) { \
                       tryLoginPortal(pele4uIdx); \
@@ -418,20 +418,20 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 switch ( res ) {
                   case "error" :
                     clearInterval( loop );
-                 //   inAppBrowserRef.close();
+                   inAppBrowserRef.close();
                     break ;
                     case "success" :
                     clearInterval( loop );
                     break ;
                     case "timeout" :
                     clearInterval( loop );
-                  //  inAppBrowserRef.close();
+                    inAppBrowserRef.close();
                     break ;
                     case "progress":
                     break 
                 }
              })
-          },200);
+          },500);
      });
     }
   }
