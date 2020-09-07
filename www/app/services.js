@@ -423,17 +423,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 switch ( res ) {
                   case "error" :
                     clearInterval( loop );
-                   inAppBrowserRef.close();
-                    break ;
-                    case "success" :
-                    clearInterval( loop );
-                    break ;
-                    case "timeout" :
-                    clearInterval( loop );
                     inAppBrowserRef.close();
                     break ;
                     case "progress":
-                    break 
+                    break ;
                 }
              })
           },500);
