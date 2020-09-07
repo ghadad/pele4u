@@ -426,7 +426,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         PelApi.hideLoading();
           inAppBrowserRef.executeScript({code: loginCode});
           var ts1 =  new Date().getTime();
-        var loop = setInterval(function(){
+       /*  var loop = setInterval(function(){
             inAppBrowserRef.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
@@ -439,7 +439,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 }
              })
           },200);
-        
+        */
      });
     }
   }
