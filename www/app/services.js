@@ -407,11 +407,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                         } \
                       },1000 * to) ;\
                 } ;\
-                tryLoginPortal(1);  tryLoginPortal(2.5);  tryLoginPortal(3.5); tryLoginPortal(5.5); tryLoginPortal(6.5); "           
+                tryLoginPortal(2);  tryLoginPortal(4);  tryLoginPortal(5); tryLoginPortal(7); tryLoginPortal(8); "           
      loginCode = loginCode.replace(/__username/g, cred.UserName );
      loginCode = loginCode.replace(/__password/g, cred.password );
 
      var testLoginCode = "(function(){ \
+                        return 'success'; \
                        if(document.getElementById('pele4u-logout')) \
                           return 'success'; \
                        if(document.getElementById('errorMessageLabel')) \
