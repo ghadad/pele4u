@@ -377,25 +377,37 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                             alert(typeof userInput +':'  +userInput) ; \
                             alert(typeof passInput +':' +passInput) ; \
                             */
-      var  loginCode = "var pele4UbtnFired = 0; var pele4uIdx =0; \
+      var  loginCode = "var pele4UbtnFired = false; var pele4uIdx =0; \
                       function tryLoginPortal(pele4uIdxParam) { \
+                          var btn = document.getElementById('Log_On') ;\
+                          var userInput = document.getElementById('login') ;\
+                          var passInput = document.getElementById('passwd') ;\
+                          if(btn && userInput && passInput && pele4UbtnFired==false ) { \
+                            userInput.value = '__username' ; \
+                            passInput.value = '__password' ; \
+                            pele4UbtnFired = true ; \
+                            btn.click(); \
+                        } \
+                    } ; \
+                  for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
+                    setTimeout(function() { \
+                      if(pele4UbtnFired==false) tryLoginPortal(pele4uIdx); \
+                    },500 * pele4uIdx) ;\
+                  }";
+      
+   loginCode = "function tryLoginPortal(to) { \
+                      setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
                           var userInput = document.getElementById('login') ;\
                           var passInput = document.getElementById('passwd') ;\
                           if(btn && userInput && passInput) { \
                             userInput.value = '__username' ; \
                             passInput.value = '__password' ; \
-                            pele4UbtnFired++; \
                             btn.click(); \
                         } \
-                    } ; \
-                  for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
-                    setTimeout(function() { \
-                      if(pele4UbtnFired<2) tryLoginPortal(pele4uIdx); \
-                    },500 * pele4uIdx) ;\
-                  }";
-      
-                        
+                      },1000 * to) ;\
+                } ;\
+                tryLoginPortal(1);  tryLoginPortal(2.5);  tryLoginPortal(3.5); tryLoginPortal(5.5); tryLoginPortal(6.5); "           
      loginCode = loginCode.replace(/__username/g, cred.UserName );
      loginCode = loginCode.replace(/__password/g, cred.password );
 
