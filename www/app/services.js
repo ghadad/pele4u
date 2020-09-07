@@ -419,27 +419,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           return 'error'; \
                         return 'progress'  ; \
                      })()";
-            
+      testLoginCode = "document.getElementById('pele4u-logout')";
 
          
       inAppBrowserRef.addEventListener("loadstop", function () {
         PelApi.hideLoading();
           inAppBrowserRef.executeScript({code: loginCode});
           var ts1 =  new Date().getTime();
-       /*  var loop = setInterval(function(){
+          var loop2 = setInterval(function(){
             inAppBrowserRef.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
-                if( (new Date().getTime() - ts1)  > 40*1000) 
-                  res = "timeout";
-                  PelApi.store.set("portalLogin",res);
-                  if ( res !== "progress" ) { 
-                   clearInterval( loop );
-                //   inAppBrowserRef.close();
-                }
+                console.log(res);
+                if(res) 
+                PelApi.store.set("portalLogin","success");
+                if( (new Date().getTime() - ts1)  > 40*1000)                
+                   clearInterval( loop2 );
              })
           },200);
-        */
+        
      });
     }
   }
