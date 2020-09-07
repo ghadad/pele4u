@@ -332,7 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
+    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
 
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
@@ -372,24 +372,29 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      }
      else {
       PelApi.store.set("portalLogin","progress");
+      /*
+        alert(typeof btn +':' +btn); \
+        alert(typeof userInput +':'  +userInput) ; \
+        alert(typeof passInput +':' +passInput) ; \
+       */
       var  loginCode = "var pele4UbtnFired = false; var pele4uIdx =0; \
-                        function tryLoginPortal(pele4uIdxParam) { \
-                          if(pele4UbtnFired) return true; \
-                          setTimeout(function() { \
-                            var btn = document.getElementById('Log_On') ;\
-                            var userInput = document.getElementById('login') ;\
-                            var passInput = document.getElementById('passwd') ;\
-                            if(btn && userInput && passInput ) { \
-                              userInput.value = '__username' ; \
-                              passInput.value = '__password' ; \
-                              pele4UbtnFired = true ; \
-                              btn.click(); \
-                            } \
-                          },500 * pele4uIdxParam) ;\
-                      } ; \
-                    for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
-                      tryLoginPortal(pele4uIdx); \
-                    }";
+                      function tryLoginPortal(pele4uIdxParam) { \
+                            setTimeout(function() { \
+                          var btn = document.getElementById('Log_On') ;\
+                          var userInput = document.getElementById('login') ;\
+                          var passInput = document.getElementById('passwd') ;\
+                          if(btn && userInput && passInput && pele4UbtnFired==false ) { \
+                            userInput.value = '__username' ; \
+                            passInput.value = '__password' ; \
+                            pele4UbtnFired = true ; \
+                          btn.click(); \
+                        } \
+                        },500 * pele4uIdxParam) ;\
+                    } ; \
+                  for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
+                    tryLoginPortal(pele4uIdx); \
+                  }";
+      
                         
      loginCode = loginCode.replace(/__username/g, cred.UserName );
      loginCode = loginCode.replace(/__password/g, cred.password );
