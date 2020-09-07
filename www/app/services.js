@@ -374,25 +374,25 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       PelApi.store.set("portalLogin","progress");
       /*
         alert(typeof btn +':' +btn); \
-        alert(typeof userInput +':'  +userInput) ; \
-        alert(typeof passInput +':' +passInput) ; \
-       */
+                            alert(typeof userInput +':'  +userInput) ; \
+                            alert(typeof passInput +':' +passInput) ; \
+                            */
       var  loginCode = "var pele4UbtnFired = false; var pele4uIdx =0; \
                       function tryLoginPortal(pele4uIdxParam) { \
-                            setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
                           var userInput = document.getElementById('login') ;\
                           var passInput = document.getElementById('passwd') ;\
-                          if(btn && userInput && passInput) { \
+                          if(btn && userInput && passInput && pele4UbtnFired==false ) { \
                             userInput.value = '__username' ; \
                             passInput.value = '__password' ; \
                             pele4UbtnFired = true ; \
                             btn.click(); \
                         } \
-                        },500 * pele4uIdxParam) ;\
                     } ; \
                   for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
-                    if(pele4UbtnFired==false)  tryLoginPortal(pele4uIdx); \
+                    setTimeout(function() { \
+                      if(pele4UbtnFired==false) tryLoginPortal(pele4uIdx); \
+                    },500 * pele4uIdx) ;\
                   }";
       
                         
