@@ -383,16 +383,16 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           var btn = document.getElementById('Log_On') ;\
                           var userInput = document.getElementById('login') ;\
                           var passInput = document.getElementById('passwd') ;\
-                          if(btn && userInput && passInput && pele4UbtnFired==false ) { \
+                          if(btn && userInput && passInput) { \
                             userInput.value = '__username' ; \
                             passInput.value = '__password' ; \
                             pele4UbtnFired = true ; \
-                          btn.click(); \
+                            btn.click(); \
                         } \
                         },500 * pele4uIdxParam) ;\
                     } ; \
                   for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
-                    tryLoginPortal(pele4uIdx); \
+                    if(pele4UbtnFired==false)  tryLoginPortal(pele4uIdx); \
                   }";
       
                         
