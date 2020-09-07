@@ -372,7 +372,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       },300) 
      }
      else {
-     // PelApi.store.set("portalLogin","progress");
+      PelApi.store.set("portalLogin","progress");
       /*
         alert(typeof btn +':' +btn); \
                             alert(typeof userInput +':'  +userInput) ; \
