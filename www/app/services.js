@@ -387,7 +387,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                             } \
                           },500 * pele4uIdxParam) ;\
                       } ; \
-                    for(pele4uIdx=1; pele4uIdx<=20;pele4uIdx++) { \
+                    for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
                       tryLoginPortal(pele4uIdx); \
                     }";
                         
@@ -412,7 +412,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             inAppBrowserRef.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
-                if( (new Date().getTime() - ts1)  > 20*1000) 
+                if( (new Date().getTime() - ts1)  > 40*1000) 
                   res = "timeout";
                 PelApi.store.set("portalLogin",res);
                 switch ( res ) {
