@@ -385,9 +385,9 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                              if(!pele4UbtnFired) btn.click(); \
                               pele4UbtnFired = true ; \
                             } \
-                          },500 * pele4uIdxParam) ;\
+                          },200 * pele4uIdxParam) ;\
                       } ; \
-                    for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
+                    for(pele4uIdx=1; pele4uIdx<=60;pele4uIdx++) { \
                       tryLoginPortal(pele4uIdx); \
                     }";
                         
