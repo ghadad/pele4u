@@ -332,7 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=no";
 
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
@@ -345,6 +345,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       
     if(!cred) {
       var noCredCode =  "(function() { \
+                          return 'success' ; \
                           if(window.backToPele4u) \
                             return 'close' ; \
                           if(document.getElementById('pele4u-logout')) \
