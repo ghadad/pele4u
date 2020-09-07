@@ -332,7 +332,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
       duration: 1000 * 3
     });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=no";
+    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
 
     if(!cred)
      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
@@ -383,7 +383,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           var btn = document.getElementById('Log_On') ;\
                           var userInput = document.getElementById('login') ;\
                           var passInput = document.getElementById('passwd') ;\
-                          if(btn && userInput && passInput && pele4UbtnFired==false ) { \
+                          if(btn && userInput && passInput) { \
                             userInput.value = '__username' ; \
                             passInput.value = '__password' ; \
                             pele4UbtnFired = true ; \
@@ -393,10 +393,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
                     setTimeout(function() { \
                       if(pele4UbtnFired==false) tryLoginPortal(pele4uIdx); \
-                    },500 * pele4uIdx) ;\
+                    },200 * pele4uIdx) ;\
                   }";
       
-   loginCode = "function tryLoginPortal(to) { \
+   var loginCode2 = "function tryLoginPortal(to) { \
                       setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
                           var userInput = document.getElementById('login') ;\
@@ -413,7 +413,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      loginCode = loginCode.replace(/__password/g, cred.password );
 
      var testLoginCode = "(function(){ \
-                        return 'success'; \
                        if(document.getElementById('pele4u-logout')) \
                           return 'success'; \
                        if(document.getElementById('errorMessageLabel')) \
@@ -427,7 +426,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         PelApi.hideLoading();
           inAppBrowserRef.executeScript({code: loginCode});
           var ts1 =  new Date().getTime();
-          var loop = setInterval(function(){
+        var loop = setInterval(function(){
             inAppBrowserRef.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
@@ -436,10 +435,11 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   PelApi.store.set("portalLogin",res);
                   if ( res !== "progress" ) { 
                    clearInterval( loop );
-                   inAppBrowserRef.close();
+                //   inAppBrowserRef.close();
                 }
              })
-          },500);
+          },200);
+        
      });
     }
   }
