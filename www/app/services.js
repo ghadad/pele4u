@@ -358,7 +358,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        function( values ) {
            var res = values[ 0 ];
              if ( res ) {
-               if(res == "close" || res == "error") {
+               if(res == "close") {
                 clearInterval( loop );
                 inAppBrowserRef.close();
                }
