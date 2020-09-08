@@ -187,9 +187,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     return getUrlBase() + urlStr;
   }
 
-
-  //return PelApi.throwError("api", "ApiService.checkResponse-InvalidJsonResponse", "(httpStatus : " + httpStatus + ") " + errorMsg)
-  //return PelApi.throwError("api", "ApiService.checkResponse-" + errorMsg, "(httpStatus : " + httpStatus + ") " + JSON.stringify(data), false)
   this.getHeaders = buildHeader;
   this.getUrl = getUrl;
 
@@ -263,11 +260,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
   this.openInApp = function (url) {
+
      if(!window.cordova) {
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
     }
-    var swalObject = {
+    var swalObject = {  
       type: 'error',
       title: 'תהליך אימות העובד נכשל',
       text: 'נא צאו והתחברו שוב ונסו שנית ',
@@ -321,7 +319,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
   this.openPortal = function (url,cred) {
 
-    
     if(!window.cordova) {
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
