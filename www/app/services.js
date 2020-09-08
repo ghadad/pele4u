@@ -395,19 +395,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                     },200 * pele4uIdx) ;\
                   }";
       
-   var loginCode2 = "function tryLoginPortal(to) { \
-                      setTimeout(function() { \
-                          var btn = document.getElementById('Log_On') ;\
-                          var userInput = document.getElementById('login') ;\
-                          var passInput = document.getElementById('passwd') ;\
-                          if(btn && userInput && passInput) { \
-                            userInput.value = '__username' ; \
-                            passInput.value = '__password' ; \
-                            btn.click(); \
-                        } \
-                      },1000 * to) ;\
-                } ;\
-                tryLoginPortal(2);  tryLoginPortal(4);  tryLoginPortal(5); tryLoginPortal(7); tryLoginPortal(8); "           
+        
      loginCode = loginCode.replace(/__username/g, cred.UserName );
      loginCode = loginCode.replace(/__password/g, cred.password );
 
@@ -418,7 +406,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           return 'error'; \
                         return 'progress'  ; \
                      })()";
-      testLoginCode = "document.getElementById('pele4u-logout')";
+
+     // testLoginCode = "document.getElementById('pele4u-logout')";
 
          
       inAppBrowserRef.addEventListener("loadstop", function () {
@@ -429,11 +418,14 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             inAppBrowserRef.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
-                console.log(res);
-                if(res) 
-                  PelApi.store.set("portalLogin","success");
-                if( (new Date().getTime() - ts1)  > 40*1000)                
+                  if( (new Date().getTime() - ts1)  > 40*1000)          
+                  res ="timeout" ;
+
+                  PelApi.store.set("portalLogin",res);
+                
+                  if(res != "progress") 
                    clearInterval( loop2 );
+
              })
           },200);
         
