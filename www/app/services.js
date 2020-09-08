@@ -423,9 +423,10 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
                   PelApi.store.set("portalLogin",res);
                 
-                  if(res != "progress") 
-                   clearInterval( loop2 );
-
+                  if(res != "progress") {
+                    inAppBrowserRef.close();
+                    clearInterval( loop2 );
+                  }                    
              })
           },200);
         
