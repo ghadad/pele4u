@@ -326,24 +326,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
     }
-
-
-    PelApi.showLoading({
-      duration: 1000 * 3
-    });
     var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-
-    if(!cred)
-     iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
-   
-
-     var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
-       inAppBrowserRef.addEventListener("loaderror", function () {
-          PelApi.hideLoading();
-     });
       
     if(!cred) {
+      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=no,zoom=no,footer=no'; 
+      var ref1 =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+      ref1.addEventListener("loaderror", function () {
+           PelApi.hideLoading();
+           PelApi.showPopup("בעיה בפתיחת יישום");
+      }); 
       var noCredCode =  "(function() { \
                           if(window.backToPele4u) \
                             return 'close' ; \
@@ -354,29 +345,27 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           })();"
  
        var loop = setInterval(function() {
-       inAppBrowserRef.executeScript({ code: noCredCode  },
+        ref1.executeScript({ code: noCredCode  },
        function( values ) {
            var res = values[ 0 ];
              if ( res ) {
                if(res == "close") {
                 clearInterval( loop );
-                inAppBrowserRef.close();
+                ref1.close();
                }
                PelApi.store.set("portalLogin",res);
            }
        })},200);
-
-      setTimeout(function(){
-        inAppBrowserRef.show();
-      },300) 
      }
      else {
+      iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
       PelApi.store.set("portalLogin","progress");
-            /*
-        alert(typeof btn +':' +btn); \
-                            alert(typeof userInput +':'  +userInput) ; \
-                            alert(typeof passInput +':' +passInput) ; \
-                            */
+      var ref2 =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+      ref2.addEventListener("loaderror", function () {
+           PelApi.hideLoading();
+           PelApi.showPopup("בעיה בפתיחת יישום");
+      }); 
+
       var  loginCode = "var pele4UbtnFired = false; var pele4uIdx =0; \
                       function tryLoginPortal(pele4uIdxParam) { \
                           var btn = document.getElementById('Log_On') ;\
@@ -410,12 +399,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      // testLoginCode = "document.getElementById('pele4u-logout')";
 
          
-      inAppBrowserRef.addEventListener("loadstop", function () {
+     ref2.addEventListener("loadstop", function () {
         PelApi.hideLoading();
-          inAppBrowserRef.executeScript({code: loginCode});
+        ref2.executeScript({code: loginCode});
           var ts1 =  new Date().getTime();
           var loop2 = setInterval(function(){
-            inAppBrowserRef.executeScript({code: testLoginCode},
+            ref2.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
                   if( (new Date().getTime() - ts1)  > 40*1000)          
@@ -424,7 +413,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   PelApi.store.set("portalLogin",res);
                 
                   if(res != "progress") {
-                    inAppBrowserRef.close();
+                    ref2.close();
                     clearInterval( loop2 );
                   }                    
              })
