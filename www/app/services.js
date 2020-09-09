@@ -408,9 +408,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   if( (new Date().getTime() - ts1)  > 40*1000)          
                   res ="timeout" ;
                   PelApi.store.set("portalLogin",res);
-              //    PelApi.lagger.info("res :"+res);
-
-                  if(res != "progress") {
+                  PelApi.lagger.info("res :"+res);
+                  if(res !== "progress") {
                     clearInterval( loop2 );
                     ref2.close();
                   }                    
