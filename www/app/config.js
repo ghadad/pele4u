@@ -199,7 +199,7 @@ angular.module('pele.config', [])
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
-      portalUrl:"https://peleportal.pelephone.co.il",
+      portalUrl:"https://peleportal.pelephone.co.il/Pages/ns_test_login.aspx",
       bioClientId: "NEVER_CHANGE_THIS_VALUE_BIOPELE4U",
       bioClientSecret: "NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
