@@ -387,7 +387,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
      var testLoginCode = "(function(){ \
                         var pele4uDiv = document.getElementById('pele4u-logout') || {} ; \
-                       if(pele4uDiv.innerHTML)  return 'success'; \
+                        if(pele4uDiv.innerHTML)  return 'success'; \
                        if(document.getElementById('errorMessageLabel')) \
                           return 'error'; \
                         return 'progress'  ; \
@@ -404,14 +404,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
             ref2.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
+                
                   if( (new Date().getTime() - ts1)  > 40*1000)          
                   res ="timeout" ;
                   PelApi.store.set("portalLogin",res);
-                  PelApi.lagger.info("res :"+res);
+              //    PelApi.lagger.info("res :"+res);
 
                   if(res != "progress") {
-                    ref2.close();
                     clearInterval( loop2 );
+                    ref2.close();
                   }                    
              })
           },300);
