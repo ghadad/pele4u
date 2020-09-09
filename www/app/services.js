@@ -323,7 +323,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
     }
-    var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+    var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=no";
       
     if(!cred) {
       iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=no,zoom=no,footer=no'; 
