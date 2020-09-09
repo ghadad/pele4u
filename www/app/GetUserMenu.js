@@ -47,7 +47,7 @@ app.controller('GetUserMenuCtrl',
     }
     setInterval(function () {
       $scope.getWellcomeString();
-    }, 60)
+    }, 30000)
 
     $scope.childOf = {};
     //$scope.tilesEnabled = true;

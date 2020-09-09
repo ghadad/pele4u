@@ -355,7 +355,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        })},200);
      }
      else {
-      iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+      iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
       PelApi.store.set("portalLogin","progress");
       var ref2 =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
       ref2.addEventListener("loaderror", function () {
@@ -378,7 +378,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
                     setTimeout(function() { \
                       if(pele4UbtnFired==false) tryLoginPortal(pele4uIdx); \
-                    },200 * pele4uIdx) ;\
+                    },300 * pele4uIdx) ;\
                   }";
       
         
@@ -386,8 +386,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
      loginCode = loginCode.replace(/__password/g, cred.password );
 
      var testLoginCode = "(function(){ \
-                       if(document.getElementById('pele4u-logout')) \
-                          return 'success'; \
+                        var pele4uDiv = document.getElementById('pele4u-logout') || {} ; \
+                       if(pele4uDiv.innerHTML)  return 'success'; \
                        if(document.getElementById('errorMessageLabel')) \
                           return 'error'; \
                         return 'progress'  ; \
@@ -406,15 +406,15 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                 var res = values[0];
                   if( (new Date().getTime() - ts1)  > 40*1000)          
                   res ="timeout" ;
-
                   PelApi.store.set("portalLogin",res);
-                
+                  PelApi.lagger.info("res :"+res);
+
                   if(res != "progress") {
                     ref2.close();
                     clearInterval( loop2 );
                   }                    
              })
-          },200);
+          },300);
         
      });
     }
