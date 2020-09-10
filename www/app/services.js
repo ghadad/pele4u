@@ -419,7 +419,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   return ;
                 }
              })
-          },400);
+          },200);
         
      });
     }
