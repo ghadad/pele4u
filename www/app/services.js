@@ -408,7 +408,8 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   
                 if( (new Date().getTime() - ts1)  > 40*1000)          
                 res ="timeout" ;
-                PelApi.lagger.info("res :"+res);
+
+                PelApi.lagger.info("res :"+res+"stopInterval:"+stopInterval);
 
 
                 if(stopInterval || res != "progress"){
