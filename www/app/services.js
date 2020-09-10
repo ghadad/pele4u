@@ -355,7 +355,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        })},200);
      }
      else {
-      iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
+      iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
       PelApi.store.set("portalLogin","progress");
       var ref2 =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
       ref2.addEventListener("loaderror", function () {
@@ -400,21 +400,18 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
         PelApi.hideLoading();
         ref2.executeScript({code: loginCode});
           var ts1 =  new Date().getTime();
-          var stopInterval ;
           var loop2 = setInterval(function(){
             ref2.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
                 if( (new Date().getTime() - ts1)  > 25*1000)          
                 res ="timeout" ;
-
-                if(stopInterval || res != "progress"){
+                PelApi.lagger.info("portal test:"+res)
+                if(res == "success") {
                   clearInterval(loop2);
                   PelApi.store.set("portalLogin",res);
-                  stopInterval = res ;
                   ref2.close();
-                  return ;
-                }
+                }  
              })
           },200);
         
