@@ -409,12 +409,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                   res ="timeout" ;
                   PelApi.store.set("portalLogin",res);
                   PelApi.lagger.info("res :"+res);
-                  if(res !== "progress") {
+                  if(res == "success" || res =="error") {
                     clearInterval( loop2 );
                     ref2.close();
                   }                    
              })
-          },300);
+          },400);
         
      });
     }
