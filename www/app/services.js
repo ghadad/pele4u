@@ -355,7 +355,7 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
        })},200);
      }
      else {
-      iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
+      iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
       PelApi.store.set("portalLogin","progress");
       var ref2 =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
       ref2.addEventListener("loaderror", function () {
