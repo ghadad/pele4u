@@ -45,10 +45,9 @@ app.controller('GetUserMenuCtrl',
         $scope.wellcome = "לילה טוב";
       }
     }
-    setInterval(function () {
-      $scope.getWellcomeString();
-    }, 30000)
 
+    $scope.getWellcomeString();
+ 
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
     $scope.sort = function (items) {
