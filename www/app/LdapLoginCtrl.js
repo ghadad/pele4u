@@ -5,6 +5,9 @@ angular.module('pele', ['ngStorage'])
     //------------------------------------------------------------//
 
      $scope.hideAllforms = false;
+
+     $scope.deviceIsSecureByLockScreen =  PelApi.secureStorage ? true :false ;
+     
     $scope.focusMe = function(event) {   
       var ae =     event.target;
       $timeout(function() {
@@ -22,7 +25,7 @@ angular.module('pele', ['ngStorage'])
        $scope.eyeIcon = "img/new_icons/eye-off-outline.svg";
       } else {
 
- $scope.passwordType =  "password";
+    $scope.passwordType =  "password";
      $scope.eyeIcon = "img/new_icons/eye-outline.svg";
      
       }

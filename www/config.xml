@@ -13,7 +13,7 @@ xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1
         <preference name="StatusBarBackgroundColor" value="#60beea" />
     </platform>
     <platform name="ios">
-        <plugin name="cordova-plugin-secure-storage" source="npm" />
+        <plugin name="cordova-plugin-secure-storage-echo" source="npm" />
       <preference name="StatusBarBackgroundColor" value="#60beea" />
       <preference name="StatusBarOverlaysWebView" value="false" />
       <preference name="StatusBarStyle" value="blacktranslucent" />

@@ -6,6 +6,7 @@
       </div>
     </div>
   </ion-nav-title>
+  
   <ion-content class="pele-background" scroll="false">
  
     <div class="row" ng-show="activeForm && !hideAllforms">
@@ -62,7 +63,8 @@
         </div>
       </div>
     </div>
-    <div  id="auth-methods" ng-show="!activeForm && !hideAllforms" class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
+
+    <div ng-if="deviceIsSecureByLockScreen" id="auth-methods" ng-show="!activeForm && !hideAllforms" class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
         <div class="item item-text-wrap pele_ltr">
             <!--button ng-click="closeModal()" class="button-icon ion-close"></button-->
             <h2 class="text-center"><strong>יש לבחור שיטת זיהוי</strong></h2>             
@@ -96,7 +98,15 @@
             </div>
         </div>
       </div>
-      
+      <div ng-if="!deviceIsSecureByLockScreen"  class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
+        <div class="item item-text-wrap pele_ltr">
+            <!--button ng-click="closeModal()" class="button-icon ion-close"></button-->
+            <h2 class="text-center"><strong>המכשיר לא מאובטח</strong></h2>             
+            <div class="item no-border">
+              <h2 class="text-center"><strong>המכשיר לא מאובטח</strong></h2>   
+            </div>
+     </div>
+    
   </ion-content>
   <script type="text/ng-template" id="authMethods.html">
     <ion-content  id="auth-modal" padding="true" style="margin:60px 25px 25px 25px" ng-show="doRender">
