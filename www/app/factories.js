@@ -134,7 +134,18 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
       cordovaInit: function () {
         //file in device file system
         var self = this;
-        //if(ionic.Platform.isIOS()) {
+
+        self.secureStorage = new cordova.plugins.SecureStorage(
+          function() {
+            console.log("Success");
+          },
+          function(error) {
+            self.secureStorage = null; 
+          },
+          "pele4u"
+        );
+
+        /* if(ionic.Platform.isIOS()) {
          self.secureStorage  = new cordova.plugins.SecureStorage(
           function() {
           },
@@ -143,7 +154,8 @@ angular.module('pele.factories', ['ngStorage', 'LocalStorageModule', 'ngCordova'
           },
           "pele4u"
         );
-        //}
+        }
+        */
        
         
         $sessionStorage.ApiServiceAuthParams = $sessionStorage.ApiServiceAuthParams || {};
