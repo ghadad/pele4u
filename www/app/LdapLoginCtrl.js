@@ -6,8 +6,8 @@ angular.module('pele', ['ngStorage'])
 
      $scope.hideAllforms = false;
 
-     $scope.deviceIsSecureByLockScreen =  PelApi.secureStorage ? true :false ;
-     
+     $scope.deviceIsSecureByLockScreen =  PelApi.secureStorage ? true : false ;
+    PelApi.lagger.info(PelApi.secureStorage) ;
     $scope.focusMe = function(event) {   
       var ae =     event.target;
       $timeout(function() {
