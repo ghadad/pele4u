@@ -8,6 +8,10 @@ var app = angular.module('pele.GetUserMenu', ['ngStorage', 'ngCordova']);
 app.controller('GetUserMenuCtrl',
   function ($scope, $timeout, $state, $ionicLoading, PelApi, ApiGateway, $rootScope, $ionicPopup, $ionicHistory, $sessionStorage, $localStorage, appSettings, srvShareData, $cordovaNetwork, $ionicNavBarDelegate, BioAuth) {
 
+    if (!BioAuth.getMethod())
+      return $state.go('app.ldap_login');
+
+
     $ionicNavBarDelegate.showBackButton(true);
     $ionicHistory.clearHistory();
     PelApi.lagger.checkFile().then(function (logStat) {

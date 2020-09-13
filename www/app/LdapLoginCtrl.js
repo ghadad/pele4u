@@ -8,7 +8,7 @@ angular.module('pele', ['ngStorage'])
 
      $scope.deviceIsSecureByLockScreen =  window.cordova  && PelApi.secureStorage ? true : false ;
      
-     PelApi.lagger.info("ss",PelApi.secureStorage) ;
+    
 
     $scope.focusMe = function(event) {   
       var ae =     event.target;
@@ -171,6 +171,19 @@ angular.module('pele', ['ngStorage'])
              password: password
          });
  
+         if(BioAuth.getMethod().match(/pincode/)){ 
+          PelApi.secureStorage.set(
+              function(){
+              },
+              function() {
+              } ,
+              "pele4ucred",
+              JSON.stringify({
+                UserName: user,
+                password: password
+              })) ;
+         }
+          
 
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
           if(!BioAuth.getMethod()) { 

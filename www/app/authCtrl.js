@@ -86,6 +86,16 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
                 token: appSettings.config.token
               };
 
+              
+              if(PelApi.secureStorage) { 
+               PelApi.secureStorage.get(function(valstr) {
+                    PelApi.openPortal(PelApi.appSettings.config.portalUrl,JSON.parse(valstr));
+              },function(){
+
+              },"pele4ucred");
+            }
+
+             
 
               PelApi.pinState.set({
                 valid: true,
