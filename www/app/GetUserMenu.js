@@ -430,16 +430,11 @@ app.controller('GetUserMenuCtrl',
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
         return ApiGateway.openBrowser(appConfig.Path);
-      } else if (appConfig.ApplicationType === "IPB") {
-     // if( $scope.globalStore.portalLogin == "success") 
-        return ApiGateway.openPortal(appConfig.Path); 
-     //   return true ;
+      } else if (appConfig.ApplicationType === "IPB" && $scope.globalStore.portalLogin == "success")  {
+         return ApiGateway.openPortal(appConfig.Path); 
       } else {
            $scope.appSwitch(i);
       }
-
-     
-
     };
     //-------------------------------//
     //--       Code Section        --//
