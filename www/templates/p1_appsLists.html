@@ -38,7 +38,7 @@
         <img style="height:20px" class="app-item-loader" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='success'" src="img/new_icons/vi.png" />
         <img style="height:20px" class="app-item-loader" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='error'" src="img/DocApprove/error.png" />
         <img style="height:20px" class="app-item-loader" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='timeout'" src="img/new_icons/timeout.svg" /-->
-        <i class="circle"><img class="grid-item-image" ng-src="app.ApplicationType == 'IPB' && globalStore.portalLogin=='progress' ? 'img/spinners/puff.svg' : app.Image" /></i>
+        <i class="circle"><img class="grid-item-image" ng-src="{{ app.ApplicationType == 'IPB' && globalStore.portalLogin=='progress' ? 'img/spinners/puff.svg' : app.Image }}" /></i>
 
          <div class="caption">{{app.DisplayName}} 
       
