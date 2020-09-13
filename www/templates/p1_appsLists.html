@@ -33,12 +33,15 @@
     <ion-refresher pulling-text="משוך לרענון... " on-refresh="goToADLogin()">
     </ion-refresher>
     <div class="grid-layout" ng-show="menuItems">
-      <div ng-show="app.ApplicationType != 'IPB' || (app.ApplicationType == 'IPB')" ng-click="forwardToApp(app)" class="grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">
+      <div ng-show="app.ApplicationType != 'IPB' || (app.ApplicationType == 'IPB')" ng-click="forwardToApp(app)" class="spp-item grid-item" ng-repeat="app in menuItems | filter: { menu2: true }">
+        <img style="height:20px" class="app-item-loader" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='progress'" src="img/spinners/puff.svg" />
+        <img style="height:20px" class="app-item-loader" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='success'" src="img/new_icons/vi.png" />
+        <img style="height:20px" class="app-item-loader" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='error'" src="img/DocApprove/error.png" />
+        <img style="height:20px" class="app-item-loader" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='timeout'" src="img/new_icons/timeout.svg" />
         <i class="circle"><img class="grid-item-image" ng-src="{{app.Image}}" /></i>
+
          <div class="caption">{{app.DisplayName}} 
-           <img style="height:30px" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='progress'" src="img/spinners/puff.svg" />
-           <img style="height:30px" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='error'" src="img/DocApprove/error.png" />
-           <img style="height:30px" ng-show="app.ApplicationType == 'IPB' && globalStore.portalLogin=='timeout'" src="img/DocApprove/three-dots.svg" />
+      
        </div>
       </div>
     </div>

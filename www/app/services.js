@@ -187,9 +187,6 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
     return getUrlBase() + urlStr;
   }
 
-
-  //return PelApi.throwError("api", "ApiService.checkResponse-InvalidJsonResponse", "(httpStatus : " + httpStatus + ") " + errorMsg)
-  //return PelApi.throwError("api", "ApiService.checkResponse-" + errorMsg, "(httpStatus : " + httpStatus + ") " + JSON.stringify(data), false)
   this.getHeaders = buildHeader;
   this.getUrl = getUrl;
 
@@ -263,11 +260,12 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
   }
 
   this.openInApp = function (url) {
+
      if(!window.cordova) {
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
     }
-    var swalObject = {
+    var swalObject = {  
       type: 'error',
       title: 'תהליך אימות העובד נכשל',
       text: 'נא צאו והתחברו שוב ונסו שנית ',
@@ -321,28 +319,19 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
 
   this.openPortal = function (url,cred) {
 
-    
     if(!window.cordova) {
        swal({ text: 'האפליקציה מנסה להפעיל תכונה שמתאימה להפעלה בסמארטפון בלבד',});
        return false;
     }
-
-
-    PelApi.showLoading({
-      duration: 1000 * 3
-    });
-    var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=yes";
-    iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
-
-    if(!cred)
-     iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=yes,zoom=no,footer=no'; 
-
-     var inAppBrowserRef =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
-       inAppBrowserRef.addEventListener("loaderror", function () {
-          PelApi.hideLoading();
-     });
+    var iabOptions =  "clearcache=yes,clearsessioncache=yes,location=no,hidden=no";
       
     if(!cred) {
+      iabOptions =  'clearcache=no,clearsessioncache=no,location=no,hidden=no,zoom=no,footer=no'; 
+      var ref1 =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+      ref1.addEventListener("loaderror", function () {
+           PelApi.hideLoading();
+           PelApi.showPopup("בעיה בפתיחת יישום");
+      }); 
       var noCredCode =  "(function() { \
                           if(window.backToPele4u) \
                             return 'close' ; \
@@ -353,82 +342,79 @@ app.service('StorageService', ['$http', 'PelApi', '$localStorage', function ($ht
                           })();"
  
        var loop = setInterval(function() {
-       inAppBrowserRef.executeScript({ code: noCredCode  },
+        ref1.executeScript({ code: noCredCode  },
        function( values ) {
            var res = values[ 0 ];
              if ( res ) {
-               if(res == "close" || res == "error") {
+               if(res == "close") {
                 clearInterval( loop );
-                inAppBrowserRef.close();
+                ref1.close();
                }
                PelApi.store.set("portalLogin",res);
            }
        })},200);
-
-      setTimeout(function(){
-        inAppBrowserRef.show();
-      },300) 
      }
      else {
+      iabOptions =  "clearcache=no,clearsessioncache=no,location=no,hidden=yes";
       PelApi.store.set("portalLogin","progress");
-      var  loginCode = "var pele4UbtnFired = false; var pele4uIdx ; \
+      var ref2 =  cordova.InAppBrowser.open(encodeURI(url), '_blank',iabOptions);
+      ref2.addEventListener("loaderror", function () {
+           PelApi.hideLoading();
+           PelApi.showPopup("בעיה בפתיחת יישום");
+      }); 
+
+      var  loginCode = "var pele4UbtnFired = false; var pele4uIdx =0; \
                       function tryLoginPortal(pele4uIdxParam) { \
-                        setTimeout(function() { \
                           var btn = document.getElementById('Log_On') ;\
-                          if(btn && pele4UbtnFired == false ) { \
-                          //alert('pele4UbtnFired = '+ pele4UbtnFired + ' pele4uIdxParam = ' + pele4uIdxParam ) ;\
-                          document.getElementById('login').value = '__username' ; \
-                          document.getElementById('passwd').value = '__password' ; \
-                          pele4UbtnFired = true ; \
-                          btn.click(); \
-                          } \
-                        },200 * pele4uIdxParam) ;\
+                          var userInput = document.getElementById('login') ;\
+                          var passInput = document.getElementById('passwd') ;\
+                          if(btn && userInput && passInput) { \
+                            userInput.value = '__username' ; \
+                            passInput.value = '__password' ; \
+                            pele4UbtnFired = true ; \
+                            btn.click(); \
+                        } \
                     } ; \
-                   for(pele4uIdx=1; pele4uIdx<=20;pele4uIdx++) { \
-                     tryLoginPortal(pele4uIdx); \
-                   }";
-                            
+                  for(pele4uIdx=1; pele4uIdx<=40;pele4uIdx++) { \
+                    setTimeout(function() { \
+                      if(pele4UbtnFired==false) tryLoginPortal(pele4uIdx); \
+                    },300 * pele4uIdx) ;\
+                  }";
+      
+        
      loginCode = loginCode.replace(/__username/g, cred.UserName );
      loginCode = loginCode.replace(/__password/g, cred.password );
 
      var testLoginCode = "(function(){ \
-                       if(document.getElementById('pele4u-logout')) \
-                          return 'success'; \
+                        var pele4uDiv = document.getElementById('pele4u-logout') || {} ; \
+                        if(pele4uDiv.innerHTML)  return 'success'; \
                        if(document.getElementById('errorMessageLabel')) \
                           return 'error'; \
                         return 'progress'  ; \
                      })()";
-            
+
+     // testLoginCode = "document.getElementById('pele4u-logout')";
 
          
-      inAppBrowserRef.addEventListener("loadstop", function () {
+     ref2.addEventListener("loadstop", function () {
         PelApi.hideLoading();
-          inAppBrowserRef.executeScript({code: loginCode});
+        ref2.executeScript({code: loginCode});
           var ts1 =  new Date().getTime();
-          var loop = setInterval(function(){
-            inAppBrowserRef.executeScript({code: testLoginCode},
+          var loop2 = setInterval(function(){
+            ref2.executeScript({code: testLoginCode},
               function( values ) {
                 var res = values[0];
-                if( (new Date().getTime() - ts1)  > 20*1000) 
-                  res = "timeout";
-                PelApi.store.set("portalLogin",res);
-                switch ( res ) {
-                  case "error" :
-                    clearInterval( loop );
-                    inAppBrowserRef.close();
-                    break ;
-                    case "success" :
-                    clearInterval( loop );
-                    break ;
-                    case "timeout" :
-                    clearInterval( loop );
-                    inAppBrowserRef.close();
-                    break ;
-                    case "progress":
-                      break 
-                }
+                if( (new Date().getTime() - ts1)  > 25*1000)          
+                res ="timeout" ;
+                PelApi.lagger.info("portal test:"+res)
+                if(res == "success") {
+                  clearInterval(loop2);
+                  PelApi.store.set("portalLogin",res);
+                  ref2.close();
+                }  
              })
           },200);
+        
      });
     }
   }
