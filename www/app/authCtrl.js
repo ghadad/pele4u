@@ -92,21 +92,19 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
                PelApi.lagger.info("secureStorage success get  pele4ucred :"+valstr);
                PelApi.secureStorage.get(function(valstr) {
                     PelApi.openPortal(PelApi.appSettings.config.portalUrl,JSON.parse(valstr));
-              },  function(e) {
-                PelApi.lagger.error("ureStorage success get pele4ucred");
-                PelApi.lagger.error(e.stack);
+                    PelApi.pinState.set({
+                      valid: true,
+                      code: appSettings.config.Pin,
+                      apiCode: pinStatus
+                    })
+                    
+                    $state.go('app.p1_appsLists');
+              },function(e) {
+                  PelApi.lagger.error("secureStorage success get pele4ucred");
+                   PelApi.lagger.error(e.stack);
              } ,"pele4ucred");
             }
 
-             
-
-              PelApi.pinState.set({
-                valid: true,
-                code: appSettings.config.Pin,
-                apiCode: pinStatus
-              })
-              
-              $state.go('app.p1_appsLists');
             } else if ("PWA" === pinStatus) {
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
