@@ -3,7 +3,7 @@
  */
 var app = angular.module('pele.authCtrl', ['ngStorage']);
 
-app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $ionicLoading, appSettings,$timeout) {
+app.controller('LoginCtrl', function($scope, $state,  PelApi,ApiGateway, $sessionStorage, $ionicLoading, appSettings,$timeout) {
   //------------------------------------------------------------//
   //--                    Get AppId                           --//
   //------------------------------------------------------------//
@@ -91,20 +91,21 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
               if(PelApi.secureStorage) { 
                PelApi.lagger.info("secureStorage success get  pele4ucred :"+valstr);
                PelApi.secureStorage.get(function(valstr) {
-                    PelApi.openPortal(PelApi.appSettings.config.portalUrl,JSON.parse(valstr));
-                    PelApi.pinState.set({
-                      valid: true,
-                      code: appSettings.config.Pin,
-                      apiCode: pinStatus
-                    })
-                    
-                    $state.go('app.p1_appsLists');
+                 ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,JSON.parse(valstr));
               },function(e) {
-                  PelApi.lagger.error("secureStorage success get pele4ucred");
+                   PelApi.lagger.error("secureStorage success get pele4ucred");
                    PelApi.lagger.error(e.stack);
              } ,"pele4ucred");
             }
 
+             
+              PelApi.pinState.set({
+                valid: true,
+                code: appSettings.config.Pin,
+                apiCode: pinStatus
+              })
+              
+              $state.go('app.p1_appsLists');
             } else if ("PWA" === pinStatus) {
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
