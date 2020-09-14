@@ -86,13 +86,16 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi, $sessionStorage, $
                 token: appSettings.config.token
               };
 
+      
               
               if(PelApi.secureStorage) { 
+               PelApi.lagger.info("secureStorage success get  pele4ucred :"+valstr);
                PelApi.secureStorage.get(function(valstr) {
                     PelApi.openPortal(PelApi.appSettings.config.portalUrl,JSON.parse(valstr));
-              },function(){
-
-              },"pele4ucred");
+              },  function(e) {
+                PelApi.lagger.error("ureStorage success get pele4ucred");
+                PelApi.lagger.error(e.stack);
+             } ,"pele4ucred");
             }
 
              

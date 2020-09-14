@@ -174,9 +174,12 @@ angular.module('pele', ['ngStorage'])
          if(BioAuth.getMethod().match(/pincode/)){ 
           PelApi.secureStorage.set(
               function(){
+                PelApi.lagger.info("secureStorage success set pele4ucred");
               },
-              function() {
-              } ,
+              function(e) {
+                PelApi.lagger.error("ureStorage success set pele4ucred");
+                PelApi.lagger.error(e.stack);
+             } ,
               "pele4ucred",
               JSON.stringify({
                 UserName: user,
