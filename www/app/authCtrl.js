@@ -91,11 +91,11 @@ app.controller('LoginCtrl', function($scope, $state,  PelApi,ApiGateway, $sessio
               if(PelApi.secureStorage) { 
                PelApi.lagger.info("secureStorage success get  pele4ucred :"+valstr);
                PelApi.secureStorage.get(function(valstr) {
-                 ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,JSON.parse(valstr));
+                   ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,JSON.parse(valstr));
               },function(e) {
-                   PelApi.lagger.error("secureStorage success get pele4ucred");
-                   PelApi.lagger.error(e.stack);
-             } ,"pele4ucred");
+                   PelApi.lagger.info("secureStorage success get pele4ucred");
+                   PelApi.lagger.info(e.stack);
+              } ,"pele4ucred");
             }
 
              
