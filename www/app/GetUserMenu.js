@@ -61,8 +61,8 @@ app.controller('GetUserMenuCtrl',
 
       var sortedMenu = _.sortBy(items, function (i) {
         idx++;
-        if(i.DisplayName.match(/PELEPORTAL/i))
-           i.ApplicationType = 'IPB';
+   //     if(i.DisplayName.match(/PELEPORTAL/i))
+   //        i.ApplicationType = 'IPB';
 
         i.menuLocation = i.Location || "side";
         i.side = i.menuLocation.match("side|s") ? true : false;
