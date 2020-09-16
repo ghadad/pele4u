@@ -7,10 +7,6 @@ angular.module('pele', ['ngStorage'])
      $scope.hideAllforms = false;
 
      $scope.deviceIsSecureByLockScreen =  window.cordova  && PelApi.secureStorage ? true : false ;
-
-     if(!$scope.deviceIsSecureByLockScreen)
-     return  ;
-
     
 
     $scope.focusMe = function(event) {   

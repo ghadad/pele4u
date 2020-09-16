@@ -9,7 +9,7 @@
   
   <ion-content class="pele-background" scroll="false">
  
-    <div class="row" ng-show="activeForm && !hideAllforms">
+    <div class="row" ng-show="deviceIsSecureByLockScreen && activeForm && !hideAllforms">
       <div class="col col-center">
         <div class="card login-container">
           <form name="" class="" novalidate>
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div ng-if="deviceIsSecureByLockScreen" id="auth-methods" ng-show="!activeForm && !hideAllforms" class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
+    <div id="auth-methods" ng-show="deviceIsSecureByLockScreen && !activeForm && !hideAllforms" class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
         <div class="item item-text-wrap pele_ltr">
             <!--button ng-click="closeModal()" class="button-icon ion-close"></button-->
             <h2 class="text-center"><strong>יש לבחור שיטת זיהוי</strong></h2>             
@@ -98,7 +98,7 @@
             </div>
         </div>
       </div>
-      <div ng-if="deviceIsSecureByLockScreen == false"  class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
+      <div ng-show="deviceIsSecureByLockScreen == false"  class="card pele_rtl" style="border:2px solid #CCC;border-radius:5px">
         <div class="item item-text-wrap pele_ltr">
             <!--button ng-click="closeModal()" class="button-icon ion-close"></button-->
             <div class="item no-border">
