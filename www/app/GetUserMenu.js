@@ -51,7 +51,7 @@ app.controller('GetUserMenuCtrl',
     }
 
     $scope.getWellcomeString();
- 
+
     $scope.childOf = {};
     //$scope.tilesEnabled = true;
     $scope.sort = function (items) {
@@ -61,8 +61,8 @@ app.controller('GetUserMenuCtrl',
 
       var sortedMenu = _.sortBy(items, function (i) {
         idx++;
-   //     if(i.DisplayName.match(/PELEPORTAL/i))
-   //        i.ApplicationType = 'IPB';
+        //     if(i.DisplayName.match(/PELEPORTAL/i))
+        //        i.ApplicationType = 'IPB';
 
         i.menuLocation = i.Location || "side";
         i.side = i.menuLocation.match("side|s") ? true : false;
@@ -428,18 +428,18 @@ app.controller('GetUserMenuCtrl',
         PIN: $sessionStorage.AuthInfo.pinCode,
         TOKEN: $sessionStorage.AuthInfo.token
       };
-      if (appConfig.ApplicationType === "EXT") { 
-         window.open(appConfig.Path, '_system'); //, 'location=yes,footer=no');
-        var iabOptions =  'enableViewportScale=yes,footer=no,closebuttoncaption=סגור'; 
-        window.open(encodeURI(appConfig.Path), '_system',iabOptions);
+      if (appConfig.ApplicationType === "EXT") {
+        window.open(appConfig.Path, '_system'); //, 'location=yes,footer=no');
+        var iabOptions = 'enableViewportScale=yes,footer=no,closebuttoncaption=סגור';
+        window.open(encodeURI(appConfig.Path), '_system', iabOptions);
       } else if (appConfig.ApplicationType === "IAB") {
         return ApiGateway.openInApp(appConfig.Path);
       } else if (appConfig.ApplicationType === "IEB") {
         return ApiGateway.openBrowser(appConfig.Path);
-      } else if (appConfig.ApplicationType === "IPB" && $scope.globalStore.portalLogin == "success")  {
-         return ApiGateway.openPortal(appConfig.Path); 
+      } else if (appConfig.ApplicationType === "IPB" && $scope.globalStore.portalLogin == "success") {
+        return ApiGateway.openPortal(appConfig.Path);
       } else {
-           $scope.appSwitch(i);
+        $scope.appSwitch(i);
       }
     };
     //-------------------------------//

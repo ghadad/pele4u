@@ -28,10 +28,10 @@ angular.module('pele')
           reload: true
         })
       }
-      $scope.download = function(vcardUri,fname) {
-        PelApi.download(vcardUri,fname +".vcf");
+      $scope.download = function (vcardUri, fname) {
+        PelApi.download(vcardUri, fname + ".vcf");
       }
-      
+
       $scope.saveContact = function (c, info) {
         var deviceContact = c;
         if (c.id) {
@@ -66,7 +66,7 @@ angular.module('pele')
       }
 
       $scope.swalContact = function (event, c) {
-        try { 
+        try {
           swal({
             html: '<div>' + "שים לב, איש הקשר ישמר בנייד כאיש קשר חדש" + '</div>',
             showCloseButton: true,
@@ -82,10 +82,10 @@ angular.module('pele')
               $scope.saveContact(targetContact, c)
             }
           })
-        } catch(e) { 
+        } catch (e) {
           console.log(e)
         }
-        
+
       }
 
 

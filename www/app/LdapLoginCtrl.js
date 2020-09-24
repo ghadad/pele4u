@@ -1,63 +1,63 @@
 angular.module('pele', ['ngStorage'])
-  .controller('LdapLoginCtrl', function (ApiGateway,$scope, $state, $ionicSideMenuDelegate, PelApi, $http, $ionicLoading, BioAuth, $ionicModal,$timeout) {
+  .controller('LdapLoginCtrl', function (ApiGateway, $scope, $state, $ionicSideMenuDelegate, PelApi, $http, $ionicLoading, BioAuth, $ionicModal, $timeout) {
     //------------------------------------------------------------//
     //--                    Get AppId                           --//
     //------------------------------------------------------------//
 
-     $scope.hideAllforms = false;
+    $scope.hideAllforms = false;
 
-     $scope.deviceIsSecureByLockScreen =  window.cordova  && PelApi.secureStorage ? true : false ;
-    
+    $scope.deviceIsSecureByLockScreen = window.cordova && PelApi.secureStorage ? true : false;
 
-    $scope.focusMe = function(event) {   
-      var ae =     event.target;
-      $timeout(function() {
-       // document.activeElement.selectionStart = document.activeElement.selectionEnd;
-      //  console.log(document.activeElement.selectionEnd)
-      ae.focus()
-      },300)      
+
+    $scope.focusMe = function (event) {
+      var ae = event.target;
+      $timeout(function () {
+        // document.activeElement.selectionStart = document.activeElement.selectionEnd;
+        //  console.log(document.activeElement.selectionEnd)
+        ae.focus()
+      }, 300)
     }
-    $scope.passwordType='password';
+    $scope.passwordType = 'password';
     $scope.eyeIcon = "img/new_icons/eye-outline.svg";
 
-    $scope.togglePass = function() { 
-      if($scope.passwordType=='password' ) { 
-         $scope.passwordType =  "text";
-       $scope.eyeIcon = "img/new_icons/eye-off-outline.svg";
+    $scope.togglePass = function () {
+      if ($scope.passwordType == 'password') {
+        $scope.passwordType = "text";
+        $scope.eyeIcon = "img/new_icons/eye-off-outline.svg";
       } else {
 
-    $scope.passwordType =  "password";
-     $scope.eyeIcon = "img/new_icons/eye-outline.svg";
-     
+        $scope.passwordType = "password";
+        $scope.eyeIcon = "img/new_icons/eye-outline.svg";
+
       }
-     
+
     }
 
-    if($state.params.reset ) 
-       BioAuth.clear();
-        
-  $scope.checkTries = function() { 
-    var tries = _.get(PelApi.sessionStorage,'stat.bioFailed',0);
-    if(tries>=5)    
+    if ($state.params.reset)
+      BioAuth.clear();
+
+    $scope.checkTries = function () {
+      var tries = _.get(PelApi.sessionStorage, 'stat.bioFailed', 0);
+      if (tries >= 5)
         BioAuth.clear("soft");
-    _.set(PelApi.sessionStorage, 'stat.bioFailed',tries+1);
-  }
+      _.set(PelApi.sessionStorage, 'stat.bioFailed', tries + 1);
+    }
 
-  $scope.toggleRight = function(){
-    $ionicSideMenuDelegate.toggleRight();
-};
+    $scope.toggleRight = function () {
+      $ionicSideMenuDelegate.toggleRight();
+    };
 
-  $scope.resetTries = function() { 
-    var tries = _.set(PelApi.sessionStorage,'stat.bioFailed',0);
-  }
-    
+    $scope.resetTries = function () {
+      var tries = _.set(PelApi.sessionStorage, 'stat.bioFailed', 0);
+    }
+
     $scope.authMethod = BioAuth.getMethod();
-    
-    
+
+
     $scope.bioAuthRegistered = _.get(PelApi.localStorage, 'ADAUTH.cred', "");
-    
-    $scope.bioErrMessage1 = "שגיאה בהפעלת זיהוי ביומטרי" ; 
-    $scope.bioErrMessage2 = "נסו שוב או  הזדהו באמצעות סיסמא חד פעמית" ; 
+
+    $scope.bioErrMessage1 = "שגיאה בהפעלת זיהוי ביומטרי";
+    $scope.bioErrMessage2 = "נסו שוב או  הזדהו באמצעות סיסמא חד פעמית";
 
     $scope.regTitle = $scope.title = "התחברות עם משתמש וסיסמה";
     $scope.authTitle = "ניהול שיטות זיהוי";
@@ -69,27 +69,27 @@ angular.module('pele', ['ngStorage'])
     $scope.activeForm = false;
     $scope.bioCap = null;
     $scope.doRender = false;
-    
-    BioAuth.getCap().then(function (result="") {
-      if(result.match(/bio/i))
-          $scope.bioCap = "bio";
-          else if (result.match(/finger/i))
-          $scope.bioCap = "finger";
-          else if (result.match(/face/i))
-          $scope.bioCap = "face";
+
+    BioAuth.getCap().then(function (result = "") {
+      if (result.match(/bio/i))
+        $scope.bioCap = "bio";
+      else if (result.match(/finger/i))
+        $scope.bioCap = "finger";
+      else if (result.match(/face/i))
+        $scope.bioCap = "face";
     }).catch(function () {
-      
+
       PelApi.lagger.info("bioAuth not exists for this device");
-    }).finally(function(){ 
+    }).finally(function () {
       $scope.doRender = true;
-    
+
     })
 
 
     $ionicModal.fromTemplateUrl('authMethods.html', {
       scope: $scope,
       animation: 'slide-in-up',
-      backdropClickToClose:true
+      backdropClickToClose: true
     }).then(function (modal) {
       $scope.modal = modal;
     });
@@ -97,7 +97,7 @@ angular.module('pele', ['ngStorage'])
     $scope.openModal = function () {
       $scope.title = $scope.authTitle
       $scope.activeForm = false;
-     // $scope.modal.show();
+      // $scope.modal.show();
     };
 
 
@@ -111,12 +111,12 @@ angular.module('pele', ['ngStorage'])
 
     $scope.closeModal = function (backToMenu) {
       $scope.title = $scope.regTitle
-     // $scope.modal.hide();
-      if(backToMenu)
-      setTimeout(function () {
-        $scope.activeForm = true;
-      //  return $state.go("app.p1_appsLists");
-      }, 100)
+      // $scope.modal.hide();
+      if (backToMenu)
+        setTimeout(function () {
+          $scope.activeForm = true;
+          //  return $state.go("app.p1_appsLists");
+        }, 100)
 
     };
     $scope.$on('$destroy', function () {
@@ -124,18 +124,18 @@ angular.module('pele', ['ngStorage'])
     });
 
     $scope.$on('modal.hidden', function (event, modal) {
-  
-     
+
+
       $scope.title = $scope.regTitle
       setTimeout(function () {
         $scope.activeForm = true;
-      //  $ionicSideMenuDelegate.toggleRight();
+        //  $ionicSideMenuDelegate.toggleRight();
       }, 100)
       // Execute action
     });
 
     $scope.doLogIn = function (isBio) {
-      
+
       $scope.error = "";
       $scope.error2 = "";
 
@@ -144,7 +144,7 @@ angular.module('pele', ['ngStorage'])
       }
       PelApi.showLoading();
 
-      var user = _.trim($scope.user.username).replace(/\@.+/,"");
+      var user = _.trim($scope.user.username).replace(/\@.+/, "");
       var password = _.trim($scope.user.password);
 
       var httpConf = PelApi.getDocApproveServiceUrl('ADLogin');
@@ -161,40 +161,51 @@ angular.module('pele', ['ngStorage'])
         headers: httpConf.headers
       });
 
-      
-  
+
+
       promise.success(function (data, status, headers, config) {
-        
-         ApiGateway.openPortal(PelApi.appSettings.config.portalUrl,{
-             UserName: user,
-             password: password
-         });
- 
-         if(BioAuth.getMethod().match(/pincode/)){ 
-          PelApi.secureStorage.set(
-              function(){
+          var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
+          var reMenu = PelApi.getMenu(links);
+          reMenu.success(function (data, status, headers, config) {
+            if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === data.PinCode) {
+              $timeout(function () {
+                $state.go('app.login', {}, {
+                  reload: true
+                });
+              });
+            }
+          });
+
+          ApiGateway.openPortal(PelApi.appSettings.config.portalUrl, {
+            UserName: user,
+            password: password
+          });
+
+          if (BioAuth.getMethod().match(/pincode/)) {
+            PelApi.secureStorage.set(
+              function () {
                 PelApi.lagger.info("secureStorage success set pele4ucred");
               },
-              function(e) {
+              function (e) {
                 PelApi.lagger.info("ureStorage success set pele4ucred");
                 PelApi.lagger.info(e.stack);
-             } ,
+              },
               "pele4ucred",
               JSON.stringify({
                 UserName: user,
                 password: password
-              })) ;
-         }
-          
+              }));
+          }
+
 
           var adLoginInfo = _.get(data, 'ADLoginResult', {});
-          if(!BioAuth.getMethod()) { 
+          if (!BioAuth.getMethod()) {
             $scope.error = "לא בחרת שיטת  זיהוי"
             $scope.doRender = true;
             throw new Error("no method selected")
           }
 
-          if(!adLoginInfo.msisdn) { 
+          if (!adLoginInfo.msisdn) {
             $scope.error = "שגיאה בהפעלת אימות משתמש"
             throw new Error("Failed to get data from ADLogin")
           }
@@ -209,26 +220,26 @@ angular.module('pele', ['ngStorage'])
           var credentials = {
             username: user,
             password: password,
-            msisdn:PelApi.appSettings.config.MSISDN_VALUE
+            msisdn: PelApi.appSettings.config.MSISDN_VALUE
           };
 
 
-          _.set(PelApi.localStorage, 'ADAUTH.username',user);
+          _.set(PelApi.localStorage, 'ADAUTH.username', user);
 
-          if (!_.get(PelApi.localStorage, 'ADAUTH.token',null) &&  BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/)) {
-              $scope.hideAllforms = true;
-              BioAuth.encrypt(credentials).
-              then(function(result){
-                _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
-                $scope.resetTries();
-                return $state.go("app.p1_appsLists");
-              }).catch(function(err){
-                
-                $scope.checkTries();
-                PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
-                $state.reload();
-              })
-            
+          if (!_.get(PelApi.localStorage, 'ADAUTH.token', null) && BioAuth.isInstalled() && BioAuth.getMethod().match(/finger|face|bio/)) {
+            $scope.hideAllforms = true;
+            BioAuth.encrypt(credentials).
+            then(function (result) {
+              _.set(PelApi.localStorage, 'ADAUTH.token', result.token);
+              $scope.resetTries();
+              return $state.go("app.p1_appsLists");
+            }).catch(function (err) {
+
+              $scope.checkTries();
+              PelApi.showPopup($scope.bioErrMessage1, $scope.bioErrMessage2);
+              $state.reload();
+            })
+
           } else {
             return $state.go("app.p1_appsLists");
             /*
@@ -252,11 +263,11 @@ angular.module('pele', ['ngStorage'])
             $scope.user.password = "";
 
             var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
-            if(isBio)
-            $scope.error = "זוהתה סיסמא שגויה באפליקציה, יש לבצע הזדהות מחדש עם שם המשתמש והסיסמא של המחשב"
+            if (isBio)
+              $scope.error = "זוהתה סיסמא שגויה באפליקציה, יש לבצע הזדהות מחדש עם שם המשתמש והסיסמא של המחשב"
             else
-            $scope.error = "שם משתמש או סיסמה לא נכונים"
-            
+              $scope.error = "שם משתמש או סיסמה לא נכונים"
+
           }
         ).finally(function () {
           $ionicLoading.hide();
@@ -264,48 +275,48 @@ angular.module('pele', ['ngStorage'])
         });
     }
 
-    
-    
-    
-    if(PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN ) {
-      if(_.get(PelApi.sessionStorage,'ADAUTH.token'))
-      PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
-      if(_.get(PelApi.sessionStorage,'ADAUTH.msisdn'))
-          PelApi.appSettings.config.MSISDN_VALUE = PelApi.sessionStorage.PELE4U_MSISDN = _.get(PelApi.sessionStorage,'ADAUTH.msisdn');
+
+
+
+    if (PelApi.appSettings.config.IS_TOKEN_VALID == "Y" && PelApi.localStorage.PELE4U_MSISDN) {
+      if (_.get(PelApi.sessionStorage, 'ADAUTH.token'))
+        PelApi.appSettings.config.token = PelApi.sessionStorage.ADAUTH.token;
+      if (_.get(PelApi.sessionStorage, 'ADAUTH.msisdn'))
+        PelApi.appSettings.config.MSISDN_VALUE = PelApi.sessionStorage.PELE4U_MSISDN = _.get(PelApi.sessionStorage, 'ADAUTH.msisdn');
       return $state.go("app.p1_appsLists");
     }
 
-    if(BioAuth.getMethod().match(/pincode/) && PelApi.appSettings.config.IS_TOKEN_VALID != "Y" ) {
+    if (BioAuth.getMethod().match(/pincode/) && PelApi.appSettings.config.IS_TOKEN_VALID != "Y") {
       PelApi.sessionStorage.$reset();
       return $state.go("app.p1_appsLists");
     }
 
-    var token =  BioAuth.getToken();
-    var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username',null);
-        
-    
-    if (PelApi.appSettings.config.IS_TOKEN_VALID != "Y" && bioUser && token && BioAuth.isInstalled()  && BioAuth.getMethod().match(/finger|face|bio/) ) {
-      $scope.hideAllforms = true;
-         BioAuth.decrypt(bioUser,token).
-         then(function(decryptedCredentials){
-          $scope.user = decryptedCredentials
-          $scope.activeForm = false;
-          $scope.resetTries();
-          return $scope.doLogIn(true);
-        }).catch(function(err){
+    var token = BioAuth.getToken();
+    var bioUser = _.get(PelApi.localStorage, 'ADAUTH.username', null);
 
-          $scope.checkTries();
-          PelApi.showPopup($scope.bioErrMessage1,$scope.bioErrMessage2);        
-         // $state.reload();
-        })
+
+    if (PelApi.appSettings.config.IS_TOKEN_VALID != "Y" && bioUser && token && BioAuth.isInstalled() && BioAuth.getMethod().match(/finger|face|bio/)) {
+      $scope.hideAllforms = true;
+      BioAuth.decrypt(bioUser, token).
+      then(function (decryptedCredentials) {
+        $scope.user = decryptedCredentials
+        $scope.activeForm = false;
+        $scope.resetTries();
+        return $scope.doLogIn(true);
+      }).catch(function (err) {
+
+        $scope.checkTries();
+        PelApi.showPopup($scope.bioErrMessage1, $scope.bioErrMessage2);
+        // $state.reload();
+      })
     } else {
-      
+
       BioAuth.clear("soft");
-      if(BioAuth.getMethod() == "pincode") { 
+      if (BioAuth.getMethod() == "pincode") {
         $scope.activeForm = true;
-        return ;
+        return;
       }
-      
+
       setTimeout(function () {
         $scope.activeForm = true;
         $scope.openModal();
@@ -313,4 +324,3 @@ angular.module('pele', ['ngStorage'])
 
     }
   });
- 

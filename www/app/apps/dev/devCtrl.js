@@ -3,16 +3,16 @@ angular.module('pele')
   //==                    PAGE_4
   //=================================================================
   .controller('devCtrl', ['$scope', '$stateParams', '$ionicLoading', '$ionicModal', 'PelApi', '$ionicHistory', '$ionicPopup', '$fileLogger',
-    function($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $fileLogger) {
+    function ($scope, $stateParams, $ionicLoading, $ionicModal, PelApi, $ionicHistory, $ionicPopup, $fileLogger) {
 
       $scope.title = "בדיקת צרופות";
-      $scope.openAttachment = function(file) {
+      $scope.openAttachment = function (file) {
         PelApi.openAttachment(file)
       }
       $scope.errors = PelApi.getErrorsStack();
 
 
-      $fileLogger.getLogfile().then(function(log) {
+      $fileLogger.getLogfile().then(function (log) {
         $scope.logContent = log
       });
 
