@@ -164,18 +164,18 @@ angular.module('pele', ['ngStorage'])
 
 
       promise.success(function (data, status, headers, config) {
-          var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
-          var reMenu = PelApi.getMenu(links);
-          reMenu.success(function (data, status, headers, config) {
-            if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === data.PinCode) {
-              $timeout(function () {
-                $state.go('app.login', {}, {
-                  reload: true
-                });
+          /*    var links = PelApi.getDocApproveServiceUrl("GetUserMenu");
+              var reMenu = PelApi.getMenu(links);
+              reMenu.success(function (data, status, headers, config) {
+                if (appSettings.config.PIN_CODE_AUTHENTICATION_REQUIRED_CODE === data.PinCode) {
+                  $timeout(function () {
+                    $state.go('app.login', {}, {
+                      reload: true
+                    });
+                  });
+                }
               });
-            }
-          });
-
+              */
           ApiGateway.openPortal(PelApi.appSettings.config.portalUrl, {
             UserName: user,
             password: password
