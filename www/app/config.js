@@ -1,11 +1,11 @@
 /*********************/
-const env = "Q2";
+const env = "P2";
 /********************/
 
 const EnvCodes = {
   PD: "PROD",
   P2: "PROD",
-  DV: "DEV", 
+  DV: "DEV",
   QA: "QA",
   Q2: "QA",
   LP: "LP"
@@ -192,14 +192,14 @@ const apiConfig = {
 
 angular.module('pele.config', [])
   .constant('$ionicLoadingConfig', spinConfig)
-  .value('appSettings', {   
+  .value('appSettings', {
     debug: false,
     EnvCodes: EnvCodes,
     SSOEnv: SSOEnv,
     api_timeout: 20000,
     gw_timeout: 15000,
     config: {
-      portalUrl:"https://peleportal.pelephone.co.il/Pages/ns_test_login.aspx",
+      portalUrl: "https://peleportal.pelephone.co.il/Pages/ns_test_login.aspx",
       bioClientId: "NEVER_CHANGE_THIS_VALUE_BIOPELE4U",
       bioClientSecret: "NEVER_CHANGE_THIS_VALUE",
       contactIdPrefix: "pelephone",
@@ -358,7 +358,7 @@ angular.module('pele.config', [])
       },
       "PAY": {
         state: "app.pay_list"
-      },      
+      },
     },
     ACTION_HISTORY: {
       "FORWARD": "אישור",
